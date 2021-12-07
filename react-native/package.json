@@ -8,13 +8,13 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "echo \"Test\""
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-native-community/netinfo": "^7.1.3",
     "aws-amplify": "^4.3.10",
     "aws-amplify-react-native": "^6.0.1",

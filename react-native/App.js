@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Amplify from 'aws-amplify'
 import config from './src/aws-exports'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 Amplify.configure(config)
 
 export default function App() {
