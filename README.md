@@ -2,6 +2,10 @@
 
 Insert slogan here
 
+## CI Server
+
+Here in Github! https://github.com/CPSECapstone/GSP/actions
+
 ## Installation
 
 To download our repository, open your terminal and go to the directory in which you will want this repository. Run the command 
