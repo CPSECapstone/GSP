@@ -12,7 +12,7 @@ To download our repository, open your terminal and go to the directory in which 
 ```bash
 git clone https://github.com/CPSECapstone/GSP.git
 ```
-to make a local copy. Next, open the "react-native" folder, and run the command
+to make a local copy. Next, open the "frontend" folder, and run the command
 ```bash
 npm i
 ```
