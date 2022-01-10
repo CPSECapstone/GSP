@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "prepare": "cd ../ && husky install ./frontend/.husky"
   },
   "dependencies": {
     "expo": "~44.0.0",
@@ -27,11 +28,16 @@
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "^7.0.4",
     "jest": "^27.4.7",
+    "lint-staged": "^12.1.7",
+    "prettier": "^2.5.1",
     "typescript": "~4.3.5"
   },
   "private": true
