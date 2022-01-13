@@ -10,6 +10,17 @@
       "StackName": "amplify-minoritymarket-staging-24817",
       "StackId": "arn:aws:cloudformation:us-west-1:476906480570:stack/amplify-minoritymarket-staging-24817/1a27e090-6e9b-11ec-8257-02c4e4ab736d",
       "AmplifyAppId": "d9y26qlr4tnmk"
+    },
+    "categories": {
+      "function": {
+        "AdminQueries8b479e72": {
+          "deploymentBucketName": "amplify-minoritymarket-staging-24817-deployment",
+          "s3Key": "amplify-builds/AdminQueries8b479e72-4b725263664659382b7a-build.zip"
+        }
+      },
+      "auth": {
+        "mmAuth": {}
+      }
     }
   }
 }
