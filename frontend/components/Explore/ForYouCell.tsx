@@ -26,14 +26,16 @@ const styles = StyleSheet.create({
     foryoucellcontainer: {
         width: Dimensions.get('window').width * 0.53,
         height: Dimensions.get('window').height * 0.3,
-        cornerRadius: 15,
-        backgroundColor: "#FFFFFF",
+        borderRadius: 15,
+        backgroundColor: "orange",
         padding: 10,
         justifyContent: "center",
+        alignItems: "center",
     },
     businessimage: {
-        cornerRadius: 15,
-        margin: "auto",
+        borderRadius: 15,
+        width: "80%",
+        height: "80%",
     },
     businesssubtitle: {
         fontSize: 22,

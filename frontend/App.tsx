@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, RootTabBarParamList , TabBarScreenOptions, AppProps, LoginProps, HomeProps, ExploreProps, CollectionsProps, ProfileProps} from './route-settings';
+import Explore from './components/Explore/Explore';
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,7 +25,7 @@ function AuthenticatedApp({ route, navigation } : AppProps) {
   return(
     <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
       <Tab.Screen name="Home" component={HomePage}/>
-      <Tab.Screen name="Explore" component={ExplorePage} />
+      <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Collections" component={CollectionsPage}/>
       <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
