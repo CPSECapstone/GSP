@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "prepare": "cd ../ && husky install ./frontend/.husky"
+    "prepare": "cd ../ && husky install ./frontend/.husky",
+    "lint": "eslint . --fix && prettier . --write"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.0.9",
