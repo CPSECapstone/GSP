@@ -25,3 +25,6 @@ to install the necessary dependencies. Now, you are able to run our app and any 
  npm test
  ```
 but at this moment we have not written any code or tests. This will be done in Winter 2022 (CSC402).
+
+Font resource: 
+https://fonts.google.com/specimen/Mada
