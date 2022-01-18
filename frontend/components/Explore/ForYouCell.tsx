@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "#FFFFFF",
         alignItems: "center",
+        marginRight: 30,
     },
     businessimage: {
         height: 110,
