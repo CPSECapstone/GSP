@@ -5,20 +5,44 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { RootStackParamList, RootTabBarParamList , TabBarScreenOptions, AppProps, LoginProps, HomeProps, ExploreProps, CollectionsProps, ProfileProps} from './route-settings';
 import Explore from './components/Explore/Explore';
+import * as React from 'react';
+import * as Font from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
 
+let fonts = {
+  "Mada-Black": require('./assets/fonts/Mada/Mada-Black.ttf'),
+  "Mada-Regular": require('./assets/fonts/Mada/Mada-Regular.ttf'),
+  "Mada-SemiBold": require('./assets/fonts/Mada/Mada-SemiBold.ttf'),
+  "Mada-Bold": require('./assets/fonts/Mada/Mada-Bold.ttf')
+};
+
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={LoginPage}/>
-        <Stack.Screen name="App" component={AuthenticatedApp}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+
+  const [fontsLoaded, setfontsLoaded] = React.useState(false);
+
+    async function _loadFontsAsync() {
+        await Font.loadAsync(fonts);
+        setfontsLoaded(true);
+    }
+
+    _loadFontsAsync();
+  
+  if (fontsLoaded) {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={LoginPage}/>
+          <Stack.Screen name="App" component={AuthenticatedApp}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  } else {
+    return <AppLoading />;
+  }
 }
 
 function AuthenticatedApp({ route, navigation } : AppProps) {
