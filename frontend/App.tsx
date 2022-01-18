@@ -4,6 +4,8 @@ import { Button, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
 import {
   RootStackParamList,
   RootTabBarParamList,
@@ -11,15 +13,13 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
-import Explore from './components/Explore/Explore';
-import * as Font from 'expo-font';
-import AppLoading from 'expo-app-loading';
+import Explore from "./components/Explore/Explore";
 
 const fonts = {
-  "Mada-Black": require('./assets/fonts/Mada/Mada-Black.ttf'),
-  "Mada-Regular": require('./assets/fonts/Mada/Mada-Regular.ttf'),
-  "Mada-SemiBold": require('./assets/fonts/Mada/Mada-SemiBold.ttf'),
-  "Mada-Bold": require('./assets/fonts/Mada/Mada-Bold.ttf')
+  "Mada-Black": require("./assets/fonts/Mada/Mada-Black.ttf"),
+  "Mada-Regular": require("./assets/fonts/Mada/Mada-Regular.ttf"),
+  "Mada-SemiBold": require("./assets/fonts/Mada/Mada-SemiBold.ttf"),
+  "Mada-Bold": require("./assets/fonts/Mada/Mada-Bold.ttf"),
 };
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -87,12 +87,12 @@ function AuthenticatedApp() {
 export default function App() {
   const [fontsLoaded, setfontsLoaded] = React.useState(false);
 
-  async function _loadFontsAsync() {
-      await Font.loadAsync(fonts);
-      setfontsLoaded(true);
+  async function loadFontsAsync() {
+    await Font.loadAsync(fonts);
+    setfontsLoaded(true);
   }
 
-  _loadFontsAsync();
+  loadFontsAsync();
 
   if (fontsLoaded) {
     return (
@@ -106,7 +106,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  } else {
-    return <AppLoading />;
   }
+  return <AppLoading />;
 }
