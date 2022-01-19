@@ -11,6 +11,8 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
+import AccountType from "./Login/AccountType";
+import SignUp from "./Login/SignUp";
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -28,9 +30,12 @@ const styles = StyleSheet.create({
 function LoginPage({ navigation }: LoginProps) {
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
       <StatusBar />
       <Button title="Login" onPress={() => navigation.navigate("App")} />
+      <Button
+        title="Create Account"
+        onPress={() => navigation.navigate("ChooseAccountType")}
+      />
     </View>
   );
 }
@@ -91,6 +96,8 @@ export default function App() {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Login" component={LoginPage} />
+        <Stack.Screen name="ChooseAccountType" component={AccountType} />
+        <Stack.Screen name="CreateAccount" component={SignUp} />
         <Stack.Screen name="App" component={AuthenticatedApp} />
       </Stack.Navigator>
     </NavigationContainer>

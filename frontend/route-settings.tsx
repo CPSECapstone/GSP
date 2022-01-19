@@ -8,6 +8,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 export type RootStackParamList = {
   Login: undefined;
+  ChooseAccountType: undefined;
+  CreateAccount: { isMBO?: boolean };
   App: undefined;
 };
 

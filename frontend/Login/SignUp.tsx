@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import CleanInput from "./CleanInput";
 import Header from "../components/Header";
+import { RootStackParamList } from "../route-settings";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -23,11 +25,14 @@ const styles = StyleSheet.create({
   },
 });
 
-function SignUp() {
+type SignUpProps = NativeStackScreenProps<RootStackParamList, "CreateAccount">;
+
+function SignUp({ navigation, route }: SignUpProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { isMBO } = route.params;
 
   const [passwordError, setPasswordError] = useState("");
 
@@ -35,6 +40,7 @@ function SignUp() {
     if (password === confirmPassword) {
       setPasswordError("");
       console.log({ name, email, password });
+      navigation.navigate("App");
     } else {
       setPasswordError("Passwords must match");
     }
@@ -43,7 +49,11 @@ function SignUp() {
   return (
     <View style={styles.wrapper}>
       <Header>Create an Account</Header>
-      <Feather style={styles.icon} name="user" size={150} />
+      {isMBO ? (
+        <FontAwesome5 name="store" size={130} />
+      ) : (
+        <Feather style={styles.icon} name="user" size={150} />
+      )}
       <CleanInput label="Name" textContentType="name" setState={setName} />
       <CleanInput
         label="Email Address"
@@ -69,5 +79,9 @@ function SignUp() {
     </View>
   );
 }
+
+SignUp.defaultProps = {
+  isMBO: false,
+};
 
 export default SignUp;
