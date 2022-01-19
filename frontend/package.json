@@ -12,6 +12,7 @@
     "prepare": "cd ../ && husky install ./frontend/.husky"
   },
   "dependencies": {
+    "@expo/vector-icons": "^12.0.5",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
