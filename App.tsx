@@ -13,8 +13,8 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
-import AccountType from "./Login/AccountType";
-import SignUp from "./Login/SignUp";
+import AccountType from "./components/Login/AccountType";
+import SignUp from "./components/Login/SignUp";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
