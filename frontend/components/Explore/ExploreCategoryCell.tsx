@@ -1,11 +1,15 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     borderRadius: 25,
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
+    height: 60,
+    width: 200,
+    marginRight: 25,
+    marginBottom: 25,
   },
   shadow: {
     shadowColor: "#000",
@@ -21,21 +25,24 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-Regular",
     fontSize: 18,
     textAlign: "left",
+    padding: 10,
+    paddingLeft: 25,
   },
 });
 
 interface CategoryCellProps {
   title: string;
-  minoritygroup: string;
 }
 
 function ExploreCategoryCell(props: CategoryCellProps) {
-  const { title, minoritygroup } = props;
+  const { title } = props;
 
   return (
-    <View style={[styles.container, styles.shadow]}>
-      <Text>{title}</Text>
-    </View>
+    <Pressable onPress={() => {console.log(title)}}>
+      <View style={[styles.container, styles.shadow]}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    </Pressable>
   );
 }
 

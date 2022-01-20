@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import * as React from "react";
 
 const placeHolderImage = require("../../assets/icon.png");
@@ -54,11 +54,13 @@ function ForYouCell(props: ForYouParameters) {
   const { name, businessId, distance } = props;
 
   return (
-    <View style={[styles.foryoucellcontainer, styles.shadow]}>
-      <Image style={styles.businessimage} source={placeHolderImage} />
-      <Text style={styles.businesssubtitle}>{name}</Text>
-      <Text style={styles.distancetext}>{`${distance.toString()}mi`}</Text>
-    </View>
+    <Pressable onPress={() => { console.log("navigate to business page for: '" + name + "' with ID: " + businessId)}}>
+      <View style={[styles.foryoucellcontainer, styles.shadow]}>
+        <Image style={styles.businessimage} source={placeHolderImage} />
+        <Text style={styles.businesssubtitle}>{name}</Text>
+        <Text style={styles.distancetext}>{`${distance.toString()}mi`}</Text>
+      </View>
+    </Pressable>
   );
 }
 
