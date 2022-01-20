@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -11,17 +8,80 @@ import {
   RootStackParamList,
   RootTabBarParamList,
   TabBarScreenOptions,
-  AppProps,
   LoginProps,
   HomeProps,
-  ExploreProps,
-  CollectionsProps,
 } from "./route-settings";
-import ProfilePage from "./components/Profile";
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+// Placeholder components, replace with actual components as they are made
+function LoginPage({ navigation }: LoginProps) {
+  return (
+    <View style={styles.container}>
+      <Text>Login Screen</Text>
+      <StatusBar />
+      <Button title="Login" onPress={() => navigation.navigate("App")} />
+    </View>
+  );
+}
+
+function HomePage({ navigation }: HomeProps) {
+  return (
+    <View style={styles.container}>
+      <Text>Home Screen</Text>
+      <StatusBar />
+      <Button
+        title="Go to Explore"
+        onPress={() => navigation.navigate("Explore")}
+      />
+    </View>
+  );
+}
+
+function ExplorePage() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Explore Screen</Text>
+    </View>
+  );
+}
+
+function CollectionsPage() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Collections Screen</Text>
+    </View>
+  );
+}
+
+function ProfilePage() {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Profile Screen</Text>
+    </View>
+  );
+}
+
+function AuthenticatedApp() {
+  return (
+    <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
+      <Tab.Screen name="Home" component={HomePage} />
+      <Tab.Screen name="Explore" component={ExplorePage} />
+      <Tab.Screen name="Collections" component={CollectionsPage} />
+      <Tab.Screen name="Profile" component={ProfilePage} />
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -36,60 +96,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-function AuthenticatedApp({ route, navigation }: AppProps) {
-  return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Explore" component={ExplorePage} />
-      <Tab.Screen name="Collections" component={CollectionsPage} />
-      <Tab.Screen name="Profile" component={ProfilePage} />
-    </Tab.Navigator>
-  );
-}
-
-// Placeholder components, replace with actual components as they are made
-function LoginPage({ route, navigation }: LoginProps) {
-  return (
-    <View style={styles.container}>
-      <Text>Login Screen</Text>
-      <Button title="Login" onPress={() => navigation.navigate("App")} />
-    </View>
-  );
-}
-
-function HomePage({ route, navigation }: HomeProps) {
-  return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Explore"
-        onPress={() => navigation.navigate("Explore")}
-      />
-    </View>
-  );
-}
-
-function ExplorePage({ route, navigation }: ExploreProps) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Explore Screen</Text>
-    </View>
-  );
-}
-
-function CollectionsPage({ route, navigation }: CollectionsProps) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Collections Screen</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

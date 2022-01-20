@@ -11,10 +11,8 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
-  ImageBackground,
-  Button,
+  ImageBackground
 } from "react-native";
-import { Rating } from 'react-native-ratings';
 import { ProfileProps } from "../route-settings";
 
 const profileData = {

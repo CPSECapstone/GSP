@@ -1,0 +1,4 @@
+node_modules/**
+.expo/**
+**/*.json
+babel.config.js
