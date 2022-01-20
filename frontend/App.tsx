@@ -15,6 +15,7 @@ import {
 } from "./route-settings";
 import AccountType from "./Login/AccountType";
 import SignUp from "./Login/SignUp";
+import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
@@ -73,14 +74,6 @@ function CollectionsPage() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Collections Screen</Text>
-    </View>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Profile Screen</Text>
     </View>
   );
 }
