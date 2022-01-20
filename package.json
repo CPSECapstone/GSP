@@ -13,6 +13,7 @@
     "lint": "eslint . --fix && prettier . --write"
   },
   "dependencies": {
+    "@aws-amplify/datastore": "^3.7.4",
     "@expo-google-fonts/mada": "^0.2.0",
     "@expo/vector-icons": "^12.0.5",
     "@react-navigation/bottom-tabs": "^6.0.9",

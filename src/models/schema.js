@@ -72,8 +72,6 @@ export const schema = {
                                 "allow": "public",
                                 "operations": [
                                     "create",
-                                    "update",
-                                    "delete",
                                     "read"
                                 ]
                             },
@@ -237,8 +235,6 @@ export const schema = {
                                 "allow": "public",
                                 "operations": [
                                     "create",
-                                    "update",
-                                    "delete",
                                     "read"
                                 ]
                             },
@@ -332,15 +328,6 @@ export const schema = {
                     "type": "auth",
                     "properties": {
                         "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
                             {
                                 "provider": "userPools",
                                 "ownerField": "owner",
