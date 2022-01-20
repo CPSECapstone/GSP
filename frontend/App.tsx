@@ -20,6 +20,7 @@ const fonts = {
   "Mada-Regular": require("./assets/fonts/Mada/Mada-Regular.ttf"),
   "Mada-SemiBold": require("./assets/fonts/Mada/Mada-SemiBold.ttf"),
   "Mada-Bold": require("./assets/fonts/Mada/Mada-Bold.ttf"),
+  "Mada-Medium": require("./assets/fonts/Mada/Mada-Medium.ttf"),
 };
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();

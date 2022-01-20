@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, Text, FlatList, Pressable } from "react-native";
+import { ExploreProps } from "../../route-settings";
 import ForYouCell from "./ForYouCell";
 
 const styles = StyleSheet.create({
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Explore() {
+function Explore({ navigation }: ExploreProps) {
   const placeholderData = [
     {
       name: "Taqueria Santa Cruz",
@@ -49,7 +50,12 @@ function Explore() {
       <Text style={styles.foryouheader}>For You</Text>
       <FlatList
         horizontal
-        style={{ width: "100%", paddingLeft: 50, overflow: "visible" }}
+        style={{
+          width: "100%",
+          paddingLeft: 50,
+          overflow: "visible",
+          height: "auto",
+        }}
         renderItem={({ item }) => (
           <ForYouCell
             name={item.name}

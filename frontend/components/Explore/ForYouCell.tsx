@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.27,
+    shadowOpacity: 0.05,
     shadowRadius: 4.65,
-    elevation: 6,
+    elevation: 5,
   },
 });
 
@@ -54,7 +54,7 @@ function ForYouCell(props: ForYouParameters) {
   const { name, businessId, distance } = props;
 
   return (
-    <View style={styles.foryoucellcontainer}>
+    <View style={[styles.foryoucellcontainer, styles.shadow]}>
       <Image style={styles.businessimage} source={placeHolderImage} />
       <Text style={styles.businesssubtitle}>{name}</Text>
       <Text style={styles.distancetext}>{`${distance.toString()}mi`}</Text>
