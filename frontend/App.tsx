@@ -17,7 +17,7 @@ import {
   ExploreProps,
   CollectionsProps,
 } from "./route-settings";
-import ProfilePage from "./components/Profile2";
+import ProfilePage from "./components/Profile";
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
