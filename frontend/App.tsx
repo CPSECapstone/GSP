@@ -11,6 +11,7 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
+import ProfilePage from "./components/Profile";
 
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -60,14 +61,6 @@ function CollectionsPage() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Collections Screen</Text>
-    </View>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Profile Screen</Text>
     </View>
   );
 }
