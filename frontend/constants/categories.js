@@ -1,0 +1,3 @@
+const restaurants = {
+  title: "Food",
+};
