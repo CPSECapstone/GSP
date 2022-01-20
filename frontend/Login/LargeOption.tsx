@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    boxShadow: "5px 5px 15px 2px rgba(161,161,161,0.39)",
   },
   label: {
     fontSize: 22,
