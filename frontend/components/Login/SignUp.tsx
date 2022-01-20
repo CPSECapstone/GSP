@@ -3,8 +3,8 @@ import { View, StyleSheet, Button, Text } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import CleanInput from "./CleanInput";
-import Header from "../components/Header";
-import { RootStackParamList } from "../route-settings";
+import Header from "../Header";
+import { RootStackParamList } from "../../route-settings";
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -1,5 +1,4 @@
-import {Text, Image, TextInput, StyleSheet} from "react-native";
-import {View} from "react-native";
+import { Text, Image, TextInput, StyleSheet, View } from "react-native";
 
 import LargeButton from "../Misc/LargeButton";
 
@@ -8,6 +7,11 @@ function createAccount() {
 }
 
 const styles = StyleSheet.create({
+   container: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+    },
    login: {
       fontSize: 30,
       textAlign: 'left',
@@ -52,17 +56,16 @@ const styles = StyleSheet.create({
    }
 });
 
-function Login(props) {
+function Login({ navigation }) {
 
    function handleChange() {
       // code to handle change in email and password
    }
    return (
-      <View className="Login">
-            <Text style={styles.login}>Log In</Text>
+      <View className="Login" style={styles.container}>
 
 
-            <Image source={require('../assets/default-avatar.jpeg')}
+            <Image source={require('../../assets/default-avatar.jpeg')}
                style={styles.account}
             ></Image>
 
@@ -79,7 +82,7 @@ function Login(props) {
             />
          
          <Text style={{color: 'rgb(250, 74, 12)', paddingBottom: 20, textAlign: 'right', fontWeight: 'bold'}}>Forgot Password?</Text>
-         <LargeButton label="login" style={styles.loginButton}></LargeButton>
+         <LargeButton onPress={() => navigation.navigate("App")} label="login" style={styles.loginButton}></LargeButton>
 
          <Text 
          style={{marginTop: 20, alignSelf: 'center'}}>Don't have an Account? <Text onClick={createAccount} style={{color: 'rgb(250, 74, 12)', textDecorationLine: 'underline'}}>Sign Up</Text></Text>

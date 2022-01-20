@@ -21,7 +21,7 @@ function LargeButton(props) {
 
    return (
       <Pressable style = {LoginButtonStyle.LargeButton}
-       onPress={()=>{console.log("pressed")}}>
+       onPress={()=> props.onPress()}>
           <Text style={LoginButtonStyle.text}>{props.label}</Text>
        </Pressable>
 

@@ -13,8 +13,9 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
-import AccountType from "./Login/AccountType";
-import SignUp from "./Login/SignUp";
+import AccountType from "./components/Login/AccountType";
+import SignUp from "./components/Login/SignUp";
+import Login from "./components/Login/Login";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
@@ -106,7 +107,7 @@ export default function App() {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
