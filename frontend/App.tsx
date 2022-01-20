@@ -13,15 +13,23 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
+import AccountType from "./Login/AccountType";
+import SignUp from "./Login/SignUp";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
+const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
+const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
+const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
+const madaBold = require("./assets/fonts/Mada/Mada-Bold.ttf");
+const madaMedium = require("./assets/fonts/Mada/Mada-Medium.ttf");
+
 const fonts = {
-  "Mada-Black": require("./assets/fonts/Mada/Mada-Black.ttf"),
-  "Mada-Regular": require("./assets/fonts/Mada/Mada-Regular.ttf"),
-  "Mada-SemiBold": require("./assets/fonts/Mada/Mada-SemiBold.ttf"),
-  "Mada-Bold": require("./assets/fonts/Mada/Mada-Bold.ttf"),
-  "Mada-Medium": require("./assets/fonts/Mada/Mada-Medium.ttf"),
+  "Mada-Black": madaBalck,
+  "Mada-Regular": madaRegular,
+  "Mada-SemiBold": madaSemiBold,
+  "Mada-Bold": madaBold,
+  "Mada-Medium": madaMedium,
 };
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -39,9 +47,12 @@ const styles = StyleSheet.create({
 function LoginPage({ navigation }: LoginProps) {
   return (
     <View style={styles.container}>
-      <Text>Login Screen</Text>
       <StatusBar />
       <Button title="Login" onPress={() => navigation.navigate("App")} />
+      <Button
+        title="Create Account"
+        onPress={() => navigation.navigate("ChooseAccountType")}
+      />
     </View>
   );
 }
@@ -96,6 +107,8 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="ChooseAccountType" component={AccountType} />
+          <Stack.Screen name="CreateAccount" component={SignUp} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
         </Stack.Navigator>
       </NavigationContainer>

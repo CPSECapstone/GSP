@@ -7,7 +7,6 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { ExploreProps } from "../../route-settings";
 import ExploreCategoryCell from "./ExploreCategoryCell";
 import ForYouCell from "./ForYouCell";
 
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Explore({ navigation }: ExploreProps) {
+function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
 
   const changeSelectedCategory = (index: number) => {

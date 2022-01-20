@@ -11,9 +11,8 @@ import {
   Image,
   TouchableOpacity,
   Pressable,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
-import { ProfileProps } from "../route-settings";
 
 const profileData = {
   name: "Milk In It",
@@ -37,14 +36,22 @@ const profileData = {
   },
   aboutUs:
     "Tea house serving milk tea, boba and more. We use authentic recipes for our tapioca and import the highest quality black, oolong, and green teas. We are a small, locally-owned business with a small team dedicated to making you awesome drinks to brighten your day",
-    email: "contact",
+  email: "contact",
 };
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
 }
 
-function CircleButton({ icon, title, action }: { icon: any; title: string, action: Function }) {
+function CircleButton({
+  icon,
+  title,
+  action,
+}: {
+  icon: any;
+  title: string;
+  action: Function;
+}) {
   return (
     <View style={styles.circleButtonContainer}>
       <TouchableOpacity onPress={() => action()} style={styles.circleButton}>
@@ -56,24 +63,40 @@ function CircleButton({ icon, title, action }: { icon: any; title: string, actio
 }
 
 function Line() {
-  return <View
-  style={{
-    borderBottomColor: "#D9D9D9",
-    borderBottomWidth: 1.5,
-    marginTop: 30,
-    marginBottom: 20,
-    marginRight: "-10%",
-    marginLeft: "-10%",
-  }}
-/>
+  return (
+    <View
+      style={{
+        borderBottomColor: "#D9D9D9",
+        borderBottomWidth: 1.5,
+        marginTop: 30,
+        marginBottom: 20,
+        marginRight: "-10%",
+        marginLeft: "-10%",
+      }}
+    />
+  );
 }
 
 function Star() {
-  return <Ionicons name="star" style={{marginRight: 2}} size={22} color="#DA5125" />
+  return (
+    <Ionicons
+      name="star"
+      style={{ marginRight: 2 }}
+      size={22}
+      color="#DA5125"
+    />
+  );
 }
 
 function StarOutline() {
-  return <Ionicons name="star-outline" style={{marginRight: 5}} size={22} color="#DA5125" />
+  return (
+    <Ionicons
+      name="star-outline"
+      style={{ marginRight: 5 }}
+      size={22}
+      color="#DA5125"
+    />
+  );
 }
 
 function Tags() {
@@ -88,7 +111,7 @@ function call(phoneNumber: string) {
   Linking.openURL(`tel:${phoneNumber}`);
 }
 
-const openUrl = async(link: string) => {
+const openUrl = async (link: string) => {
   try {
     const supported = await Linking.canOpenURL(link);
 
@@ -96,17 +119,17 @@ const openUrl = async(link: string) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-const openMap = async (address : string, city : string, zipCode: string) => {
-  const destination = encodeURIComponent(`${address} ${zipCode}, ${city}`);  
-  const provider = Platform.OS === 'ios' ? 'apple' : 'google'
+const openMap = async (address: string, city: string, zipCode: string) => {
+  const destination = encodeURIComponent(`${address} ${zipCode}, ${city}`);
+  const provider = Platform.OS === "ios" ? "apple" : "google";
   const link = `http://maps.${provider}.com/?daddr=${destination}`;
 
   openUrl(link);
-}
+};
 
-export default function ProfilePage({ route, navigation }: ProfileProps) {
+export default function ProfilePage() {
   return (
     <View>
       <ImageBackground
@@ -140,30 +163,59 @@ export default function ProfilePage({ route, navigation }: ProfileProps) {
                 action={() => call(profileData.phone)}
               />
               <Margin />
-              <CircleButton icon="map" title="Map" action={() => openMap(profileData.address, profileData.city, profileData.zipCode)}/>
+              <CircleButton
+                icon="map"
+                title="Map"
+                action={() =>
+                  openMap(
+                    profileData.address,
+                    profileData.city,
+                    profileData.zipCode
+                  )
+                }
+              />
               <Margin />
-              <CircleButton icon="restaurant" title="Menu" action={() => openUrl(profileData.menu)}/>
+              <CircleButton
+                icon="restaurant"
+                title="Menu"
+                action={() => openUrl(profileData.menu)}
+              />
               <Margin />
-              <CircleButton icon="open" title="Site" action={() => openUrl(profileData.website)}/>
+              <CircleButton
+                icon="open"
+                title="Site"
+                action={() => openUrl(profileData.website)}
+              />
             </View>
 
             <Line />
-            
+
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Star />
               <Star />
               <Star />
               <Star />
               <StarOutline />
-              <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>  •  4.3 Stars  •  62 Reviews</Text>
+              <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+                {" "}
+                • 4.3 Stars • 62 Reviews
+              </Text>
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Pressable style={[styles.ratingButton, {marginRight: 10}]}>
-                <Text style={{color: "white", fontWeight: "bold", fontSize: 16}}>Write a Review</Text>
+              <Pressable style={[styles.ratingButton, { marginRight: 10 }]}>
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
+                >
+                  Write a Review
+                </Text>
               </Pressable>
-              <Pressable style={[styles.ratingButton, {marginLeft: 10}]}>
-                <Text style={{color: "white", fontWeight: "bold", fontSize: 16}}>See All Reviews</Text>
+              <Pressable style={[styles.ratingButton, { marginLeft: 10 }]}>
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
+                >
+                  See All Reviews
+                </Text>
               </Pressable>
             </View>
 
@@ -302,5 +354,5 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
 });
