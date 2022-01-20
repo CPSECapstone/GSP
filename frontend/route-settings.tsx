@@ -1,30 +1,34 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Ionicons from '@expo/vector-icons/Ionicons';
+/* eslint-disable prettier/prettier */
+
+import React from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 // https://reactnavigation.org/docs/typescript/
 // Maps route names to params of a route
 // https://reactnavigation.org/docs/params
 
 export type RootStackParamList = {
-    Login: undefined;
-    App: undefined;
+  Login: undefined;
+  App: undefined;
 };
 
-export type LoginProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
-export type AppProps = NativeStackScreenProps<RootStackParamList, 'App'>;
+export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
+export type AppProps = NativeStackScreenProps<RootStackParamList, "App">;
 
 export type RootTabBarParamList = {
-    Home: undefined;
-    Explore: undefined;
-    Collections: undefined;
-    Profile: undefined;
-    Feed: { sort: 'latest' | 'top' } | undefined;
+  Home: undefined;
+  Explore: undefined;
+  Collections: undefined;
+  Profile: undefined;
+  Feed: { sort: "latest" | "top" } | undefined;
 };
 
-export type HomeProps = NativeStackScreenProps<RootTabBarParamList, 'Home'>;
-export type ExploreProps = NativeStackScreenProps<RootTabBarParamList, 'Explore'>;
-export type CollectionsProps = NativeStackScreenProps<RootTabBarParamList, 'Collections'>;
-export type ProfileProps = NativeStackScreenProps<RootTabBarParamList, 'Profile'>;
+export type HomeProps = NativeStackScreenProps<RootTabBarParamList, "Home">;
+export type ExploreProps = NativeStackScreenProps<RootTabBarParamList, "Explore">;
+export type CollectionsProps = NativeStackScreenProps<RootTabBarParamList, "Collections">;
+export type ProfileProps = NativeStackScreenProps<RootTabBarParamList, "Profile">;
+
 
 export const TabBarScreenOptions = ({ route } : any) => ({
     tabBarShowLabel: false,
