@@ -1,7 +1,7 @@
 import {Text, Image, TextInput, StyleSheet} from "react-native";
 import {View} from "react-native";
 
-import LargeButton from "../components/LargeButton";
+import LargeButton from "../Misc/LargeButton";
 
 function createAccount() {
    console.log("creating account");
