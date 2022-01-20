@@ -1,0 +1,19 @@
+{
+    "AppSyncApiName": "minoritymarket",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authmmAuth",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "S3DeploymentBucket": "amplify-minoritymarket-staging-24817-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/312ba605532ae9f8a3f71ee3aa3113204d6e88de"
+}
