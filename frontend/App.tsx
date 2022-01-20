@@ -13,6 +13,7 @@ import {
   LoginProps,
   HomeProps,
 } from "./route-settings";
+import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
 const fonts = {
@@ -62,14 +63,6 @@ function CollectionsPage() {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Collections Screen</Text>
-    </View>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Profile Screen</Text>
     </View>
   );
 }
