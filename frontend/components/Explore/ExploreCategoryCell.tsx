@@ -38,7 +38,11 @@ function ExploreCategoryCell(props: CategoryCellProps) {
   const { title } = props;
 
   return (
-    <Pressable onPress={() => {console.log(title)}}>
+    <Pressable
+      onPress={() => {
+        console.log(title);
+      }}
+    >
       <View style={[styles.container, styles.shadow]}>
         <Text style={styles.title}>{title}</Text>
       </View>

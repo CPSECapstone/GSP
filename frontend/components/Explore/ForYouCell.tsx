@@ -54,7 +54,13 @@ function ForYouCell(props: ForYouParameters) {
   const { name, businessId, distance } = props;
 
   return (
-    <Pressable onPress={() => { console.log("navigate to business page for: '" + name + "' with ID: " + businessId)}}>
+    <Pressable
+      onPress={() => {
+        console.log(
+          `navigate to business page for: '${name}' with ID: ${businessId}`
+        );
+      }}
+    >
       <View style={[styles.foryoucellcontainer, styles.shadow]}>
         <Image style={styles.businessimage} source={placeHolderImage} />
         <Text style={styles.businesssubtitle}>{name}</Text>
