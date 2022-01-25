@@ -56,6 +56,6 @@
   },
   "private": true,
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.js": "prettier --write"
   }
 }
