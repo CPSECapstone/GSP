@@ -109,7 +109,8 @@ export default function App() {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="ForgotPass" component={ForgotPass} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
