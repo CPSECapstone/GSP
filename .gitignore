@@ -32,4 +32,5 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
+.DS_Store
 #amplify-do-not-edit-end

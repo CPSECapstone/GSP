@@ -18,6 +18,9 @@ import SignUp from "./components/Login/SignUp";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 
+import Login from "./components/Login";
+import ForgotPass from "./components/ForgotPass";
+
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
 const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
@@ -106,7 +109,8 @@ export default function App() {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Login" component={LoginPage} />
+          <Stack.Screen name="ForgotPass" component={ForgotPass} />
+          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
