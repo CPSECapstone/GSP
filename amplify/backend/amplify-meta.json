@@ -1,0 +1,180 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-minoritymarket-staging-24817-authRole",
+      "UnauthRoleArn": "arn:aws:iam::476906480570:role/amplify-minoritymarket-staging-24817-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::476906480570:role/amplify-minoritymarket-staging-24817-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-minoritymarket-staging-24817-deployment",
+      "UnauthRoleName": "amplify-minoritymarket-staging-24817-unauthRole",
+      "StackName": "amplify-minoritymarket-staging-24817",
+      "StackId": "arn:aws:cloudformation:us-west-1:476906480570:stack/amplify-minoritymarket-staging-24817/1a27e090-6e9b-11ec-8257-02c4e4ab736d",
+      "AmplifyAppId": "d9y26qlr4tnmk"
+    }
+  },
+  "function": {
+    "AdminQueries8b479e72": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "mmAuth",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
+      "output": {
+        "Region": "us-west-1",
+        "Arn": "arn:aws:lambda:us-west-1:476906480570:function:AdminQueries8b479e72-staging",
+        "Name": "AdminQueries8b479e72-staging",
+        "LambdaExecutionRole": "AdminQueries8b479e72LambdaRole-staging"
+      },
+      "lastPushTimeStamp": "2022-01-20T21:48:16.137Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/function/AdminQueries8b479e72-cloudformation-template.json",
+        "logicalId": "functionAdminQueries8b479e72"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-minoritymarket-staging-24817-deployment",
+        "s3Key": "amplify-builds/AdminQueries8b479e72-4b725263664659382b7a-build.zip"
+      }
+    }
+  },
+  "api": {
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "mmAuth",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueries8b479e72",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "output": {
+        "ApiName": "AdminQueries",
+        "RootUrl": "https://n13ymupj66.execute-api.us-west-1.amazonaws.com/staging",
+        "ApiId": "n13ymupj66"
+      },
+      "lastPushTimeStamp": "2022-01-20T21:48:16.139Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
+        "logicalId": "apiAdminQueries"
+      }
+    },
+    "minoritymarket": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            },
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authmmAuth"
+              }
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "asqxjyka5nhalmrhx2rrjtvi44",
+        "GraphQLAPIEndpointOutput": "https://vvvdngqynza63kkt2e6ww4cqhe.appsync-api.us-west-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-jvfnatbwoffs3aft66hwkdr4oy"
+      },
+      "lastPushTimeStamp": "2022-01-20T21:48:16.142Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiminoritymarket"
+      },
+      "lastPushDirHash": "l83q2BopRgc6ANGw/gZwUgH5AJc="
+    }
+  },
+  "auth": {
+    "mmAuth": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL",
+          "NAME"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OPTIONAL",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "CreatedSNSRole": "arn:aws:iam::476906480570:role/snsa0bad98b24817-staging",
+        "UserPoolId": "us-west-1_cfBkptwe6",
+        "AppClientIDWeb": "4ogo2qljebd015m0k3kogfh8o1",
+        "AppClientID": "5lfl7eadonpkg6sv11u36j6vit",
+        "IdentityPoolId": "us-west-1:780ca1c1-084b-489b-8759-83376c256840",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-1:476906480570:userpool/us-west-1_cfBkptwe6",
+        "IdentityPoolName": "mmIdentity__staging",
+        "UserPoolName": "mmUserPool"
+      },
+      "lastPushTimeStamp": "2022-01-20T21:48:16.145Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/auth/mmAuth-cloudformation-template.json",
+        "logicalId": "authmmAuth"
+      }
+    }
+  },
+  "geo": {
+    "SearchMap": {
+      "isDefault": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Map",
+      "mapStyle": "VectorEsriStreets",
+      "pricingPlan": "RequestBasedUsage",
+      "accessType": "AuthorizedUsers",
+      "output": {
+        "Style": "VectorEsriStreets",
+        "Region": "us-west-2",
+        "Arn": "arn:aws:geo:us-west-2:476906480570:map/SearchMap-staging",
+        "Name": "SearchMap-staging"
+      },
+      "lastPushTimeStamp": "2022-01-20T21:48:16.147Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/geo/SearchMap-cloudformation-template.json",
+        "logicalId": "geoSearchMap"
+      }
+    }
+  }
+}

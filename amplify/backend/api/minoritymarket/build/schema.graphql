@@ -1,0 +1,347 @@
+
+type Review @aws_iam @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  rating: Int
+  comments: String
+  businessID: ID
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
+  id: ID!
+  name: String!
+  about: String
+  phone: AWSPhone
+  address: String
+  url: AWSURL
+  tags: [String]
+  type: String
+  primarycolor: String
+  secondarycolor: String
+  rating: Float
+  Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
+  collectionID: ID
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+type Collection @aws_iam @aws_cognito_user_pools {
+  id: ID!
+  title: String!
+  description: String
+  color: String
+  Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  _version: Int!
+  _deleted: Boolean
+  _lastChangedAt: AWSTimestamp!
+  owner: String
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Review]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelReviewFilterInput {
+  id: ModelIDInput
+  rating: ModelIntInput
+  comments: ModelStringInput
+  businessID: ModelIDInput
+  and: [ModelReviewFilterInput]
+  or: [ModelReviewFilterInput]
+  not: ModelReviewFilterInput
+}
+
+type Query {
+  getReview(id: ID!): Review @aws_api_key @aws_iam @aws_cognito_user_pools
+  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  syncReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getBusiness(id: ID!): Business @aws_api_key @aws_iam @aws_cognito_user_pools
+  listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  syncBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools
+  getCollection(id: ID!): Collection @aws_iam @aws_cognito_user_pools
+  listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_iam @aws_cognito_user_pools
+  syncCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCollectionConnection @aws_iam @aws_cognito_user_pools
+}
+
+input ModelReviewConditionInput {
+  rating: ModelIntInput
+  comments: ModelStringInput
+  businessID: ModelIDInput
+  and: [ModelReviewConditionInput]
+  or: [ModelReviewConditionInput]
+  not: ModelReviewConditionInput
+}
+
+input CreateReviewInput {
+  id: ID
+  rating: Int
+  comments: String
+  businessID: ID
+  _version: Int
+}
+
+input UpdateReviewInput {
+  id: ID!
+  rating: Int
+  comments: String
+  businessID: ID
+  _version: Int
+}
+
+input DeleteReviewInput {
+  id: ID!
+  _version: Int
+}
+
+type Mutation {
+  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review @aws_iam @aws_cognito_user_pools
+  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review @aws_iam @aws_cognito_user_pools
+  createBusiness(input: CreateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam @aws_cognito_user_pools
+  updateBusiness(input: UpdateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_iam @aws_cognito_user_pools
+  deleteBusiness(input: DeleteBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_iam @aws_cognito_user_pools
+  createCollection(input: CreateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
+  updateCollection(input: UpdateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
+  deleteCollection(input: DeleteCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
+}
+
+type Subscription {
+  onCreateReview(owner: String): Review @aws_subscribe(mutations: ["createReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateReview(owner: String): Review @aws_subscribe(mutations: ["updateReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteReview(owner: String): Review @aws_subscribe(mutations: ["deleteReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateBusiness(owner: String): Business @aws_subscribe(mutations: ["createBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onUpdateBusiness(owner: String): Business @aws_subscribe(mutations: ["updateBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onDeleteBusiness(owner: String): Business @aws_subscribe(mutations: ["deleteBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
+  onCreateCollection(owner: String): Collection @aws_subscribe(mutations: ["createCollection"]) @aws_iam @aws_cognito_user_pools
+  onUpdateCollection(owner: String): Collection @aws_subscribe(mutations: ["updateCollection"]) @aws_iam @aws_cognito_user_pools
+  onDeleteCollection(owner: String): Collection @aws_subscribe(mutations: ["deleteCollection"]) @aws_iam @aws_cognito_user_pools
+}
+
+type ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+  items: [Business]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelBusinessFilterInput {
+  id: ModelIDInput
+  name: ModelStringInput
+  about: ModelStringInput
+  phone: ModelStringInput
+  address: ModelStringInput
+  url: ModelStringInput
+  tags: ModelStringInput
+  type: ModelStringInput
+  primarycolor: ModelStringInput
+  secondarycolor: ModelStringInput
+  rating: ModelFloatInput
+  collectionID: ModelIDInput
+  and: [ModelBusinessFilterInput]
+  or: [ModelBusinessFilterInput]
+  not: ModelBusinessFilterInput
+}
+
+input ModelBusinessConditionInput {
+  name: ModelStringInput
+  about: ModelStringInput
+  phone: ModelStringInput
+  address: ModelStringInput
+  url: ModelStringInput
+  tags: ModelStringInput
+  type: ModelStringInput
+  primarycolor: ModelStringInput
+  secondarycolor: ModelStringInput
+  rating: ModelFloatInput
+  collectionID: ModelIDInput
+  and: [ModelBusinessConditionInput]
+  or: [ModelBusinessConditionInput]
+  not: ModelBusinessConditionInput
+}
+
+input CreateBusinessInput {
+  id: ID
+  name: String!
+  about: String
+  phone: AWSPhone
+  address: String
+  url: AWSURL
+  tags: [String]
+  type: String
+  primarycolor: String
+  secondarycolor: String
+  rating: Float
+  collectionID: ID
+  _version: Int
+}
+
+input UpdateBusinessInput {
+  id: ID!
+  name: String
+  about: String
+  phone: AWSPhone
+  address: String
+  url: AWSURL
+  tags: [String]
+  type: String
+  primarycolor: String
+  secondarycolor: String
+  rating: Float
+  collectionID: ID
+  _version: Int
+}
+
+input DeleteBusinessInput {
+  id: ID!
+  _version: Int
+}
+
+type ModelCollectionConnection @aws_iam @aws_cognito_user_pools {
+  items: [Collection]!
+  nextToken: String
+  startedAt: AWSTimestamp
+}
+
+input ModelCollectionFilterInput {
+  id: ModelIDInput
+  title: ModelStringInput
+  description: ModelStringInput
+  color: ModelStringInput
+  and: [ModelCollectionFilterInput]
+  or: [ModelCollectionFilterInput]
+  not: ModelCollectionFilterInput
+}
+
+input ModelCollectionConditionInput {
+  title: ModelStringInput
+  description: ModelStringInput
+  color: ModelStringInput
+  and: [ModelCollectionConditionInput]
+  or: [ModelCollectionConditionInput]
+  not: ModelCollectionConditionInput
+}
+
+input CreateCollectionInput {
+  id: ID
+  title: String!
+  description: String
+  color: String
+  _version: Int
+}
+
+input UpdateCollectionInput {
+  id: ID!
+  title: String
+  description: String
+  color: String
+  _version: Int
+}
+
+input DeleteCollectionInput {
+  id: ID!
+  _version: Int
+}
+
