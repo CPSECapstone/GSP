@@ -9,7 +9,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint . --fix && prettier . --write",
+    "lint": "eslint . && prettier . --check",
+    "lint-fix": "eslint . --fix && prettier . --write",
     "prepare": "husky install"
   },
   "dependencies": {
