@@ -8,8 +8,8 @@
   "javascript": {
     "framework": "react-native",
     "config": {
-      "SourceDir": "./",
-      "DistributionDir": "./",
+      "SourceDir": "src",
+      "DistributionDir": "/",
       "BuildCommand": "npm run-script build",
       "StartCommand": "npm run-script start"
     }

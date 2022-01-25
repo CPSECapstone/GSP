@@ -5,7 +5,8 @@ const LoginButtonStyle = StyleSheet.create({
       height: 70,
       width: 314,
       backgroundColor: 'rgb(250, 74, 12)',
-      borderRadius: 50
+      borderRadius: 50,
+      alignSelf: 'center'
 
    },
    text: {
@@ -21,7 +22,7 @@ function LargeButton(props) {
 
    return (
       <Pressable style = {LoginButtonStyle.LargeButton}
-       onPress={()=>{console.log("pressed")}}>
+       onPress={props.function}>
           <Text style={LoginButtonStyle.text}>{props.label}</Text>
        </Pressable>
 
