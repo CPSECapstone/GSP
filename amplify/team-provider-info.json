@@ -12,14 +12,14 @@
       "AmplifyAppId": "d9y26qlr4tnmk"
     },
     "categories": {
+      "auth": {
+        "mmAuth": {}
+      },
       "function": {
         "AdminQueries8b479e72": {
           "deploymentBucketName": "amplify-minoritymarket-staging-24817-deployment",
           "s3Key": "amplify-builds/AdminQueries8b479e72-4b725263664659382b7a-build.zip"
         }
-      },
-      "auth": {
-        "mmAuth": {}
       }
     }
   }

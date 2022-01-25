@@ -1,0 +1,32 @@
+## [Start] Authorization Steps. **
+$util.qr($ctx.stash.put("hasAuth", true))
+#set( $isAuthorized = false )
+#if( $util.authType() == "API Key Authorization" )
+  #set( $isAuthorized = true )
+#end
+#if( $util.authType() == "IAM Authorization" )
+  #set( $adminRoles = ["us-west-1_syKtAAi8e_Full-access/CognitoIdentityCredentials","us-west-1_syKtAAi8e_Manage-only/CognitoIdentityCredentials"] )
+  #foreach( $adminRole in $adminRoles )
+    #if( $ctx.identity.userArn.contains($adminRole) && $ctx.identity.userArn != $ctx.stash.authRole && $ctx.identity.userArn != $ctx.stash.unauthRole )
+      #return($util.toJson({}))
+    #end
+  #end
+$util.unauthorized()
+#end
+#if( $util.authType() == "User Pool Authorization" )
+  #if( !$isAuthorized )
+    #set( $authFilter = [] )
+    #set( $role0 = $util.defaultIfNull($ctx.identity.claims.get("username"), $util.defaultIfNull($ctx.identity.claims.get("cognito:username"), "___xamznone____")) )
+    #if( $role0 != "___xamznone____" )
+      $util.qr($authFilter.add({"owner": { "eq": $role0 }}))
+    #end
+    #if( !$authFilter.isEmpty() )
+      $util.qr($ctx.stash.put("authFilter", { "or": $authFilter }))
+    #end
+  #end
+#end
+#if( !$isAuthorized && $util.isNull($ctx.stash.authFilter) )
+$util.unauthorized()
+#end
+$util.toJson({"version":"2018-05-29","payload":{}})
+## [End] Authorization Steps. **
