@@ -54,7 +54,7 @@ function ForgotPass2({ navigation }: ForgotPass2Props) {
       </Text>
 
       <View style={{ paddingBottom: 20 }}>
-        <InverseLargeButton label="Resend Email" />
+        <InverseLargeButton label="Resend Email" action={() => {}} />
       </View>
       <LargeButton label="Done" action={() => navigation.navigate("Login")} />
     </View>

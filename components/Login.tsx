@@ -10,9 +10,7 @@ import {
 import { LoginProps } from "../route-settings";
 import LargeButton from "./LargeButton";
 
-function createAccount() {
-  console.log("creating account");
-}
+const avatarImg = require("../assets/default-avatar.jpeg");
 
 export const styles = StyleSheet.create({
   login: {
@@ -77,10 +75,7 @@ function Login({ navigation }: LoginProps) {
       <Text style={styles.login}>Log In</Text>
 
       <View style={styles.userInfo}>
-        <Image
-          source={require("../assets/default-avatar.jpeg")}
-          style={styles.account}
-        />
+        <Image source={avatarImg} style={styles.account} />
 
         <Text style={styles.emailText}>Email address</Text>
         <TextInput style={styles.email} placeholder="Enter your email" />
@@ -109,7 +104,7 @@ function Login({ navigation }: LoginProps) {
         <LargeButton label="Login" action={() => navigation.navigate("App")} />
 
         <Text style={{ marginTop: 20, alignSelf: "center" }}>
-          Don't have an Account?
+          Don&apos;t have an Account?
           <Pressable>
             <Text
               style={{

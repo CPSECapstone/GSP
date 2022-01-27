@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from "react-native";
+import React from "react";
 
 const LoginButtonStyle = StyleSheet.create({
   LargeButton: {
@@ -6,6 +7,7 @@ const LoginButtonStyle = StyleSheet.create({
     width: 314,
     backgroundColor: "rgb(250, 74, 12)",
     borderRadius: 50,
+    alignSelf: "center",
   },
   text: {
     fontSize: 30,
@@ -16,15 +18,15 @@ const LoginButtonStyle = StyleSheet.create({
   },
 });
 
-function LargeButton(props) {
+interface LargeButtonProps {
+  action: () => void;
+  label: String;
+}
+
+function LargeButton({ action, label }: LargeButtonProps) {
   return (
-    <Pressable
-      style={LoginButtonStyle.LargeButton}
-      onPress={() => {
-        console.log("pressed");
-      }}
-    >
-      <Text style={LoginButtonStyle.text}>{props.label}</Text>
+    <Pressable style={LoginButtonStyle.LargeButton} onPress={action}>
+      <Text style={LoginButtonStyle.text}>{label}</Text>
     </Pressable>
   );
 }

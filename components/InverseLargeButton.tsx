@@ -18,10 +18,15 @@ const LoginButtonStyle = StyleSheet.create({
   },
 });
 
-function InverseLargeButton(props) {
+interface InverseButtonProps {
+  action: () => void;
+  label: String;
+}
+
+function InverseLargeButton({ action, label }: InverseButtonProps) {
   return (
-    <Pressable style={LoginButtonStyle.LargeButton} onPress={props.action}>
-      <Text style={LoginButtonStyle.text}>{props.label}</Text>
+    <Pressable style={LoginButtonStyle.LargeButton} onPress={action}>
+      <Text style={LoginButtonStyle.text}>{label}</Text>
     </Pressable>
   );
 }
