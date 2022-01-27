@@ -1,4 +1,12 @@
-import { Text, Image, TextInput, StyleSheet, View } from "react-native";
+import React from "react";
+import {
+  Text,
+  Image,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  View,
+} from "react-native";
 import { LoginProps } from "../route-settings";
 import LargeButton from "./LargeButton";
 
@@ -6,11 +14,11 @@ function createAccount() {
   console.log("creating account");
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   login: {
     fontSize: 30,
     textAlign: "left",
-    marginTop: 40,
+    marginTop: 60,
     marginLeft: 10,
   },
 
@@ -55,53 +63,65 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#B1B1B3",
   },
+
+  userInfo: {
+    marginTop: 100,
+    marginLeft: 20,
+    marginRight: 20,
+  },
 });
 
 function Login({ navigation }: LoginProps) {
-  function handleChange() {
-    // code to handle change in email and password
-  }
   return (
     <View>
       <Text style={styles.login}>Log In</Text>
 
-      <Image
-        source={require("../assets/default-avatar.jpeg")}
-        style={styles.account}
-      />
+      <View style={styles.userInfo}>
+        <Image
+          source={require("../assets/default-avatar.jpeg")}
+          style={styles.account}
+        />
 
-      <Text style={styles.emailText}>Email address</Text>
-      <TextInput style={styles.email} placeholder="Enter your email" />
+        <Text style={styles.emailText}>Email address</Text>
+        <TextInput style={styles.email} placeholder="Enter your email" />
 
-      <Text style={styles.passwordText}>Password</Text>
-      <TextInput
-        secureTextEntry
-        style={styles.password}
-        placeholder="Enter your password"
-      />
+        <Text style={styles.passwordText}>Password</Text>
+        <TextInput
+          secureTextEntry
+          style={styles.password}
+          placeholder="Enter your password"
+        />
 
-      <Text
-        style={{
-          color: "rgb(250, 74, 12)",
-          paddingBottom: 20,
-          marginLeft: 20,
-          marginRight: 20,
-          textAlign: "right",
-          fontWeight: "bold",
-        }}
-      >
-        Forgot Password?
-      </Text>
-      <LargeButton label="Login" function={() => navigation.navigate("App")} />
+        <Pressable onPress={() => navigation.navigate("ForgotPass")}>
+          <Text
+            style={{
+              color: "rgb(250, 74, 12)",
+              paddingBottom: 20,
+              marginLeft: 20,
+              marginRight: 20,
+              textAlign: "right",
+              fontWeight: "bold",
+            }}
+          >
+            Forgot Password?
+          </Text>
+        </Pressable>
+        <LargeButton label="Login" action={() => navigation.navigate("App")} />
 
-      <Text style={{ marginTop: 20, alignSelf: "center" }}>
-        Don't have an Account?{" "}
-        <Text
-          style={{ color: "rgb(250, 74, 12)", textDecorationLine: "underline" }}
-        >
-          Sign Up
+        <Text style={{ marginTop: 20, alignSelf: "center" }}>
+          Don't have an Account?
+          <Pressable>
+            <Text
+              style={{
+                color: "rgb(250, 74, 12)",
+                textDecorationLine: "underline",
+              }}
+            >
+              Sign Up
+            </Text>
+          </Pressable>
         </Text>
-      </Text>
+      </View>
     </View>
   );
 }

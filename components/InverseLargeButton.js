@@ -5,20 +5,20 @@ const LoginButtonStyle = StyleSheet.create({
   LargeButton: {
     height: 70,
     width: 314,
-    backgroundColor: "rgb(250, 74, 12)",
+    backgroundColor: "white",
     borderRadius: 50,
     alignSelf: "center",
   },
   text: {
     fontSize: 30,
-    color: "white",
+    color: "rgb(250, 74, 12)",
     alignSelf: "center",
     fontWeight: "bold",
     paddingTop: 15,
   },
 });
 
-function LargeButton(props) {
+function InverseLargeButton(props) {
   return (
     <Pressable style={LoginButtonStyle.LargeButton} onPress={props.action}>
       <Text style={LoginButtonStyle.text}>{props.label}</Text>
@@ -26,4 +26,4 @@ function LargeButton(props) {
   );
 }
 
-export default LargeButton;
+export default InverseLargeButton;
