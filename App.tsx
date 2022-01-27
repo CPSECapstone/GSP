@@ -20,6 +20,7 @@ import Explore from "./components/Explore/Explore";
 
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
+import ForgotPass2 from "./components/ForgotPass2";
 
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -110,6 +111,7 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="ForgotPass" component={ForgotPass} />
+          <Stack.Screen name="ForgotPass2" component={ForgotPass2}/>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />

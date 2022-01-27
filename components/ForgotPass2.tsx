@@ -1,12 +1,12 @@
 import React from "react";
-import {View, Pressable, Text, TextInput, Image} from "react-native";
+import {View, Pressable, Text, TextInput, Image, StyleSheet} from "react-native";
 import LargeButton from "./LargeButton";
 import { ForgotPass2Props } from "../route-settings";
 import {styles} from "./Login";
 import InverseLargeButton from "./InverseLargeButton";
 
 
-const forgotPassStyle = {
+const forgotPassStyle = StyleSheet.create({
    container: {
       margin: 50,
       paddingTop: 10
@@ -31,7 +31,7 @@ const forgotPassStyle = {
       alignSelf: "center",
       marginBottom: 200
    }
-}
+});
 function ForgotPass2({ navigation }: ForgotPass2Props) {
    return (
       <View style={forgotPassStyle.container}>
@@ -43,9 +43,12 @@ function ForgotPass2({ navigation }: ForgotPass2Props) {
          </View>
 
          
-         <Text style={{marginTop: 20, marginBottom: 20, alignSelf: 'center', color: '#B1B1B3'}}>The link has been sent to your email.</Text>
-         <InverseLargeButton label="Resend Email"></InverseLargeButton>
-         <LargeButton label="Done"></LargeButton>
+         <Text style={{marginTop: 200, marginBottom: 20, alignSelf: 'center', color: '#B1B1B3'}}>The link has been sent to your email.</Text>
+
+         <View style={{paddingBottom: 20}}>
+            <InverseLargeButton label="Resend Email"></InverseLargeButton>
+         </View>
+         <LargeButton label="Done" function={() => navigation.navigate("Login")}></LargeButton>
 
          
       </View>

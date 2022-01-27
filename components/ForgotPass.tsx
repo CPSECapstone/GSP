@@ -1,11 +1,11 @@
 import React from "react";
-import {View, Pressable, Text, TextInput, Image} from "react-native";
+import {View, Pressable, Text, TextInput, Image, StyleSheet} from "react-native";
 import LargeButton from "./LargeButton";
 import { ForgotPassProps } from "../route-settings";
 import {styles} from "./Login";
 
 
-const forgotPassStyle = {
+const forgotPassStyle = StyleSheet.create({
    container: {
       margin: 50,
       paddingTop: 10
@@ -30,7 +30,7 @@ const forgotPassStyle = {
       alignSelf: "center",
       marginBottom: 200
    }
-}
+});
 function ForgotPass({ navigation }: ForgotPassProps) {
    return (
       <View style={forgotPassStyle.container}>
@@ -51,7 +51,7 @@ function ForgotPass({ navigation }: ForgotPassProps) {
                placeholder="Enter your email"/>
 
          <Text style={{marginTop: 20, marginBottom: 20, alignSelf: 'center', color: '#B1B1B3'}}>Enter your email and we will send you a link to reset your password</Text>
-         <LargeButton label="Reset Password"></LargeButton>
+         <LargeButton label="Reset Password" function={() => navigation.navigate("ForgotPass2")}></LargeButton>
 
          
       </View>
