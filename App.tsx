@@ -10,7 +10,6 @@ import {
   RootStackParamList,
   RootTabBarParamList,
   TabBarScreenOptions,
-  LoginProps,
   HomeProps,
 } from "./route-settings";
 import AccountType from "./components/Login/AccountType";
@@ -46,20 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-// Placeholder components, replace with actual components as they are made
-function LoginPage({ navigation }: LoginProps) {
-  return (
-    <View style={styles.container}>
-      <StatusBar />
-      <Button title="Login" onPress={() => navigation.navigate("App")} />
-      <Button
-        title="Create Account"
-        onPress={() => navigation.navigate("ChooseAccountType")}
-      />
-    </View>
-  );
-}
 
 function HomePage({ navigation }: HomeProps) {
   return (
@@ -111,7 +96,7 @@ export default function App() {
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="ForgotPass" component={ForgotPass} />
-          <Stack.Screen name="ForgotPass2" component={ForgotPass2}/>
+          <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
