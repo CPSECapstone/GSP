@@ -1,26 +1,38 @@
 export enum BusinessType {
-    Food = "Food",
-    Cosmetic = "Cosmetic",
-    Business = "Business",
-    Service = "Service",
+    FOOD = "Food",
+    COSMETIC = "Cosmetic",
+    BUSINESS = "Business",
+    SERVICE = "Service",
 };
 
 export enum FoodCategory {
-    Mexican = "Mexican",
-    Chinese = "Chinese",
-    Cuban = "Cuban",
-    Japanese = "Japanese",
-    Soul = "Soul Food",
-    Thai = "Thai"
+    MEXICAN = "Mexican",
+    CHINESE = "Chinese",
+    CUBAN = "Cuban",
+    JAPANESE = "Japanese",
+    SOUL = "Soul Food",
+    THAI = "Thai"
 };
 
 export enum CosmeticCategory {
-    Hair = "Hair",
-    Nails = "Nails",
-    Shave = "Shave",
-    Makeup = "Makeup"
+    HAIR = "Hair",
+    NAILS = "Nails",
+    SHAVE = "Shave",
+    MAKEUP = "Makeup"
 };
 
 export enum BusinessCategory {};
 
 export enum ServiceCategory {};
+
+export enum Ownership {
+    AFRICAN_AMERICAN = "African American",
+    ASIAN_AMERICAN = "Asian American",
+    LATINX = "Latinx",
+    MIDDLE_EASTERN = "Middle Eastern American",
+    NATIVE_AMERICAN = "Native American",
+    PACIFIC_ISLAND = "Pacific Islander",
+    ALASKA_NATIVES = "Alaska Native",
+    MUSLIM = "Muslim",
+    HALAL = "Halal",
+};

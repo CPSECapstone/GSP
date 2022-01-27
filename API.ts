@@ -1,5 +1,5 @@
 import { DataStore, SortDirection } from '@aws-amplify/datastore';
-import { BusinessType } from './constants/enums';
+import { BusinessType, Ownership } from './constants/enums';
 import { Business, Review, Collection } from './src/models';
 
 /**
@@ -62,3 +62,10 @@ export async function getForYouBussinesses() {
         limit: 20
     });
 };
+
+export async function getBusinessesByTypeAndOwnership(
+    type: BusinessType,
+    ownership: [Ownership],
+) {
+    const businesses = await DataStore.query(Business, b => b.type("eq", type));
+}
