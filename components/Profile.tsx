@@ -117,7 +117,7 @@ const openUrl = async (link: string) => {
 
     if (supported) Linking.openURL(link);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

@@ -19,8 +19,14 @@ export type RootStackParamList = {
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
 export type AppProps = NativeStackScreenProps<RootStackParamList, "App">;
-export type ForgotPassProps = NativeStackScreenProps<RootStackParamList, "ForgotPass">;
-export type ForgotPass2Props = NativeStackScreenProps<RootStackParamList, "ForgotPass2">;
+export type ForgotPassProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ForgotPass"
+>;
+export type ForgotPass2Props = NativeStackScreenProps<
+  RootStackParamList,
+  "ForgotPass2"
+>;
 
 export type RootTabBarParamList = {
   Home: undefined;
