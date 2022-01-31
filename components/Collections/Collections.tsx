@@ -74,10 +74,14 @@ const styles = StyleSheet.create({
         fontSize: 17,
       },
       modalinput: {
-        backgroundColor: "#EDEDED",
+        borderBottomColor: "#8b8b8b",
+        borderBottomWidth: 1,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
         padding: 5,
         borderRadius: 10,
         minWidth: 300,
+        marginBottom: 10,
       },
       emptytext: {
         fontFamily: "Mada-Medium",
