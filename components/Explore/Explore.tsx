@@ -9,8 +9,10 @@ import {
 } from "react-native";
 import ExploreCategoryCell from "./ExploreCategoryCell";
 import ForYouCell from "../Misc/BusinessCell";
-import { placeholderbusinesses, placeholdercategories } from "../../constants/placeholderdata";
-
+import {
+  placeholderbusinesses,
+  placeholdercategories,
+} from "../../constants/placeholderdata";
 
 const styles = StyleSheet.create({
   title: {

@@ -1,11 +1,3 @@
-const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
-const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
-const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
-const madaBold = require("./assets/fonts/Mada/Mada-Bold.ttf");
-const madaMedium = require("./assets/fonts/Mada/Mada-Medium.ttf");
-const poppinsRegular = require("./assets/fonts/Poppins/Poppins-Regular.ttf");
-const poppinsSemi = require("./assets/fonts/Poppins/Poppins-SemiBold.ttf");
-
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -14,12 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-import {
-  RootStackParamList,
-  RootTabBarParamList,
-  TabBarScreenOptions,
-  HomeProps,
-} from "./route-settings";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
 import ProfilePage from "./components/Profile";
@@ -29,7 +16,20 @@ import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
 import OpenCollection from "./components/Collections/OpenCollection";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  RootStackParamList,
+  RootTabBarParamList,
+  TabBarScreenOptions,
+  HomeProps,
+} from "./route-settings";
+
+const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
+const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
+const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
+const madaBold = require("./assets/fonts/Mada/Mada-Bold.ttf");
+const madaMedium = require("./assets/fonts/Mada/Mada-Medium.ttf");
+const poppinsRegular = require("./assets/fonts/Poppins/Poppins-Regular.ttf");
+const poppinsSemi = require("./assets/fonts/Poppins/Poppins-SemiBold.ttf");
 
 const fonts = {
   "Mada-Black": madaBalck,
@@ -65,14 +65,6 @@ function HomePage({ navigation }: HomeProps) {
   );
 }
 
-function CollectionsPage() {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Collections Screen</Text>
-    </View>
-  );
-}
-
 function AuthenticatedApp() {
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
@@ -97,7 +89,7 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <NavigationContainer>
-        <SafeAreaView style={{flex: 1, backgroundColor: "#f2f2f2"}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
           <Stack.Navigator
             initialRouteName="Login"
             screenOptions={{ headerShown: false }}
