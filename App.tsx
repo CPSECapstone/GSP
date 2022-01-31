@@ -29,6 +29,7 @@ import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
 import OpenCollection from "./components/Collections/OpenCollection";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const fonts = {
   "Mada-Black": madaBalck,
@@ -96,18 +97,20 @@ export default function App() {
   if (fontsLoaded) {
     return (
       <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="ForgotPass" component={ForgotPass} />
-          <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="ChooseAccountType" component={AccountType} />
-          <Stack.Screen name="CreateAccount" component={SignUp} />
-          <Stack.Screen name="App" component={AuthenticatedApp} />
-          <Stack.Screen name="OpenCollection" component={OpenCollection} />
-        </Stack.Navigator>
+        <SafeAreaView style={{flex: 1, backgroundColor: "#f2f2f2"}}>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="ForgotPass" component={ForgotPass} />
+            <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ChooseAccountType" component={AccountType} />
+            <Stack.Screen name="CreateAccount" component={SignUp} />
+            <Stack.Screen name="App" component={AuthenticatedApp} />
+            <Stack.Screen name="OpenCollection" component={OpenCollection} />
+          </Stack.Navigator>
+        </SafeAreaView>
       </NavigationContainer>
     );
   }
