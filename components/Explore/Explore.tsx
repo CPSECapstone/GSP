@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     marginLeft: 50,
-    marginTop: 100,
+    marginTop: 50,
     marginBottom: 25,
     fontFamily: "Mada-Bold",
   },

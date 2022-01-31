@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet, Pressable, Modal, TextInput } from "react-native";
 import { placeholderbusinesses } from "../../constants/placeholderdata";
+import { CollectionProps, CollectionsProps } from "../../route-settings";
 import BusinessCell from "../Misc/BusinessCell";
 import CollectionCell from "./CollectionCell";
 import ColorPicker from "./ColorPicker";
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 34,
         marginLeft: 50,
-        marginTop: 100,
+        marginTop: 50,
         marginBottom: 25,
         fontFamily: "Mada-Bold",
       },
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
       },
       modalinput: {
         backgroundColor: "#EDEDED",
-        padding: 10,
+        padding: 5,
         borderRadius: 10,
         minWidth: 300,
       }
@@ -88,12 +89,12 @@ const styles = StyleSheet.create({
 //TODO: when a new collection is created, data must be appended to this list
 // Its content should be added to redux as well as posted to the collections category of the user in the DB
 const collectionplaceholder = [
-    { color: "#E92736", title: "Authentic Thai"},
-    { color: "black", title: "Black Hairdressers"},
-    { color: "#8F00FF", title: "Pride Month"}
+    { color: "#E92736", title: "Authentic Thai", description: "The best thai restaurants in town!"},
+    { color: "black", title: "Black Hairdressers", description: "My favorite local black-owned hairdressers"},
+    { color: "#8F00FF", title: "Pride Month", description: "LQBTQ owned businesses in my area."}
 ];
 
-function Collections() {
+function Collections({ navigation }: CollectionProps) {
     const [modalVisible, setModalVisible] = React.useState(false);
     let color = "#B27129";
 
@@ -114,7 +115,7 @@ function Collections() {
                         <Text style={styles.modaltitletext}>TITLE</Text>
                         <TextInput style={styles.modalinput} />
                         <Text style={styles.modaltitletext}>DESCRIPTION</Text>
-                        <TextInput style={styles.modalinput} />
+                        <TextInput multiline style={styles.modalinput} />
                         <Text style={styles.modaltitletext}>COLOR</Text>
                         <ColorPicker updateColor={updateColor} />
                         <View style={styles.subcontainer}>
@@ -163,10 +164,12 @@ function Collections() {
                 showsVerticalScrollIndicator={false}
                 data={collectionplaceholder}
                 renderItem={({item}) => (
-                    <CollectionCell 
-                        color={item.color}
-                        title={item.title}
-                    />
+                    <Pressable onPress={() => navigation.navigate("OpenCollection", {name: item.title, description: item.description})}>
+                        <CollectionCell 
+                            color={item.color}
+                            title={item.title}
+                        />
+                    </Pressable>
                 )}
                 keyExtractor={(item, index) => item.title + item.color + index}
             />

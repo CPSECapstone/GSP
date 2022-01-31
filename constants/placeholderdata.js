@@ -33,3 +33,13 @@ export const placeholderbusinesses = [
     { name: "Business", items: [] },
     { name: "Service", items: [] },
   ];
+
+  export const collectionplaceholderbusinesses = [
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"},
+    { name: "Taqueria Santa Cruz", distance: "1.6", rating: "4.4"}
+  ]

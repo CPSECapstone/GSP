@@ -28,6 +28,7 @@ import Collections from "./components/Collections/Collections";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
+import OpenCollection from "./components/Collections/OpenCollection";
 
 const fonts = {
   "Mada-Black": madaBalck,
@@ -105,6 +106,7 @@ export default function App() {
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
+          <Stack.Screen name="OpenCollection" component={OpenCollection} />
         </Stack.Navigator>
       </NavigationContainer>
     );
