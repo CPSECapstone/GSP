@@ -14,7 +14,7 @@ export type RootStackParamList = {
   CreateAccount: { isMBO?: boolean };
   App: undefined;
   ForgotPass: undefined;
-  ForgotPass2: undefined;
+  ForgotPass2: { email: string };
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;

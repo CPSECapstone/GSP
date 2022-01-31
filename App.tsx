@@ -6,6 +6,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+import Amplify from "aws-amplify";
+import awsconfig from "./src/aws-exports";
 import {
   RootStackParamList,
   RootTabBarParamList,
@@ -16,7 +18,6 @@ import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
-
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
@@ -34,6 +35,9 @@ const fonts = {
   "Mada-Bold": madaBold,
   "Mada-Medium": madaMedium,
 };
+
+Amplify.configure(awsconfig);
+
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();

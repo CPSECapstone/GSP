@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 0.5,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   inputLabel: {
     color: "#939395",
     fontWeight: "bold",
-    paddingBottom: 10,
+    paddingBottom: 15,
   },
 });
 
@@ -20,6 +20,7 @@ interface CleanInputProps {
   label: String;
   secureTextEntry?: boolean;
   textContentType: React.ComponentProps<typeof TextInput>["textContentType"];
+  placeholder?: string | undefined;
   setState: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -27,6 +28,7 @@ function CleanInput({
   label,
   textContentType,
   secureTextEntry,
+  placeholder,
   setState,
 }: CleanInputProps) {
   return (
@@ -36,6 +38,7 @@ function CleanInput({
         style={styles.input}
         textContentType={textContentType}
         secureTextEntry={secureTextEntry}
+        placeholder={placeholder}
         onChangeText={setState}
       />
     </View>
@@ -44,6 +47,7 @@ function CleanInput({
 
 CleanInput.defaultProps = {
   secureTextEntry: false,
+  placeholder: undefined,
 };
 
 export default CleanInput;
