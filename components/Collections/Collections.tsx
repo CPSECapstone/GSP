@@ -10,15 +10,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 34,
         marginLeft: 50,
-        marginTop: 50,
         marginBottom: 25,
         fontFamily: "Mada-Bold",
       },
-      container: {
-        height: "100%",
-        width: "100%",
-        flex: 1,
-      },
+
       subheader: {
         marginLeft: 50,
         fontFamily: "Mada-Medium",
@@ -83,6 +78,11 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 10,
         minWidth: 300,
+      },
+      emptytext: {
+        fontFamily: "Mada-Medium",
+        fontSize: 20,
+        padding: 50
       }
 });
 
@@ -103,6 +103,9 @@ function Collections({ navigation }: CollectionProps) {
     };
 
     function AddCollectionModal() {
+        const [title, setTitle] = React.useState("");
+        const [description, setDescription] = React.useState("");
+
         return (
             <Modal 
                 transparent
@@ -113,16 +116,23 @@ function Collections({ navigation }: CollectionProps) {
                     <View style={styles.modalView}>
                         <Text style={{ padding: 20,fontFamily: "Poppins-Regular", fontSize: 17}}>Create a New Collection</Text>
                         <Text style={styles.modaltitletext}>TITLE</Text>
-                        <TextInput style={styles.modalinput} />
+                        <TextInput style={styles.modalinput} onChangeText={setTitle} value={title} />
                         <Text style={styles.modaltitletext}>DESCRIPTION</Text>
-                        <TextInput multiline style={styles.modalinput} />
+                        <TextInput multiline style={styles.modalinput} onChangeText={setDescription} value={description}/>
                         <Text style={styles.modaltitletext}>COLOR</Text>
                         <ColorPicker updateColor={updateColor} />
                         <View style={styles.subcontainer}>
                             <Pressable style={{marginRight: 75, marginLeft: 15}} onPress={() => { setModalVisible(false) }}>
                                 <Text style={[styles.modalbuttontext, {opacity: 0.5}]}>Cancel</Text>
                             </Pressable>
-                            <Pressable onPress={() => {}} style={{ backgroundColor: "#FA4A0C", borderRadius: 30, padding: 12, paddingHorizontal: 40,}}>
+                            <Pressable onPress={() => {
+                                navigation.navigate("OpenCollection", { name: title, description: description});
+                                setModalVisible(false);
+                                // TODO: replace this with redux/database push!
+                                collectionplaceholder.push({ color: color, title: title, description: description});
+                                }} 
+                                style={{ backgroundColor: "#FA4A0C", borderRadius: 30, padding: 12, paddingHorizontal: 40,}}
+                                >
                                 <Text style={[styles.modalbuttontext, {color: "white"}]}>Create</Text>
                             </Pressable>
                         </View>
@@ -133,7 +143,7 @@ function Collections({ navigation }: CollectionProps) {
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             <AddCollectionModal />
             <Text style={styles.title}>Collections</Text>
             <Text style={[styles.subheader, {marginBottom: 20}]}>Recently Visisted</Text>
@@ -153,12 +163,13 @@ function Collections({ navigation }: CollectionProps) {
                     data={placeholderbusinesses}
                 />
             </View>
-            <View style={styles.subcontainer}>
+            <View style={[{ marginBottom: 10 }, styles.subcontainer]}>
                 <Text style={[styles.subheader, {marginLeft: 50}]}>Your Collections</Text>
                 <Pressable onPress={() => setModalVisible(true)}>
                     <Text style={styles.addcollectiontext}>+ Add Collection</Text>
                 </Pressable>
             </View>
+            {collectionplaceholder.length > 0 ? 
             <FlatList 
                 contentContainerStyle={styles.verticalflatlist}
                 showsVerticalScrollIndicator={false}
@@ -172,7 +183,11 @@ function Collections({ navigation }: CollectionProps) {
                     </Pressable>
                 )}
                 keyExtractor={(item, index) => item.title + item.color + index}
-            />
+            /> : 
+            <View style={{alignItems: "center"}}>
+                <Text style={styles.emptytext}>Add you first collection!</Text>
+            </View>
+            }
         </View>
     );
 };
