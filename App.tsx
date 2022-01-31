@@ -1,3 +1,11 @@
+const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
+const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
+const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
+const madaBold = require("./assets/fonts/Mada/Mada-Bold.ttf");
+const madaMedium = require("./assets/fonts/Mada/Mada-Medium.ttf");
+const poppinsRegular = require("./assets/fonts/Poppins/Poppins-Regular.ttf");
+const poppinsSemi = require("./assets/fonts/Poppins/Poppins-SemiBold.ttf");
+
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -21,18 +29,14 @@ import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
 
-const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
-const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
-const madaSemiBold = require("./assets/fonts/Mada/Mada-SemiBold.ttf");
-const madaBold = require("./assets/fonts/Mada/Mada-Bold.ttf");
-const madaMedium = require("./assets/fonts/Mada/Mada-Medium.ttf");
-
 const fonts = {
   "Mada-Black": madaBalck,
   "Mada-Regular": madaRegular,
   "Mada-SemiBold": madaSemiBold,
   "Mada-Bold": madaBold,
   "Mada-Medium": madaMedium,
+  "Poppins-Regular": poppinsRegular,
+  "Poppins-SemiBold": poppinsSemi,
 };
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
