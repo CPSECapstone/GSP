@@ -16,7 +16,7 @@ import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
 import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
-
+import Collections from "./components/Collections/Collections";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
@@ -72,7 +72,7 @@ function AuthenticatedApp() {
     <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
       <Tab.Screen name="Home" component={HomePage} />
       <Tab.Screen name="Explore" component={Explore} />
-      <Tab.Screen name="Collections" component={CollectionsPage} />
+      <Tab.Screen name="Collections" component={Collections} />
       <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
   );
