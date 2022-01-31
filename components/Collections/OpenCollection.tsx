@@ -1,9 +1,9 @@
 const placeHolderImage = require("../../assets/icon.png");
-import { Entypo, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import { NavigationProp } from "@react-navigation/native";
 import { NativeStackNavigationProp, NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
-import { StyleSheet, View, Text, FlatList, Image, Pressable } from "react-native";
+import React, { useRef } from "react";
+import { StyleSheet, View, Text, FlatList, Image, Pressable, Animated } from "react-native";
 import { collectionplaceholderbusinesses } from "../../constants/placeholderdata";
 import { OpenCollectionPageProps, RootStackParamList } from "../../route-settings";
 
@@ -97,29 +97,46 @@ function CollectionBusinessCell({ name, distance, rating }: CollectionBusinessCe
 };
 
 function OpenCollection({ route, navigation} : OpenCollectionPageProps) {
+    const [isEditing, setisEditing] = React.useState(false);
+    const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
     const { name, description } = route.params;
     
+    React.useEffect(() => {
+        Animated.timing(fadeAnim, {
+            toValue: isEditing ? 1 : 0,
+            duration: 200,
+            useNativeDriver: false
+        }).start();
+    }, [isEditing]);
+
     return (
         <View style={styles.container}>
-            <View style={{flexDirection: "row", marginTop: 50, marginLeft: 50}}>
+            <View style={{flexDirection: "row", marginLeft: 50}}>
                 <Pressable onPress={() => { navigation.goBack() }}>
                    <Entypo color={"black"} name="chevron-left" size={30} />
                 </Pressable>
                 <Text style={styles.collectiontitle}>{name}</Text>
-                <Pressable onPress={() => {navigation.goBack()}}>
-                    <Text style={styles.editcollectiontext}>Edit Collection</Text>
+                <Pressable onPress={() => {
+                    setisEditing(!isEditing);
+                    }}>
+                    <Text style={[styles.editcollectiontext, {minWidth: 150, textAlign: "center"}]}>{isEditing ? "Done" : "Edit Collection"}</Text>
                 </Pressable>
             </View>
             <Text style={styles.collectiondesctext}>{description}</Text>
             <FlatList 
                 showsVerticalScrollIndicator={false}
                 renderItem={({item}) => (
-                    <CollectionBusinessCell 
-                        name={item.name}
-                        rating={item.rating}
-                        distance={item.distance}
-                    />
+                    <View style={{ justifyContent: "center", alignItems: "center", flexDirection: "row"}}>
+                        <Animated.View style={{ opacity: fadeAnim}}>                        
+                            <AntDesign style={{ marginHorizontal: 10 }} name="minuscircle" color={"#FA4A0C"} size={20} />
+                        </Animated.View>
+                        <CollectionBusinessCell 
+                            name={item.name}
+                            rating={item.rating}
+                            distance={item.distance}
+                        />
+                    </View>
                 )}
                 keyExtractor={(item, index) => index + item.name}
                 data={collectionplaceholderbusinesses}

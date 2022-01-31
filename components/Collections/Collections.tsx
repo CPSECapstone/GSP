@@ -80,13 +80,19 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 0,
         padding: 5,
         borderRadius: 10,
-        minWidth: 300,
-        marginBottom: 10,
+        width: 300,
       },
       emptytext: {
         fontFamily: "Mada-Medium",
         fontSize: 20,
         padding: 50
+      },
+      charcounttext: {
+        fontSize: 10,
+        fontFamily: "Poppins-Regular",
+        opacity: 0.3,
+        marginTop: 2.5,
+        marginBottom: 10,
       }
 });
 
@@ -120,9 +126,11 @@ function Collections({ navigation }: CollectionProps) {
                     <View style={styles.modalView}>
                         <Text style={{ padding: 20,fontFamily: "Poppins-Regular", fontSize: 17}}>Create a New Collection</Text>
                         <Text style={styles.modaltitletext}>TITLE</Text>
-                        <TextInput style={styles.modalinput} onChangeText={setTitle} value={title} />
+                        <TextInput maxLength={15} style={styles.modalinput} onChangeText={setTitle} value={title} />
+                        <Text style={styles.charcounttext}>{title.length + "/15"}</Text>
                         <Text style={styles.modaltitletext}>DESCRIPTION</Text>
-                        <TextInput multiline style={styles.modalinput} onChangeText={setDescription} value={description}/>
+                        <TextInput maxLength={50} style={styles.modalinput} onChangeText={setDescription} value={description}/>
+                        <Text style={styles.charcounttext}>{description.length + "/50"}</Text>
                         <Text style={styles.modaltitletext}>COLOR</Text>
                         <ColorPicker updateColor={updateColor} />
                         <View style={styles.subcontainer}>
