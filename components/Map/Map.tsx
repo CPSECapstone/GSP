@@ -1,6 +1,6 @@
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { View, StyleSheet, Dimensions } from "react-native";
-import mapStyle from "../../constants/map"
+import mapStyle from "../../constants/map";
 
 const styles = StyleSheet.create({
   container: {
