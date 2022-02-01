@@ -16,7 +16,7 @@ export type RootStackParamList = {
   ForgotPass: undefined;
   ForgotPass2: undefined;
   ViewCollection: undefined;
-  OpenCollection: { name: string, description: string };
+  OpenCollection: { name: string; description: string };
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -36,7 +36,7 @@ export type CollectionProps = NativeStackScreenProps<
 >;
 
 export type OpenCollectionPageProps = NativeStackScreenProps<
-  RootStackParamList, 
+  RootStackParamList,
   "OpenCollection"
 >;
 

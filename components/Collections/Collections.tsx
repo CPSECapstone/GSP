@@ -132,6 +132,7 @@ function Collections({ navigation }: CollectionProps) {
     color = val;
   };
 
+  // eslint-disable-next-line
   function AddCollectionModal() {
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -182,6 +183,7 @@ function Collections({ navigation }: CollectionProps) {
               </Pressable>
               <Pressable
                 onPress={() => {
+                  // eslint-disable-next-line
                   navigation.navigate("OpenCollection", {
                     name: title,
                     description,
