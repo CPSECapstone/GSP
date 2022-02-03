@@ -5,32 +5,17 @@ import {
   Text,
   FlatList,
   Pressable,
-  ScrollView,
-  Image,
   Animated,
 } from "react-native";
-import ExploreCategoryCell from "./ExploreCategoryCell";
+import {
+  AntDesign,
+  Entypo,
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { businesses, categories } from "../../constants/exploredata";
-import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import ExploreResultCell from "./ExploreResultCell";
-
-const placeholderData = [
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "1",
-    distance: 3,
-  },
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "2",
-    distance: 3,
-  },
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "3",
-    distance: 3,
-  },
-];
 
 const styles = StyleSheet.create({
   title: {
@@ -55,7 +40,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 15,
     borderColor: "#FFFFFF",
-  }, 
+  },
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
@@ -66,46 +51,76 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 5,
   },
-  categoryicon: { 
-    paddingHorizontal: 20, 
-    paddingTop: 20, 
-    paddingBottom: 13
+  categoryicon: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 13,
   },
   categorysubtitle: {
     fontSize: 11,
     fontFamily: "Mada-Medium",
     paddingBottom: 10,
     textAlign: "center",
-  }
+  },
 });
 
 const categoryicons = [
-  <Ionicons style={styles.categoryicon} name="restaurant" color={"#8F8F8F"} size={30} />,
-  <Feather style={styles.categoryicon} name="shopping-bag" color={"#45A54F"} size={30} />,
-  <Entypo style={styles.categoryicon} name="shop" color={"#3CA1DA"} size={30} />,
-  <MaterialCommunityIcons style={styles.categoryicon} name="lipstick" color={"#FB6BE4"} size={30} />,
-  <AntDesign style={styles.categoryicon} name="ellipsis1" color={"black"} size={30} />
-]
+  <Ionicons
+    style={styles.categoryicon}
+    name="restaurant"
+    color="#8F8F8F"
+    size={30}
+  />,
+  <Feather
+    style={styles.categoryicon}
+    name="shopping-bag"
+    color="#45A54F"
+    size={30}
+  />,
+  <Entypo style={styles.categoryicon} name="shop" color="#3CA1DA" size={30} />,
+  <MaterialCommunityIcons
+    style={styles.categoryicon}
+    name="lipstick"
+    color="#FB6BE4"
+    size={30}
+  />,
+  <AntDesign
+    style={styles.categoryicon}
+    name="ellipsis1"
+    color="black"
+    size={30}
+  />,
+];
 
 function Explore() {
-  const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);  
+  const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
 
-  const moreonpress = () => {
-
-  };
+  const moreonpress = () => {};
 
   return (
     <View>
       <Text style={styles.title}>Explore</Text>
       <Text style={styles.title2}>Categories</Text>
-      <FlatList 
+      <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={categories}
-        contentContainerStyle={{ paddingLeft: 20, }}
+        contentContainerStyle={{ paddingLeft: 20 }}
         renderItem={({ item, index }) => (
-          <Pressable onPress={index === 4 ? () => moreonpress() : () => setselectedCategoryIndex(index)}>
-            <Animated.View style={[styles.categorycontainer, styles.shadow, selectedCategoryIndex === index && { borderColor: "#FA4A0C"}]}>
+          <Pressable
+            onPress={
+              index === 4
+                ? () => moreonpress()
+                : () => setselectedCategoryIndex(index)
+            }
+          >
+            <Animated.View
+              style={[
+                styles.categorycontainer,
+                styles.shadow,
+                selectedCategoryIndex === index && { borderColor: "#FA4A0C" },
+              ]}
+            >
               {categoryicons[index]}
               <Text style={styles.categorysubtitle}>{item}</Text>
             </Animated.View>
@@ -115,13 +130,12 @@ function Explore() {
       />
       <FlatList
         horizontal
-        style={{marginVertical: 20,}}
+        style={{ marginVertical: 20 }}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{paddingLeft: 25}}
+        contentContainerStyle={{ paddingLeft: 25 }}
         data={businesses}
         renderItem={({ item }) => (
           <ExploreResultCell
-            imageurl={item.imageurl}
             title={item.title}
             distance={item.distance}
             category={item.category}
