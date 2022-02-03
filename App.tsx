@@ -2,9 +2,11 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
+import Amplify from "aws-amplify";
+import { SafeAreaView } from "react-native-safe-area-context";
+import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
 // import ProfilePage from "./components/Profile";
@@ -13,6 +15,7 @@ import Collections from "./components/Collections/Collections";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
+import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
 import {
   RootStackParamList,
@@ -40,6 +43,9 @@ const fonts = {
   "Poppins-Regular": poppinsRegular,
   "Poppins-SemiBold": poppinsSemi,
 };
+
+Amplify.configure(awsconfig);
+
 // Stack navigates between login and app, Tab navigates between pages within app
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
@@ -78,6 +84,7 @@ export default function App() {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="ChooseAccountType" component={AccountType} />
             <Stack.Screen name="CreateAccount" component={SignUp} />
+            <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
             <Stack.Screen name="App" component={AuthenticatedApp} />
             <Stack.Screen name="OpenCollection" component={OpenCollection} />
           </Stack.Navigator>

@@ -1,14 +1,9 @@
-import React from "react";
-import {
-  Text,
-  Image,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  View,
-} from "react-native";
+import React, { useState } from "react";
+import { Text, Image, StyleSheet, Pressable, View } from "react-native";
+import { Auth } from "aws-amplify";
 import { LoginProps } from "../route-settings";
 import LargeButton from "./LargeButton";
+import CleanInput from "./Login/CleanInput";
 
 const avatarImg = require("../assets/default-avatar.jpeg");
 
@@ -62,30 +57,88 @@ export const styles = StyleSheet.create({
     color: "#B1B1B3",
   },
 
+  inputWrapper: {
+    display: "flex",
+    alignItems: "center",
+    paddingTop: 100,
+    paddingBottom: 40,
+  },
+
   userInfo: {
     marginTop: 100,
-    marginLeft: 20,
-    marginRight: 20,
+  },
+
+  error: {
+    color: "red",
+    textAlign: "left",
+    width: "70%",
+    fontSize: 11,
+    fontWeight: "bold",
+    marginTop: -11,
   },
 });
 
 function Login({ navigation }: LoginProps) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const validateEmail = () => {
+    if (!email) {
+      setEmailError("Email is required");
+    } else {
+      setEmailError("");
+    }
+    return email;
+  };
+
+  const validatePassword = () => {
+    if (!password) {
+      setPasswordError("Password is required");
+    } else {
+      setPasswordError("");
+    }
+    return password;
+  };
+
+  const authenticate = async () => {
+    if (validateEmail() && validatePassword()) {
+      try {
+        const user = await Auth.signIn(email, password);
+        console.log(user);
+        navigation.navigate("App");
+      } catch (error) {
+        console.error(error);
+        setPasswordError("Invalid email or password");
+      }
+    }
+  };
+
   return (
     <View>
       <Text style={styles.login}>Log In</Text>
 
       <View style={styles.userInfo}>
         <Image source={avatarImg} style={styles.account} />
-
-        <Text style={styles.emailText}>Email address</Text>
-        <TextInput style={styles.email} placeholder="Enter your email" />
-
-        <Text style={styles.passwordText}>Password</Text>
-        <TextInput
-          secureTextEntry
-          style={styles.password}
-          placeholder="Enter your password"
-        />
+        <View style={styles.inputWrapper}>
+          <CleanInput
+            label="Email Address"
+            placeholder="Enter your email"
+            textContentType="emailAddress"
+            setState={setEmail}
+          />
+          {!!emailError && <Text style={styles.error}>{emailError}</Text>}
+          <CleanInput
+            label="Password"
+            placeholder="Enter your password"
+            textContentType="password"
+            setState={setPassword}
+            secureTextEntry
+          />
+          {!!passwordError && <Text style={styles.error}>{passwordError}</Text>}
+        </View>
 
         <Pressable onPress={() => navigation.navigate("ForgotPass")}>
           <Text
@@ -93,7 +146,7 @@ function Login({ navigation }: LoginProps) {
               color: "rgb(250, 74, 12)",
               paddingBottom: 20,
               marginLeft: 20,
-              marginRight: 20,
+              marginRight: 40,
               textAlign: "right",
               fontWeight: "bold",
             }}
@@ -101,16 +154,17 @@ function Login({ navigation }: LoginProps) {
             Forgot Password?
           </Text>
         </Pressable>
-        <LargeButton label="Login" action={() => navigation.navigate("App")} />
+        <LargeButton label="Login" action={authenticate} />
 
         <Text style={{ marginTop: 20, alignSelf: "center" }}>
-          Don&apos;t have an Account?
+          Don&apos;t have an Account?&emsp;
           <Pressable>
             <Text
               style={{
                 color: "rgb(250, 74, 12)",
                 textDecorationLine: "underline",
               }}
+              onPress={() => navigation.navigate("ChooseAccountType")}
             >
               Sign Up
             </Text>
