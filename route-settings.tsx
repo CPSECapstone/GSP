@@ -14,11 +14,32 @@ export type RootStackParamList = {
   ChooseAccountType: undefined;
   CreateAccount: { isMBO?: boolean };
   App: undefined;
-  ForgotPass: undefined
+  ForgotPass: undefined;
+  ForgotPass2: undefined;
+  ViewCollection: undefined;
+  OpenCollection: { name: string; description: string };
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
 export type AppProps = NativeStackScreenProps<RootStackParamList, "App">;
+export type ForgotPassProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ForgotPass"
+>;
+export type ForgotPass2Props = NativeStackScreenProps<
+  RootStackParamList,
+  "ForgotPass2"
+>;
+
+export type CollectionProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ViewCollection"
+>;
+
+export type OpenCollectionPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  "OpenCollection"
+>;
 
 export type RootTabBarParamList = {
   Home: undefined;

@@ -8,49 +8,16 @@ import {
   ScrollView,
 } from "react-native";
 import ExploreCategoryCell from "./ExploreCategoryCell";
-import ForYouCell from "./ForYouCell";
-
-const placeholderData = [
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "1",
-    distance: 3,
-  },
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "2",
-    distance: 3,
-  },
-  {
-    name: "Taqueria Santa Cruz",
-    businessId: "3",
-    distance: 3,
-  },
-];
-
-const categories = [
-  {
-    name: "Food",
-    items: [
-      "Mexican",
-      "Cuban",
-      "Japanese",
-      "Chinese",
-      "Indian",
-      "Israeli",
-      "Mediterranean",
-    ],
-  },
-  { name: "Cosmetic", items: ["Hair", "Shave", "Nails", "Makeup"] },
-  { name: "Business", items: [] },
-  { name: "Service", items: [] },
-];
+import ForYouCell from "../Misc/BusinessCell";
+import {
+  placeholderbusinesses,
+  placeholdercategories,
+} from "../../constants/placeholderdata";
 
 const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     marginLeft: 50,
-    marginTop: 100,
     marginBottom: 25,
     fontFamily: "Mada-Bold",
   },
@@ -61,7 +28,7 @@ const styles = StyleSheet.create({
   },
   foryouheader: {
     marginLeft: 50,
-    fontFamily: "Mada-Black",
+    fontFamily: "Mada-Medium",
     color: "#FA4A0C",
     fontSize: 18,
     marginBottom: 15,
@@ -117,7 +84,7 @@ function Explore() {
             />
           )}
           keyExtractor={(item) => item.businessId}
-          data={placeholderData}
+          data={placeholderbusinesses}
         />
       </View>
 
@@ -154,13 +121,13 @@ function Explore() {
           );
         }}
         keyExtractor={(item, index) => item + index.toString()}
-        data={categories}
+        data={placeholdercategories}
       />
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <FlatList
           key={selectedCategoryIndex}
           numColumns={Math.ceil(
-            categories[selectedCategoryIndex].items.length / 2
+            placeholdercategories[selectedCategoryIndex].items.length / 2
           )}
           contentContainerStyle={{ alignSelf: "flex-start" }}
           style={styles.scrollitemsflatlist}
@@ -169,7 +136,7 @@ function Explore() {
           scrollEnabled={false}
           renderItem={({ item }) => <ExploreCategoryCell title={item} />}
           keyExtractor={(item, index) => item + index.toString()}
-          data={categories[selectedCategoryIndex].items}
+          data={placeholdercategories[selectedCategoryIndex].items}
         />
       </ScrollView>
     </View>

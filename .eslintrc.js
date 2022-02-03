@@ -11,6 +11,9 @@ module.exports = {
       parserOptions: {
         project: ["./tsconfig.json"], // Specify it only for TypeScript files
       },
+      rules: {
+        "react/react-in-jsx-scope": "off",
+      },
     },
   ],
   extends: ["airbnb", "prettier"],
@@ -25,5 +28,6 @@ module.exports = {
   ignorePatterns: ["babel.config.js"],
   rules: {
     "prettier/prettier": "error",
+    "react/react-in-jsx-scope": "off",
   },
 };

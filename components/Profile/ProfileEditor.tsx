@@ -114,6 +114,7 @@ function DoneButton({ onPress } : {onPress : Function}) {
 const headerOptions : Partial<BottomTabNavigationOptions> = {
   headerShown: true,
   headerTitle: "Edit Profile",
+  headerStyle: {backgroundColor: "#f2f2f2"},
   headerLeft: () => <HeaderButton title="Cancel" onPress={() => {}}/>,
   headerRight: () => <DoneButton onPress={alert}/>,
 }
@@ -121,9 +122,10 @@ const headerOptions : Partial<BottomTabNavigationOptions> = {
 function getEditHeaderOptions(edit: string, onBack: Function, onDone: Function) : Partial<BottomTabNavigationOptions> {
   return {
     headerShown: true,
-  headerTitle: edit,
-  headerLeft: () => <HeaderButton title="Back" onPress={onBack}/>,
-  headerRight: () => <DoneButton onPress={onDone}/>,
+    headerTitle: edit,
+    headerStyle: {backgroundColor: "#f2f2f2"},
+    headerLeft: () => <HeaderButton title="Back" onPress={onBack}/>,
+    headerRight: () => <DoneButton onPress={onDone}/>,
   }
 }
 
