@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Text, Image, StyleSheet, Pressable, View } from "react-native";
 import { Auth } from "aws-amplify";
-import { LoginProps } from "../route-settings";
-import LargeButton from "./LargeButton";
-import CleanInput from "./Login/CleanInput";
+import { LoginProps } from "../../route-settings";
+import LargeButton from "../Misc/LargeButton";
+import CleanInput from "./CleanInput";
 
-const avatarImg = require("../assets/default-avatar.jpeg");
+const avatarImg = require("../../assets/default-avatar.jpeg");
 
 export const styles = StyleSheet.create({
   login: {
