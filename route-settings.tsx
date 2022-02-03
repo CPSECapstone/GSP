@@ -2,7 +2,10 @@
 
 import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabNavigationOptions,
+  BottomTabScreenProps,
+} from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 // https://reactnavigation.org/docs/typescript/
@@ -50,14 +53,21 @@ export type RootTabBarParamList = {
   ProfileEditor: undefined;
 };
 
-
 export type HomeProps = BottomTabScreenProps<RootTabBarParamList, "Home">;
 export type ExploreProps = BottomTabScreenProps<RootTabBarParamList, "Explore">;
-export type CollectionsProps = BottomTabScreenProps<RootTabBarParamList, "Collections">;
+export type CollectionsProps = BottomTabScreenProps<
+  RootTabBarParamList,
+  "Collections"
+>;
 export type ProfileProps = BottomTabScreenProps<RootTabBarParamList, "Profile">;
-export type ProfileEditorProps = BottomTabScreenProps<RootTabBarParamList, "ProfileEditor">;
+export type ProfileEditorProps = BottomTabScreenProps<
+  RootTabBarParamList,
+  "ProfileEditor"
+>;
 
-export const TabBarScreenOptions = ({ route }: any) : Partial<BottomTabNavigationOptions> => ({
+export const TabBarScreenOptions = ({
+  route,
+}: any): Partial<BottomTabNavigationOptions> => ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: { height: 70, backgroundColor: "F5F5F8", borderTopWidth: 0 },
@@ -89,7 +99,7 @@ export const TabBarScreenOptions = ({ route }: any) : Partial<BottomTabNavigatio
     }
 
     // You can return any component that you like here!
-    
+
     return <Ionicons name={iconName} size={size} color={color} />;
   },
   tabBarActiveTintColor: "tomato",

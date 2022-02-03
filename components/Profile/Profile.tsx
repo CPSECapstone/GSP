@@ -146,7 +146,10 @@ export default function ProfilePage({ navigation }: ProfileProps) {
             <Pressable style={styles.back}>
               <Ionicons name="chevron-back-outline" size={30} color="white" />
             </Pressable>
-            <Pressable style={styles.save} onPress={() => navigation.navigate("ProfileEditor")}>
+            <Pressable
+              style={styles.save}
+              onPress={() => navigation.navigate("ProfileEditor")}
+            >
               <Ionicons name="bookmark-outline" size={25} color="white" />
             </Pressable>
             <Image style={styles.avatar} source={profileData.profileImage} />
