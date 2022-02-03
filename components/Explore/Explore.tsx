@@ -5,14 +5,17 @@ import {
   Text,
   FlatList,
   Pressable,
-  ScrollView,
+  Animated,
 } from "react-native";
-import ExploreCategoryCell from "./ExploreCategoryCell";
-import ForYouCell from "../Misc/BusinessCell";
 import {
-  placeholderbusinesses,
-  placeholdercategories,
-} from "../../constants/placeholderdata";
+  AntDesign,
+  Entypo,
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { businesses, categories } from "../../constants/exploredata";
+import ExploreResultCell from "./ExploreResultCell";
 
 const styles = StyleSheet.create({
   title: {
@@ -21,124 +24,127 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     fontFamily: "Mada-Bold",
   },
-  container: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-  },
-  foryouheader: {
+  title2: {
     marginLeft: 50,
     fontFamily: "Mada-Medium",
     color: "#FA4A0C",
     fontSize: 18,
-    marginBottom: 15,
   },
-  categorieslist: {
-    width: "100%",
-    paddingLeft: 50,
-    overflow: "visible",
-    height: 0,
-  },
-  categorytitlecontainer: {
-    width: 90,
-    borderWidth: 3,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+  categorycontainer: {
+    width: 68,
+    borderRadius: 15,
+    marginHorizontal: 10,
+    marginTop: 25,
+    borderWidth: 2,
+    backgroundColor: "#FFFFFF",
     alignItems: "center",
-    justifyContent: "center",
-    padding: 5,
+    marginBottom: 15,
+    borderColor: "#FFFFFF",
   },
-  categorytitletext: {
-    fontSize: 17,
-    fontFamily: "Mada-Regular",
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4.65,
+    elevation: 5,
   },
-  scrollitemsflatlist: {
-    width: "100%",
-    paddingLeft: 50,
-    overflow: "visible",
+  categoryicon: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 13,
+  },
+  categorysubtitle: {
+    fontSize: 11,
+    fontFamily: "Mada-Medium",
+    paddingBottom: 10,
+    textAlign: "center",
   },
 });
+
+const categoryicons = [
+  <Ionicons
+    style={styles.categoryicon}
+    name="restaurant"
+    color="#8F8F8F"
+    size={30}
+  />,
+  <Feather
+    style={styles.categoryicon}
+    name="shopping-bag"
+    color="#45A54F"
+    size={30}
+  />,
+  <Entypo style={styles.categoryicon} name="shop" color="#3CA1DA" size={30} />,
+  <MaterialCommunityIcons
+    style={styles.categoryicon}
+    name="lipstick"
+    color="#FB6BE4"
+    size={30}
+  />,
+  <AntDesign
+    style={styles.categoryicon}
+    name="ellipsis1"
+    color="black"
+    size={30}
+  />,
+];
 
 function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
 
-  const changeSelectedCategory = (index: number) => {
-    setselectedCategoryIndex(index);
-  };
+  const moreonpress = () => {};
 
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.title}>Explore</Text>
-      <Text style={styles.foryouheader}>For You</Text>
-      <View style={{ height: 300 }}>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.scrollitemsflatlist}
-          renderItem={({ item }) => (
-            <ForYouCell
-              name={item.name}
-              businessId={item.businessId}
-              distance={item.distance}
-            />
-          )}
-          keyExtractor={(item) => item.businessId}
-          data={placeholderbusinesses}
-        />
-      </View>
-
+      <Text style={styles.title2}>Categories</Text>
       <FlatList
         horizontal
-        contentContainerStyle={{ justifyContent: "flex-start" }}
-        style={styles.categorieslist}
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => {
-          let color = "#9A9A9D";
-          let viewcolor = "#C1C1C1";
-          let borderwidth = 0;
-          if (index === selectedCategoryIndex) {
-            color = "#FA4A0C";
-            viewcolor = "#FA4A0C";
-            borderwidth = 3;
-          }
-          return (
-            <Pressable onPress={() => changeSelectedCategory(index)}>
-              <View
-                style={[
-                  styles.categorytitlecontainer,
-                  {
-                    borderBottomColor: viewcolor,
-                    borderBottomWidth: borderwidth,
-                  },
-                ]}
-              >
-                <Text style={[styles.categorytitletext, { color }]}>
-                  {item.name}
-                </Text>
-              </View>
-            </Pressable>
-          );
-        }}
+        data={categories}
+        contentContainerStyle={{ paddingLeft: 20 }}
+        renderItem={({ item, index }) => (
+          <Pressable
+            onPress={
+              index === 4
+                ? () => moreonpress()
+                : () => setselectedCategoryIndex(index)
+            }
+          >
+            <Animated.View
+              style={[
+                styles.categorycontainer,
+                styles.shadow,
+                selectedCategoryIndex === index && { borderColor: "#FA4A0C" },
+              ]}
+            >
+              {categoryicons[index]}
+              <Text style={styles.categorysubtitle}>{item}</Text>
+            </Animated.View>
+          </Pressable>
+        )}
         keyExtractor={(item, index) => item + index.toString()}
-        data={placeholdercategories}
       />
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <FlatList
-          key={selectedCategoryIndex}
-          numColumns={Math.ceil(
-            placeholdercategories[selectedCategoryIndex].items.length / 2
-          )}
-          contentContainerStyle={{ alignSelf: "flex-start" }}
-          style={styles.scrollitemsflatlist}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          scrollEnabled={false}
-          renderItem={({ item }) => <ExploreCategoryCell title={item} />}
-          keyExtractor={(item, index) => item + index.toString()}
-          data={placeholdercategories[selectedCategoryIndex].items}
-        />
-      </ScrollView>
+      <FlatList
+        horizontal
+        style={{ marginVertical: 20 }}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingLeft: 25 }}
+        data={businesses}
+        renderItem={({ item }) => (
+          <ExploreResultCell
+            title={item.title}
+            distance={item.distance}
+            category={item.category}
+            minoritygroup={item.minoritygroup}
+          />
+        )}
+        keyExtractor={(item, index) => item.title + index.toString()}
+      />
+      <Text style={styles.title2}>Minority Groups</Text>
     </View>
   );
 }
