@@ -12,10 +12,10 @@ import SignUp from "./components/Login/SignUp";
 // import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 import Collections from "./components/Collections/Collections";
-import Login from "./components/Login";
-import ForgotPass from "./components/ForgotPass";
+import Login from "./components/Login/Login";
+import ForgotPass from "./components/Login/ForgotPass";
 import ProfileEditor from "./components/Profile/ProfileEditor";
-import ForgotPass2 from "./components/ForgotPass2";
+import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
 import {

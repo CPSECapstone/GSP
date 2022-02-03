@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
-import LargeButton from "./LargeButton";
-import { ForgotPass2Props } from "../route-settings";
-import InverseLargeButton from "./InverseLargeButton";
-import CleanInput from "./Login/CleanInput";
+import LargeButton from "../Misc/LargeButton";
+import { ForgotPass2Props } from "../../route-settings";
+import InverseLargeButton from "../Misc/InverseLargeButton";
+import CleanInput from "./CleanInput";
 
 const forgotPassStyle = StyleSheet.create({
   container: {
