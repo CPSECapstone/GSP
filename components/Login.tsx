@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LoginProps } from "../route-settings";
 import LargeButton from "./LargeButton";
-import ReviewCell from "./ReviewCell";
+
 const avatarImg = require("../assets/default-avatar.jpeg");
 
 export const styles = StyleSheet.create({
