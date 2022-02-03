@@ -76,12 +76,6 @@ function Login({ navigation }: LoginProps) {
       <View style={styles.userInfo}>
         <Image source={avatarImg} style={styles.account} />
 
-        <ReviewCell restaurant={"Taqueria Santa Cruz"}
-        description={"One of my favorite restaurants in San Luis Obispo. They are always consistent with their food. While it is not the most amazing value out there, they never fail to deliver and have an amazing family atmosphere."}
-        srcImage={"myTestImage.png"}
-        rating={5.0}
-        
-        ></ReviewCell> 
         <Text style={styles.emailText}>Email address</Text>
         <TextInput style={styles.email} placeholder="Enter your email" />
 

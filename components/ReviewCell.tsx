@@ -5,18 +5,21 @@ import { Ionicons } from "@expo/vector-icons";
 export const styles = StyleSheet.create({
    reviewCell: {
       width: 250,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      padding: 10,
+      borderRadius: 10 
    },
    restauraunt: {
-      fontWeight: 'bold',
-      paddingBottom: 10
+      fontWeight: 'bold'
    },
    description: {
       paddingTop: 10
    },
    image: {
       height: 40,
-      width: 40
+      width: 40,
+      borderRadius: 50,
+      marginLeft: 5
    }
 
 });
@@ -46,7 +49,7 @@ function Star() {
 interface ReviewCellProps {
    restaurant: String;
    rating: Number;
-   srcImage: String;
+   srcImage: string;
    description: String;
  }
 
@@ -71,8 +74,11 @@ function ReviewCell({restaurant, rating, srcImage, description}: ReviewCellProps
    return (
       <View style={styles.reviewCell}>
    
-         <Text style={styles.restauraunt}>{restaurant}</Text>
-         <Image style={styles.image} source={require('../assets/default-avatar.jpeg')}></Image>
+         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.restauraunt}>{restaurant}</Text>
+            <Image style={styles.image} source={{uri: srcImage}}></Image>
+         </View>
+         
          {rating == 1 &&
             <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Star />
