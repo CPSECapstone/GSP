@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function ForYouCell(props: ForYouParameters) {
+function BusinessCell(props: ForYouParameters) {
   const { name, businessId, distance } = props;
 
   return (
@@ -70,4 +70,4 @@ function ForYouCell(props: ForYouParameters) {
   );
 }
 
-export default ForYouCell;
+export default BusinessCell;

@@ -10,7 +10,6 @@ import {
   Animated,
 } from "react-native";
 import ExploreCategoryCell from "./ExploreCategoryCell";
-import ForYouCell from "./ForYouCell";
 import { businesses, categories } from "../../constants/exploredata";
 import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import ExploreResultCell from "./ExploreResultCell";
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     marginLeft: 50,
-    marginTop: 100,
     marginBottom: 25,
     fontFamily: "Mada-Bold",
   },
