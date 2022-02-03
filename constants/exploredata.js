@@ -30,3 +30,20 @@ export const categories = [
     "Beauty",
     "More",
   ];
+
+export const businesses = [
+  {
+    imageurl: "../assets/icon.png",
+    title: "Taqueria Santa Cruz",
+    distance: 3,
+    category: "Restaurant",
+    minoritygroup: "LatinX"
+  },
+  {
+    imageurl: "../assets/icon.png",
+    title: "Taqueria Santa Cruz",
+    distance: 3,
+    category: "Restaurant",
+    minoritygroup: "LatinX"
+  }
+];

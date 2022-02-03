@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import ExploreCategoryCell from "./ExploreCategoryCell";
 import ForYouCell from "./ForYouCell";
-import { categories } from "../../constants/exploredata";
+import { businesses, categories } from "../../constants/exploredata";
 import { AntDesign, Entypo, Feather, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import ExploreResultCell from "./ExploreResultCell";
 
 const placeholderData = [
   {
@@ -51,10 +52,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginHorizontal: 10,
     marginTop: 25,
+    borderWidth: 2,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     marginBottom: 15,
-    borderColor: "#FA4A0C"
+    borderColor: "#FFFFFF",
   }, 
   shadow: {
     shadowColor: "#000",
@@ -105,7 +107,7 @@ function Explore() {
         contentContainerStyle={{ paddingLeft: 20, }}
         renderItem={({ item, index }) => (
           <Pressable onPress={index === 4 ? () => moreonpress() : () => setselectedCategoryIndex(index)}>
-            <Animated.View style={[styles.categorycontainer, styles.shadow, selectedCategoryIndex === index && { borderWidth: 2}]}>
+            <Animated.View style={[styles.categorycontainer, styles.shadow, selectedCategoryIndex === index && { borderColor: "#FA4A0C"}]}>
               {categoryicons[index]}
               <Text style={styles.categorysubtitle}>{item}</Text>
             </Animated.View>
@@ -113,6 +115,24 @@ function Explore() {
         )}
         keyExtractor={(item, index) => item + index.toString()}
       />
+      <FlatList
+        horizontal
+        style={{marginVertical: 20,}}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{paddingLeft: 25}}
+        data={businesses}
+        renderItem={({ item }) => (
+          <ExploreResultCell
+            imageurl={item.imageurl}
+            title={item.title}
+            distance={item.distance}
+            category={item.category}
+            minoritygroup={item.minoritygroup}
+          />
+        )}
+        keyExtractor={(item, index) => item.title + index.toString()}
+      />
+      <Text style={styles.title2}>Minority Groups</Text>
     </View>
   );
 }
