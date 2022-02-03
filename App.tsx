@@ -1,6 +1,5 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -20,8 +19,9 @@ import {
   RootStackParamList,
   RootTabBarParamList,
   TabBarScreenOptions,
-  HomeProps,
 } from "./route-settings";
+
+import Map from "./components/Map/Map";
 
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -52,15 +52,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function HomePage({ navigation }: HomeProps) {
+function HomePage() {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <StatusBar />
-      <Button
-        title="Go to Explore"
-        onPress={() => navigation.navigate("Explore")}
-      />
+      <Map />
     </View>
   );
 }
