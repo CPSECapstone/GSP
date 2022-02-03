@@ -119,7 +119,6 @@ function Login({ navigation }: LoginProps) {
   return (
     <View>
       <Text style={styles.login}>Log In</Text>
-
       <View style={styles.userInfo}>
         <Image source={avatarImg} style={styles.account} />
         <View style={styles.inputWrapper}>
