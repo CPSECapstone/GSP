@@ -67,8 +67,8 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
-        <NavigationContainer>
+      <NavigationContainer>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
           <Stack.Navigator
             initialRouteName="Login"
             screenOptions={{ headerShown: false }}
@@ -81,8 +81,8 @@ export default function App() {
             <Stack.Screen name="App" component={AuthenticatedApp} />
             <Stack.Screen name="OpenCollection" component={OpenCollection} />
           </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
+        </SafeAreaView>
+      </NavigationContainer>
     );
   }
   return <AppLoading />;
