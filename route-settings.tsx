@@ -2,6 +2,7 @@
 
 import React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { BottomTabNavigationOptions, BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 // https://reactnavigation.org/docs/typescript/
@@ -25,23 +26,17 @@ export type RootTabBarParamList = {
   Collections: undefined;
   Profile: undefined;
   Feed: { sort: "latest" | "top" } | undefined;
+  ProfileEditor: undefined;
 };
 
-export type HomeProps = NativeStackScreenProps<RootTabBarParamList, "Home">;
-export type ExploreProps = NativeStackScreenProps<
-  RootTabBarParamList,
-  "Explore"
->;
-export type CollectionsProps = NativeStackScreenProps<
-  RootTabBarParamList,
-  "Collections"
->;
-export type ProfileProps = NativeStackScreenProps<
-  RootTabBarParamList,
-  "Profile"
->;
 
-export const TabBarScreenOptions = ({ route }: any) => ({
+export type HomeProps = BottomTabScreenProps<RootTabBarParamList, "Home">;
+export type ExploreProps = BottomTabScreenProps<RootTabBarParamList, "Explore">;
+export type CollectionsProps = BottomTabScreenProps<RootTabBarParamList, "Collections">;
+export type ProfileProps = BottomTabScreenProps<RootTabBarParamList, "Profile">;
+export type ProfileEditorProps = BottomTabScreenProps<RootTabBarParamList, "ProfileEditor">;
+
+export const TabBarScreenOptions = ({ route }: any) : Partial<BottomTabNavigationOptions> => ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: { height: 70, backgroundColor: "F5F5F8", borderTopWidth: 0 },
@@ -64,6 +59,8 @@ export const TabBarScreenOptions = ({ route }: any) => ({
       iconName = "ios-bookmark";
     } else if (route.name === "Profile") {
       iconName = "ios-person";
+    } else if (route.name === "ProfileEditor") {
+      iconName = "settings";
     }
 
     if (!focused) {
@@ -71,6 +68,7 @@ export const TabBarScreenOptions = ({ route }: any) => ({
     }
 
     // You can return any component that you like here!
+    
     return <Ionicons name={iconName} size={size} color={color} />;
   },
   tabBarActiveTintColor: "tomato",

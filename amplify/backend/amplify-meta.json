@@ -176,5 +176,22 @@
         "logicalId": "geoSearchMap"
       }
     }
+  },
+  "storage": {
+    "imagestore": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueries8b479e72",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
+    }
   }
 }

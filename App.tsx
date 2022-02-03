@@ -10,16 +10,16 @@ import {
   RootStackParamList,
   RootTabBarParamList,
   TabBarScreenOptions,
-  LoginProps,
   HomeProps,
 } from "./route-settings";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
-import ProfilePage from "./components/Profile";
+import ProfilePage from "./components/Profile/Profile";
 import Explore from "./components/Explore/Explore";
 
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
+import ProfileEditor from "./components/Profile/ProfileEditor";
 
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -45,20 +45,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-// Placeholder components, replace with actual components as they are made
-function LoginPage({ navigation }: LoginProps) {
-  return (
-    <View style={styles.container}>
-      <StatusBar />
-      <Button title="Login" onPress={() => navigation.navigate("App")} />
-      <Button
-        title="Create Account"
-        onPress={() => navigation.navigate("ChooseAccountType")}
-      />
-    </View>
-  );
-}
 
 function HomePage({ navigation }: HomeProps) {
   return (
@@ -88,6 +74,7 @@ function AuthenticatedApp() {
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Collections" component={CollectionsPage} />
       <Tab.Screen name="Profile" component={ProfilePage} />
+      <Tab.Screen name="ProfileEditor" component={ProfileEditor} />
     </Tab.Navigator>
   );
 }
