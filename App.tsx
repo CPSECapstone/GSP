@@ -14,6 +14,7 @@ import Explore from "./components/Explore/Explore";
 import Collections from "./components/Collections/Collections";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
+import ProfileEditor from "./components/Profile/ProfileEditor";
 import ForgotPass2 from "./components/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
@@ -56,6 +57,7 @@ function AuthenticatedApp() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Collections" component={Collections} />
+      <Tab.Screen name="ProfileEditor" component={ProfileEditor} />
       <Tab.Screen name="Profile" component={UserProfile} />
     </Tab.Navigator>
   );

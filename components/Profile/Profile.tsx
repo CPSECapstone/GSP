@@ -13,6 +13,7 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
+import { ProfileProps } from "../../route-settings";
 
 const profileData = {
   name: "Milk In It",
@@ -129,7 +130,7 @@ const openMap = async (address: string, city: string, zipCode: string) => {
   openUrl(link);
 };
 
-export default function ProfilePage() {
+export default function ProfilePage({ navigation }: ProfileProps) {
   return (
     <View>
       <ImageBackground
@@ -145,7 +146,10 @@ export default function ProfilePage() {
             <Pressable style={styles.back}>
               <Ionicons name="chevron-back-outline" size={30} color="white" />
             </Pressable>
-            <Pressable style={styles.save}>
+            <Pressable
+              style={styles.save}
+              onPress={() => navigation.navigate("ProfileEditor")}
+            >
               <Ionicons name="bookmark-outline" size={25} color="white" />
             </Pressable>
             <Image style={styles.avatar} source={profileData.profileImage} />
