@@ -21,6 +21,7 @@ import Explore from "./components/Explore/Explore";
 import Login from "./components/Login";
 import ForgotPass from "./components/ForgotPass";
 import ForgotPass2 from "./components/ForgotPass2";
+import SignUpCode from "./components/Login/SignUpCode";
 
 const madaBalck = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -104,6 +105,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="ChooseAccountType" component={AccountType} />
           <Stack.Screen name="CreateAccount" component={SignUp} />
+          <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
           <Stack.Screen name="App" component={AuthenticatedApp} />
         </Stack.Navigator>
       </NavigationContainer>

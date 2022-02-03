@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Login: undefined;
   ChooseAccountType: undefined;
   CreateAccount: { isMBO?: boolean };
+  CreateAccountCode: { email: string };
   App: undefined;
   ForgotPass: undefined;
   ForgotPass2: { email: string };

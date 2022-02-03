@@ -141,6 +141,7 @@ function ForgotPass2({ navigation, route }: ForgotPass2Props) {
         <CleanInput
           label="Code"
           textContentType="oneTimeCode"
+          keyboardType="numeric"
           setState={setCode}
         />
         {!!codeError && <Text style={forgotPassStyle.error}>{codeError}</Text>}

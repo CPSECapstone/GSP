@@ -100,7 +100,7 @@ function SignUp({ navigation, route }: SignUpProps) {
           },
         });
         console.log(user);
-        navigation.navigate("App");
+        navigation.navigate("CreateAccountCode", { email });
       } catch {
         setConfirmPasswordError("Failed to create account");
       }
