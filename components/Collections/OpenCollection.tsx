@@ -101,6 +101,7 @@ function CollectionBusinessCell({
 
 function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
   const [isEditing, setisEditing] = React.useState(false);
+  const [businesses, setbusinesses] = React.useState(collectionplaceholderbusinesses);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   const { name, description } = route.params;
@@ -112,6 +113,11 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
       useNativeDriver: false,
     }).start();
   }, [isEditing]);
+
+  const removeData = (index: number) => {
+    businesses.splice(index, 1);
+    setbusinesses(businesses);
+  };
 
   return (
     <View style={styles.container}>
@@ -142,7 +148,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
       <Text style={styles.collectiondesctext}>{description}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <View
             style={{
               justifyContent: "center",
@@ -150,14 +156,16 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
               flexDirection: "row",
             }}
           >
-            <Animated.View style={{ opacity: fadeAnim }}>
-              <AntDesign
-                style={{ marginHorizontal: 10 }}
-                name="minuscircle"
-                color="#FA4A0C"
-                size={20}
-              />
+            <Pressable onPress={() => removeData(index)}>
+              <Animated.View style={{ opacity: fadeAnim }}>
+                <AntDesign
+                  style={{ marginHorizontal: 10 }}
+                  name="minuscircle"
+                  color="#FA4A0C"
+                  size={20}
+                />
             </Animated.View>
+            </Pressable>
             <CollectionBusinessCell
               name={item.name}
               rating={item.rating}
@@ -166,7 +174,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
           </View>
         )}
         keyExtractor={(item, index) => index + item.name}
-        data={collectionplaceholderbusinesses}
+        data={businesses}
       />
     </View>
   );
