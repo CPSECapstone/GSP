@@ -6,6 +6,8 @@ import {
   FlatList,
   Pressable,
   Animated,
+  Dimensions,
+  Image,
 } from "react-native";
 import {
   AntDesign,
@@ -16,6 +18,18 @@ import {
 } from "@expo/vector-icons";
 import { businesses, categories } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
+
+const width = Dimensions.get("screen").width * 0.16;
+const height = Dimensions.get("screen").height * 0.096;
+const imgdimensions = width - 29;
+
+const aaimg = require("../../assets/icons/asianamerican.png");
+const afam = require("../../assets/icons/africanamerican.png");
+const lx = require("../../assets/icons/latinx.png");
+const mide = require("../../assets/icons/middleeastern.png");
+const na = require("../../assets/icons/nativeamerican.png");
+const pi = require("../../assets/icons/pacific.png");
+const an = require("../../assets/icons/alaska.png");
 
 const styles = StyleSheet.create({
   title: {
@@ -62,7 +76,62 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     textAlign: "center",
   },
+  minoritycellcontainer: {
+    borderRadius: 15,
+    marginHorizontal: 10,
+    marginTop: 25,
+    minHeight: height,
+    minWidth: width + 10,
+    maxWidth: width + 10,
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+  },
+  minoritycellimage: {
+    width: imgdimensions,
+    height: imgdimensions,
+    borderRadius: imgdimensions,
+    position: "absolute",
+    marginTop: 15,
+  },
+  minoritycelltitle: {
+    fontFamily: "Mada-Medium",
+    fontSize: 12,
+    textAlign: "center",
+    marginTop: imgdimensions + 15,
+    padding: 10,
+  },
 });
+
+const minoritygroups = [
+  {
+    img: aaimg,
+    title: "Asian American",
+  },
+  {
+    img: afam,
+    title: "African American",
+  },
+  {
+    img: lx,
+    title: "LatinX",
+  },
+  {
+    img: mide,
+    title: "Middle Eastern American",
+  },
+  {
+    img: na,
+    title: "Native American",
+  },
+  {
+    img: pi,
+    title: "Pacific Islander",
+  },
+  {
+    img: an,
+    title: "Alaska Native",
+  },
+];
 
 const categoryicons = [
   <Ionicons
@@ -94,6 +163,7 @@ const categoryicons = [
 
 function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
+  const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
 
   const moreonpress = () => {};
 
@@ -145,6 +215,41 @@ function Explore() {
         keyExtractor={(item, index) => item.title + index.toString()}
       />
       <Text style={styles.title2}>Minority Groups</Text>
+      <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        data={minoritygroups}
+        contentContainerStyle={{ paddingLeft: 20 }}
+        renderItem={({ item, index }) => (
+          <Pressable
+            onPress={() => {
+              if (selectedMinorityGroups.includes(index)) {
+                setselectedMinorityGroups(
+                  selectedMinorityGroups.filter(
+                    (listitem) => listitem !== index
+                  )
+                );
+              } else {
+                setselectedMinorityGroups([...selectedMinorityGroups, index]);
+              }
+            }}
+          >
+            <View
+              style={[
+                styles.minoritycellcontainer,
+                { borderWidth: 2, borderColor: "#FFFFFF" },
+                selectedMinorityGroups.includes(index) && {
+                  borderColor: "#FA4A0C",
+                },
+              ]}
+            >
+              <Image style={styles.minoritycellimage} source={item.img} />
+              <Text style={styles.minoritycelltitle}>{item.title}</Text>
+            </View>
+          </Pressable>
+        )}
+        keyExtractor={(item, index) => item.title + index.toString()}
+      />
     </View>
   );
 }
