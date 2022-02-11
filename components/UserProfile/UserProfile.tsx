@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
+import { UserProfileProps } from "../../route-settings";
 
 const profileData = {
   name: "Marvis Ighedosa",
@@ -83,17 +84,26 @@ function LogoutCell() {
   );
 }
 
-export default function UserProfile() {
+export default function UserProfile({ navigation }: UserProfileProps) {
   return (
     <View style={styles.container}>
-      <BackButton />
+      <BackButton action={() => navigation.goBack()} />
       <Text style={styles.myProfileText}>My Profile</Text>
       <Image style={styles.profileImage} source={profileData.profileImage} />
       <Text style={styles.name}>{profileData.name}</Text>
       <View style={styles.cells}>
-        <UserProfileCell title="My Reviews" />
-        <UserProfileCell title="Edit Profile" />
-        <UserProfileCell title="Notifications" />
+        <UserProfileCell
+          action={() => navigation.navigate("ReviewPage")}
+          title="My Reviews"
+        />
+        <UserProfileCell
+          action={() => console.log("Edit Profile")}
+          title="Edit Profile"
+        />
+        <UserProfileCell
+          action={() => console.log("Notifications")}
+          title="Notifications"
+        />
         <LogoutCell />
       </View>
     </View>

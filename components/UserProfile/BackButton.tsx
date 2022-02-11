@@ -17,11 +17,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function BackButton() {
+interface BackButtonProps {
+  action: () => void;
+}
+
+export default function BackButton(props: BackButtonProps) {
   return (
     <Pressable
       onPress={() => {
-        console.log("Back");
+        props.action();
       }}
     >
       <View style={styles.back}>
