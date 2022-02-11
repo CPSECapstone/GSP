@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { Auth } from "aws-amplify";
+import { UserProfileProps } from "../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
 
@@ -71,19 +73,13 @@ const styles = StyleSheet.create({
 
 function LogoutCell() {
   return (
-    <Pressable
-      onPress={() => {
-        console.log("Logout");
-      }}
-    >
-      <View style={[styles.logoutCell, styles.shadow]}>
-        <Text style={styles.logout}>Log Out</Text>
-      </View>
-    </Pressable>
+    <View style={[styles.logoutCell, styles.shadow]}>
+      <Text style={styles.logout}>Log Out</Text>
+    </View>
   );
 }
 
-export default function UserProfile() {
+export default function UserProfile({ navigation }: UserProfileProps) {
   return (
     <View style={styles.container}>
       <BackButton />
@@ -94,7 +90,18 @@ export default function UserProfile() {
         <UserProfileCell title="My Reviews" />
         <UserProfileCell title="Edit Profile" />
         <UserProfileCell title="Notifications" />
-        <LogoutCell />
+        <Pressable
+          onPress={async () => {
+            try {
+              await Auth.signOut();
+              navigation.navigate("Login");
+            } catch (error) {
+              console.error("error signing out: ", error);
+            }
+          }}
+        >
+          <LogoutCell />
+        </Pressable>
       </View>
     </View>
   );
