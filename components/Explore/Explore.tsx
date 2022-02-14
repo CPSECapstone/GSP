@@ -12,24 +12,21 @@ import {
 import {
   AntDesign,
   Entypo,
+  EvilIcons,
   Feather,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { businesses, categories } from "../../constants/exploredata";
+import {
+  businesses,
+  categories,
+  minoritygroups,
+} from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
 const imgdimensions = width - 29;
-
-const aaimg = require("../../assets/icons/asianamerican.png");
-const afam = require("../../assets/icons/africanamerican.png");
-const lx = require("../../assets/icons/latinx.png");
-const mide = require("../../assets/icons/middleeastern.png");
-const na = require("../../assets/icons/nativeamerican.png");
-const pi = require("../../assets/icons/pacific.png");
-const an = require("../../assets/icons/alaska.png");
 
 const styles = StyleSheet.create({
   title: {
@@ -83,6 +80,7 @@ const styles = StyleSheet.create({
     minHeight: height,
     minWidth: width + 10,
     maxWidth: width + 10,
+    flex: 1,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
   },
@@ -90,48 +88,15 @@ const styles = StyleSheet.create({
     width: imgdimensions,
     height: imgdimensions,
     borderRadius: imgdimensions,
-    position: "absolute",
     marginTop: 15,
   },
   minoritycelltitle: {
     fontFamily: "Mada-Medium",
     fontSize: 12,
     textAlign: "center",
-    marginTop: imgdimensions + 15,
     padding: 10,
   },
 });
-
-const minoritygroups = [
-  {
-    img: aaimg,
-    title: "Asian American",
-  },
-  {
-    img: afam,
-    title: "African American",
-  },
-  {
-    img: lx,
-    title: "LatinX",
-  },
-  {
-    img: mide,
-    title: "Middle Eastern American",
-  },
-  {
-    img: na,
-    title: "Native American",
-  },
-  {
-    img: pi,
-    title: "Pacific Islander",
-  },
-  {
-    img: an,
-    title: "Alaska Native",
-  },
-];
 
 const categoryicons = [
   <Ionicons
@@ -166,6 +131,11 @@ function Explore() {
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
 
   const moreonpress = () => {};
+
+  const queryBusinesses = () => {
+    // if selectedminoritygroups is empty, display "Select one or more minority groups to view businesses."
+    console.log("Query businesses using state variables");
+  };
 
   return (
     <View>
@@ -219,18 +189,22 @@ function Explore() {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={minoritygroups}
-        contentContainerStyle={{ paddingLeft: 20 }}
+        contentContainerStyle={{ paddingLeft: 20, height: 125 }}
         renderItem={({ item, index }) => (
           <Pressable
             onPress={() => {
-              if (selectedMinorityGroups.includes(index)) {
-                setselectedMinorityGroups(
-                  selectedMinorityGroups.filter(
-                    (listitem) => listitem !== index
-                  )
-                );
+              if (index === 0 && !selectedMinorityGroups.includes(index)) {
+                setselectedMinorityGroups([0]);
               } else {
-                setselectedMinorityGroups([...selectedMinorityGroups, index]);
+                if (selectedMinorityGroups.includes(index)) {
+                  setselectedMinorityGroups(
+                    selectedMinorityGroups.filter(
+                      (listitem) => listitem !== index
+                    )
+                  );
+                } else {
+                  setselectedMinorityGroups([...selectedMinorityGroups, index]);
+                }
               }
             }}
           >
@@ -250,6 +224,43 @@ function Explore() {
         )}
         keyExtractor={(item, index) => item.title + index.toString()}
       />
+      <View style={{ width: "100%", alignItems: "flex-end" }}>
+        <Pressable
+          onPress={queryBusinesses}
+          style={{
+            backgroundColor: "#FA4A0C",
+            borderRadius: 15,
+            margin: 10,
+            marginRight: 15,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <EvilIcons
+              style={{ padding: 5 }}
+              name="search"
+              color={"white"}
+              size={20}
+            />
+            <Text
+              style={{
+                color: "white",
+                padding: 5,
+                marginRight: 5,
+                fontSize: 16,
+                fontFamily: "Mada-Regular",
+              }}
+            >
+              Search
+            </Text>
+          </View>
+        </Pressable>
+      </View>
     </View>
   );
 }

@@ -47,3 +47,47 @@ export const businesses = [
     minoritygroup: "LatinX",
   },
 ];
+
+const all = require("../../assets/icons/all.png");
+const aaimg = require("../../assets/icons/asianamerican.png");
+const afam = require("../../assets/icons/africanamerican.png");
+const lx = require("../../assets/icons/latinx.png");
+const mide = require("../../assets/icons/middleeastern.png");
+const na = require("../../assets/icons/nativeamerican.png");
+const pi = require("../../assets/icons/pacific.png");
+const an = require("../../assets/icons/alaska.png");
+
+export const minoritygroups = [
+  {
+    img: all,
+    title: "All",
+  },
+  {
+    img: aaimg,
+    title: "Asian American",
+  },
+  {
+    img: afam,
+    title: "African American",
+  },
+  {
+    img: lx,
+    title: "LatinX",
+  },
+  {
+    img: mide,
+    title: "Middle Eastern",
+  },
+  {
+    img: na,
+    title: "Native American",
+  },
+  {
+    img: pi,
+    title: "Pacific Islander",
+  },
+  {
+    img: an,
+    title: "Alaska Native",
+  },
+];
