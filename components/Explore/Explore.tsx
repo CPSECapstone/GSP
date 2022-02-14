@@ -195,16 +195,14 @@ function Explore() {
             onPress={() => {
               if (index === 0 && !selectedMinorityGroups.includes(index)) {
                 setselectedMinorityGroups([0]);
+              } else if (selectedMinorityGroups.includes(index)) {
+                setselectedMinorityGroups(
+                  selectedMinorityGroups.filter(
+                    (listitem) => listitem !== index
+                  )
+                );
               } else {
-                if (selectedMinorityGroups.includes(index)) {
-                  setselectedMinorityGroups(
-                    selectedMinorityGroups.filter(
-                      (listitem) => listitem !== index
-                    )
-                  );
-                } else {
-                  setselectedMinorityGroups([...selectedMinorityGroups, index]);
-                }
+                setselectedMinorityGroups([...selectedMinorityGroups, index]);
               }
             }}
           >
@@ -244,7 +242,7 @@ function Explore() {
             <EvilIcons
               style={{ padding: 5 }}
               name="search"
-              color={"white"}
+              color="white"
               size={20}
             />
             <Text
