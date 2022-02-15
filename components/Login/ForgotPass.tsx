@@ -86,8 +86,9 @@ function ForgotPass({ navigation }: ForgotPassProps) {
           placeholder="Enter your email"
           textContentType="emailAddress"
           setState={setEmail}
+          value={email}
+          errorMsg={emailError}
         />
-        {!!emailError && <Text style={styles.error}>{emailError}</Text>}
       </View>
 
       <View style={forgotPassStyle.container}>

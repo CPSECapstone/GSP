@@ -107,6 +107,8 @@ function Login({ navigation }: LoginProps) {
     if (validateEmail() && validatePassword()) {
       try {
         const user = await Auth.signIn(email, password);
+        setEmail("");
+        setPassword("");
         console.log(user);
         navigation.navigate("App");
       } catch (error) {
@@ -127,16 +129,18 @@ function Login({ navigation }: LoginProps) {
             placeholder="Enter your email"
             textContentType="emailAddress"
             setState={setEmail}
+            value={email}
+            errorMsg={emailError}
           />
-          {!!emailError && <Text style={styles.error}>{emailError}</Text>}
           <CleanInput
             label="Password"
             placeholder="Enter your password"
             textContentType="password"
             setState={setPassword}
             secureTextEntry
+            value={password}
+            errorMsg={passwordError}
           />
-          {!!passwordError && <Text style={styles.error}>{passwordError}</Text>}
         </View>
 
         <Pressable onPress={() => navigation.navigate("ForgotPass")}>

@@ -31,6 +31,7 @@ interface CleanInputProps {
   placeholder?: string | undefined;
   errorMsg?: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
+  value: any;
 }
 
 function CleanInput({
@@ -41,6 +42,7 @@ function CleanInput({
   placeholder,
   errorMsg,
   setState,
+  value,
 }: CleanInputProps) {
   return (
     <View style={styles.inputWrapper}>
@@ -52,6 +54,7 @@ function CleanInput({
         keyboardType={keyboardType}
         placeholder={placeholder}
         onChangeText={setState}
+        value={value}
       />
       {!!errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
     </View>

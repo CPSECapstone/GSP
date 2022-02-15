@@ -143,26 +143,25 @@ function ForgotPass2({ navigation, route }: ForgotPass2Props) {
           textContentType="oneTimeCode"
           keyboardType="numeric"
           setState={setCode}
+          value={code}
+          errorMsg={codeError}
         />
-        {!!codeError && <Text style={forgotPassStyle.error}>{codeError}</Text>}
         <CleanInput
           label="New Password"
           textContentType="password"
           setState={setPassword}
           secureTextEntry
+          value={password}
+          errorMsg={passwordError}
         />
-        {!!passwordError && (
-          <Text style={forgotPassStyle.error}>{passwordError}</Text>
-        )}
         <CleanInput
           label="Confirm New Password"
           textContentType="password"
           setState={setConfirmPassword}
           secureTextEntry
+          value={confirmPassword}
+          errorMsg={confirmPasswordError}
         />
-        {!!confirmPasswordError && (
-          <Text style={forgotPassStyle.error}>{confirmPasswordError}</Text>
-        )}
         {resetPassSuccess && (
           <Text style={forgotPassStyle.success}>
             Password successfully reset!
