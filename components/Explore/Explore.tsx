@@ -16,6 +16,8 @@ import {
 } from "@expo/vector-icons";
 import { businesses, categories } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
+import { useAppSelector } from "../../redux/hooks";
+import selectAllBusinesses from "../../redux/selectors/business";
 
 const styles = StyleSheet.create({
   title: {
@@ -94,6 +96,8 @@ const categoryicons = [
 
 function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
+  const b = useAppSelector(selectAllBusinesses);
+  console.log(b);
 
   const moreonpress = () => {};
 

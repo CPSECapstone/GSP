@@ -67,14 +67,14 @@ export type ProfileEditorProps = BottomTabScreenProps<
   RootTabBarParamList,
   "ProfileEditor"
 >;
+export type UserProfileProps = NativeStackScreenProps<
+  RootStackParamList,
+  "UserProfile"
+>;
 
 export type ReviewPageProps = NativeStackScreenProps<
   RootStackParamList,
   "ReviewPage"
->;
-export type UserProfileProps = NativeStackScreenProps<
-  RootStackParamList,
-  "UserProfile"
 >;
 
 export const TabBarScreenOptions = ({
