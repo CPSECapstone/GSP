@@ -131,10 +131,11 @@ const categoryicons = [
 function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
-  const b = useAppSelector(selectAllBusinesses);
-  console.log(b);
+  const allBusinesses = useAppSelector(selectAllBusinesses);
 
   const moreonpress = () => {};
+
+  React.useEffect(() => {}, [selectedCategoryIndex, selectedMinorityGroups]);
 
   const queryBusinesses = () => {
     // if selectedminoritygroups is empty, display "Select one or more minority groups to view businesses."
