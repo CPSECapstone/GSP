@@ -23,6 +23,8 @@ import {
   minoritygroups,
 } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
+import { useAppSelector } from "../../redux/hooks";
+import selectAllBusinesses from "../../redux/selectors/business";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
@@ -129,6 +131,8 @@ const categoryicons = [
 function Explore() {
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
+  const b = useAppSelector(selectAllBusinesses);
+  console.log(b);
 
   const moreonpress = () => {};
 

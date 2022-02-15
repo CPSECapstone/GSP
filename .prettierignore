@@ -8,3 +8,4 @@ src
 assets/fonts
 .husky/pre-commit
 assets/icons
+**/.eslintignore
