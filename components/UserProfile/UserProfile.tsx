@@ -99,7 +99,6 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           action={() => console.log("Notifications")}
           title="Notifications"
         />
-        <LogoutCell />
         <Pressable
           onPress={async () => {
             try {
