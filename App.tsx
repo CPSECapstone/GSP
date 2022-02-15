@@ -18,6 +18,8 @@ import ProfileEditor from "./components/Profile/ProfileEditor";
 import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
+import ReviewPage from "./components/Review/ReviewPage";
+
 import {
   RootStackParamList,
   RootTabBarParamList,
@@ -89,6 +91,7 @@ export default function App() {
             <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
             <Stack.Screen name="App" component={AuthenticatedApp} />
             <Stack.Screen name="OpenCollection" component={OpenCollection} />
+            <Stack.Screen name="ReviewPage" component={ReviewPage} />
           </Stack.Navigator>
         </SafeAreaView>
       </NavigationContainer>
