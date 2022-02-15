@@ -39,13 +39,11 @@ interface CellProps {
   action: () => void;
 }
 
-function UserProfileCell(props: CellProps) {
-  const { title } = props;
-
+function UserProfileCell({ title, action }: CellProps) {
   return (
     <Pressable
       onPress={() => {
-        props.action();
+        action();
       }}
     >
       <View style={[styles.container, styles.shadow]}>

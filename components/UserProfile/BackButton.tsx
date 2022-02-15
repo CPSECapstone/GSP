@@ -21,11 +21,11 @@ interface BackButtonProps {
   action: () => void;
 }
 
-export default function BackButton(props: BackButtonProps) {
+export default function BackButton({ action }: BackButtonProps) {
   return (
     <Pressable
       onPress={() => {
-        props.action();
+        action();
       }}
     >
       <View style={styles.back}>
