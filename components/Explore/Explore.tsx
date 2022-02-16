@@ -12,16 +12,11 @@ import {
 import {
   AntDesign,
   Entypo,
-  EvilIcons,
   Feather,
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import {
-  businesses,
-  categories,
-  minoritygroups,
-} from "../../constants/exploredata";
+import { categories, minoritygroups } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
@@ -157,21 +152,14 @@ function Explore() {
           (minorityGroupsByName.includes(tag) ||
             minorityGroupsByName.includes("All"))
         ) {
-          resBusiness.push(business);
+          if (business.type === categories[selectedCategoryIndex]) {
+            resBusiness.push(business);
+          }
         }
       });
     });
-    resBusiness.filter((b) => {
-      b.type === categories[selectedCategoryIndex];
-    });
-    console.log(resBusiness);
     setResultBusinesses(resBusiness);
   }, [selectedCategoryIndex, selectedMinorityGroups]);
-
-  const queryBusinesses = () => {
-    // if selectedminoritygroups is empty, display "Select one or more minority groups to view businesses."
-    console.log("Query businesses using state variables");
-  };
 
   return (
     <View>
@@ -221,14 +209,13 @@ function Explore() {
                 title={item.name}
                 distance={3}
                 category={item.type}
-                minoritygroup={"LatinX"}
+                minoritygroup="LatinX"
               />
             );
-          } else {
-            return <Text>idk</Text>;
           }
+          return <Text>idk</Text>;
         }}
-        keyExtractor={(item, index) => item?.name + index.toString()}
+        keyExtractor={(item, index) => index.toString()}
       />
       <Text style={styles.title2}>Minority Groups</Text>
       <FlatList
@@ -268,43 +255,6 @@ function Explore() {
         )}
         keyExtractor={(item, index) => item.title + index.toString()}
       />
-      <View style={{ width: "100%", alignItems: "flex-end" }}>
-        <Pressable
-          onPress={queryBusinesses}
-          style={{
-            backgroundColor: "#FA4A0C",
-            borderRadius: 15,
-            margin: 10,
-            marginRight: 15,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <EvilIcons
-              style={{ padding: 5 }}
-              name="search"
-              color="white"
-              size={20}
-            />
-            <Text
-              style={{
-                color: "white",
-                padding: 5,
-                marginRight: 5,
-                fontSize: 16,
-                fontFamily: "Mada-Regular",
-              }}
-            >
-              Search
-            </Text>
-          </View>
-        </Pressable>
-      </View>
     </View>
   );
 }
