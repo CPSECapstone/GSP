@@ -25,6 +25,7 @@ import {
 import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
+import { Business } from "../../src/API";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
@@ -129,13 +130,43 @@ const categoryicons = [
 ];
 
 function Explore() {
+  const allBusinesses = useAppSelector(selectAllBusinesses);
+
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
-  const allBusinesses = useAppSelector(selectAllBusinesses);
+  const [resultBusinesses, setResultBusinesses] = useState(allBusinesses);
+
+  let minorityGroupsByName: string[] = [];
 
   const moreonpress = () => {};
 
-  React.useEffect(() => {}, [selectedCategoryIndex, selectedMinorityGroups]);
+  React.useEffect(() => {
+    minorityGroupsByName = [];
+    selectedMinorityGroups.forEach((index) => {
+      minorityGroupsByName.push(minoritygroups[index].title);
+    });
+    console.log(minorityGroupsByName);
+  }, [selectedMinorityGroups]);
+
+  React.useEffect(() => {
+    const resBusiness: Business[] = [];
+    allBusinesses.forEach((business) => {
+      business?.tags?.forEach((tag) => {
+        if (
+          tag != null &&
+          (minorityGroupsByName.includes(tag) ||
+            minorityGroupsByName.includes("All"))
+        ) {
+          resBusiness.push(business);
+        }
+      });
+    });
+    resBusiness.filter((b) => {
+      b.type === categories[selectedCategoryIndex];
+    });
+    console.log(resBusiness);
+    setResultBusinesses(resBusiness);
+  }, [selectedCategoryIndex, selectedMinorityGroups]);
 
   const queryBusinesses = () => {
     // if selectedminoritygroups is empty, display "Select one or more minority groups to view businesses."
@@ -178,16 +209,26 @@ function Explore() {
         style={{ marginVertical: 20 }}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingLeft: 25 }}
-        data={businesses}
-        renderItem={({ item }) => (
-          <ExploreResultCell
-            title={item.title}
-            distance={item.distance}
-            category={item.category}
-            minoritygroup={item.minoritygroup}
-          />
-        )}
-        keyExtractor={(item, index) => item.title + index.toString()}
+        data={resultBusinesses}
+        renderItem={({ item }) => {
+          if (
+            item?.name !== undefined &&
+            item.type !== undefined &&
+            item.type !== null
+          ) {
+            return (
+              <ExploreResultCell
+                title={item.name}
+                distance={3}
+                category={item.type}
+                minoritygroup={"LatinX"}
+              />
+            );
+          } else {
+            return <Text>idk</Text>;
+          }
+        }}
+        keyExtractor={(item, index) => item?.name + index.toString()}
       />
       <Text style={styles.title2}>Minority Groups</Text>
       <FlatList
