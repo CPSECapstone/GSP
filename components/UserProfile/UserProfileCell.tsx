@@ -36,15 +36,14 @@ const styles = StyleSheet.create({
 
 interface CellProps {
   title: string;
+  action: () => void;
 }
 
-function UserProfileCell(props: CellProps) {
-  const { title } = props;
-
+function UserProfileCell({ title, action }: CellProps) {
   return (
     <Pressable
       onPress={() => {
-        console.log(title);
+        action();
       }}
     >
       <View style={[styles.container, styles.shadow]}>

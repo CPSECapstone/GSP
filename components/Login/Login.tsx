@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 60,
     marginLeft: 10,
+    fontFamily: "Mada-SemiBold",
   },
 
   account: {
@@ -85,6 +86,10 @@ function Login({ navigation }: LoginProps) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  Auth.currentSession()
+    .then(() => navigation.navigate("App"))
+    .catch(() => {}); // suppress unhandled Promise warning
+
   const validateEmail = () => {
     if (!email) {
       setEmailError("Email is required");
@@ -106,10 +111,9 @@ function Login({ navigation }: LoginProps) {
   const authenticate = async () => {
     if (validateEmail() && validatePassword()) {
       try {
-        const user = await Auth.signIn(email, password);
+        await Auth.signIn(email, password);
         setEmail("");
         setPassword("");
-        console.log(user);
         navigation.navigate("App");
       } catch (error) {
         console.error(error);
