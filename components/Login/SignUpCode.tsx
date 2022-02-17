@@ -3,7 +3,7 @@ import { useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Auth } from "aws-amplify";
 import { RootStackParamList } from "../../route-settings";
-import LargeButton from "../LargeButton";
+import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
 
 const { height } = Dimensions.get("screen");

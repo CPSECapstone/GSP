@@ -6,16 +6,16 @@ import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import Amplify from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
-import BusinessProfile from "./components/Profile/Business/BusinessProfile";
 import Explore from "./components/Explore/Explore";
 import Collections from "./components/Collections/Collections";
-import Login from "./components/Login";
-import ForgotPass from "./components/ForgotPass";
-import ProfileEditor from "./components/Profile/Business/ProfileEditor";
-import ForgotPass2 from "./components/ForgotPass2";
+import Login from "./components/Login/Login";
+import ForgotPass from "./components/Login/ForgotPass";
+import BusinessProfile from "./components/Profile/Business/BusinessProfile";
+import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
 import {
@@ -26,6 +26,9 @@ import {
 
 import Home from "./components/Home/Home";
 import UserProfile from "./components/UserProfile/UserProfile";
+import store from "./redux/store";
+import initializeRedux from "./redux/initialize";
+import { useAppDispatch } from "./redux/hooks";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -63,6 +66,31 @@ function AuthenticatedApp() {
   );
 }
 
+function InnerApp() {
+  const dispatch = useAppDispatch();
+  initializeRedux(dispatch);
+
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="ForgotPass" component={ForgotPass} />
+          <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="ChooseAccountType" component={AccountType} />
+          <Stack.Screen name="CreateAccount" component={SignUp} />
+          <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
+          <Stack.Screen name="App" component={AuthenticatedApp} />
+          <Stack.Screen name="OpenCollection" component={OpenCollection} />
+        </Stack.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
+  );
+}
+
 export default function App() {
   const [fontsLoaded, setfontsLoaded] = React.useState(false);
 
@@ -73,27 +101,9 @@ export default function App() {
 
   loadFontsAsync();
 
-  if (fontsLoaded) {
-    return (
-      <NavigationContainer>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
-          <Stack.Navigator
-            initialRouteName="App"
-            screenOptions={{ headerShown: false }}
-          >
-            <Stack.Screen name="ForgotPass" component={ForgotPass} />
-            <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="ChooseAccountType" component={AccountType} />
-            <Stack.Screen name="CreateAccount" component={SignUp} />
-            <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
-            <Stack.Screen name="App" component={AuthenticatedApp} />
-            <Stack.Screen name="OpenCollection" component={OpenCollection} />
-            <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
-          </Stack.Navigator>
-        </SafeAreaView>
-      </NavigationContainer>
-    );
-  }
-  return <AppLoading />;
+  return (
+    <Provider store={store}>
+      {fontsLoaded ? <InnerApp /> : <AppLoading />}
+    </Provider>
+  );
 }

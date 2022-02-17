@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { View, Pressable, Text, Image, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
-import LargeButton from "./LargeButton";
-import { ForgotPassProps } from "../route-settings";
-import CleanInput from "./Login/CleanInput";
+import LargeButton from "../Misc/LargeButton";
+import { ForgotPassProps } from "../../route-settings";
+import CleanInput from "./CleanInput";
 import { styles } from "./Login";
 
-const sourceImage = require("../assets/default-avatar.jpeg");
+const sourceImage = require("../../assets/default-avatar.jpeg");
 
 const forgotPassStyle = StyleSheet.create({
   container: {

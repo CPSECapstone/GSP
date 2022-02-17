@@ -23,6 +23,7 @@ export type RootStackParamList = {
   ViewCollection: undefined;
   OpenCollection: { name: string; description: string };
   ProfileEditor: undefined;
+  UserProfile: undefined;
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -69,6 +70,10 @@ export type ProfileProps = BottomTabScreenProps<RootTabBarParamList, "Profile">;
 export type BusinessProps = BottomTabScreenProps<
   RootTabBarParamList,
   "Business"
+>;
+export type UserProfileProps = NativeStackScreenProps<
+  RootStackParamList,
+  "UserProfile"
 >;
 
 export const TabBarScreenOptions = ({
