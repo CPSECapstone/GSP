@@ -22,6 +22,7 @@ export type RootStackParamList = {
   ForgotPass2: { email: string };
   ViewCollection: undefined;
   OpenCollection: { name: string; description: string };
+  ProfileEditor: undefined;
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -44,14 +45,18 @@ export type OpenCollectionPageProps = NativeStackScreenProps<
   RootStackParamList,
   "OpenCollection"
 >;
+export type ProfileEditorProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ProfileEditor"
+>;
 
 export type RootTabBarParamList = {
   Home: undefined;
   Explore: undefined;
   Collections: undefined;
   Profile: undefined;
+  Business: undefined;
   Feed: { sort: "latest" | "top" } | undefined;
-  ProfileEditor: undefined;
 };
 
 export type HomeProps = BottomTabScreenProps<RootTabBarParamList, "Home">;
@@ -61,9 +66,9 @@ export type CollectionsProps = BottomTabScreenProps<
   "Collections"
 >;
 export type ProfileProps = BottomTabScreenProps<RootTabBarParamList, "Profile">;
-export type ProfileEditorProps = BottomTabScreenProps<
+export type BusinessProps = BottomTabScreenProps<
   RootTabBarParamList,
-  "ProfileEditor"
+  "Business"
 >;
 
 export const TabBarScreenOptions = ({
@@ -91,8 +96,8 @@ export const TabBarScreenOptions = ({
       iconName = "ios-bookmark";
     } else if (route.name === "Profile") {
       iconName = "ios-person";
-    } else if (route.name === "ProfileEditor") {
-      iconName = "settings";
+    } else if (route.name === "Business") {
+      iconName = "business";
     }
 
     if (!focused) {
