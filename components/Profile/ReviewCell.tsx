@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { EditButton } from "./ProfileEditor";
+import { EditButton } from "./Business/ProfileEditor";
 
 export const styles = StyleSheet.create({
   reviewCell: {

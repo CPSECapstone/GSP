@@ -10,12 +10,12 @@ import { Provider } from "react-redux";
 import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
-// import ProfilePage from "./components/Profile";
 import Explore from "./components/Explore/Explore";
 import Collections from "./components/Collections/Collections";
 import Login from "./components/Login/Login";
 import ForgotPass from "./components/Login/ForgotPass";
-import ProfileEditor from "./components/Profile/ProfileEditor";
+import BusinessProfile from "./components/Profile/Business/BusinessProfile";
+import ProfileEditor from "./components/Profile/Business/ProfileEditor";
 import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
@@ -63,8 +63,8 @@ function AuthenticatedApp() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Collections" component={Collections} />
-      <Tab.Screen name="ProfileEditor" component={ProfileEditor} />
       <Tab.Screen name="Profile" component={UserProfile} />
+      <Tab.Screen name="Business" component={BusinessProfile} />
     </Tab.Navigator>
   );
 }
@@ -89,6 +89,7 @@ function InnerApp() {
           <Stack.Screen name="App" component={AuthenticatedApp} />
           <Stack.Screen name="OpenCollection" component={OpenCollection} />
           <Stack.Screen name="ReviewPage" component={ReviewPage} />
+          <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
