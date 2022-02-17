@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 60,
     marginLeft: 10,
+    fontFamily: "Mada-SemiBold",
   },
 
   account: {
@@ -85,6 +86,10 @@ function Login({ navigation }: LoginProps) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  Auth.currentSession()
+    .then(() => navigation.navigate("App"))
+    .catch(() => {}); // suppress unhandled Promise warning
+
   const validateEmail = () => {
     if (!email) {
       setEmailError("Email is required");
@@ -106,8 +111,9 @@ function Login({ navigation }: LoginProps) {
   const authenticate = async () => {
     if (validateEmail() && validatePassword()) {
       try {
-        const user = await Auth.signIn(email, password);
-        console.log(user);
+        await Auth.signIn(email, password);
+        setEmail("");
+        setPassword("");
         navigation.navigate("App");
       } catch (error) {
         console.error(error);
@@ -127,16 +133,18 @@ function Login({ navigation }: LoginProps) {
             placeholder="Enter your email"
             textContentType="emailAddress"
             setState={setEmail}
+            value={email}
+            errorMsg={emailError}
           />
-          {!!emailError && <Text style={styles.error}>{emailError}</Text>}
           <CleanInput
             label="Password"
             placeholder="Enter your password"
             textContentType="password"
             setState={setPassword}
             secureTextEntry
+            value={password}
+            errorMsg={passwordError}
           />
-          {!!passwordError && <Text style={styles.error}>{passwordError}</Text>}
         </View>
 
         <Pressable onPress={() => navigation.navigate("ForgotPass")}>

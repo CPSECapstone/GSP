@@ -46,6 +46,7 @@ function SignUpCode({ navigation, route }: SignUpCodeProps) {
         textContentType="oneTimeCode"
         keyboardType="numeric"
         setState={setCode}
+        value={code}
         errorMsg={codeError}
       />
       <LargeButton label="Submit" action={submitCode} />

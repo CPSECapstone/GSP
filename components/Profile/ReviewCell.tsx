@@ -1,10 +1,11 @@
 import React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { EditButton } from "./ProfileEditor";
 
 export const styles = StyleSheet.create({
   reviewCell: {
-    width: 250,
+    width: 300,
     backgroundColor: "white",
     padding: 10,
     borderRadius: 10,
@@ -16,10 +17,10 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
   },
   image: {
-    height: 40,
-    width: 40,
+    height: 50,
+    width: 50,
     borderRadius: 50,
-    marginLeft: 5,
+    marginLeft: 10,
   },
 });
 
@@ -77,6 +78,7 @@ function ReviewCell({
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <EditButton position={{ bottom: 0, right: -7 }} />
         <Text style={styles.restauraunt}>{restaurant}</Text>
         <Image style={styles.image} source={{ uri: srcImage }} />
       </View>

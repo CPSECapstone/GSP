@@ -23,6 +23,7 @@ export type RootStackParamList = {
   ViewCollection: undefined;
   OpenCollection: { name: string; description: string };
   ProfileEditor: undefined;
+  ReviewPage: undefined;
   UserProfile: undefined;
 };
 
@@ -74,6 +75,11 @@ export type BusinessProps = BottomTabScreenProps<
 export type UserProfileProps = NativeStackScreenProps<
   RootStackParamList,
   "UserProfile"
+>;
+
+export type ReviewPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ReviewPage"
 >;
 
 export const TabBarScreenOptions = ({
