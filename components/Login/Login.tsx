@@ -85,6 +85,10 @@ function Login({ navigation }: LoginProps) {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  Auth.currentSession()
+    .then(() => navigation.navigate("App"))
+    .catch(() => {}); // suppress unhandled Promise warning
+
   const validateEmail = () => {
     if (!email) {
       setEmailError("Email is required");
@@ -106,8 +110,7 @@ function Login({ navigation }: LoginProps) {
   const authenticate = async () => {
     if (validateEmail() && validatePassword()) {
       try {
-        const user = await Auth.signIn(email, password);
-        console.log(user);
+        await Auth.signIn(email, password);
         navigation.navigate("App");
       } catch (error) {
         console.error(error);
