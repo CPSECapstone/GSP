@@ -131,7 +131,7 @@ function Explore() {
     selectedMinorityGroups.forEach((index) => {
       minorityGroupsByName.push(minoritygroups[index].title);
     });
-  }, [selectedMinorityGroups]);
+  }, [selectedMinorityGroups, selectedCategoryIndex]);
 
   React.useEffect(() => {
     const resBusiness: Business[] = [];
@@ -202,7 +202,7 @@ function Explore() {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 25 }}
+            contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
             data={resultBusinesses}
             renderItem={({ item }) => {
               if (
