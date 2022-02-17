@@ -22,6 +22,7 @@ export type RootStackParamList = {
   ForgotPass2: { email: string };
   ViewCollection: undefined;
   OpenCollection: { name: string; description: string };
+  ReviewPage: undefined;
   UserProfile: undefined;
 };
 
@@ -69,6 +70,11 @@ export type ProfileEditorProps = BottomTabScreenProps<
 export type UserProfileProps = NativeStackScreenProps<
   RootStackParamList,
   "UserProfile"
+>;
+
+export type ReviewPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  "ReviewPage"
 >;
 
 export const TabBarScreenOptions = ({

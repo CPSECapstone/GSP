@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 60,
     marginLeft: 10,
+    fontFamily: "Mada-SemiBold",
   },
 
   account: {

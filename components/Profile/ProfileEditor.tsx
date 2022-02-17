@@ -100,7 +100,7 @@ function DataRow({ title, data, setEdit }: DataRowProps) {
   );
 }
 
-function EditButton({ position }: any) {
+export function EditButton({ position }: any) {
   return (
     <Pressable style={[styles.editButton, position]}>
       <Ionicons name="pencil" size={30} color="black" />
