@@ -7,4 +7,5 @@ src
 .prettierignore
 assets/fonts
 .husky/pre-commit
+assets/icons
 **/.eslintignore
