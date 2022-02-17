@@ -6,7 +6,8 @@ interface ResultCellProps {
   title: string;
   distance: number;
   category: string;
-  minoritygroup: string;
+  minoritygroups: (string | null)[];
+  primarycolor: string;
 }
 
 const styles = StyleSheet.create({
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-Bold",
     fontSize: 17,
     color: "#FA4A0C",
-    padding: 15,
+    padding: 10,
   },
   horizview: {
     flexDirection: "row",
@@ -40,30 +41,49 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-SemiBold",
     fontSize: 12,
     opacity: 0.5,
-    padding: 10,
+    padding: 5,
   },
   image: {
     width: 150,
     height: 150,
     borderRadius: 150,
-    margin: 15,
+    margin: 10,
   },
 });
 
 function ExploreResultCell(props: ResultCellProps) {
-  const { title, distance, category, minoritygroup } = props;
+  const { title, distance, category, minoritygroups, primarycolor } = props;
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} source={placeholdericon} />
+      <Image
+        style={[
+          styles.image,
+          { borderWidth: 2, borderColor: `#${primarycolor}` },
+        ]}
+        source={placeholdericon}
+      />
       <View style={styles.horizview}>
         <Text style={styles.titletext}>{title}</Text>
         <Text style={styles.distancetext}>{`${distance}mi`}</Text>
       </View>
-      <View style={styles.horizview}>
-        <Text style={styles.littletext}>{category}</Text>
-        <Text style={styles.littletext}>|</Text>
-        <Text style={styles.littletext}>{`${minoritygroup}-Owned`}</Text>
+      <Text style={styles.littletext}>{category}</Text>
+      <View
+        style={{
+          justifyContent: "center",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          paddingBottom: 10,
+        }}
+      >
+        {minoritygroups.map((minoritygroup, index) => (
+          <Text
+            style={{ fontFamily: "Mada-SemiBold", fontSize: 12, opacity: 0.5 }}
+          >
+            {minoritygroup}
+            {index !== minoritygroups.length - 1 ? " • " : ""}
+          </Text>
+        ))}
       </View>
     </View>
   );

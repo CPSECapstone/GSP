@@ -1,10 +1,4 @@
-export const categories = [
-  "Restaurant",
-  "Shopping",
-  "Markets",
-  "Beauty",
-  "More",
-];
+export const categories = ["Food", "Shopping", "Markets", "Beauty"];
 
 export const businesses = [
   {

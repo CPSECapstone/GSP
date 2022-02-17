@@ -10,7 +10,6 @@ import {
   Image,
 } from "react-native";
 import {
-  AntDesign,
   Entypo,
   Feather,
   Ionicons,
@@ -116,12 +115,6 @@ const categoryicons = [
     color="#FB6BE4"
     size={30}
   />,
-  <AntDesign
-    style={styles.categoryicon}
-    name="ellipsis1"
-    color="black"
-    size={30}
-  />,
 ];
 
 function Explore() {
@@ -133,14 +126,11 @@ function Explore() {
 
   let minorityGroupsByName: string[] = [];
 
-  const moreonpress = () => {};
-
   React.useEffect(() => {
     minorityGroupsByName = [];
     selectedMinorityGroups.forEach((index) => {
       minorityGroupsByName.push(minoritygroups[index].title);
     });
-    console.log(minorityGroupsByName);
   }, [selectedMinorityGroups]);
 
   React.useEffect(() => {
@@ -171,13 +161,7 @@ function Explore() {
         data={categories}
         contentContainerStyle={{ paddingLeft: 20 }}
         renderItem={({ item, index }) => (
-          <Pressable
-            onPress={
-              index === 4
-                ? () => moreonpress()
-                : () => setselectedCategoryIndex(index)
-            }
-          >
+          <Pressable onPress={() => setselectedCategoryIndex(index)}>
             <Animated.View
               style={[
                 styles.categorycontainer,
@@ -192,31 +176,58 @@ function Explore() {
         )}
         keyExtractor={(item, index) => item + index.toString()}
       />
-      <FlatList
-        horizontal
-        style={{ marginVertical: 20 }}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: 25 }}
-        data={resultBusinesses}
-        renderItem={({ item }) => {
-          if (
-            item?.name !== undefined &&
-            item.type !== undefined &&
-            item.type !== null
-          ) {
-            return (
-              <ExploreResultCell
-                title={item.name}
-                distance={3}
-                category={item.type}
-                minoritygroup="LatinX"
-              />
-            );
-          }
-          return <Text>idk</Text>;
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          marginVertical: 20,
+          padding: 10,
+          minHeight: 350,
         }}
-        keyExtractor={(item, index) => index.toString()}
-      />
+      >
+        {resultBusinesses.length === 0 ? (
+          <Text
+            style={{
+              color: "#FA4A0C",
+              fontFamily: "Mada-Regular",
+              fontSize: 24,
+              textAlign: "center",
+            }}
+          >
+            No businesses returned from selected filters.
+          </Text>
+        ) : (
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingLeft: 25 }}
+            data={resultBusinesses}
+            renderItem={({ item }) => {
+              if (
+                item?.name !== undefined &&
+                item.type !== undefined &&
+                item.type !== null &&
+                item.primarycolor !== null &&
+                item.primarycolor !== undefined &&
+                item.tags !== null &&
+                item.tags !== undefined
+              ) {
+                return (
+                  <ExploreResultCell
+                    title={item.name}
+                    distance={3}
+                    category={item.type}
+                    minoritygroups={item.tags}
+                    primarycolor={item.primarycolor}
+                  />
+                );
+              }
+              return <Text>Something went wrong</Text>;
+            }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        )}
+      </View>
       <Text style={styles.title2}>Minority Groups</Text>
       <FlatList
         horizontal
