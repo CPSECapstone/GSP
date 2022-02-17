@@ -78,7 +78,7 @@ function ExploreResultCell(props: ResultCellProps) {
       >
         {minoritygroups.map((minoritygroup, index) => (
           <Text
-            key={index}
+            key={minoritygroup + index.toString()}
             style={{ fontFamily: "Mada-SemiBold", fontSize: 12, opacity: 0.5 }}
           >
             {minoritygroup}
