@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
@@ -115,30 +115,36 @@ function SignUp({ navigation, route }: SignUpProps) {
       ) : (
         <Feather style={styles.icon} name="user" size={150} />
       )}
-      <CleanInput label="Name" textContentType="name" setState={setName} />
-      {!!nameError && <Text style={styles.error}>{nameError}</Text>}
+      <CleanInput
+        label="Name"
+        textContentType="name"
+        setState={setName}
+        value={name}
+        errorMsg={nameError}
+      />
       <CleanInput
         label="Email Address"
         textContentType="emailAddress"
         setState={setEmail}
+        value={email}
+        errorMsg={emailError}
       />
-      {!!emailError && <Text style={styles.error}>{emailError}</Text>}
       <CleanInput
         label="Password"
         textContentType="password"
         setState={setPassword}
         secureTextEntry
+        value={password}
+        errorMsg={passwordError}
       />
-      {!!passwordError && <Text style={styles.error}>{passwordError}</Text>}
       <CleanInput
         label="Confirm Password"
         textContentType="password"
         setState={setConfirmPassword}
         secureTextEntry
+        value={confirmPassword}
+        errorMsg={confirmPasswordError}
       />
-      {!!confirmPasswordError && (
-        <Text style={styles.error}>{confirmPasswordError}</Text>
-      )}
       <LargeButton label="Submit" action={submit} />
     </View>
   );
