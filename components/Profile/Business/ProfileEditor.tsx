@@ -358,7 +358,7 @@ function DataRow({ onPress, field, data }: DataRowProps) {
 }
 
 type EditButtonProps = { position: Object; onPress: Function };
-function EditButton({ position, onPress }: EditButtonProps) {
+export function EditButton({ position, onPress }: EditButtonProps) {
   return (
     <Pressable style={[styles.editButton, position]} onPress={() => onPress()}>
       <Ionicons name="pencil" size={30} color="black" />
