@@ -136,7 +136,7 @@ function Explore() {
   React.useEffect(() => {
     const resBusiness: Business[] = [];
     allBusinesses.forEach((business) => {
-      business?.tags?.forEach((tag) => {
+      business?.tags?.every((tag) => {
         if (
           tag != null &&
           (minorityGroupsByName.includes(tag) ||
@@ -144,8 +144,10 @@ function Explore() {
         ) {
           if (business.type === categories[selectedCategoryIndex]) {
             resBusiness.push(business);
+            return false;
           }
         }
+        return true;
       });
     });
     setResultBusinesses(resBusiness);
