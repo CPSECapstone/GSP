@@ -22,6 +22,12 @@ export default function Map() {
         style={styles.map}
         customMapStyle={mapStyle}
         provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 35.30501403594777,
+          longitude: -120.66260149147742,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
       />
     </View>
   );
