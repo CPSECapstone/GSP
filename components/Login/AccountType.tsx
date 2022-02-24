@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Pressable } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import LargeOption from "./LargeOption";
-import Header from "./Header";
 import { RootStackParamList } from "../../route-settings";
 
 const styles = StyleSheet.create({
@@ -26,7 +25,6 @@ type AccountTypeProps = NativeStackScreenProps<
 function AccountType({ navigation }: AccountTypeProps) {
   return (
     <View>
-      <Header>Create an Account</Header>
       <Text style={styles.description}>I am a...</Text>
       <View style={styles.buttonWrapper}>
         <Pressable

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, Image, StyleSheet, Pressable, View } from "react-native";
 import { Auth } from "aws-amplify";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LoginProps } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
@@ -9,11 +10,10 @@ const avatarImg = require("../../assets/default-avatar.jpeg");
 
 export const styles = StyleSheet.create({
   login: {
-    fontSize: 30,
-    textAlign: "left",
-    marginTop: 60,
-    marginLeft: 10,
-    fontFamily: "Mada-SemiBold",
+    fontSize: 34,
+    marginLeft: 50,
+    marginBottom: 25,
+    fontFamily: "Mada-Bold",
   },
 
   account: {
@@ -123,7 +123,7 @@ function Login({ navigation }: LoginProps) {
   };
 
   return (
-    <View>
+    <SafeAreaView>
       <Text style={styles.login}>Log In</Text>
       <View style={styles.userInfo}>
         <Image source={avatarImg} style={styles.account} />
@@ -178,7 +178,7 @@ function Login({ navigation }: LoginProps) {
           </Pressable>
         </Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

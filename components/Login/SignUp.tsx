@@ -4,7 +4,6 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
 import CleanInput from "./CleanInput";
-import Header from "./Header";
 import { RootStackParamList } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 
@@ -109,7 +108,6 @@ function SignUp({ navigation, route }: SignUpProps) {
 
   return (
     <View style={styles.wrapper}>
-      <Header>Create an Account</Header>
       {isMBO ? (
         <FontAwesome5 style={styles.icon} name="store" size={130} />
       ) : (
