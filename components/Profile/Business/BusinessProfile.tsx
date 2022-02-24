@@ -13,31 +13,27 @@ import {
   Pressable,
   ImageBackground,
 } from "react-native";
+import { BusinessProps } from "../../../route-settings";
+import Business from "./Business";
 
-const profileData = {
-  name: "Milk In It",
-  businessType: "Restaurant",
-  distance: "2 miles",
-  colorPrimary: "#0394fc",
-  colorSecondary: "grey",
-  phone: "(805) 645-2301",
-  address: "195 N Santa Rosa St",
-  state: "California",
-  city: "San Luis Obispo",
-  zipCode: "93405",
-  website: "https://www.milk-in-it.com/",
-  tags: ["Asian-American", "American Fusion", "Family-owned", "Small business"],
-  profileImage: {
-    uri: "https://www.milk-in-it.com/uploads/b/815c5b9666f8d1247820b963f62921ff010e53ce81ca60cc0f303331f5d83f1a/Milk%20in%20it_Sticker-01_1586286751.png",
-  },
-  menu: "https://www.milk-in-it.com/signature",
-  banner: {
-    uri: "https://www.milk-in-it.com/uploads/1/3/1/4/131411053/s823200538205006002_p76_i2_w2077.jpeg",
-  },
-  aboutUs:
-    "Tea house serving milk tea, boba and more. We use authentic recipes for our tapioca and import the highest quality black, oolong, and green teas. We are a small, locally-owned business with a small team dedicated to making you awesome drinks to brighten your day",
-  email: "contact",
-};
+const profileData = new Business(
+  "Milk In It",
+  "Milkinit@gmail.com",
+  "Restaurant",
+  "#0394FC",
+  "#7D9FB8",
+  "(805) 645-2301",
+  "195 N Santa Rosa St",
+  "San Luis Obispo",
+  "California",
+  93405,
+  "https://www.milk-in-it.com/",
+  ["Asian-American", "American Fusion", "Family-owned", "Small business"],
+  "https://www.milk-in-it.com/uploads/b/815c5b9666f8d1247820b963f62921ff010e53ce81ca60cc0f303331f5d83f1a/Milk%20in%20it_Sticker-01_1586286751.png",
+  "https://www.milk-in-it.com/uploads/1/3/1/4/131411053/s823200538205006002_p76_i2_w2077.jpeg",
+  "Tea house serving milk tea, boba and more. We use authentic recipes for our tapioca and import the highest quality black, oolong, and green teas. We are a small, locally-owned business with a small team dedicated to making you awesome drinks to brighten your day",
+  "https://www.milk-in-it.com/signature"
+);
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -117,6 +113,7 @@ const openUrl = async (link: string) => {
 
     if (supported) Linking.openURL(link);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
   }
 };
@@ -129,11 +126,11 @@ const openMap = async (address: string, city: string, zipCode: string) => {
   openUrl(link);
 };
 
-export default function ProfilePage() {
+export default function BusinessProfile({ navigation }: BusinessProps) {
   return (
     <View>
       <ImageBackground
-        source={profileData.banner}
+        source={{ uri: profileData.bannerImage }}
         resizeMode="cover"
         style={styles.banner}
       />
@@ -145,13 +142,19 @@ export default function ProfilePage() {
             <Pressable style={styles.back}>
               <Ionicons name="chevron-back-outline" size={30} color="white" />
             </Pressable>
-            <Pressable style={styles.save}>
+            <Pressable
+              style={styles.save}
+              onPress={() => navigation.navigate("ProfileEditor")}
+            >
               <Ionicons name="bookmark-outline" size={25} color="white" />
             </Pressable>
-            <Image style={styles.avatar} source={profileData.profileImage} />
+            <Image
+              style={styles.avatar}
+              source={{ uri: profileData.profileImage }}
+            />
             <Text style={styles.title}>{profileData.name}</Text>
             <Text style={styles.details}>
-              {`${profileData.businessType} • ${profileData.distance}`}
+              {`${profileData.businessType} • 3mi`}
             </Text>
           </View>
           <View style={styles.body}>
@@ -168,24 +171,28 @@ export default function ProfilePage() {
                 title="Map"
                 action={() =>
                   openMap(
-                    profileData.address,
-                    profileData.city,
-                    profileData.zipCode
+                    profileData.address.address,
+                    profileData.address.city,
+                    profileData.address.zipcode.toString()
                   )
                 }
               />
               <Margin />
               <CircleButton
-                icon="restaurant"
-                title="Menu"
-                action={() => openUrl(profileData.menu)}
-              />
-              <Margin />
-              <CircleButton
                 icon="open"
                 title="Site"
-                action={() => openUrl(profileData.website)}
+                action={() => openUrl(profileData.website.toString())}
               />
+              <Margin />
+              {profileData.menu ? (
+                <CircleButton
+                  icon="restaurant"
+                  title="Menu"
+                  action={() => openUrl(profileData.menu!)}
+                />
+              ) : (
+                <CircleButton icon="bookmark" title="Save" action={() => {}} />
+              )}
             </View>
 
             <Line />
@@ -263,7 +270,7 @@ const styles = StyleSheet.create({
     marginRight: -10,
   },
   banner: {
-    borderColor: profileData.colorPrimary,
+    borderColor: profileData.colorSet.primary,
     height: 300,
     flex: 1,
     justifyContent: "center",
@@ -273,7 +280,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
     borderBottomWidth: 3,
-    borderBottomColor: profileData.colorPrimary,
+    borderBottomColor: profileData.colorSet.primary,
   },
   header: {
     height: 300,
@@ -293,7 +300,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    backgroundColor: profileData.colorPrimary,
+    backgroundColor: profileData.colorSet.primary,
   },
   circleButtonText: {
     paddingTop: 8,
@@ -306,7 +313,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 100,
     borderWidth: 4,
-    borderColor: profileData.colorPrimary,
+    borderColor: profileData.colorSet.primary,
     alignSelf: "center",
     marginTop: 60,
     backgroundColor: "black",
@@ -346,7 +353,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00BFFF",
   },
   ratingButton: {
-    backgroundColor: "#7d9fb8",
+    backgroundColor: profileData.colorSet.secondary,
     flex: 1,
     borderRadius: 10,
     marginTop: 10,
