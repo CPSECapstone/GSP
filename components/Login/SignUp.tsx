@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Auth } from "aws-amplify";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CleanInput from "./CleanInput";
 import { RootStackParamList } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
@@ -107,44 +108,46 @@ function SignUp({ navigation, route }: SignUpProps) {
   };
 
   return (
-    <View style={styles.wrapper}>
-      {isMBO ? (
-        <FontAwesome5 style={styles.icon} name="store" size={130} />
-      ) : (
-        <Feather style={styles.icon} name="user" size={150} />
-      )}
-      <CleanInput
-        label="Name"
-        textContentType="name"
-        setState={setName}
-        value={name}
-        errorMsg={nameError}
-      />
-      <CleanInput
-        label="Email Address"
-        textContentType="emailAddress"
-        setState={setEmail}
-        value={email}
-        errorMsg={emailError}
-      />
-      <CleanInput
-        label="Password"
-        textContentType="password"
-        setState={setPassword}
-        secureTextEntry
-        value={password}
-        errorMsg={passwordError}
-      />
-      <CleanInput
-        label="Confirm Password"
-        textContentType="password"
-        setState={setConfirmPassword}
-        secureTextEntry
-        value={confirmPassword}
-        errorMsg={confirmPasswordError}
-      />
-      <LargeButton label="Submit" action={submit} />
-    </View>
+    <KeyboardAwareScrollView scrollEnabled={false} extraHeight={100}>
+      <View style={styles.wrapper}>
+        {isMBO ? (
+          <FontAwesome5 style={styles.icon} name="store" size={130} />
+        ) : (
+          <Feather style={styles.icon} name="user" size={150} />
+        )}
+        <CleanInput
+          label="Name"
+          textContentType="name"
+          setState={setName}
+          value={name}
+          errorMsg={nameError}
+        />
+        <CleanInput
+          label="Email Address"
+          textContentType="emailAddress"
+          setState={setEmail}
+          value={email}
+          errorMsg={emailError}
+        />
+        <CleanInput
+          label="Password"
+          textContentType="password"
+          setState={setPassword}
+          secureTextEntry
+          value={password}
+          errorMsg={passwordError}
+        />
+        <CleanInput
+          label="Confirm Password"
+          textContentType="password"
+          setState={setConfirmPassword}
+          secureTextEntry
+          value={confirmPassword}
+          errorMsg={confirmPasswordError}
+        />
+        <LargeButton label="Submit" action={submit} />
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 

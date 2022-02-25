@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LargeButton from "../Misc/LargeButton";
 import { ForgotPassProps } from "../../route-settings";
 import CleanInput from "./CleanInput";
@@ -65,7 +66,7 @@ function ForgotPass({ navigation }: ForgotPassProps) {
   };
 
   return (
-    <View>
+    <KeyboardAwareScrollView scrollEnabled={false} extraHeight={100}>
       <Image source={sourceImage} style={forgotPassStyle.image} />
 
       <View style={styles.inputWrapper}>
@@ -92,7 +93,7 @@ function ForgotPass({ navigation }: ForgotPassProps) {
         </Text>
         <LargeButton label="Reset Password" action={resetPass} />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
