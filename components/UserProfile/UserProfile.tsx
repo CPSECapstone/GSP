@@ -83,7 +83,6 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   return (
     <View style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
-      <Text style={styles.myProfileText}>My Profile</Text>
       <Image style={styles.profileImage} source={profileData.profileImage} />
       <Text style={styles.name}>{profileData.name}</Text>
       <View style={styles.cells}>

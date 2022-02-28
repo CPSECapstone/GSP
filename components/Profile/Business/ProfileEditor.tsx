@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/lines-between-class-members */
-/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { Ionicons } from "@expo/vector-icons";
 import {
