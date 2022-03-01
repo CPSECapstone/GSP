@@ -1,10 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
 import { profileData } from "../Profile/Business/BusinessProfile";
 import LargeButton from "../Misc/LargeButton";
+
 const styles = StyleSheet.create({
   header: {
     fontFamily: "Mada-Black",
@@ -26,12 +27,35 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flexDirection: "row",
   },
+  filterButton: {
+    height: 30,
+    width: 70,
+    backgroundColor: "#D7D7D7",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#D7D7D7",
+    marginLeft: 30,
+    marginTop: 5,
+  },
+  unselectedFilter: {
+    height: 30,
+    width: 70,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "#D7D7D7",
+    marginLeft: 30,
+    marginTop: 5,
+  },
 });
 
 function BizReviewPage({ navigation }: BizReviewPageProps) {
   return (
     <View>
-      <BackButton action={navigation.goBack}></BackButton>
+      <BackButton action={navigation.goBack} />
       <View
         style={{
           paddingBottom: 10,
@@ -63,22 +87,62 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         </View>
       </View>
 
-      <Text> Sort By</Text>
-      <View style={{ padding: 30 }}>
+      <Text style={{ color: "grey", paddingLeft: 30, paddingTop: 10 }}>
+        {" "}
+        Sort By
+      </Text>
+
+      <View style={{ flexDirection: "row" }}>
+        <Pressable style={styles.filterButton}>
+          <Text>Relevant</Text>
+        </Pressable>
+
+        <Pressable style={styles.unselectedFilter}>
+          <Text>Recent</Text>
+        </Pressable>
+
+        <Pressable style={styles.unselectedFilter}>
+          <Text>Lowest</Text>
+        </Pressable>
+
+        <Pressable style={styles.unselectedFilter}>
+          <Text>Highest</Text>
+        </Pressable>
+      </View>
+
+      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
         <ReviewCell
-          restaurant={"Milk In It"}
+          restaurant="Milk In It"
           rating={4.0}
-          srcImage={""}
-          description={"This is my review"}
-        ></ReviewCell>
+          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          description="This is a review."
+        />
+      </View>
+
+      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
+        <ReviewCell
+          restaurant="Milk In It"
+          rating={5.0}
+          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          description="This is a review."
+        />
+      </View>
+
+      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
+        <ReviewCell
+          restaurant="Milk In It"
+          rating={5.0}
+          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          description="This is a review."
+        />
       </View>
 
       <LargeButton
         action={function (): void {
           throw new Error("Function not implemented.");
         }}
-        label={"Write a Review"}
-      ></LargeButton>
+        label="Write a Review"
+      />
     </View>
   );
 }
