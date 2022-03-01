@@ -14,7 +14,6 @@ import {
   ImageBackground,
 } from "react-native";
 import { BusinessProps } from "../../../route-settings";
-import Business from "./Business";
 import dummyBusiness from "./tempdata";
 
 function Margin() {
