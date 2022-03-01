@@ -12,9 +12,11 @@ export const styles = StyleSheet.create({
   },
   restauraunt: {
     fontWeight: "bold",
+    fontFamily: "Mada-Bold",
   },
   description: {
     paddingTop: 10,
+    fontFamily: "Mada-Medium",
   },
   image: {
     height: 50,
@@ -24,7 +26,7 @@ export const styles = StyleSheet.create({
   },
 });
 
-function Star() {
+export function Star() {
   return (
     <Ionicons
       name="star"
@@ -35,7 +37,7 @@ function Star() {
   );
 }
 
-function StarOutline() {
+export function StarOutline() {
   return (
     <Ionicons
       name="star-outline"
@@ -78,7 +80,7 @@ function ReviewCell({
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <EditButton position={{ bottom: 0, right: -7 }} />
+        <EditButton position={{ bottom: 0, right: -7 }} onPress={() => {}} />
         <Text style={styles.restauraunt}>{restaurant}</Text>
         <Image style={styles.image} source={{ uri: srcImage }} />
       </View>

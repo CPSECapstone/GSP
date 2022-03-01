@@ -1,16 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
-import { profileData } from "../Profile/Business/BusinessProfile";
+import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
 
 const styles = StyleSheet.create({
   header: {
     fontFamily: "Mada-Black",
     fontSize: 24,
-    paddingTop: 30,
+    paddingTop: 10,
     alignSelf: "center",
     paddingBottom: 10,
   },
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
   filterButton: {
     height: 30,
     width: 70,
+    fontFamily: "Mada-Medium",
     backgroundColor: "#D7D7D7",
     justifyContent: "center",
     alignItems: "center",
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
   unselectedFilter: {
     height: 30,
     width: 70,
+    fontFamily: "Mada-Medium",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 20,
@@ -49,6 +51,12 @@ const styles = StyleSheet.create({
     borderColor: "#D7D7D7",
     marginLeft: 30,
     marginTop: 5,
+  },
+  bizImage: {
+    height: 100,
+    width: 100,
+    alignSelf: "center",
+    paddingRight: 30,
   },
 });
 
@@ -63,8 +71,15 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
           borderBottomWidth: 2,
         }}
       >
-        <Text style={styles.header}>Milk In It</Text>
-        <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
+        <View>
+          <Image
+            style={styles.bizImage}
+            source={{ uri: dummyBusiness.profileImage }}
+          />
+
+          <Text style={styles.header}>{dummyBusiness.name}</Text>
+          <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
+        </View>
 
         <View
           style={{
@@ -114,7 +129,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <ReviewCell
           restaurant="Tori L."
           rating={4.0}
-          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          srcImage=""
           description="This is a review."
         />
       </View>
@@ -123,7 +138,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <ReviewCell
           restaurant="Marvis I."
           rating={5.0}
-          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          srcImage=""
           description="This is a review."
         />
       </View>
@@ -132,15 +147,13 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <ReviewCell
           restaurant="Tessa S."
           rating={5.0}
-          srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
+          srcImage=""
           description="This is a review."
         />
       </View>
 
       <LargeButton
-        action={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        action={() => console.log("Write a Review")}
         label="Write a Review"
       />
     </View>

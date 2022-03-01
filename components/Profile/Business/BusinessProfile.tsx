@@ -16,7 +16,7 @@ import {
 import { BusinessProps } from "../../../route-settings";
 import Business from "./Business";
 
-const profileData = new Business(
+export const profileData = new Business(
   "Milk In It",
   "Milkinit@gmail.com",
   "Restaurant",
@@ -217,7 +217,10 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                   Write a Review
                 </Text>
               </Pressable>
-              <Pressable style={[styles.ratingButton, { marginLeft: 10 }]}>
+              <Pressable
+                style={[styles.ratingButton, { marginLeft: 10 }]}
+                onPress={() => navigation.navigate("BizReviewPage")}
+              >
                 <Text
                   style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
                 >
