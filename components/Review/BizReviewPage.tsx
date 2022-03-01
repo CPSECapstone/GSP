@@ -112,7 +112,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
 
       <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
         <ReviewCell
-          restaurant="Milk In It"
+          restaurant="Tori L."
           rating={4.0}
           srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
           description="This is a review."
@@ -121,7 +121,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
 
       <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
         <ReviewCell
-          restaurant="Milk In It"
+          restaurant="Marvis I."
           rating={5.0}
           srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
           description="This is a review."
@@ -130,7 +130,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
 
       <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
         <ReviewCell
-          restaurant="Milk In It"
+          restaurant="Tessa S."
           rating={5.0}
           srcImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRc3sJ2HlBFCa9lPdzINc4EwPd171ara9zr6A&usqp=CAU"
           description="This is a review."
