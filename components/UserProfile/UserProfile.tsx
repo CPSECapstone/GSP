@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Auth } from "aws-amplify";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { UserProfileProps } from "../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
@@ -81,7 +82,7 @@ function LogoutCell() {
 
 export default function UserProfile({ navigation }: UserProfileProps) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
       <Image style={styles.profileImage} source={profileData.profileImage} />
       <Text style={styles.name}>{profileData.name}</Text>
@@ -111,6 +112,6 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           <LogoutCell />
         </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import Amplify from "aws-amplify";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
@@ -75,23 +75,56 @@ function InnerApp() {
 
   return (
     <NavigationContainer>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="ForgotPass" component={ForgotPass} />
-          <Stack.Screen name="ForgotPass2" component={ForgotPass2} />
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="ChooseAccountType" component={AccountType} />
-          <Stack.Screen name="CreateAccount" component={SignUp} />
-          <Stack.Screen name="CreateAccountCode" component={SignUpCode} />
-          <Stack.Screen name="App" component={AuthenticatedApp} />
-          <Stack.Screen name="OpenCollection" component={OpenCollection} />
-          <Stack.Screen name="ReviewPage" component={ReviewPage} />
-          <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
-        </Stack.Navigator>
-      </SafeAreaView>
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false }}
+      >
+        <Stack.Screen
+          name="ForgotPass"
+          component={ForgotPass}
+          options={{
+            title: "Forgot Password",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="ForgotPass2"
+          component={ForgotPass2}
+          options={{
+            title: "Reset Password",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen
+          name="ChooseAccountType"
+          component={AccountType}
+          options={{
+            title: "Chose an Account",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="CreateAccount"
+          component={SignUp}
+          options={{
+            title: "Create an Account",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen
+          name="CreateAccountCode"
+          component={SignUpCode}
+          options={{
+            title: "Input Code",
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen name="App" component={AuthenticatedApp} />
+        <Stack.Screen name="OpenCollection" component={OpenCollection} />
+        <Stack.Screen name="ReviewPage" component={ReviewPage} />
+        <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
@@ -108,7 +141,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      {fontsLoaded ? <InnerApp /> : <AppLoading />}
+      <SafeAreaProvider>
+        {fontsLoaded ? <InnerApp /> : <AppLoading />}
+      </SafeAreaProvider>
     </Provider>
   );
 }

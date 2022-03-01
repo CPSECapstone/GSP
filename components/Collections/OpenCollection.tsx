@@ -8,6 +8,7 @@ import {
   Pressable,
   Animated,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { collectionplaceholderbusinesses } from "../../constants/placeholderdata";
 import { OpenCollectionPageProps } from "../../route-settings";
 
@@ -114,7 +115,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
   }, [isEditing]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row", marginLeft: 50 }}>
         <Pressable
           onPress={() => {
@@ -168,7 +169,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
         keyExtractor={(item, index) => index + item.name}
         data={collectionplaceholderbusinesses}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
