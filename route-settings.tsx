@@ -107,17 +107,25 @@ export const TabBarScreenOptions = ({
       iconName = "ios-bookmark";
     } else if (route.name === "Profile") {
       iconName = "ios-person";
-    } else if (route.name === "Business") {
-      iconName = "business";
     }
 
     if (!focused) {
       iconName += "-outline";
+      return <Ionicons name={iconName} size={size} color="#ADADAF" />;
     }
-
-    // You can return any component that you like here!
-
-    return <Ionicons name={iconName} size={size} color={color} />;
+    return (
+      <Ionicons
+        style={{
+          shadowColor: color,
+          shadowOpacity: 0.8,
+          shadowRadius: 14,
+          shadowOffset: { width: 0, height: 6 },
+        }}
+        name={iconName}
+        size={size}
+        color={color}
+      />
+    );
   },
   tabBarActiveTintColor: "tomato",
   tabBarInactiveTintColor: "tomato",

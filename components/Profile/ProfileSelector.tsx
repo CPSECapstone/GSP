@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import UserProfile from "../UserProfile/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import dummyBusiness from "./Business/tempdata";
@@ -21,8 +22,9 @@ type SelectorProps = {
   title: string;
   onPress: Function;
   img: string;
-  details: string | undefined;
+  details?: string;
 };
+
 function Selector({ title, onPress, img, details }: SelectorProps) {
   return (
     <Pressable style={styles.selector} onPress={() => onPress()}>
@@ -34,6 +36,7 @@ function Selector({ title, onPress, img, details }: SelectorProps) {
     </Pressable>
   );
 }
+Selector.defaultProps = { details: undefined };
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -42,7 +45,7 @@ function Margin() {
 type BaseProps = NativeStackScreenProps<ProfileStackParamList, "Base">;
 function Base({ navigation }: BaseProps) {
   return (
-    <View style={{ flex: 1, flexDirection: "row" }}>
+    <SafeAreaView style={{ flex: 1, flexDirection: "row" }}>
       <Margin />
       <View style={{ flex: 10 }}>
         <Text style={styles.title}>Profile</Text>
@@ -60,7 +63,7 @@ function Base({ navigation }: BaseProps) {
         />
       </View>
       <Margin />
-    </View>
+    </SafeAreaView>
   );
 }
 

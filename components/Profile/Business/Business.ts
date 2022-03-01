@@ -1,6 +1,8 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 
+import { Business as BackendBusiness } from "../../../src/API";
+
 export const BUSINESS_TYPES = [
   "Restaurant",
   "Store",
@@ -56,7 +58,7 @@ export default class Business {
   colorSet: ColorSet;
   phone: string;
   address: Address;
-  website: URL;
+  website?: URL;
   tags: Array<string>;
   profileImage: string;
   bannerImage: string;
@@ -74,7 +76,7 @@ export default class Business {
     city: string,
     state: string,
     zipcode: Number,
-    website: string,
+    website: string | undefined | null,
     tags: Array<string>,
     profileImage: string,
     bannerImage: string,
@@ -87,12 +89,34 @@ export default class Business {
     this.colorSet = { primary: colorPrimary, secondary: colorSecondary };
     this.phone = phone;
     this.address = { address, city, state, zipcode };
-    this.website = new URL(website);
+    this.website = website ? new URL(website) : undefined;
     this.tags = tags;
     this.profileImage = profileImage;
     this.bannerImage = bannerImage;
     this.menu = menu;
     this.aboutUs = aboutUs;
-    this.email = email;
+  }
+}
+
+export class BusinessAdapter extends Business {
+  constructor(business: BackendBusiness) {
+    super(
+      business.name,
+      "needs backend implementation",
+      business.type as BusinessType,
+      `#${business.primarycolor}` as Color,
+      `#${business.secondarycolor}` as Color,
+      business.phone!,
+      business.address!,
+      "nan",
+      "nan",
+      0,
+      business.url,
+      business.tags ? (business.tags as string[]) : new Array<string>(),
+      "nan",
+      "nan",
+      business.about!,
+      "nan"
+    );
   }
 }
