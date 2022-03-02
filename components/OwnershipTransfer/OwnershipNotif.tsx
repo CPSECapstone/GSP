@@ -1,4 +1,3 @@
-import { button } from "aws-amplify";
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
@@ -56,6 +55,7 @@ interface NotifProps {
   // REQUEST, IGNORE, RESPONSE, OR ACCEPT notif types
 }
 
+// eslint-disable-next-line
 function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
   let buttons;
 
@@ -104,8 +104,7 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
       );
       break;
     default:
-      // ACCEPT case here
-      buttons = <View></View>;
+      buttons = <View />;
   }
 
   return (
