@@ -8,6 +8,7 @@ import {
   Modal,
   TextInput,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { placeholderbusinesses } from "../../constants/placeholderdata";
 import { CollectionProps } from "../../route-settings";
 import BusinessCell from "../Misc/BusinessCell";
@@ -215,7 +216,7 @@ function Collections({ navigation }: CollectionProps) {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <AddCollectionModal />
       <Text style={styles.title}>Collections</Text>
       <Text style={[styles.subheader, { marginBottom: 20 }]}>
@@ -269,7 +270,7 @@ function Collections({ navigation }: CollectionProps) {
           <Text style={styles.emptytext}>Add you first collection!</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

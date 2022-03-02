@@ -1,4 +1,5 @@
 import { FlatList, View } from "react-native";
+import { NotificationsProps } from "../../route-settings";
 import OwnershipNotif from "./OwnershipNotif";
 
 const testData = [
@@ -11,7 +12,7 @@ const testData = [
   },
 ];
 
-function Notifications() {
+function Notifications({ route, navigation }: NotificationsProps) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <FlatList

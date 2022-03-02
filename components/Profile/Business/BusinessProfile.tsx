@@ -35,6 +35,7 @@ const profileData = new Business(
   "Tea house serving milk tea, boba and more. We use authentic recipes for our tapioca and import the highest quality black, oolong, and green teas. We are a small, locally-owned business with a small team dedicated to making you awesome drinks to brighten your day",
   "https://www.milk-in-it.com/signature"
 );
+import dummyBusiness from "./tempdata";
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -99,7 +100,7 @@ function StarOutline() {
 function Tags() {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
-  profileData.tags.forEach((tag) => (tagList += `${tag} • `));
+  dummyBusiness.tags.forEach((tag) => (tagList += `${tag} • `));
   tagList = tagList.substring(0, tagList.length - 3);
   return <Text style={styles.tags}>{tagList}</Text>;
 }
@@ -137,7 +138,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
         modalVisibilitySetter={setmodalVisible}
       />
       <ImageBackground
-        source={{ uri: profileData.bannerImage }}
+        source={{ uri: dummyBusiness.bannerImage }}
         resizeMode="cover"
         style={styles.banner}
       />
@@ -146,7 +147,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
         <Margin />
         <View style={{ flex: 10 }}>
           <View style={styles.header}>
-            <Pressable style={styles.back}>
+            <Pressable style={styles.back} onPress={() => navigation.goBack()}>
               <Ionicons name="chevron-back-outline" size={30} color="white" />
             </Pressable>
             <Pressable
@@ -163,11 +164,11 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
             </Pressable>
             <Image
               style={styles.avatar}
-              source={{ uri: profileData.profileImage }}
+              source={{ uri: dummyBusiness.profileImage }}
             />
-            <Text style={styles.title}>{profileData.name}</Text>
+            <Text style={styles.title}>{dummyBusiness.name}</Text>
             <Text style={styles.details}>
-              {`${profileData.businessType} • 3mi`}
+              {`${dummyBusiness.businessType} • 3mi`}
             </Text>
           </View>
           <View style={styles.body}>
@@ -176,7 +177,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
               <CircleButton
                 icon="call"
                 title="Call"
-                action={() => call(profileData.phone)}
+                action={() => call(dummyBusiness.phone)}
               />
               <Margin />
               <CircleButton
@@ -184,9 +185,9 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                 title="Map"
                 action={() =>
                   openMap(
-                    profileData.address.address,
-                    profileData.address.city,
-                    profileData.address.zipcode.toString()
+                    dummyBusiness.address.address,
+                    dummyBusiness.address.city,
+                    dummyBusiness.address.zipcode.toString()
                   )
                 }
               />
@@ -194,14 +195,14 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
               <CircleButton
                 icon="open"
                 title="Site"
-                action={() => openUrl(profileData.website.toString())}
+                action={() => openUrl(dummyBusiness.website.toString())}
               />
               <Margin />
-              {profileData.menu ? (
+              {dummyBusiness.menu ? (
                 <CircleButton
                   icon="restaurant"
                   title="Menu"
-                  action={() => openUrl(profileData.menu!)}
+                  action={() => openUrl(dummyBusiness.menu!)}
                 />
               ) : (
                 <CircleButton icon="bookmark" title="Save" action={() => {}} />
@@ -243,7 +244,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
 
             <View style={styles.bodyContent}>
               <Text style={styles.heading}>About Us</Text>
-              <Text style={styles.description}>{profileData.aboutUs}</Text>
+              <Text style={styles.description}>{dummyBusiness.aboutUs}</Text>
             </View>
           </View>
         </View>
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
     right: 35,
   },
   banner: {
-    borderColor: profileData.colorSet.primary,
+    borderColor: dummyBusiness.colorSet.primary,
     height: 300,
     flex: 1,
     justifyContent: "center",
@@ -300,7 +301,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 300,
     borderBottomWidth: 3,
-    borderBottomColor: profileData.colorSet.primary,
+    borderBottomColor: dummyBusiness.colorSet.primary,
   },
   header: {
     height: 300,
@@ -320,7 +321,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    backgroundColor: profileData.colorSet.primary,
+    backgroundColor: dummyBusiness.colorSet.primary,
   },
   circleButtonText: {
     paddingTop: 8,
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 100,
     borderWidth: 4,
-    borderColor: profileData.colorSet.primary,
+    borderColor: dummyBusiness.colorSet.primary,
     alignSelf: "center",
     marginTop: 60,
     backgroundColor: "black",
@@ -373,7 +374,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#00BFFF",
   },
   ratingButton: {
-    backgroundColor: profileData.colorSet.secondary,
+    backgroundColor: dummyBusiness.colorSet.secondary,
     flex: 1,
     borderRadius: 10,
     marginTop: 10,
