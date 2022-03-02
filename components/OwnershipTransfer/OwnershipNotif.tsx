@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    marginHorizontal: "5%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
     padding: 20,
+    marginVertical: 15,
   },
   buttonscontainer: {
     flexDirection: "row",
@@ -30,6 +31,16 @@ const styles = StyleSheet.create({
   },
   filledbutton: {
     backgroundColor: "#FA4A0C",
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4.65,
+    elevation: 5,
   },
 });
 
@@ -63,6 +74,7 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
     case "REQUEST":
       buttons = (
         <View>
+          <Divider />
           <View style={styles.buttonscontainer}>
             <Pressable style={[styles.emptybutton, styles.button]}>
               <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
@@ -108,7 +120,7 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styles.shadow]}>
       <Text style={{ fontFamily: "Mada-Medium", fontSize: 17, padding: 5 }}>
         {title}
       </Text>
