@@ -32,6 +32,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import store from "./redux/store";
 import initializeRedux from "./redux/initialize";
 import { useAppDispatch } from "./redux/hooks";
+import Notifications from "./components/OwnershipTransfer/NotificationsPage";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -90,6 +91,7 @@ function InnerApp() {
           <Stack.Screen name="OpenCollection" component={OpenCollection} />
           <Stack.Screen name="ReviewPage" component={ReviewPage} />
           <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
+          <Stack.Screen name="Notifications" component={Notifications} />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
