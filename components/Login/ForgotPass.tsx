@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Pressable, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import LargeButton from "../Misc/LargeButton";
 import { ForgotPassProps } from "../../route-settings";
 import CleanInput from "./CleanInput";
@@ -32,6 +33,7 @@ const forgotPassStyle = StyleSheet.create({
     height: 150,
     alignSelf: "center",
     marginBottom: 150,
+    marginTop: 60,
   },
   inputWrapper: {
     display: "flex",
@@ -64,20 +66,7 @@ function ForgotPass({ navigation }: ForgotPassProps) {
   };
 
   return (
-    <View>
-      <View style={forgotPassStyle.container}>
-        <View style={forgotPassStyle.navbar}>
-          <Pressable onPress={() => navigation.navigate("Login")}>
-            <Text style={forgotPassStyle.back}>
-              Back{" "}
-              <Text style={forgotPassStyle.forgotPassword}>
-                Forgot Password
-              </Text>
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-
+    <KeyboardAwareScrollView scrollEnabled={false} extraHeight={100}>
       <Image source={sourceImage} style={forgotPassStyle.image} />
 
       <View style={styles.inputWrapper}>
@@ -104,7 +93,7 @@ function ForgotPass({ navigation }: ForgotPassProps) {
         </Text>
         <LargeButton label="Reset Password" action={resetPass} />
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 

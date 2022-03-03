@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Text, Image, StyleSheet, Pressable, View } from "react-native";
 import { Auth } from "aws-amplify";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { LoginProps } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
@@ -9,11 +11,10 @@ const avatarImg = require("../../assets/default-avatar.jpeg");
 
 export const styles = StyleSheet.create({
   login: {
-    fontSize: 30,
-    textAlign: "left",
-    marginTop: 60,
-    marginLeft: 10,
-    fontFamily: "Mada-SemiBold",
+    fontSize: 34,
+    marginLeft: 50,
+    marginBottom: 25,
+    fontFamily: "Mada-Bold",
   },
 
   account: {
@@ -123,62 +124,64 @@ function Login({ navigation }: LoginProps) {
   };
 
   return (
-    <View>
-      <Text style={styles.login}>Log In</Text>
-      <View style={styles.userInfo}>
-        <Image source={avatarImg} style={styles.account} />
-        <View style={styles.inputWrapper}>
-          <CleanInput
-            label="Email Address"
-            placeholder="Enter your email"
-            textContentType="emailAddress"
-            setState={setEmail}
-            value={email}
-            errorMsg={emailError}
-          />
-          <CleanInput
-            label="Password"
-            placeholder="Enter your password"
-            textContentType="password"
-            setState={setPassword}
-            secureTextEntry
-            value={password}
-            errorMsg={passwordError}
-          />
-        </View>
+    <SafeAreaView>
+      <KeyboardAwareScrollView scrollEnabled={false}>
+        <Text style={styles.login}>Log In</Text>
+        <View style={styles.userInfo}>
+          <Image source={avatarImg} style={styles.account} />
+          <View style={styles.inputWrapper}>
+            <CleanInput
+              label="Email Address"
+              placeholder="Enter your email"
+              textContentType="emailAddress"
+              setState={setEmail}
+              value={email}
+              errorMsg={emailError}
+            />
+            <CleanInput
+              label="Password"
+              placeholder="Enter your password"
+              textContentType="password"
+              setState={setPassword}
+              secureTextEntry
+              value={password}
+              errorMsg={passwordError}
+            />
+          </View>
 
-        <Pressable onPress={() => navigation.navigate("ForgotPass")}>
-          <Text
-            style={{
-              color: "rgb(250, 74, 12)",
-              paddingBottom: 20,
-              marginLeft: 20,
-              marginRight: 40,
-              textAlign: "right",
-              fontWeight: "bold",
-            }}
-          >
-            Forgot Password?
-          </Text>
-        </Pressable>
-        <LargeButton label="Login" action={authenticate} />
-
-        <Text style={{ marginTop: 20, alignSelf: "center" }}>
-          Don&apos;t have an Account?&emsp;
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate("ForgotPass")}>
             <Text
               style={{
                 color: "rgb(250, 74, 12)",
-                textDecorationLine: "underline",
+                paddingBottom: 20,
+                marginLeft: 20,
+                marginRight: 40,
+                textAlign: "right",
+                fontWeight: "bold",
               }}
-              onPress={() => navigation.navigate("ChooseAccountType")}
             >
-              Sign Up
+              Forgot Password?
             </Text>
           </Pressable>
-        </Text>
-      </View>
-    </View>
+          <LargeButton label="Login" action={authenticate} />
+
+          <Text style={{ marginTop: 20, alignSelf: "center" }}>
+            Don&apos;t have an Account?&emsp;
+            <Pressable>
+              <Text
+                style={{
+                  color: "rgb(250, 74, 12)",
+                  textDecorationLine: "underline",
+                }}
+                onPress={() => navigation.navigate("ChooseAccountType")}
+              >
+                Sign Up
+              </Text>
+            </Pressable>
+          </Text>
+        </View>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 
