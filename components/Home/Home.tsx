@@ -7,13 +7,16 @@ import {
   Image,
   Text,
   Dimensions,
+  Button,
 } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
-import SearchBar from "../Searchbar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 import Map from "../Map/Map";
 import { Business } from "../../src/API";
 import { minoritygroups } from "../../constants/exploredata";
+import ResultsTab from "./ResultsTab";
+import BusinessCard from "../BusinessCard/BusinessCard";
 
 const width = Dimensions.get("screen").width * 0.3;
 const height = Dimensions.get("screen").height * 0.04;
@@ -34,8 +37,8 @@ const styles = StyleSheet.create({
     borderRadius: 20.35,
     marginHorizontal: 8,
     marginTop: minorityGroupCellPadding,
-    width: width,
-    height: height,
+    width,
+    height,
     // minHeight: height,
     // minWidth: width + 10,
     // maxWidth: width + 10,
@@ -67,6 +70,12 @@ export default function HomePage() {
 
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
   const [resultBusinesses, setResultBusinesses] = useState(allBusinesses);
+  const [openModal, setopenModal] = useState(false);
+  const [searchText, setsearchText] = useState("");
+
+  const onDismiss = () => {
+    setopenModal(false);
+  };
 
   let minorityGroupsByName: string[] = [];
 
@@ -90,11 +99,15 @@ export default function HomePage() {
   return (
     <View style={styles.container}>
       <Map />
-      <SearchBar />
+      <SearchBar
+        searchText={searchText}
+        setsearchText={setsearchText}
+        setopenModal={setopenModal}
+      />
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={minoritygroups.filter((group) => group.title != "All")}
+        data={minoritygroups.filter((group) => group.title !== "All")}
         contentContainerStyle={{ paddingLeft: "9.5%", height: ".02%" }}
         style={styles.filters}
         renderItem={({ item, index }) => (
@@ -102,7 +115,8 @@ export default function HomePage() {
             onPress={() => {
               if (index === 0 && !selectedMinorityGroups.includes(index)) {
                 setselectedMinorityGroups([0]);
-              } else if (selectedMinorityGroups.includes(index)) {
+              }
+              if (selectedMinorityGroups.includes(index)) {
                 setselectedMinorityGroups(
                   selectedMinorityGroups.filter(
                     (listitem) => listitem !== index
@@ -129,59 +143,21 @@ export default function HomePage() {
         )}
         keyExtractor={(item, index) => item.title + index.toString()}
       />
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          marginVertical: 20,
-          padding: 10,
-          minHeight: 350,
-        }}
-      >
-        {resultBusinesses.length === 0 ? (
-          <Text
-            style={{
-              color: "#FA4A0C",
-              fontFamily: "Mada-Regular",
-              fontSize: 24,
-              textAlign: "center",
-            }}
-          >
-            No businesses returned from selected filters.
-          </Text>
-        ) : (
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
-            data={resultBusinesses}
-            renderItem={({ item }) => {
-              if (
-                item?.name !== undefined &&
-                item.type !== undefined &&
-                item.type !== null &&
-                item.primarycolor !== null &&
-                item.primarycolor !== undefined &&
-                item.tags !== null &&
-                item.tags !== undefined
-              ) {
-                return (
-                  <View></View>
-                  // <ExploreResultCell
-                  //   title={item.name}
-                  //   distance={3}
-                  //   category={item.type}
-                  //   minoritygroups={item.tags}
-                  //   primarycolor={item.primarycolor}
-                  // />
-                );
-              }
-              return <Text>Something went wrong</Text>;
-            }}
-            keyExtractor={(item, index) => index.toString()}
+      {openModal && (
+        <ResultsTab onDismiss={onDismiss} visible={true}>
+          <BusinessCard
+            name={"Test Business Name"}
+            rating={"4"}
+            distance={"2"}
           />
-        )}
-      </View>
+          <BusinessCard
+            name={"Test Business Name"}
+            rating={"4"}
+            distance={"2"}
+          />
+        </ResultsTab>
+      )}
     </View>
+    // </View>
   );
 }

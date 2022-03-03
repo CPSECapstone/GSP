@@ -18,11 +18,19 @@ const styles = StyleSheet.create({
   },
 });
 
-function SearchBar() {
-  const [searchText, setSearchText] = useState("");
+interface SearchBarProps {
+  searchText: string;
+  setsearchText: React.Dispatch<React.SetStateAction<string>>;
+  setopenModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
+function SearchBar({
+  searchText,
+  setsearchText,
+  setopenModal,
+}: SearchBarProps) {
   const updateSearch = (search: React.SetStateAction<string>) => {
-    setSearchText(search);
+    setsearchText(search);
   };
 
   return (
@@ -34,6 +42,7 @@ function SearchBar() {
         onChangeText={updateSearch}
         value={searchText}
         platform="ios"
+        onSubmitEditing={() => setopenModal(true)}
       />
     </View>
   );
