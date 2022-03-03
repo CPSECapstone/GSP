@@ -2,12 +2,27 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
-
+const MinorityGroups = {
+  "ASIANAMERICAN": "ASIANAMERICAN",
+  "AFRICANAMERICAN": "AFRICANAMERICAN",
+  "LATINX": "LATINX",
+  "MIDDLEEASTERN": "MIDDLEEASTERN",
+  "NATIVEAMERICAN": "NATIVEAMERICAN",
+  "PACIFICISLANDER": "PACIFICISLANDER",
+  "ALASKANATIVE": "ALASKANATIVE",
+  "MUSLIM": "MUSLIM",
+  "HALAL": "HALAL",
+  "JEWISH": "JEWISH",
+  "KOSHER": "KOSHER",
+  "HINDU": "HINDU",
+  "SIKH": "SIKH"
+};
 
 const { Review, Business, Collection } = initSchema(schema);
 
 export {
   Review,
   Business,
-  Collection
+  Collection,
+  MinorityGroups
 };

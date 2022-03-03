@@ -1,4 +1,20 @@
 
+enum MinorityGroups {
+  ASIANAMERICAN
+  AFRICANAMERICAN
+  LATINX
+  MIDDLEEASTERN
+  NATIVEAMERICAN
+  PACIFICISLANDER
+  ALASKANATIVE
+  MUSLIM
+  HALAL
+  JEWISH
+  KOSHER
+  HINDU
+  SIKH
+}
+
 type Review @aws_iam @aws_cognito_user_pools @aws_api_key {
   id: ID!
   rating: Int
@@ -15,17 +31,24 @@ type Review @aws_iam @aws_cognito_user_pools @aws_api_key {
 type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
   id: ID!
   name: String!
-  about: String
-  phone: AWSPhone
-  address: String
-  url: AWSURL
-  tags: [String]
+  about: String!
+  phone: AWSPhone!
+  address: String!
+  website: AWSURL
+  tags: [MinorityGroups!]
   type: String
-  primarycolor: String
-  secondarycolor: String
-  rating: Float
+  primarycolor: String!
+  secondarycolor: String!
+  rating: Int
   Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
   collectionID: ID
+  email: AWSEmail!
+  city: String!
+  state: String!
+  zipcode: Int!
+  menu: AWSURL
+  profileImage: AWSURL!
+  bannerImage: AWSURL
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -227,19 +250,33 @@ type ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
   startedAt: AWSTimestamp
 }
 
+input ModelMinorityGroupsListInput {
+  eq: [MinorityGroups]
+  ne: [MinorityGroups]
+  contains: MinorityGroups
+  notContains: MinorityGroups
+}
+
 input ModelBusinessFilterInput {
   id: ModelIDInput
   name: ModelStringInput
   about: ModelStringInput
   phone: ModelStringInput
   address: ModelStringInput
-  url: ModelStringInput
-  tags: ModelStringInput
+  website: ModelStringInput
+  tags: ModelMinorityGroupsListInput
   type: ModelStringInput
   primarycolor: ModelStringInput
   secondarycolor: ModelStringInput
-  rating: ModelFloatInput
+  rating: ModelIntInput
   collectionID: ModelIDInput
+  email: ModelStringInput
+  city: ModelStringInput
+  state: ModelStringInput
+  zipcode: ModelIntInput
+  menu: ModelStringInput
+  profileImage: ModelStringInput
+  bannerImage: ModelStringInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
   not: ModelBusinessFilterInput
@@ -250,13 +287,20 @@ input ModelBusinessConditionInput {
   about: ModelStringInput
   phone: ModelStringInput
   address: ModelStringInput
-  url: ModelStringInput
-  tags: ModelStringInput
+  website: ModelStringInput
+  tags: ModelMinorityGroupsListInput
   type: ModelStringInput
   primarycolor: ModelStringInput
   secondarycolor: ModelStringInput
-  rating: ModelFloatInput
+  rating: ModelIntInput
   collectionID: ModelIDInput
+  email: ModelStringInput
+  city: ModelStringInput
+  state: ModelStringInput
+  zipcode: ModelIntInput
+  menu: ModelStringInput
+  profileImage: ModelStringInput
+  bannerImage: ModelStringInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
   not: ModelBusinessConditionInput
@@ -265,16 +309,23 @@ input ModelBusinessConditionInput {
 input CreateBusinessInput {
   id: ID
   name: String!
-  about: String
-  phone: AWSPhone
-  address: String
-  url: AWSURL
-  tags: [String]
+  about: String!
+  phone: AWSPhone!
+  address: String!
+  website: AWSURL
+  tags: [MinorityGroups!]
   type: String
-  primarycolor: String
-  secondarycolor: String
-  rating: Float
+  primarycolor: String!
+  secondarycolor: String!
+  rating: Int
   collectionID: ID
+  email: AWSEmail!
+  city: String!
+  state: String!
+  zipcode: Int!
+  menu: AWSURL
+  profileImage: AWSURL!
+  bannerImage: AWSURL
   _version: Int
 }
 
@@ -284,13 +335,20 @@ input UpdateBusinessInput {
   about: String
   phone: AWSPhone
   address: String
-  url: AWSURL
-  tags: [String]
+  website: AWSURL
+  tags: [MinorityGroups!]
   type: String
   primarycolor: String
   secondarycolor: String
-  rating: Float
+  rating: Int
   collectionID: ID
+  email: AWSEmail
+  city: String
+  state: String
+  zipcode: Int
+  menu: AWSURL
+  profileImage: AWSURL
+  bannerImage: AWSURL
   _version: Int
 }
 

@@ -32,7 +32,7 @@
         "Name": "AdminQueries8b479e72-staging",
         "LambdaExecutionRole": "AdminQueries8b479e72LambdaRole-staging"
       },
-      "lastPushTimeStamp": "2022-02-14T18:21:59.727Z",
+      "lastPushTimeStamp": "2022-03-03T21:18:27.488Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/function/AdminQueries8b479e72-cloudformation-template.json",
         "logicalId": "functionAdminQueries8b479e72"
@@ -70,7 +70,7 @@
         "RootUrl": "https://n13ymupj66.execute-api.us-west-1.amazonaws.com/staging",
         "ApiId": "n13ymupj66"
       },
-      "lastPushTimeStamp": "2022-02-14T18:21:59.732Z",
+      "lastPushTimeStamp": "2022-03-03T21:18:27.490Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
         "logicalId": "apiAdminQueries"
@@ -104,12 +104,12 @@
         "GraphQLAPIEndpointOutput": "https://vvvdngqynza63kkt2e6ww4cqhe.appsync-api.us-west-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-jvfnatbwoffs3aft66hwkdr4oy"
       },
-      "lastPushTimeStamp": "2022-02-14T18:22:02.864Z",
+      "lastPushTimeStamp": "2022-03-03T21:18:27.491Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiminoritymarket"
       },
-      "lastPushDirHash": "4kocUkxQ+tJ8KqbpOEZ/zR580e4="
+      "lastPushDirHash": "tSr0/ARHdg7P5pUfsOZKT1K1a6Q="
     }
   },
   "auth": {
@@ -149,7 +149,7 @@
         "IdentityPoolName": "mmIdentity__staging",
         "UserPoolName": "mmUserPool"
       },
-      "lastPushTimeStamp": "2022-02-14T18:21:59.740Z",
+      "lastPushTimeStamp": "2022-03-03T21:18:27.492Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/auth/mmAuth-cloudformation-template.json",
         "logicalId": "authmmAuth"
@@ -170,10 +170,26 @@
         "Arn": "arn:aws:geo:us-west-2:476906480570:map/SearchMap-staging",
         "Name": "SearchMap-staging"
       },
-      "lastPushTimeStamp": "2022-02-14T18:21:59.745Z",
+      "lastPushTimeStamp": "2022-03-03T21:18:27.494Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/geo/SearchMap-cloudformation-template.json",
         "logicalId": "geoSearchMap"
+      }
+    }
+  },
+  "storage": {
+    "s3minoritymarketimagestore": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "minoritymarket-imagestore24817-staging",
+        "Region": "us-west-1"
+      },
+      "lastPushTimeStamp": "2022-03-03T21:18:29.626Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3minoritymarketimagestore"
       }
     }
   }

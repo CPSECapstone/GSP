@@ -70,7 +70,7 @@ export const createBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -81,6 +81,13 @@ export const createBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -101,7 +108,7 @@ export const updateBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -112,6 +119,13 @@ export const updateBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -132,7 +146,7 @@ export const deleteBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -143,6 +157,13 @@ export const deleteBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version

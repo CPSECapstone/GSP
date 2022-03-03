@@ -80,7 +80,7 @@ export const getBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -91,6 +91,13 @@ export const getBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -113,13 +120,20 @@ export const listBusinesses = /* GraphQL */ `
         about
         phone
         address
-        url
+        website
         tags
         type
         primarycolor
         secondarycolor
         rating
         collectionID
+        email
+        city
+        state
+        zipcode
+        menu
+        profileImage
+        bannerImage
         createdAt
         updatedAt
         _version
@@ -151,13 +165,20 @@ export const syncBusinesses = /* GraphQL */ `
         about
         phone
         address
-        url
+        website
         tags
         type
         primarycolor
         secondarycolor
         rating
         collectionID
+        email
+        city
+        state
+        zipcode
+        menu
+        profileImage
+        bannerImage
         createdAt
         updatedAt
         _version

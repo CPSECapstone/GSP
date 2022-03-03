@@ -1,35 +1,50 @@
-type Review @model @auth(rules: [
-  {allow: public, operations: [create, read]}, 
-  {allow: owner}
-]) {
+enum MinorityGroups {
+  ASIANAMERICAN
+  AFRICANAMERICAN
+  LATINX
+  MIDDLEEASTERN
+  NATIVEAMERICAN
+  PACIFICISLANDER
+  ALASKANATIVE
+  MUSLIM
+  HALAL
+  JEWISH
+  KOSHER
+  HINDU
+  SIKH
+}
+
+type Review @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
   id: ID!
   rating: Int
   comments: String
   businessID: ID @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [
-  {allow: public, operations: [create, read]}, 
-  {allow: owner}
-  ]) {
+type Business @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
   id: ID!
   name: String!
-  about: String
-  phone: AWSPhone
-  address: String
-  url: AWSURL
-  tags: [String]
+  about: String!
+  phone: AWSPhone!
+  address: String!
+  website: AWSURL
+  tags: [MinorityGroups!]
   type: String
-  primarycolor: String
-  secondarycolor: String
-  rating: Float
+  primarycolor: String!
+  secondarycolor: String!
+  rating: Int
   Reviews: [Review] @hasMany(indexName: "byBusiness", fields: ["id"])
   collectionID: ID @index(name: "byCollection")
+  email: AWSEmail!
+  city: String!
+  state: String!
+  zipcode: Int!
+  menu: AWSURL
+  profileImage: AWSURL!
+  bannerImage: AWSURL
 }
 
-type Collection @model @auth(rules: [
-  {allow: owner}
-]) {
+type Collection @model @auth(rules: [{allow: owner}]) {
   id: ID!
   title: String!
   description: String

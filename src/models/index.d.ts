@@ -1,6 +1,20 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
-
+export enum MinorityGroups {
+  ASIANAMERICAN = "ASIANAMERICAN",
+  AFRICANAMERICAN = "AFRICANAMERICAN",
+  LATINX = "LATINX",
+  MIDDLEEASTERN = "MIDDLEEASTERN",
+  NATIVEAMERICAN = "NATIVEAMERICAN",
+  PACIFICISLANDER = "PACIFICISLANDER",
+  ALASKANATIVE = "ALASKANATIVE",
+  MUSLIM = "MUSLIM",
+  HALAL = "HALAL",
+  JEWISH = "JEWISH",
+  KOSHER = "KOSHER",
+  HINDU = "HINDU",
+  SIKH = "SIKH"
+}
 
 
 
@@ -30,17 +44,24 @@ export declare class Review {
 export declare class Business {
   readonly id: string;
   readonly name: string;
-  readonly about?: string;
-  readonly phone?: string;
-  readonly address?: string;
-  readonly url?: string;
-  readonly tags?: (string | null)[];
+  readonly about: string;
+  readonly phone: string;
+  readonly address: string;
+  readonly website?: string;
+  readonly tags?: MinorityGroups[] | keyof typeof MinorityGroups;
   readonly type?: string;
-  readonly primarycolor?: string;
-  readonly secondarycolor?: string;
+  readonly primarycolor: string;
+  readonly secondarycolor: string;
   readonly rating?: number;
   readonly Reviews?: (Review | null)[];
   readonly collectionID?: string;
+  readonly email: string;
+  readonly city: string;
+  readonly state: string;
+  readonly zipcode: number;
+  readonly menu?: string;
+  readonly profileImage: string;
+  readonly bannerImage?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Business, BusinessMetaData>);

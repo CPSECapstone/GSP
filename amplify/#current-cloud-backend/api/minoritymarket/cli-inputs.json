@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "minoritymarket",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "C:\\Users\\vance\\OneDrive\\Desktop\\College\\Winter 2022\\CSC 405\\GSP\\amplify\\backend\\api\\minoritymarket\\schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-2c31a791-b804-4996-94df-44a47f538e12/amplify/backend/api/minoritymarket/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

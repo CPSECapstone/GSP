@@ -113,25 +113,25 @@ export const schema = {
                     "name": "about",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "phone": {
                     "name": "phone",
                     "isArray": false,
                     "type": "AWSPhone",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "address": {
                     "name": "address",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
-                "url": {
-                    "name": "url",
+                "website": {
+                    "name": "website",
                     "isArray": false,
                     "type": "AWSURL",
                     "isRequired": false,
@@ -140,8 +140,10 @@ export const schema = {
                 "tags": {
                     "name": "tags",
                     "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
+                    "type": {
+                        "enum": "MinorityGroups"
+                    },
+                    "isRequired": true,
                     "attributes": [],
                     "isArrayNullable": true
                 },
@@ -156,20 +158,20 @@ export const schema = {
                     "name": "primarycolor",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "secondarycolor": {
                     "name": "secondarycolor",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "rating": {
                     "name": "rating",
                     "isArray": false,
-                    "type": "Float",
+                    "type": "Int",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -191,6 +193,55 @@ export const schema = {
                     "name": "collectionID",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "city": {
+                    "name": "city",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "state": {
+                    "name": "state",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "zipcode": {
+                    "name": "zipcode",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "menu": {
+                    "name": "menu",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "profileImage": {
+                    "name": "profileImage",
+                    "isArray": false,
+                    "type": "AWSURL",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "bannerImage": {
+                    "name": "bannerImage",
+                    "isArray": false,
+                    "type": "AWSURL",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -346,7 +397,26 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "MinorityGroups": {
+            "name": "MinorityGroups",
+            "values": [
+                "ASIANAMERICAN",
+                "AFRICANAMERICAN",
+                "LATINX",
+                "MIDDLEEASTERN",
+                "NATIVEAMERICAN",
+                "PACIFICISLANDER",
+                "ALASKANATIVE",
+                "MUSLIM",
+                "HALAL",
+                "JEWISH",
+                "KOSHER",
+                "HINDU",
+                "SIKH"
+            ]
+        }
+    },
     "nonModels": {},
-    "version": "2483b5c243370555d55da4a6667a8ada"
+    "version": "f068a25a3530e07f10270dc63fccb125"
 };
