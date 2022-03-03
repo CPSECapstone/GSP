@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Pressable, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
 import LargeButton from "../Misc/LargeButton";
 import { ForgotPass2Props } from "../../route-settings";
@@ -113,22 +113,11 @@ function ForgotPass2({ navigation, route }: ForgotPass2Props) {
 
   return (
     <View>
-      <View style={forgotPassStyle.container}>
-        <View style={forgotPassStyle.navbar}>
-          <Pressable onPress={() => navigation.navigate("Login")}>
-            <Text style={forgotPassStyle.back}>
-              Back{" "}
-              <Text style={forgotPassStyle.forgotPassword}>
-                Forgot Password
-              </Text>
-            </Text>
-          </Pressable>
-        </View>
-      </View>
+      {/* TODO: Fill this space with an image */}
 
       <Text
         style={{
-          marginTop: 150,
+          marginTop: 225,
           marginBottom: 20,
           alignSelf: "center",
           color: "#B1B1B3",

@@ -15,6 +15,7 @@ import {
   Ionicons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { categories, minoritygroups } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
@@ -154,7 +155,7 @@ function Explore() {
   }, [selectedCategoryIndex, selectedMinorityGroups]);
 
   return (
-    <View>
+    <SafeAreaView>
       <Text style={styles.title}>Explore</Text>
       <Text style={styles.title2}>Categories</Text>
       <FlatList
@@ -268,7 +269,7 @@ function Explore() {
         )}
         keyExtractor={(item, index) => item.title + index.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

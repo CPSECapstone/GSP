@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ReviewPageProps } from "../../route-settings";
 import ReviewCell from "../Profile/ReviewCell";
 import BackButton from "../UserProfile/BackButton";
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 
 function ReviewPage({ navigation }: ReviewPageProps) {
   return (
-    <View>
+    <SafeAreaView>
       <BackButton action={() => navigation.goBack()} />
       <Text style={styles.title}>My Reviews</Text>
       <View style={styles.review}>
@@ -50,7 +51,7 @@ function ReviewPage({ navigation }: ReviewPageProps) {
           }
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
