@@ -96,7 +96,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           title="Edit Profile"
         />
         <UserProfileCell
-          action={() => console.log("Notifications")}
+          action={() => navigation.navigate("Notifications")}
           title="Notifications"
         />
         <Pressable
