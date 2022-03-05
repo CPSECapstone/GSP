@@ -2,6 +2,13 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const BusinessType = {
+  "RESTAURANT": "RESTAURANT",
+  "SHOPPING": "SHOPPING",
+  "MARKET": "MARKET",
+  "BEAUTY": "BEAUTY"
+};
+
 const MinorityGroups = {
   "ASIANAMERICAN": "ASIANAMERICAN",
   "AFRICANAMERICAN": "AFRICANAMERICAN",
@@ -24,5 +31,6 @@ export {
   Review,
   Business,
   Collection,
+  BusinessType,
   MinorityGroups
 };

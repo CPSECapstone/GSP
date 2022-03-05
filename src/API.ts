@@ -122,7 +122,7 @@ export type CreateBusinessInput = {
   address: string,
   website?: string | null,
   tags?: Array< MinorityGroups > | null,
-  type?: string | null,
+  type: BusinessType,
   primarycolor: string,
   secondarycolor: string,
   rating?: number | null,
@@ -154,6 +154,14 @@ export enum MinorityGroups {
 }
 
 
+export enum BusinessType {
+  RESTAURANT = "RESTAURANT",
+  SHOPPING = "SHOPPING",
+  MARKET = "MARKET",
+  BEAUTY = "BEAUTY",
+}
+
+
 export type ModelBusinessConditionInput = {
   name?: ModelStringInput | null,
   about?: ModelStringInput | null,
@@ -161,7 +169,7 @@ export type ModelBusinessConditionInput = {
   address?: ModelStringInput | null,
   website?: ModelStringInput | null,
   tags?: ModelMinorityGroupsListInput | null,
-  type?: ModelStringInput | null,
+  type?: ModelBusinessTypeInput | null,
   primarycolor?: ModelStringInput | null,
   secondarycolor?: ModelStringInput | null,
   rating?: ModelIntInput | null,
@@ -185,6 +193,11 @@ export type ModelMinorityGroupsListInput = {
   notContains?: MinorityGroups | null,
 };
 
+export type ModelBusinessTypeInput = {
+  eq?: BusinessType | null,
+  ne?: BusinessType | null,
+};
+
 export type Business = {
   __typename: "Business",
   id: string,
@@ -194,7 +207,7 @@ export type Business = {
   address: string,
   website?: string | null,
   tags?: Array< MinorityGroups > | null,
-  type?: string | null,
+  type: BusinessType,
   primarycolor: string,
   secondarycolor: string,
   rating?: number | null,
@@ -230,7 +243,7 @@ export type UpdateBusinessInput = {
   address?: string | null,
   website?: string | null,
   tags?: Array< MinorityGroups > | null,
-  type?: string | null,
+  type?: BusinessType | null,
   primarycolor?: string | null,
   secondarycolor?: string | null,
   rating?: number | null,
@@ -320,7 +333,7 @@ export type ModelBusinessFilterInput = {
   address?: ModelStringInput | null,
   website?: ModelStringInput | null,
   tags?: ModelMinorityGroupsListInput | null,
-  type?: ModelStringInput | null,
+  type?: ModelBusinessTypeInput | null,
   primarycolor?: ModelStringInput | null,
   secondarycolor?: ModelStringInput | null,
   rating?: ModelIntInput | null,
@@ -432,7 +445,7 @@ export type CreateBusinessMutation = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -473,7 +486,7 @@ export type UpdateBusinessMutation = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -514,7 +527,7 @@ export type DeleteBusinessMutation = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -707,7 +720,7 @@ export type GetBusinessQuery = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -751,7 +764,7 @@ export type ListBusinessesQuery = {
       address: string,
       website?: string | null,
       tags?: Array< MinorityGroups > | null,
-      type?: string | null,
+      type: BusinessType,
       primarycolor: string,
       secondarycolor: string,
       rating?: number | null,
@@ -794,7 +807,7 @@ export type SyncBusinessesQuery = {
       address: string,
       website?: string | null,
       tags?: Array< MinorityGroups > | null,
-      type?: string | null,
+      type: BusinessType,
       primarycolor: string,
       secondarycolor: string,
       rating?: number | null,
@@ -972,7 +985,7 @@ export type OnCreateBusinessSubscription = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -1012,7 +1025,7 @@ export type OnUpdateBusinessSubscription = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,
@@ -1052,7 +1065,7 @@ export type OnDeleteBusinessSubscription = {
     address: string,
     website?: string | null,
     tags?: Array< MinorityGroups > | null,
-    type?: string | null,
+    type: BusinessType,
     primarycolor: string,
     secondarycolor: string,
     rating?: number | null,

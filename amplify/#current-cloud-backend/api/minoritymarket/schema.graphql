@@ -1,3 +1,10 @@
+enum BusinessType {
+  RESTAURANT
+  SHOPPING
+  MARKET
+  BEAUTY
+}
+
 enum MinorityGroups {
   ASIANAMERICAN
   AFRICANAMERICAN
@@ -29,7 +36,7 @@ type Business @model @auth(rules: [{allow: public, operations: [create, read]}, 
   address: String!
   website: AWSURL
   tags: [MinorityGroups!]
-  type: String
+  type: BusinessType!
   primarycolor: String!
   secondarycolor: String!
   rating: Int

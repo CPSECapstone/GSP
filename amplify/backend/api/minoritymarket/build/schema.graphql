@@ -1,4 +1,11 @@
 
+enum BusinessType {
+  RESTAURANT
+  SHOPPING
+  MARKET
+  BEAUTY
+}
+
 enum MinorityGroups {
   ASIANAMERICAN
   AFRICANAMERICAN
@@ -36,7 +43,7 @@ type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
   address: String!
   website: AWSURL
   tags: [MinorityGroups!]
-  type: String
+  type: BusinessType!
   primarycolor: String!
   secondarycolor: String!
   rating: Int
@@ -257,6 +264,11 @@ input ModelMinorityGroupsListInput {
   notContains: MinorityGroups
 }
 
+input ModelBusinessTypeInput {
+  eq: BusinessType
+  ne: BusinessType
+}
+
 input ModelBusinessFilterInput {
   id: ModelIDInput
   name: ModelStringInput
@@ -265,7 +277,7 @@ input ModelBusinessFilterInput {
   address: ModelStringInput
   website: ModelStringInput
   tags: ModelMinorityGroupsListInput
-  type: ModelStringInput
+  type: ModelBusinessTypeInput
   primarycolor: ModelStringInput
   secondarycolor: ModelStringInput
   rating: ModelIntInput
@@ -289,7 +301,7 @@ input ModelBusinessConditionInput {
   address: ModelStringInput
   website: ModelStringInput
   tags: ModelMinorityGroupsListInput
-  type: ModelStringInput
+  type: ModelBusinessTypeInput
   primarycolor: ModelStringInput
   secondarycolor: ModelStringInput
   rating: ModelIntInput
@@ -314,7 +326,7 @@ input CreateBusinessInput {
   address: String!
   website: AWSURL
   tags: [MinorityGroups!]
-  type: String
+  type: BusinessType!
   primarycolor: String!
   secondarycolor: String!
   rating: Int
@@ -337,7 +349,7 @@ input UpdateBusinessInput {
   address: String
   website: AWSURL
   tags: [MinorityGroups!]
-  type: String
+  type: BusinessType
   primarycolor: String
   secondarycolor: String
   rating: Int

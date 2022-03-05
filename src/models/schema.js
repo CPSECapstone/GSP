@@ -150,8 +150,10 @@ export const schema = {
                 "type": {
                     "name": "type",
                     "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
+                    "type": {
+                        "enum": "BusinessType"
+                    },
+                    "isRequired": true,
                     "attributes": []
                 },
                 "primarycolor": {
@@ -398,6 +400,15 @@ export const schema = {
         }
     },
     "enums": {
+        "BusinessType": {
+            "name": "BusinessType",
+            "values": [
+                "RESTAURANT",
+                "SHOPPING",
+                "MARKET",
+                "BEAUTY"
+            ]
+        },
         "MinorityGroups": {
             "name": "MinorityGroups",
             "values": [
@@ -418,5 +429,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "f068a25a3530e07f10270dc63fccb125"
+    "version": "c543a47e2b5b508c7daadfaba6d1a725"
 };

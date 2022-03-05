@@ -21,7 +21,7 @@ import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
 import { Business } from "../../src/API";
-import { returnMinorityGroupValue } from "../../api";
+import { returnBusinessTypeValue, returnMinorityGroupValue } from "../../api";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
@@ -139,13 +139,17 @@ function Explore() {
     const resBusiness: Business[] = [];
     allBusinesses.forEach((business) => {
       business?.tags?.every((tag) => {
-        let byName = returnMinorityGroupValue(tag);
+        const byName = returnMinorityGroupValue(tag);
         if (
           tag != null &&
           (minorityGroupsByName.includes(byName) ||
             minorityGroupsByName.includes("All"))
         ) {
-          if (business.type === categories[selectedCategoryIndex]) {
+          if (
+            business.type != null &&
+            returnBusinessTypeValue(business.type) ===
+              categories[selectedCategoryIndex]
+          ) {
             resBusiness.push(business);
             return false;
           }

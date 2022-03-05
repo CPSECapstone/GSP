@@ -1,5 +1,12 @@
 import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
 
+export enum BusinessType {
+  RESTAURANT = "RESTAURANT",
+  SHOPPING = "SHOPPING",
+  MARKET = "MARKET",
+  BEAUTY = "BEAUTY"
+}
+
 export enum MinorityGroups {
   ASIANAMERICAN = "ASIANAMERICAN",
   AFRICANAMERICAN = "AFRICANAMERICAN",
@@ -49,7 +56,7 @@ export declare class Business {
   readonly address: string;
   readonly website?: string;
   readonly tags?: MinorityGroups[] | keyof typeof MinorityGroups;
-  readonly type?: string;
+  readonly type: BusinessType | keyof typeof BusinessType;
   readonly primarycolor: string;
   readonly secondarycolor: string;
   readonly rating?: number;
