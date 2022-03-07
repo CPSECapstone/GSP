@@ -137,7 +137,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1649210548
+                "Expires": 1649230503
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -767,6 +767,18 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationDataSourceA7FD59BCName": {
+                        "Fn::GetAtt": [
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationNotificationDataSourceA7FD59BCName"
+                        ]
+                    },
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationTable5B6F14BERef": {
+                        "Fn::GetAtt": [
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationNotificationTable5B6F14BERef"
+                        ]
+                    },
                     "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewDataSource924E2306Name": {
                         "Fn::GetAtt": [
                             "Review",
@@ -790,18 +802,6 @@
                             "Business",
                             "Outputs.transformerrootstackBusinessBusinessTable34E17224Ref"
                         ]
-                    },
-                    "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserDataSourceA8C4C398Name": {
-                        "Fn::GetAtt": [
-                            "User",
-                            "Outputs.transformerrootstackUserUserDataSourceA8C4C398Name"
-                        ]
-                    },
-                    "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserTableA7A02430Ref": {
-                        "Fn::GetAtt": [
-                            "User",
-                            "Outputs.transformerrootstackUserUserTableA7A02430Ref"
-                        ]
                     }
                 }
             },
@@ -809,8 +809,8 @@
                 "Business",
                 "Collection",
                 "GraphQLAPITransformerSchema3CB2AE18",
-                "Review",
-                "User"
+                "Notification",
+                "Review"
             ]
         },
         "CustomResourcesjson": {

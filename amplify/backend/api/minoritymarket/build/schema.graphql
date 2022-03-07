@@ -9,15 +9,13 @@ type Notification @aws_iam @aws_api_key {
   id: ID!
   message: String!
   type: NotificationType!
-  Sender: User
-  Receiver: User!
+  Sender: ID
+  userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
   _deleted: Boolean
   _lastChangedAt: AWSTimestamp!
-  notificationSenderId: ID
-  notificationReceiverId: ID!
 }
 
 type User @aws_iam @aws_api_key {
@@ -27,7 +25,7 @@ type User @aws_iam @aws_api_key {
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
   name: String
-  notifications: [ID]
+  Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -221,11 +219,11 @@ input ModelNotificationFilterInput {
   id: ModelIDInput
   message: ModelStringInput
   type: ModelNotificationTypeInput
+  Sender: ModelIDInput
+  userID: ModelIDInput
   and: [ModelNotificationFilterInput]
   or: [ModelNotificationFilterInput]
   not: ModelNotificationFilterInput
-  notificationSenderId: ModelIDInput
-  notificationReceiverId: ModelIDInput
 }
 
 type Query {
@@ -249,29 +247,29 @@ type Query {
 input ModelNotificationConditionInput {
   message: ModelStringInput
   type: ModelNotificationTypeInput
+  Sender: ModelIDInput
+  userID: ModelIDInput
   and: [ModelNotificationConditionInput]
   or: [ModelNotificationConditionInput]
   not: ModelNotificationConditionInput
-  notificationSenderId: ModelIDInput
-  notificationReceiverId: ModelIDInput
 }
 
 input CreateNotificationInput {
   id: ID
   message: String!
   type: NotificationType!
+  Sender: ID
+  userID: ID!
   _version: Int
-  notificationSenderId: ID
-  notificationReceiverId: ID!
 }
 
 input UpdateNotificationInput {
   id: ID!
   message: String
   type: NotificationType
+  Sender: ID
+  userID: ID
   _version: Int
-  notificationSenderId: ID
-  notificationReceiverId: ID
 }
 
 input DeleteNotificationInput {
@@ -327,7 +325,6 @@ input ModelUserFilterInput {
   ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
-  notifications: ModelIDInput
   and: [ModelUserFilterInput]
   or: [ModelUserFilterInput]
   not: ModelUserFilterInput
@@ -338,7 +335,6 @@ input ModelUserConditionInput {
   ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
-  notifications: ModelIDInput
   and: [ModelUserConditionInput]
   or: [ModelUserConditionInput]
   not: ModelUserConditionInput
@@ -350,7 +346,6 @@ input CreateUserInput {
   ownedBusinesses: String
   profilePic: AWSURL
   name: String
-  notifications: [ID]
   _version: Int
 }
 
@@ -360,7 +355,6 @@ input UpdateUserInput {
   ownedBusinesses: String
   profilePic: AWSURL
   name: String
-  notifications: [ID]
   _version: Int
 }
 

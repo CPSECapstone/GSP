@@ -29,30 +29,16 @@ export const schema = {
                 "Sender": {
                     "name": "Sender",
                     "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
+                    "type": "ID",
                     "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "notificationSenderId"
-                    }
+                    "attributes": []
                 },
-                "Receiver": {
-                    "name": "Receiver",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
+                    "type": "ID",
                     "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id",
-                        "targetName": "notificationReceiverId"
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -69,20 +55,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "notificationSenderId": {
-                    "name": "notificationSenderId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "notificationReceiverId": {
-                    "name": "notificationReceiverId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -91,6 +63,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -162,13 +143,19 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "notifications": {
-                    "name": "notifications",
+                "Notifications": {
+                    "name": "Notifications",
                     "isArray": true,
-                    "type": "ID",
+                    "type": {
+                        "model": "Notification"
+                    },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -665,5 +652,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "e3d0b61595930c1ae746e712ac23f210"
+    "version": "e229881800ede733ce1221446fb40edd"
 };

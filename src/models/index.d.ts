@@ -55,12 +55,10 @@ export declare class Notification {
   readonly id: string;
   readonly message: string;
   readonly type: NotificationType | keyof typeof NotificationType;
-  readonly Sender?: User;
-  readonly Receiver: User;
+  readonly Sender?: string;
+  readonly userID: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
-  readonly notificationSenderId?: string;
-  readonly notificationReceiverId: string;
   constructor(init: ModelInit<Notification, NotificationMetaData>);
   static copyOf(source: Notification, mutator: (draft: MutableModel<Notification, NotificationMetaData>) => MutableModel<Notification, NotificationMetaData> | void): Notification;
 }
@@ -72,7 +70,7 @@ export declare class User {
   readonly profilePic?: string;
   readonly Collections?: (Collection | null)[];
   readonly name?: string;
-  readonly notifications?: (string | null)[];
+  readonly Notifications?: (Notification | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);

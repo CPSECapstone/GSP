@@ -139,6 +139,145 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
+    "UserNotificationsauth0FunctionUserNotificationsauth0FunctionAppSyncFunctionF0B57C22": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "UserNotificationsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Notifications.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
+    "UserNotificationsDataResolverFnUserNotificationsDataResolverFnAppSyncFunctionAF2B5438": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationDataSourceA7FD59BCName"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "UserNotificationsDataResolverFn",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Notifications.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Notifications.res.vtl"
+            ]
+          ]
+        },
+        "SyncConfig": {
+          "ConflictDetection": "VERSION",
+          "ConflictHandler": "AUTOMERGE"
+        }
+      }
+    },
+    "UserNotificationsResolver": {
+      "Type": "AWS::AppSync::Resolver",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "FieldName": "Notifications",
+        "TypeName": "User",
+        "Kind": "PIPELINE",
+        "PipelineConfig": {
+          "Functions": [
+            {
+              "Fn::GetAtt": [
+                "UserNotificationsauth0FunctionUserNotificationsauth0FunctionAppSyncFunctionF0B57C22",
+                "FunctionId"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "UserNotificationsDataResolverFnUserNotificationsDataResolverFnAppSyncFunctionAF2B5438",
+                "FunctionId"
+              ]
+            }
+          ]
+        },
+        "RequestMappingTemplate": {
+          "Fn::Join": [
+            "",
+            [
+              "$util.qr($ctx.stash.put(\"typeName\", \"User\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Notifications\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
+              {
+                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
+              {
+                "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationTable5B6F14BERef"
+              },
+              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
+              {
+                "Ref": "AWS::AccountId"
+              },
+              ":assumed-role/",
+              {
+                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
+              },
+              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
     "BusinessReviewsauth0FunctionBusinessReviewsauth0FunctionAppSyncFunctionEFC10EE5": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -416,284 +555,6 @@
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
-    },
-    "NotificationSenderauth0FunctionNotificationSenderauth0FunctionAppSyncFunction1AA0F579": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "NotificationSenderauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Sender.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "NotificationSenderDataResolverFnNotificationSenderDataResolverFnAppSyncFunctionBB5E6507": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserDataSourceA8C4C398Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "NotificationSenderDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Sender.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Sender.res.vtl"
-            ]
-          ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
-        }
-      }
-    },
-    "NotificationSenderResolver": {
-      "Type": "AWS::AppSync::Resolver",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "FieldName": "Sender",
-        "TypeName": "Notification",
-        "Kind": "PIPELINE",
-        "PipelineConfig": {
-          "Functions": [
-            {
-              "Fn::GetAtt": [
-                "NotificationSenderauth0FunctionNotificationSenderauth0FunctionAppSyncFunction1AA0F579",
-                "FunctionId"
-              ]
-            },
-            {
-              "Fn::GetAtt": [
-                "NotificationSenderDataResolverFnNotificationSenderDataResolverFnAppSyncFunctionBB5E6507",
-                "FunctionId"
-              ]
-            }
-          ]
-        },
-        "RequestMappingTemplate": {
-          "Fn::Join": [
-            "",
-            [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Notification\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Sender\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
-              {
-                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-              },
-              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
-              {
-                "Ref": "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserTableA7A02430Ref"
-              },
-              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "NotificationReceiverauth0FunctionNotificationReceiverauth0FunctionAppSyncFunction9C633A7B": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "NotificationReceiverauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Receiver.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "NotificationReceiverDataResolverFnNotificationReceiverDataResolverFnAppSyncFunctionCF4E396C": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserDataSourceA8C4C398Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "NotificationReceiverDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Receiver.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Notification.Receiver.res.vtl"
-            ]
-          ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
-        }
-      }
-    },
-    "NotificationReceiverResolver": {
-      "Type": "AWS::AppSync::Resolver",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "FieldName": "Receiver",
-        "TypeName": "Notification",
-        "Kind": "PIPELINE",
-        "PipelineConfig": {
-          "Functions": [
-            {
-              "Fn::GetAtt": [
-                "NotificationReceiverauth0FunctionNotificationReceiverauth0FunctionAppSyncFunction9C633A7B",
-                "FunctionId"
-              ]
-            },
-            {
-              "Fn::GetAtt": [
-                "NotificationReceiverDataResolverFnNotificationReceiverDataResolverFnAppSyncFunctionCF4E396C",
-                "FunctionId"
-              ]
-            }
-          ]
-        },
-        "RequestMappingTemplate": {
-          "Fn::Join": [
-            "",
-            [
-              "$util.qr($ctx.stash.put(\"typeName\", \"Notification\"))\n$util.qr($ctx.stash.put(\"fieldName\", \"Receiver\"))\n$util.qr($ctx.stash.put(\"conditions\", []))\n$util.qr($ctx.stash.put(\"metadata\", {}))\n$util.qr($ctx.stash.metadata.put(\"dataSourceType\", \"AMAZON_DYNAMODB\"))\n$util.qr($ctx.stash.metadata.put(\"apiId\", \"",
-              {
-                "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-              },
-              "\"))\n$util.qr($ctx.stash.put(\"tableName\", \"",
-              {
-                "Ref": "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserTableA7A02430Ref"
-              },
-              "\"))\n$util.qr($ctx.stash.put(\"authRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackauthRoleNameFB872D50Ref"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.qr($ctx.stash.put(\"unauthRole\", \"arn:aws:sts::",
-              {
-                "Ref": "AWS::AccountId"
-              },
-              ":assumed-role/",
-              {
-                "Ref": "referencetotransformerrootstackunauthRoleName49F3C1FERef"
-              },
-              "/CognitoIdentityCredentials\"))\n$util.toJson({})"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
     }
   },
   "Parameters": {
@@ -721,6 +582,12 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationDataSourceA7FD59BCName": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationNotificationTable5B6F14BERef": {
+      "Type": "String"
+    },
     "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewDataSource924E2306Name": {
       "Type": "String"
     },
@@ -731,12 +598,6 @@
       "Type": "String"
     },
     "referencetotransformerrootstackBusinessNestedStackBusinessNestedStackResource11E35CC0OutputstransformerrootstackBusinessBusinessTable34E17224Ref": {
-      "Type": "String"
-    },
-    "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserDataSourceA8C4C398Name": {
-      "Type": "String"
-    },
-    "referencetotransformerrootstackUserNestedStackUserNestedStackResource01084C14OutputstransformerrootstackUserUserTableA7A02430Ref": {
       "Type": "String"
     }
   }
