@@ -11,7 +11,7 @@ import {
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
 import SearchBar from "../SearchBar/SearchBar";
-import Map from "../Map/Map";
+import Map from "./Map";
 import { Business } from "../../src/API";
 import { minoritygroups } from "../../constants/exploredata";
 import ResultsTab from "./ResultsTab";
@@ -145,7 +145,8 @@ export default function HomePage() {
       />
       {openModal && (
         <ResultsTab onDismiss={onDismiss} visible>
-          <View
+          <BusinessCard name="Test" distance="4" rating="2" />
+          {/* <View
             style={{
               justifyContent: "center",
               alignItems: "center",
@@ -167,18 +168,12 @@ export default function HomePage() {
               </Text>
             ) : (
               <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
                 data={resultBusinesses}
                 renderItem={({ item }) => {
                   if (item?.name !== undefined) {
                     return (
-                      <BusinessCard
-                        name={item.name}
-                        distance={"3"}
-                        rating={"4"}
-                      />
+                      <BusinessCard name={item.name} distance="3" rating="4" />
                     );
                   }
                   return <Text>Something went wrong</Text>;
@@ -186,7 +181,7 @@ export default function HomePage() {
                 keyExtractor={(item, index) => index.toString()}
               />
             )}
-          </View>
+          </View> */}
         </ResultsTab>
       )}
     </View>
