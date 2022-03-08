@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
   Linking,
@@ -14,6 +14,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { BusinessProps } from "../../../route-settings";
+import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import dummyBusiness from "./tempdata";
 
 function Margin() {
@@ -108,8 +109,14 @@ const openMap = async (address: string, city: string, zipCode: string) => {
 };
 
 export default function BusinessProfile({ navigation }: BusinessProps) {
+  const [modalVisible, setmodalVisible] = React.useState(false);
+
   return (
     <View>
+      <BusinessProfileModal
+        visible={modalVisible}
+        modalVisibilitySetter={setmodalVisible}
+      />
       <ImageBackground
         source={{ uri: dummyBusiness.bannerImage }}
         resizeMode="cover"
@@ -128,6 +135,12 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
               onPress={() => navigation.navigate("ProfileEditor")}
             >
               <Ionicons name="bookmark-outline" size={25} color="white" />
+            </Pressable>
+            <Pressable
+              style={styles.share}
+              onPress={() => setmodalVisible(true)}
+            >
+              <SimpleLineIcons name="options" size={25} color="white" />
             </Pressable>
             <Image
               style={styles.avatar}
@@ -252,6 +265,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginTop: 40,
     marginRight: -10,
+  },
+  share: {
+    marginBottom: 10,
+    alignSelf: "flex-end",
+    position: "absolute",
+    marginTop: 40,
+    right: 35,
   },
   banner: {
     borderColor: dummyBusiness.colorSet.primary,

@@ -17,16 +17,17 @@
       ":partitionKey": $util.dynamodb.toDynamoDB($context.source.id)
   }
 } )
+  #set( $args = $util.defaultIfNull($ctx.stash.transformedArgs, $ctx.args) )
   #if( !$util.isNullOrEmpty($ctx.stash.authFilter) )
     #set( $filter = $ctx.stash.authFilter )
-    #if( !$util.isNullOrEmpty($ctx.args.filter) )
+    #if( !$util.isNullOrEmpty($args.filter) )
       #set( $filter = {
-  "and":   [$filter, $ctx.args.filter]
+  "and":   [$filter, $args.filter]
 } )
     #end
   #else
-    #if( !$util.isNullOrEmpty($ctx.args.filter) )
-      #set( $filter = $ctx.args.filter )
+    #if( !$util.isNullOrEmpty($args.filter) )
+      #set( $filter = $args.filter )
     #end
   #end
   #if( !$util.isNullOrEmpty($filter) )

@@ -31,6 +31,7 @@ import Home from "./components/Home/Home";
 import store from "./redux/store";
 import initializeRedux from "./redux/initialize";
 import { useAppDispatch } from "./redux/hooks";
+import Notifications from "./components/OwnershipTransfer/NotificationsPage";
 import ProfileSelector from "./components/Profile/ProfileSelector";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
@@ -76,7 +77,13 @@ function InnerApp() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Login"
-        screenOptions={{ headerShown: false }}
+        screenOptions={{
+          headerShown: false,
+          headerTintColor: "#000000",
+          headerBackTitle: "Back",
+          headerBackTitleVisible: true,
+          headerBackTitleStyle: { fontSize: 18, fontFamily: "Mada-SemiBold" },
+        }}
       >
         <Stack.Screen
           name="ForgotPass"
@@ -124,6 +131,11 @@ function InnerApp() {
         <Stack.Screen name="ReviewPage" component={ReviewPage} />
         <Stack.Screen name="BizReviewPage" component={BizReviewPage} />
         <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
+        <Stack.Screen
+          name="Notifications"
+          component={Notifications}
+          options={{ title: "Notifications", headerShown: true }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

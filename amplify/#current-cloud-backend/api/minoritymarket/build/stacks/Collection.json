@@ -111,6 +111,10 @@
           {
             "AttributeName": "id",
             "AttributeType": "S"
+          },
+          {
+            "AttributeName": "userID",
+            "AttributeType": "S"
           }
         ],
         "BillingMode": {
@@ -122,6 +126,36 @@
             }
           ]
         },
+        "GlobalSecondaryIndexes": [
+          {
+            "IndexName": "byUser",
+            "KeySchema": [
+              {
+                "AttributeName": "userID",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "Fn::If": [
+                "ShouldUsePayPerRequestBilling",
+                {
+                  "Ref": "AWS::NoValue"
+                },
+                {
+                  "ReadCapacityUnits": {
+                    "Ref": "DynamoDBModelTableReadIOPS"
+                  },
+                  "WriteCapacityUnits": {
+                    "Ref": "DynamoDBModelTableWriteIOPS"
+                  }
+                }
+              ]
+            }
+          }
+        ],
         "PointInTimeRecoverySpecification": {
           "Fn::If": [
             "ShouldUsePointInTimeRecovery",
@@ -244,7 +278,18 @@
                   ]
                 },
                 {
-                  "Ref": "AWS::NoValue"
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "CollectionTable",
+                          "Arn"
+                        ]
+                      },
+                      "/index/*"
+                    ]
+                  ]
                 }
               ]
             }
@@ -787,6 +832,42 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
+    "QuerysyncCollectionspreAuth0FunctionQuerysyncCollectionspreAuth0FunctionAppSyncFunctionC6498CF9": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Fn::GetAtt": [
+            "CollectionDataSource",
+            "Name"
+          ]
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "QuerysyncCollectionspreAuth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Query.syncCollections.preAuth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      },
+      "DependsOn": [
+        "CollectionDataSource"
+      ]
+    },
     "QuerysyncCollectionsauth0FunctionQuerysyncCollectionsauth0FunctionAppSyncFunction54960EC3": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -913,6 +994,12 @@
         "Kind": "PIPELINE",
         "PipelineConfig": {
           "Functions": [
+            {
+              "Fn::GetAtt": [
+                "QuerysyncCollectionspreAuth0FunctionQuerysyncCollectionspreAuth0FunctionAppSyncFunctionC6498CF9",
+                "FunctionId"
+              ]
+            },
             {
               "Fn::GetAtt": [
                 "QuerysyncCollectionsauth0FunctionQuerysyncCollectionsauth0FunctionAppSyncFunction54960EC3",
@@ -2189,6 +2276,19 @@
             ]
           ]
         }
+      }
+    },
+    "transformerrootstackCollectionCollectionDataSource1AAC03D8Name": {
+      "Value": {
+        "Fn::GetAtt": [
+          "CollectionDataSource",
+          "Name"
+        ]
+      }
+    },
+    "transformerrootstackCollectionCollectionTableC97A91BCRef": {
+      "Value": {
+        "Ref": "CollectionTable"
       }
     }
   }
