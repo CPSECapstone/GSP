@@ -59,7 +59,7 @@ function ExploreResultCell(props: ResultCellProps) {
       <Image
         style={[
           styles.image,
-          { borderWidth: 2, borderColor: `#${primarycolor}` },
+          { borderWidth: 2, borderColor: `${primarycolor}` },
         ]}
         source={placeholdericon}
       />
