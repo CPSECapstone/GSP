@@ -291,7 +291,11 @@
         "Name": "AdminQueries"
       }
     },
+<<<<<<< Updated upstream
     "DeploymentAPIGWAdminQueriesca0418a1": {
+=======
+    "DeploymentAPIGWAdminQueriesc86a0f57": {
+>>>>>>> Stashed changes
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
