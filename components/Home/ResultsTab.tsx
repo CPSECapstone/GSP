@@ -43,7 +43,7 @@ interface ResultsTabProps {
   children: React.ReactNode;
 }
 
-const ResultsTab = ({ onDismiss, visible, children }: ResultsTabProps) => {
+function ResultsTab({ onDismiss, visible, children }: ResultsTabProps) {
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
 
@@ -93,16 +93,16 @@ const ResultsTab = ({ onDismiss, visible, children }: ResultsTabProps) => {
       animationType="fade"
       visible={visible}
       onRequestClose={handleDismiss}
-      transparent={true}
+      transparent
     >
       <TouchableWithoutFeedback onPress={handleDismiss}>
         <View style={styles.overlay}>
           <Animated.View
             style={{
               ...styles.container,
-              transform: [{ translateY: translateY }],
+              transform: [{ translateY }],
             }}
-            {...panResponders.panHandlers}
+            {...panResponders.panHandlers} // eslint-disable-line react/jsx-props-no-spreading
           >
             <View style={styles.sliderIndicatorRow}>
               <View style={styles.sliderIndicator} />
@@ -113,12 +113,11 @@ const ResultsTab = ({ onDismiss, visible, children }: ResultsTabProps) => {
       </TouchableWithoutFeedback>
     </Modal>
   );
-};
+}
 
 export default ResultsTab;
 
-{
-  /* <View
+/* <View
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -170,4 +169,3 @@ export default ResultsTab;
             keyExtractor={(item, index) => index.toString()}
           />
         )} */
-}

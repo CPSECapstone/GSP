@@ -7,7 +7,6 @@ import {
   Image,
   Text,
   Dimensions,
-  Button,
 } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
@@ -91,6 +90,7 @@ export default function HomePage() {
     allBusinesses.forEach((business) => {
       business?.tags?.every((tag) => {
         if (tag != null && minorityGroupsByName.includes(tag)) return true;
+        return false;
       });
     });
     setResultBusinesses(resBusiness);
@@ -107,7 +107,7 @@ export default function HomePage() {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
-        data={minoritygroups.filter((group) => group.title !== "All")}
+        data={minoritygroups}
         contentContainerStyle={{ paddingLeft: "9.5%", height: ".02%" }}
         style={styles.filters}
         renderItem={({ item, index }) => (
@@ -144,17 +144,49 @@ export default function HomePage() {
         keyExtractor={(item, index) => item.title + index.toString()}
       />
       {openModal && (
-        <ResultsTab onDismiss={onDismiss} visible={true}>
-          <BusinessCard
-            name={"Test Business Name"}
-            rating={"4"}
-            distance={"2"}
-          />
-          <BusinessCard
-            name={"Test Business Name"}
-            rating={"4"}
-            distance={"2"}
-          />
+        <ResultsTab onDismiss={onDismiss} visible>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 20,
+              padding: 10,
+              minHeight: 350,
+            }}
+          >
+            {resultBusinesses.length === 0 ? (
+              <Text
+                style={{
+                  color: "#FA4A0C",
+                  fontFamily: "Mada-Regular",
+                  fontSize: 24,
+                  textAlign: "center",
+                }}
+              >
+                No businesses returned from selected filters.
+              </Text>
+            ) : (
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
+                data={resultBusinesses}
+                renderItem={({ item }) => {
+                  if (item?.name !== undefined) {
+                    return (
+                      <BusinessCard
+                        name={item.name}
+                        distance={"3"}
+                        rating={"4"}
+                      />
+                    );
+                  }
+                  return <Text>Something went wrong</Text>;
+                }}
+                keyExtractor={(item, index) => index.toString()}
+              />
+            )}
+          </View>
         </ResultsTab>
       )}
     </View>
