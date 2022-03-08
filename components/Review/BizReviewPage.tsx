@@ -1,10 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  FlatList,
+  SafeAreaView,
+} from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
 import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
+import { ReviewCellProps } from "../Profile/ReviewCell";
 
 const styles = StyleSheet.create({
   header: {
@@ -60,6 +69,26 @@ const styles = StyleSheet.create({
   },
 });
 
+const reviewData = [
+  {
+    restaurant: "Tori L",
+    rating: 4.0,
+    srcImage: "",
+    description: "I love Milk In It. It is my go to shop for boba.",
+  },
+  {
+    restaurant: "Marvis I.",
+    rating: 5.0,
+    srcImage: "",
+    description: "I love Milk In It. It is my go to shop for boba.",
+  },
+  {
+    restaurant: "Tessa S.",
+    rating: 5.0,
+    srcImage: "",
+    description: "I love Milk In It. It is my go to shop for boba.",
+  },
+];
 function BizReviewPage({ navigation }: BizReviewPageProps) {
   return (
     <View>
@@ -125,32 +154,23 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         </Pressable>
       </View>
 
-      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
-        <ReviewCell
-          restaurant="Tori L."
-          rating={4.0}
-          srcImage=""
-          description="This is a review."
+      <SafeAreaView>
+        <FlatList
+          contentContainerStyle={{ alignItems: "center", padding: 30 }}
+          data={reviewData}
+          renderItem={({ item }) => (
+            <View style={{ paddingBottom: 30 }}>
+              <ReviewCell
+                restaurant={item.restaurant}
+                description={item.description}
+                srcImage={item.srcImage}
+                rating={item.rating}
+              />
+            </View>
+          )}
+          keyExtractor={(review) => review.restaurant}
         />
-      </View>
-
-      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
-        <ReviewCell
-          restaurant="Marvis I."
-          rating={5.0}
-          srcImage=""
-          description="This is a review."
-        />
-      </View>
-
-      <View style={{ alignSelf: "center", paddingBottom: 20, paddingTop: 20 }}>
-        <ReviewCell
-          restaurant="Tessa S."
-          rating={5.0}
-          srcImage=""
-          description="This is a review."
-        />
-      </View>
+      </SafeAreaView>
 
       <LargeButton
         action={() => console.log("Write a Review")}

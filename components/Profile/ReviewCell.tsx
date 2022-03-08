@@ -48,7 +48,7 @@ export function StarOutline() {
   );
 }
 
-interface ReviewCellProps {
+export interface ReviewCellProps {
   restaurant: String;
   rating: Number;
   srcImage: string;
