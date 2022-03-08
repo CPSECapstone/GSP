@@ -2,6 +2,126 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateNotification = /* GraphQL */ `
+  subscription OnCreateNotification {
+    onCreateNotification {
+      id
+      message
+      type
+      Sender
+      userID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateNotification = /* GraphQL */ `
+  subscription OnUpdateNotification {
+    onUpdateNotification {
+      id
+      message
+      type
+      Sender
+      userID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteNotification = /* GraphQL */ `
+  subscription OnDeleteNotification {
+    onDeleteNotification {
+      id
+      message
+      type
+      Sender
+      userID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      email
+      ownedBusinesses
+      profilePic
+      Collections {
+        nextToken
+        startedAt
+      }
+      name
+      Notifications {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
+      email
+      ownedBusinesses
+      profilePic
+      Collections {
+        nextToken
+        startedAt
+      }
+      name
+      Notifications {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
+      email
+      ownedBusinesses
+      profilePic
+      Collections {
+        nextToken
+        startedAt
+      }
+      name
+      Notifications {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateReview = /* GraphQL */ `
   subscription OnCreateReview($owner: String) {
     onCreateReview(owner: $owner) {
@@ -58,7 +178,7 @@ export const onCreateBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -69,6 +189,13 @@ export const onCreateBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -86,7 +213,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -97,6 +224,13 @@ export const onUpdateBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -114,7 +248,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -125,6 +259,13 @@ export const onDeleteBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -145,6 +286,7 @@ export const onCreateCollection = /* GraphQL */ `
         nextToken
         startedAt
       }
+      userID
       createdAt
       updatedAt
       _version
@@ -165,6 +307,7 @@ export const onUpdateCollection = /* GraphQL */ `
         nextToken
         startedAt
       }
+      userID
       createdAt
       updatedAt
       _version
@@ -185,6 +328,7 @@ export const onDeleteCollection = /* GraphQL */ `
         nextToken
         startedAt
       }
+      userID
       createdAt
       updatedAt
       _version

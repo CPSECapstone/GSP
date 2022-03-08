@@ -1,4 +1,5 @@
 ## [Start] Delete Request template. **
+#set( $args = $util.defaultIfNull($ctx.stash.transformedArgs, $ctx.args) )
 #set( $DeleteRequest = {
   "version": "2018-05-29",
   "operation": "DeleteItem"
@@ -7,7 +8,7 @@
   #set( $Key = $ctx.stash.metadata.modelObjectKey )
 #else
   #set( $Key = {
-  "id":   $util.dynamodb.toDynamoDB($ctx.args.input.id)
+  "id":   $util.dynamodb.toDynamoDB($args.input.id)
 } )
 #end
 $util.qr($DeleteRequest.put("key", $Key))
@@ -30,8 +31,8 @@ $util.qr($DeleteRequest.put("key", $Key))
 }))
 #end
 ## End - key condition **
-#if( $context.args.condition )
-  $util.qr($ctx.stash.conditions.add($context.args.condition))
+#if( $args.condition )
+  $util.qr($ctx.stash.conditions.add($args.condition))
 #end
 ## Start condition block **
 #if( $ctx.stash.conditions && $ctx.stash.conditions.size() != 0 )
@@ -53,6 +54,6 @@ $util.qr($DeleteRequest.put("key", $Key))
   #end
   $util.qr($DeleteRequest.put("condition", $Conditions))
 #end
-$util.qr($DeleteRequest.put("_version", $util.defaultIfNull($ctx.args.input["_version"], "0")))
+$util.qr($DeleteRequest.put("_version", $util.defaultIfNull($args.input["_version"], 0)))
 $util.toJson($DeleteRequest)
 ## [End] Delete Request template. **
