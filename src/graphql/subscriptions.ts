@@ -135,8 +135,8 @@ export const onDeleteUser = /* GraphQL */ `
   }
 `;
 export const onCreateReview = /* GraphQL */ `
-  subscription OnCreateReview($owner: String) {
-    onCreateReview(owner: $owner) {
+  subscription OnCreateReview {
+    onCreateReview {
       id
       rating
       comments
@@ -146,13 +146,12 @@ export const onCreateReview = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onUpdateReview = /* GraphQL */ `
-  subscription OnUpdateReview($owner: String) {
-    onUpdateReview(owner: $owner) {
+  subscription OnUpdateReview {
+    onUpdateReview {
       id
       rating
       comments
@@ -162,13 +161,12 @@ export const onUpdateReview = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onDeleteReview = /* GraphQL */ `
-  subscription OnDeleteReview($owner: String) {
-    onDeleteReview(owner: $owner) {
+  subscription OnDeleteReview {
+    onDeleteReview {
       id
       rating
       comments
@@ -178,13 +176,12 @@ export const onDeleteReview = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onCreateBusiness = /* GraphQL */ `
-  subscription OnCreateBusiness($owner: String) {
-    onCreateBusiness(owner: $owner) {
+  subscription OnCreateBusiness {
+    onCreateBusiness {
       id
       name
       about
@@ -214,13 +211,12 @@ export const onCreateBusiness = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onUpdateBusiness = /* GraphQL */ `
-  subscription OnUpdateBusiness($owner: String) {
-    onUpdateBusiness(owner: $owner) {
+  subscription OnUpdateBusiness {
+    onUpdateBusiness {
       id
       name
       about
@@ -250,13 +246,12 @@ export const onUpdateBusiness = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onDeleteBusiness = /* GraphQL */ `
-  subscription OnDeleteBusiness($owner: String) {
-    onDeleteBusiness(owner: $owner) {
+  subscription OnDeleteBusiness {
+    onDeleteBusiness {
       id
       name
       about
@@ -286,13 +281,12 @@ export const onDeleteBusiness = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onCreateCollection = /* GraphQL */ `
-  subscription OnCreateCollection($owner: String) {
-    onCreateCollection(owner: $owner) {
+  subscription OnCreateCollection {
+    onCreateCollection {
       id
       title
       description
@@ -307,13 +301,12 @@ export const onCreateCollection = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onUpdateCollection = /* GraphQL */ `
-  subscription OnUpdateCollection($owner: String) {
-    onUpdateCollection(owner: $owner) {
+  subscription OnUpdateCollection {
+    onUpdateCollection {
       id
       title
       description
@@ -328,13 +321,12 @@ export const onUpdateCollection = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
 export const onDeleteCollection = /* GraphQL */ `
-  subscription OnDeleteCollection($owner: String) {
-    onDeleteCollection(owner: $owner) {
+  subscription OnDeleteCollection {
+    onDeleteCollection {
       id
       title
       description
@@ -349,7 +341,6 @@ export const onDeleteCollection = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;

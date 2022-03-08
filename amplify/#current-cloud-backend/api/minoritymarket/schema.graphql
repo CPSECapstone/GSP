@@ -46,14 +46,14 @@ enum MinorityGroups {
   SIKH
 }
 
-type Review @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
+type Review @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Int
   comments: String
   businessID: ID @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
+type Business @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   about: String!
@@ -77,7 +77,7 @@ type Business @model @auth(rules: [{allow: public, operations: [create, read]}, 
   userID: ID! @index(name: "byUser")
 }
 
-type Collection @model @auth(rules: [{allow: owner}]) {
+type Collection @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String!
   description: String
