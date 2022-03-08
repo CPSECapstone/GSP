@@ -1,13 +1,13 @@
+import { API, Auth } from "aws-amplify";
+import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 import {
   notificationsLoading,
   notificationsRecieved,
 } from "../slices/notifications";
 import { AppDispatch, RootState } from "../store";
-import { API, Auth } from "aws-amplify";
 import { listNotifications } from "../../src/graphql/queries";
 import { ListNotificationsQuery } from "../../src/API";
 import notEmpty from "./helper";
-import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 
 const fetchNotifications =
   (): ThunkAction<void, RootState, unknown, AnyAction> =>
@@ -25,7 +25,6 @@ const fetchNotifications =
     const notifs = res?.data?.listNotifications?.items ?? [];
     const noNullNotifs = notifs.filter(notEmpty);
 
-    console.log(noNullNotifs);
     dispatch(notificationsRecieved(noNullNotifs));
   };
 
