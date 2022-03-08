@@ -10,6 +10,7 @@ export const getNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -31,6 +32,7 @@ export const listNotifications = /* GraphQL */ `
         type
         Sender
         userID
+        title
         createdAt
         updatedAt
         _version
@@ -61,6 +63,7 @@ export const syncNotifications = /* GraphQL */ `
         type
         Sender
         userID
+        title
         createdAt
         updatedAt
         _version
@@ -77,7 +80,6 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -85,6 +87,10 @@ export const getUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -106,7 +112,6 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         email
-        ownedBusinesses
         profilePic
         name
         createdAt
@@ -136,7 +141,6 @@ export const syncUsers = /* GraphQL */ `
       items {
         id
         email
-        ownedBusinesses
         profilePic
         name
         createdAt
@@ -246,6 +250,7 @@ export const getBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
@@ -282,6 +287,7 @@ export const listBusinesses = /* GraphQL */ `
         menu
         profileImage
         bannerImage
+        userID
         createdAt
         updatedAt
         _version
@@ -327,6 +333,7 @@ export const syncBusinesses = /* GraphQL */ `
         menu
         profileImage
         bannerImage
+        userID
         createdAt
         updatedAt
         _version

@@ -10,6 +10,7 @@ export const onCreateNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -26,6 +27,7 @@ export const onUpdateNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -42,6 +44,7 @@ export const onDeleteNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -55,7 +58,6 @@ export const onCreateUser = /* GraphQL */ `
     onCreateUser {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -63,6 +65,10 @@ export const onCreateUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -79,7 +85,6 @@ export const onUpdateUser = /* GraphQL */ `
     onUpdateUser {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -87,6 +92,10 @@ export const onUpdateUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -103,7 +112,6 @@ export const onDeleteUser = /* GraphQL */ `
     onDeleteUser {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -111,6 +119,10 @@ export const onDeleteUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -196,6 +208,7 @@ export const onCreateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
@@ -231,6 +244,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
@@ -266,6 +280,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version

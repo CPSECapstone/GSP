@@ -40,6 +40,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "title": {
+                    "name": "title",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -108,13 +115,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "ownedBusinesses": {
-                    "name": "ownedBusinesses",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "profilePic": {
                     "name": "profilePic",
                     "isArray": false,
@@ -148,6 +148,20 @@ export const schema = {
                     "isArray": true,
                     "type": {
                         "model": "Notification"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "userID"
+                    }
+                },
+                "Businesses": {
+                    "name": "Businesses",
+                    "isArray": true,
+                    "type": {
+                        "model": "Business"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -460,6 +474,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -490,6 +511,15 @@ export const schema = {
                         "name": "byCollection",
                         "fields": [
                             "collectionID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
                         ]
                     }
                 },
@@ -652,5 +682,5 @@ export const schema = {
         }
     },
     "nonModels": {},
-    "version": "e229881800ede733ce1221446fb40edd"
+    "version": "d63e40affb3bb5f12b9d814ef3df5505"
 };

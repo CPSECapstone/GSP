@@ -48,9 +48,9 @@ function Notifications({ route, navigation }: NotificationsProps) {
             ) {
               return (
                 <OwnershipNotif
-                  title={"Blah"}
-                  message={item?.message}
-                  senderID={item?.Sender}
+                  title={item.title}
+                  message={item.message}
+                  senderID={item.Sender}
                   type={item.type}
                 />
               );

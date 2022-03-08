@@ -13,6 +13,7 @@ export const createNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -32,6 +33,7 @@ export const updateNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -51,6 +53,7 @@ export const deleteNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
       _version
@@ -67,7 +70,6 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -75,6 +77,10 @@ export const createUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -94,7 +100,6 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -102,6 +107,10 @@ export const updateUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -121,7 +130,6 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
@@ -129,6 +137,10 @@ export const deleteUser = /* GraphQL */ `
       }
       name
       Notifications {
+        nextToken
+        startedAt
+      }
+      Businesses {
         nextToken
         startedAt
       }
@@ -226,6 +238,7 @@ export const createBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
@@ -264,6 +277,7 @@ export const updateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
@@ -302,6 +316,7 @@ export const deleteBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
       _version
