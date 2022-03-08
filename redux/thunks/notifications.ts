@@ -23,7 +23,9 @@ const fetchNotifications =
     };
 
     const notifs = res?.data?.listNotifications?.items ?? [];
-    const noNullNotifs = notifs.filter(notEmpty);
+    const noNullNotifs = notifs
+      .filter(notEmpty)
+      .filter((notif) => notif._deleted !== true);
 
     dispatch(notificationsRecieved(noNullNotifs));
   };
