@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { NotificationType } from "../../src/API";
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +62,7 @@ interface NotifProps {
   title: string;
   message: string;
   senderID: string;
-  type: string;
+  type: NotificationType;
   // switch type to enum when working on backend
   // REQUEST, IGNORE, RESPONSE, OR ACCEPT notif types
 }
@@ -71,7 +72,7 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
   let buttons;
 
   switch (type) {
-    case "REQUEST":
+    case NotificationType.OWNERSHIPREQUEST:
       buttons = (
         <View>
           <Divider />
@@ -96,7 +97,7 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
       );
       break;
 
-    case "REJECTED":
+    case NotificationType.OWNERSHIPDENIED:
       buttons = (
         <View>
           <Divider />
