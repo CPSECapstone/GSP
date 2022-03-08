@@ -70,15 +70,7 @@
         "RootUrl": "https://n13ymupj66.execute-api.us-west-1.amazonaws.com/staging",
         "ApiId": "n13ymupj66"
       },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      "lastPushTimeStamp": "2022-03-07T07:35:01.080Z",
-=======
       "lastPushTimeStamp": "2022-03-07T21:53:09.585Z",
->>>>>>> Stashed changes
-=======
-      "lastPushTimeStamp": "2022-03-07T21:53:09.585Z",
->>>>>>> Stashed changes
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/AdminQueries-cloudformation-template.json",
         "logicalId": "apiAdminQueries"
@@ -112,15 +104,7 @@
         "GraphQLAPIEndpointOutput": "https://vvvdngqynza63kkt2e6ww4cqhe.appsync-api.us-west-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-jvfnatbwoffs3aft66hwkdr4oy"
       },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      "lastPushTimeStamp": "2022-03-07T07:35:01.082Z",
-=======
       "lastPushTimeStamp": "2022-03-07T21:53:09.587Z",
->>>>>>> Stashed changes
-=======
-      "lastPushTimeStamp": "2022-03-07T21:53:09.587Z",
->>>>>>> Stashed changes
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiminoritymarket"
@@ -165,15 +149,7 @@
         "IdentityPoolName": "mmIdentity__staging",
         "UserPoolName": "mmUserPool"
       },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      "lastPushTimeStamp": "2022-03-07T07:35:01.086Z",
-=======
       "lastPushTimeStamp": "2022-03-07T21:53:09.588Z",
->>>>>>> Stashed changes
-=======
-      "lastPushTimeStamp": "2022-03-07T21:53:09.588Z",
->>>>>>> Stashed changes
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/auth/mmAuth-cloudformation-template.json",
         "logicalId": "authmmAuth"
@@ -194,15 +170,7 @@
         "Arn": "arn:aws:geo:us-west-2:476906480570:map/SearchMap-staging",
         "Name": "SearchMap-staging"
       },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      "lastPushTimeStamp": "2022-03-07T07:35:01.088Z",
-=======
       "lastPushTimeStamp": "2022-03-07T21:53:09.590Z",
->>>>>>> Stashed changes
-=======
-      "lastPushTimeStamp": "2022-03-07T21:53:09.590Z",
->>>>>>> Stashed changes
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/geo/SearchMap-cloudformation-template.json",
         "logicalId": "geoSearchMap"
@@ -218,15 +186,7 @@
         "BucketName": "minoritymarket-imagestore24817-staging",
         "Region": "us-west-1"
       },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      "lastPushTimeStamp": "2022-03-07T07:35:07.440Z",
-=======
       "lastPushTimeStamp": "2022-03-07T21:53:12.022Z",
->>>>>>> Stashed changes
-=======
-      "lastPushTimeStamp": "2022-03-07T21:53:12.022Z",
->>>>>>> Stashed changes
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3minoritymarketimagestore"
