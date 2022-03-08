@@ -1,22 +1,23 @@
 ## [Start] List Request. **
-#set( $limit = $util.defaultIfNull($context.args.limit, 100) )
+#set( $args = $util.defaultIfNull($ctx.stash.transformedArgs, $ctx.args) )
+#set( $limit = $util.defaultIfNull($args.limit, 100) )
 #set( $ListRequest = {
   "version": "2018-05-29",
   "limit": $limit
 } )
-#if( $context.args.nextToken )
-  #set( $ListRequest.nextToken = $context.args.nextToken )
+#if( $args.nextToken )
+  #set( $ListRequest.nextToken = $args.nextToken )
 #end
 #if( !$util.isNullOrEmpty($ctx.stash.authFilter) )
   #set( $filter = $ctx.stash.authFilter )
-  #if( !$util.isNullOrEmpty($ctx.args.filter) )
+  #if( !$util.isNullOrEmpty($args.filter) )
     #set( $filter = {
-  "and":   [$filter, $ctx.args.filter]
+  "and":   [$filter, $args.filter]
 } )
   #end
 #else
-  #if( !$util.isNullOrEmpty($ctx.args.filter) )
-    #set( $filter = $ctx.args.filter )
+  #if( !$util.isNullOrEmpty($args.filter) )
+    #set( $filter = $args.filter )
   #end
 #end
 #if( !$util.isNullOrEmpty($filter) )
@@ -31,7 +32,7 @@
 #if( !$util.isNull($ctx.stash.modelQueryExpression) && !$util.isNullOrEmpty($ctx.stash.modelQueryExpression.expression) )
   $util.qr($ListRequest.put("operation", "Query"))
   $util.qr($ListRequest.put("query", $ctx.stash.modelQueryExpression))
-  #if( !$util.isNull($ctx.args.sortDirection) && $ctx.args.sortDirection == "DESC" )
+  #if( !$util.isNull($args.sortDirection) && $args.sortDirection == "DESC" )
     #set( $ListRequest.scanIndexForward = false )
   #else
     #set( $ListRequest.scanIndexForward = true )

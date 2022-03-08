@@ -217,7 +217,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-minoritymarket-staging-24817-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/4c06a63548780add3ee791e300ff4d79bc1f9b7f",
+          "S3DeploymentRootKey": "amplify-appsync-files/897d1a8d7ea63b0d6dc932f0967f5cc0f2de940e",
           "env": "staging"
         }
       }
@@ -297,6 +297,39 @@
           "mapStyle": "VectorEsriStreets",
           "pricingPlan": "RequestBasedUsage",
           "isDefault": true,
+          "env": "staging"
+        }
+      }
+    },
+    "storages3minoritymarketimagestore": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "Parameters": {
+          "bucketName": "minoritymarket-imagestore",
+          "selectedGuestPermissions": "s3:GetObject,s3:ListBucket",
+          "selectedAuthenticatedPermissions": "s3:PutObject,s3:GetObject,s3:ListBucket",
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "s3PrivatePolicy": "Private_policy_a6196e09",
+          "s3ProtectedPolicy": "Protected_policy_a6196e09",
+          "s3PublicPolicy": "Public_policy_a6196e09",
+          "s3ReadPolicy": "read_policy_a6196e09",
+          "s3UploadsPolicy": "Uploads_policy_a6196e09",
+          "authPolicyName": "s3_amplify_a6196e09",
+          "unauthPolicyName": "s3_amplify_a6196e09",
+          "AuthenticatedAllowList": "ALLOW",
+          "GuestAllowList": "ALLOW",
+          "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject",
+          "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+          "s3PermissionsGuestPublic": "s3:GetObject",
+          "s3PermissionsGuestUploads": "DISALLOW",
           "env": "staging"
         }
       }

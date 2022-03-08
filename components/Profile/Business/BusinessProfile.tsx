@@ -18,6 +18,10 @@ import { BusinessProps } from "../../../route-settings";
 import Business, { BusinessAdapter } from "./Business";
 import { useAppSelector } from "../../../redux/hooks";
 import selectAllBusinesses from "../../../redux/selectors/business";
+// import dummyBusiness from "./tempdata";
+
+const DEFAULT_BANNER =
+  "https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/12/Gradient_builder_2.jpg?auto=format&q=60&w=1815&h=1361.25&fit=crop&crop=faces";
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -89,7 +93,7 @@ function Tags({ tags }: { tags: string[] }) {
   return <Text style={styles.tags}>{tagList}</Text>;
 }
 
-function call(phoneNumber: string) {
+async function call(phoneNumber: string) {
   alert(phoneNumber);
   Linking.openURL(`tel:${phoneNumber}`);
 }
@@ -122,7 +126,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
     <ScrollView contentContainerStyle={{ flexGrow: 1, height: "100%" }}>
       <View>
         <ImageBackground
-          source={{ uri: dummyBusiness.bannerImage }}
+          source={{ uri: dummyBusiness.bannerImage || DEFAULT_BANNER }}
           resizeMode="cover"
           style={[
             styles.banner,

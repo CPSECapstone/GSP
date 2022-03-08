@@ -38,6 +38,8 @@ const awsmobile = {
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
     ],
+    "aws_user_files_s3_bucket": "minoritymarket-imagestore24817-staging",
+    "aws_user_files_s3_bucket_region": "us-west-1",
     "geo": {
         "amazon_location_service": {
             "region": "us-west-2",

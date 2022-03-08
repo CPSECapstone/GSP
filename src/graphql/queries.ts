@@ -2,6 +2,154 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      message
+      type
+      Sender
+      userID
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        message
+        type
+        Sender
+        userID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncNotifications = /* GraphQL */ `
+  query SyncNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncNotifications(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        message
+        type
+        Sender
+        userID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      email
+      ownedBusinesses
+      profilePic
+      Collections {
+        nextToken
+        startedAt
+      }
+      name
+      Notifications {
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        email
+        ownedBusinesses
+        profilePic
+        name
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncUsers = /* GraphQL */ `
+  query SyncUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        email
+        ownedBusinesses
+        profilePic
+        name
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getReview = /* GraphQL */ `
   query GetReview($id: ID!) {
     getReview(id: $id) {
@@ -80,7 +228,7 @@ export const getBusiness = /* GraphQL */ `
       about
       phone
       address
-      url
+      website
       tags
       type
       primarycolor
@@ -91,6 +239,13 @@ export const getBusiness = /* GraphQL */ `
         startedAt
       }
       collectionID
+      email
+      city
+      state
+      zipcode
+      menu
+      profileImage
+      bannerImage
       createdAt
       updatedAt
       _version
@@ -113,13 +268,20 @@ export const listBusinesses = /* GraphQL */ `
         about
         phone
         address
-        url
+        website
         tags
         type
         primarycolor
         secondarycolor
         rating
         collectionID
+        email
+        city
+        state
+        zipcode
+        menu
+        profileImage
+        bannerImage
         createdAt
         updatedAt
         _version
@@ -151,13 +313,20 @@ export const syncBusinesses = /* GraphQL */ `
         about
         phone
         address
-        url
+        website
         tags
         type
         primarycolor
         secondarycolor
         rating
         collectionID
+        email
+        city
+        state
+        zipcode
+        menu
+        profileImage
+        bannerImage
         createdAt
         updatedAt
         _version
@@ -181,6 +350,7 @@ export const getCollection = /* GraphQL */ `
         nextToken
         startedAt
       }
+      userID
       createdAt
       updatedAt
       _version
@@ -202,6 +372,7 @@ export const listCollections = /* GraphQL */ `
         title
         description
         color
+        userID
         createdAt
         updatedAt
         _version
@@ -232,6 +403,7 @@ export const syncCollections = /* GraphQL */ `
         title
         description
         color
+        userID
         createdAt
         updatedAt
         _version

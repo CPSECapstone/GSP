@@ -1,39 +1,86 @@
-type Review @model @auth(rules: [
-  {allow: public, operations: [create, read]}, 
-  {allow: owner}
-]) {
+enum NotificationType {
+  OWNERSHIPREQUEST
+  OWNERSHIPAPPROVED
+  OWNERSHIPDENIED
+}
+
+type Notification @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  message: String!
+  type: NotificationType!
+  Sender: ID
+  userID: ID! @index(name: "byUser")
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  email: AWSEmail!
+  ownedBusinesses: String
+  profilePic: AWSURL
+  Collections: [Collection] @hasMany(indexName: "byUser", fields: ["id"])
+  name: String
+  Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+enum BusinessType {
+  RESTAURANT
+  SHOPPING
+  MARKET
+  BEAUTY
+}
+
+enum MinorityGroups {
+  ASIANAMERICAN
+  AFRICANAMERICAN
+  LATINX
+  MIDDLEEASTERN
+  NATIVEAMERICAN
+  PACIFICISLANDER
+  ALASKANATIVE
+  MUSLIM
+  HALAL
+  JEWISH
+  KOSHER
+  HINDU
+  SIKH
+}
+
+type Review @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
   id: ID!
   rating: Int
   comments: String
   businessID: ID @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [
-  {allow: public, operations: [create, read]}, 
-  {allow: owner}
-  ]) {
+type Business @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
   id: ID!
   name: String!
-  about: String
-  phone: AWSPhone
-  address: String
-  url: AWSURL
-  tags: [String]
-  type: String
-  primarycolor: String
-  secondarycolor: String
-  rating: Float
+  about: String!
+  phone: AWSPhone!
+  address: String!
+  website: AWSURL
+  tags: [MinorityGroups!]
+  type: BusinessType!
+  primarycolor: String!
+  secondarycolor: String!
+  rating: Int
   Reviews: [Review] @hasMany(indexName: "byBusiness", fields: ["id"])
   collectionID: ID @index(name: "byCollection")
+  email: AWSEmail!
+  city: String!
+  state: String!
+  zipcode: Int!
+  menu: AWSURL
+  profileImage: AWSURL!
+  bannerImage: AWSURL
 }
 
-type Collection @model @auth(rules: [
-  {allow: owner}
-]) {
+type Collection @model @auth(rules: [{allow: owner}]) {
   id: ID!
   title: String!
   description: String
   color: String
   Businesses: [Business] @hasMany(indexName: "byCollection", fields: ["id"])
+  userID: ID! @index(name: "byUser")
 }
  

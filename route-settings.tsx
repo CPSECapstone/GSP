@@ -87,7 +87,7 @@ export const TabBarScreenOptions = ({
 }: any): Partial<BottomTabNavigationOptions> => ({
   tabBarShowLabel: false,
   headerShown: false,
-  tabBarStyle: { height: 70, backgroundColor: "F5F5F8", borderTopWidth: 0 },
+  tabBarStyle: { height: 100, backgroundColor: "F5F5F8", borderTopWidth: 0 },
   tabBarIcon: ({
     focused,
     color,

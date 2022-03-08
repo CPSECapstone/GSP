@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ReviewPageProps } from "../../route-settings";
-import ReviewCell from "../Profile/ReviewCell";
-import BackButton from "../UserProfile/BackButton";
+import ReviewCell from "./ReviewCell";
+import BackButton from "../Profile/User/BackButton";
 
 const styles = StyleSheet.create({
   title: {

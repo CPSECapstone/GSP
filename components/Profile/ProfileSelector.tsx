@@ -6,7 +6,8 @@ import {
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import UserProfile from "../UserProfile/UserProfile";
+import { Storage } from "@aws-amplify/storage";
+import UserProfile from "./User/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import dummyBusiness from "./Business/tempdata";
 
@@ -68,6 +69,10 @@ function Base({ navigation }: BaseProps) {
 }
 
 export default function ProfileSelector() {
+  Storage.put("test2.txt", "Protected Content", {
+    level: "protected",
+    contentType: "text/plain",
+  });
   return (
     <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen name="Base" component={Base} />

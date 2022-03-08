@@ -15,6 +15,7 @@ import {
   ImageBackground,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { Storage } from "@aws-amplify/storage";
 import { Address, BusinessType, BUSINESS_TYPES, ColorSet } from "./Business";
 import { ProfileEditorProps } from "../../../route-settings";
 import Field, {
@@ -83,6 +84,18 @@ export default function ProfileEditor({ navigation }: ProfileEditorProps) {
   );
 }
 
+async function S3ImageUpload(file: string) {
+  const photo = await fetch(file);
+  const photoBlob = await photo.blob();
+
+  const { key } = await Storage.put("examples.png", photoBlob, {
+    level: "protected",
+    contentType: "image/png",
+  });
+
+  console.log("S3 Object key", key);
+}
+
 function BaseEditor({
   navigation,
   route,
@@ -93,7 +106,7 @@ function BaseEditor({
     business[route.params.key] = route.params.value;
   }
 
-  const [profileImage, setProfileImage] = useState(business.profileImage);
+  // const [profileImage, setProfileImage] = useState(business.profileImage);
   const [bannerImage, setBannerImage] = useState(business.bannerImage);
 
   useEffect(() =>
@@ -112,6 +125,7 @@ function BaseEditor({
     });
 
     if (!result.cancelled) {
+      S3ImageUpload(result.uri);
       setImage(result.uri);
     }
   };
@@ -171,7 +185,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditURL", {
           field: WebsiteField,
-          currentValue: business.website,
+          currentValue: business.website || "",
         }),
     },
     {
@@ -200,7 +214,9 @@ function BaseEditor({
         >
           <Image
             style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
-            source={{ uri: profileImage }}
+            source={{
+              uri: "https://minoritymarket-imagestore24817-staging.s3.us-west-1.amazonaws.com/protected/us-west-1%3A9ee32d90-5911-41ef-85a5-e6240c050c8d/example.png?AWSAccessKeyId=ASIAW6COXMO5LC2EJOBT&Expires=1646443204&Signature=prPQ1vWGb8MP5mlDZG%2B73chdPcg%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEAEaCXVzLXdlc3QtMSJIMEYCIQCIjTlXTyH8vXsAsZBqKMFQ9QmF%2Fqs2w0ClHffHjvLLjAIhAOninvIHDmzbydZIWTLw2KhlCowwW8Yh2h%2BdihELWG5JKsQECGoQABoMNDc2OTA2NDgwNTcwIgy681%2Fswhz1xAMF2L0qoQQDZ5%2BO8jroSPAy53%2BiBwFaORI7u7v2s1LexGRCDV6yYMUr6vNpLu9n6Z%2BhB0B%2BmhrtnirODvVDXTs%2B8Xvlzx80iN7WNvED9blhlsyaNwN%2B2LdoE8gm2tlIlhCI1sCapfzUWwoQrquEamNhulcZ62lmNs25EmLlj%2B3dt0NzjdZ4xSqoQA9j6ZeWfBkT6vGKzGA39F8zl%2BT706gqYF5JRt1c5KjtgeX%2FzykCM%2BOGMynouNt1YFvY26IbOdUjQTTxcGT2JsZldx8rt0wKrgFh7N8UzdQDAUcVjDqdYu85RmaQ4uOx6W6JDSLe1xmG2R2YYKYErNKQA8hXrxYoNYqhZz3qy%2FfUIJtPM1fz4toyjl5aAWoIFn2eUKIY232qzHcPmHnQyCs%2BerslUrlXkAQjZagaY1yKe2ulbw46tfkxKgXKO9vw4eKYneVNjH19%2FBuNl9ke7vKiLuJ8WyvQ1h11LHNtC7l2qb%2Bgwnsxgdbx%2B7xqlu662CLI9RZpWiRG6vYoL9c6QpA38siVUq7p%2Bx79zgp3GS1hp0MDJ09Z4UD70fu6zLsKA7nyEumLhdV0N7IONKXClfYutL0fuig1f3lgUjTRgoqadwDS8IatvduWFR1wBSlUlb%2F60vuSRt7yZNfUaWVLALrIQeCfCHbpfuEDnN%2FTF%2Bv2%2BbEpPBaEm%2FjkQL2jS42BQVoEHiAKgl1zryrap4E3L2d6%2FCJDrHFbARAU3AKnrzCV84qRBjqEAgSGf6PczzLArwfXoToiLyxUF569NOD%2FKePMZwrJ74OvwObQO12Jd2ATLvhTzFEKBzHSp%2BBMy%2FSCkKT9idxw7AfOy5a8MNXqpnmEsDjebbbu8jv5dTToxqUFq4WYWdnWBH17qXIJi5xEH7dnkR1O9SM8p9%2FtDpoFR5rqggH2Hsm0TcRRWDjl%2BxNGXP2WuAWtz%2B4mgAVKK4%2FI9M36nX2YNkWXIljrsPoleVp4pGcJaafzmYeHLWuqBisyIRZJUNJWbGtxUOvfMp7XE2kaMwsIPSUYadcg6dWYWdzpJq3LHNCwpwje4ANdkfpDQDlfeqFzBD2Jpio5O7KAN0OYCcGdnsN54OfI",
+            }}
           />
           <EditButton
             position={{ bottom: -7, right: -7 }}

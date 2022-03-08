@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Auth } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { UserProfileProps } from "../../route-settings";
+import { UserProfileProps } from "../../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
 
@@ -80,12 +80,27 @@ function LogoutCell() {
   );
 }
 
+type AuthAttributes = { email: string; name: string };
+async function getAttributes(): Promise<AuthAttributes> {
+  const user = await Auth.currentAuthenticatedUser();
+  const { attributes } = user;
+  console.log(attributes);
+  return attributes;
+}
+
 export default function UserProfile({ navigation }: UserProfileProps) {
+  const [attributes, setAttributes] = useState<AuthAttributes>();
+
+  if (!attributes) {
+    getAttributes().then((x) => setAttributes(x));
+    return <View />;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
       <Image style={styles.profileImage} source={profileData.profileImage} />
-      <Text style={styles.name}>{profileData.name}</Text>
+      <Text style={styles.name}>{attributes.name}</Text>
+      <Text style={styles.name}>{attributes.email}</Text>
       <View style={styles.cells}>
         <UserProfileCell
           action={() => navigation.navigate("ReviewPage")}

@@ -103,5 +103,12 @@
       "pricingPlan": "RequestBasedUsage",
       "accessType": "AuthorizedUsers"
     }
+  },
+  "storage": {
+    "s3minoritymarketimagestore": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
   }
 }

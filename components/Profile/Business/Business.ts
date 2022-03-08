@@ -48,7 +48,7 @@ export type Address = {
   address: string;
   city: string;
   state: string;
-  zipcode: Number;
+  zipcode: number;
 };
 
 export default class Business {
@@ -58,10 +58,10 @@ export default class Business {
   colorSet: ColorSet;
   phone: string;
   address: Address;
-  website?: URL;
+  website: string | null | undefined;
   tags: Array<string>;
   profileImage: string;
-  bannerImage: string;
+  bannerImage: string | null | undefined;
   aboutUs: string;
   menu?: string;
 
@@ -75,11 +75,11 @@ export default class Business {
     address: string,
     city: string,
     state: string,
-    zipcode: Number,
-    website: string | undefined | null,
+    zipcode: number,
+    website: string | null | undefined,
     tags: Array<string>,
     profileImage: string,
-    bannerImage: string,
+    bannerImage: string | null | undefined,
     aboutUs: string,
     menu?: string
   ) {
@@ -89,12 +89,12 @@ export default class Business {
     this.colorSet = { primary: colorPrimary, secondary: colorSecondary };
     this.phone = phone;
     this.address = { address, city, state, zipcode };
-    this.website = website ? new URL(website) : undefined;
+    this.website = website;
     this.tags = tags;
     this.profileImage = profileImage;
     this.bannerImage = bannerImage;
-    this.menu = menu;
     this.aboutUs = aboutUs;
+    this.menu = menu;
   }
 }
 
@@ -102,21 +102,21 @@ export class BusinessAdapter extends Business {
   constructor(business: BackendBusiness) {
     super(
       business.name,
-      "needs backend implementation",
+      business.email,
       business.type as BusinessType,
-      `#${business.primarycolor}` as Color,
-      `#${business.secondarycolor}` as Color,
-      business.phone!,
-      business.address!,
-      "nan",
-      "nan",
-      0,
-      business.url,
-      business.tags ? (business.tags as string[]) : new Array<string>(),
-      "nan",
-      "nan",
-      business.about!,
-      "nan"
+      business.primarycolor as Color,
+      business.secondarycolor as Color,
+      business.phone,
+      business.address,
+      business.city,
+      business.state,
+      business.zipcode,
+      business.website,
+      business.tags,
+      business.profileImage,
+      business.bannerImage,
+      business.about,
+      business.menu ? business.menu : undefined
     );
   }
 }
