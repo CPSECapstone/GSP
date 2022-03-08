@@ -7,7 +7,7 @@
 - [hooks.ts](hooks.ts): Hooks to be used in place of useDispatch and useSelector for TypeScript compatability. [More Info.](https://redux.js.org/tutorials/typescript-quick-start#define-typed-hooks)
 - [/selectors](./selectors/) Where functions called by useAppSelector sould go. [More Info.](https://react-redux.js.org/tutorials/quick-start#use-redux-state-and-actions-in-react-components)
 - [/slices](./slices/): Each data structure is given one slice. [More Info.](https://redux-toolkit.js.org/tutorials/quick-start#create-a-redux-state-slice)
-- [/thunks](./thunks/): Where all async dispatch calls should go. [More Info.](https://redux-toolkit.js.org/tutorials/quick-start#create-a-redux-state-slice)
+- [/thunks](./thunks/): Where all async dispatch calls should go. [More Info.](https://redux-toolkit.js.org/usage/usage-guide#defining-async-logic-in-slices)
 
 ## Adding a new Data Type
 
