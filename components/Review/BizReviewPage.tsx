@@ -13,7 +13,6 @@ import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
 import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
-import { ReviewCellProps } from "../Profile/ReviewCell";
 
 const styles = StyleSheet.create({
   header: {
