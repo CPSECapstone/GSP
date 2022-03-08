@@ -11,6 +11,7 @@ type Notification @aws_iam @aws_api_key {
   type: NotificationType!
   Sender: ID
   userID: ID!
+  title: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -21,11 +22,11 @@ type Notification @aws_iam @aws_api_key {
 type User @aws_iam @aws_api_key {
   id: ID!
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
   name: String
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
+  Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -90,6 +91,7 @@ type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
+  userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   _version: Int!
@@ -221,6 +223,7 @@ input ModelNotificationFilterInput {
   type: ModelNotificationTypeInput
   Sender: ModelIDInput
   userID: ModelIDInput
+  title: ModelStringInput
   and: [ModelNotificationFilterInput]
   or: [ModelNotificationFilterInput]
   not: ModelNotificationFilterInput
@@ -249,6 +252,7 @@ input ModelNotificationConditionInput {
   type: ModelNotificationTypeInput
   Sender: ModelIDInput
   userID: ModelIDInput
+  title: ModelStringInput
   and: [ModelNotificationConditionInput]
   or: [ModelNotificationConditionInput]
   not: ModelNotificationConditionInput
@@ -260,6 +264,7 @@ input CreateNotificationInput {
   type: NotificationType!
   Sender: ID
   userID: ID!
+  title: String!
   _version: Int
 }
 
@@ -269,6 +274,7 @@ input UpdateNotificationInput {
   type: NotificationType
   Sender: ID
   userID: ID
+  title: String
   _version: Int
 }
 
@@ -322,7 +328,6 @@ type ModelUserConnection @aws_api_key @aws_iam {
 input ModelUserFilterInput {
   id: ModelIDInput
   email: ModelStringInput
-  ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
   and: [ModelUserFilterInput]
@@ -332,7 +337,6 @@ input ModelUserFilterInput {
 
 input ModelUserConditionInput {
   email: ModelStringInput
-  ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
   and: [ModelUserConditionInput]
@@ -343,7 +347,6 @@ input ModelUserConditionInput {
 input CreateUserInput {
   id: ID
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   name: String
   _version: Int
@@ -352,7 +355,6 @@ input CreateUserInput {
 input UpdateUserInput {
   id: ID!
   email: AWSEmail
-  ownedBusinesses: String
   profilePic: AWSURL
   name: String
   _version: Int
@@ -409,7 +411,7 @@ input DeleteReviewInput {
   _version: Int
 }
 
-type ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+type ModelBusinessConnection @aws_iam @aws_api_key @aws_cognito_user_pools {
   items: [Business]!
   nextToken: String
   startedAt: AWSTimestamp
@@ -447,6 +449,7 @@ input ModelBusinessFilterInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
   not: ModelBusinessFilterInput
@@ -471,6 +474,7 @@ input ModelBusinessConditionInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
   not: ModelBusinessConditionInput
@@ -496,6 +500,7 @@ input CreateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
+  userID: ID!
   _version: Int
 }
 
@@ -519,6 +524,7 @@ input UpdateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL
   bannerImage: AWSURL
+  userID: ID
   _version: Int
 }
 

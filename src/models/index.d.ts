@@ -57,6 +57,7 @@ export declare class Notification {
   readonly type: NotificationType | keyof typeof NotificationType;
   readonly Sender?: string;
   readonly userID: string;
+  readonly title: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Notification, NotificationMetaData>);
@@ -66,11 +67,11 @@ export declare class Notification {
 export declare class User {
   readonly id: string;
   readonly email: string;
-  readonly ownedBusinesses?: string;
   readonly profilePic?: string;
   readonly Collections?: (Collection | null)[];
   readonly name?: string;
   readonly Notifications?: (Notification | null)[];
+  readonly Businesses?: (Business | null)[];
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<User, UserMetaData>);
@@ -111,6 +112,7 @@ export declare class Business {
   readonly menu?: string;
   readonly profileImage: string;
   readonly bannerImage?: string;
+  readonly userID: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<Business, BusinessMetaData>);

@@ -11,6 +11,10 @@ $util.qr($QueryMap.put('collectionID' , 'byCollection'))
 $util.qr($PkMap.put('collectionID' , 'byCollection'))
 ## [End] Set query expression for @key **
 ## [Start] Set query expression for @key **
+$util.qr($QueryMap.put('userID' , 'byUser'))
+$util.qr($PkMap.put('userID' , 'byUser'))
+## [End] Set query expression for @key **
+## [Start] Set query expression for @key **
 #set( $filterArgsMap = $ctx.args.filter.get("and") )
 #if( !$util.isNullOrEmpty($filterArgsMap) && ($util.isNull($ctx.args.lastSync) || $ctx.args.lastSync == 0) )
   #set( $json = $filterArgsMap )

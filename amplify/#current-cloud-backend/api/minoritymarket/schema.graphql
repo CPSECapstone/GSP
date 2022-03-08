@@ -10,16 +10,17 @@ type Notification @model @auth(rules: [{allow: public}]) {
   type: NotificationType!
   Sender: ID
   userID: ID! @index(name: "byUser")
+  title: String!
 }
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   Collections: [Collection] @hasMany(indexName: "byUser", fields: ["id"])
   name: String
   Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
+  Businesses: [Business] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 enum BusinessType {
@@ -73,6 +74,7 @@ type Business @model @auth(rules: [{allow: public, operations: [create, read]}, 
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
+  userID: ID! @index(name: "byUser")
 }
 
 type Collection @model @auth(rules: [{allow: owner}]) {
