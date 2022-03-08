@@ -1,0 +1,13 @@
+{
+  "resourceName": "s3minoritymarketimagestore",
+  "bucketName": "minoritymarket-imagestore",
+  "policyUUID": "a6196e09",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ]
+}

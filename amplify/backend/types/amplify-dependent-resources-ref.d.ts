@@ -38,5 +38,11 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "Arn": "string"
         }
+    },
+    "storage": {
+        "s3minoritymarketimagestore": {
+            "BucketName": "string",
+            "Region": "string"
+        }
     }
 }

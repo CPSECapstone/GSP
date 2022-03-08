@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import businessReducer from "./slices/business";
 import collectionReducer from "./slices/collection";
+import userReducer from "./slices/user";
 
 const store = configureStore({
   reducer: {
     business: businessReducer,
     collection: collectionReducer,
+    user: userReducer,
   },
 });
 
