@@ -174,7 +174,6 @@ export type Collection = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export type ModelBusinessConnection = {
@@ -212,7 +211,6 @@ export type Business = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export enum MinorityGroups {
@@ -258,7 +256,6 @@ export type Review = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export type ModelNotificationConnection = {
@@ -710,7 +707,6 @@ export type CreateReviewMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -731,7 +727,6 @@ export type UpdateReviewMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -752,7 +747,6 @@ export type DeleteReviewMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -794,7 +788,6 @@ export type CreateBusinessMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -836,7 +829,6 @@ export type UpdateBusinessMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -878,7 +870,6 @@ export type DeleteBusinessMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -905,7 +896,6 @@ export type CreateCollectionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -932,7 +922,6 @@ export type UpdateCollectionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -959,7 +948,6 @@ export type DeleteCollectionMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1144,7 +1132,6 @@ export type GetReviewQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1168,7 +1155,6 @@ export type ListReviewsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1196,7 +1182,6 @@ export type SyncReviewsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1240,7 +1225,6 @@ export type GetBusinessQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1280,7 +1264,6 @@ export type ListBusinessesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1324,7 +1307,6 @@ export type SyncBusinessesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1353,7 +1335,6 @@ export type GetCollectionQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1378,7 +1359,6 @@ export type ListCollectionsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1407,7 +1387,6 @@ export type SyncCollectionsQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -1555,10 +1534,6 @@ export type OnDeleteUserSubscription = {
   } | null,
 };
 
-export type OnCreateReviewSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnCreateReviewSubscription = {
   onCreateReview?:  {
     __typename: "Review",
@@ -1571,12 +1546,7 @@ export type OnCreateReviewSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateReviewSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateReviewSubscription = {
@@ -1591,12 +1561,7 @@ export type OnUpdateReviewSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteReviewSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteReviewSubscription = {
@@ -1611,12 +1576,7 @@ export type OnDeleteReviewSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnCreateBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnCreateBusinessSubscription = {
@@ -1652,12 +1612,7 @@ export type OnCreateBusinessSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateBusinessSubscription = {
@@ -1693,12 +1648,7 @@ export type OnUpdateBusinessSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteBusinessSubscription = {
@@ -1734,12 +1684,7 @@ export type OnDeleteBusinessSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnCreateCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnCreateCollectionSubscription = {
@@ -1760,12 +1705,7 @@ export type OnCreateCollectionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateCollectionSubscription = {
@@ -1786,12 +1726,7 @@ export type OnUpdateCollectionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteCollectionSubscription = {
@@ -1812,6 +1747,5 @@ export type OnDeleteCollectionSubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
