@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
   ScrollView,
@@ -18,10 +18,12 @@ import { BusinessProps } from "../../../route-settings";
 import Business, { BusinessAdapter } from "./Business";
 import { useAppSelector } from "../../../redux/hooks";
 import selectAllBusinesses from "../../../redux/selectors/business";
+import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 // import dummyBusiness from "./tempdata";
 
 const DEFAULT_BANNER =
   "https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/12/Gradient_builder_2.jpg?auto=format&q=60&w=1815&h=1361.25&fit=crop&crop=faces";
+// import dummyBusiness from "./tempdata";
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -121,10 +123,15 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
   const dummyBusiness: Business = new BusinessAdapter(
     useAppSelector(selectAllBusinesses)[0]!
   );
+  const [modalVisible, setmodalVisible] = React.useState(false);
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, height: "100%" }}>
       <View>
+        <BusinessProfileModal
+          visible={modalVisible}
+          modalVisibilitySetter={setmodalVisible}
+        />
         <ImageBackground
           source={{ uri: dummyBusiness.bannerImage || DEFAULT_BANNER }}
           resizeMode="cover"
@@ -154,6 +161,12 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                 onPress={() => navigation.navigate("ProfileEditor")}
               >
                 <Ionicons name="bookmark-outline" size={25} color="white" />
+              </Pressable>
+              <Pressable
+                style={styles.share}
+                onPress={() => setmodalVisible(true)}
+              >
+                <SimpleLineIcons name="options" size={25} color="white" />
               </Pressable>
               <Image
                 style={[
@@ -306,6 +319,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginTop: 40,
     marginRight: -10,
+  },
+  share: {
+    marginBottom: 10,
+    alignSelf: "flex-end",
+    position: "absolute",
+    marginTop: 40,
+    right: 35,
   },
   banner: {
     height: 300,

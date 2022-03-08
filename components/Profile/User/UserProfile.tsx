@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Auth } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UserProfileProps } from "../../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
+import { useAppSelector } from "../../redux/hooks";
+import selectUser from "../../redux/selectors/user";
 
 const profileData = {
   name: "Marvis Ighedosa",
@@ -80,27 +82,29 @@ function LogoutCell() {
   );
 }
 
-type AuthAttributes = { email: string; name: string };
-async function getAttributes(): Promise<AuthAttributes> {
-  const user = await Auth.currentAuthenticatedUser();
-  const { attributes } = user;
-  console.log(attributes);
-  return attributes;
-}
+// type AuthAttributes = { email: string; name: string };
+// async function getAttributes(): Promise<AuthAttributes> {
+//   const user = await Auth.currentAuthenticatedUser();
+//   const { attributes } = user;
+//   console.log(attributes);
+//   return attributes;
+// }
 
 export default function UserProfile({ navigation }: UserProfileProps) {
-  const [attributes, setAttributes] = useState<AuthAttributes>();
+  const user = useAppSelector(selectUser);
 
-  if (!attributes) {
-    getAttributes().then((x) => setAttributes(x));
-    return <View />;
-  }
   return (
     <SafeAreaView style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
-      <Image style={styles.profileImage} source={profileData.profileImage} />
-      <Text style={styles.name}>{attributes.name}</Text>
-      <Text style={styles.name}>{attributes.email}</Text>
+      <Image
+        style={styles.profileImage}
+        source={
+          user?.profilePic
+            ? { uri: user?.profilePic }
+            : profileData.profileImage
+        }
+      />
+      <Text style={styles.name}>{user?.name ?? profileData.name}</Text>
       <View style={styles.cells}>
         <UserProfileCell
           action={() => navigation.navigate("ReviewPage")}
@@ -111,7 +115,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           title="Edit Profile"
         />
         <UserProfileCell
-          action={() => console.log("Notifications")}
+          action={() => navigation.navigate("Notifications")}
           title="Notifications"
         />
         <Pressable
