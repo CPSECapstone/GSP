@@ -158,6 +158,5 @@ export default function HomePage() {
         </ResultsTab>
       )}
     </View>
-    // </View>
   );
 }
