@@ -186,11 +186,7 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
             onPress={async () => {
               setPostDisabled(true);
               // TODO: replace hardcoded ID with business owners User ID; create title using business name
-              const result = await postNewRequest(
-                "test",
-                reqMessage,
-                "Title test"
-              );
+              await postNewRequest("test", reqMessage, "Title test");
               setPostDisabled(false);
             }}
           >
