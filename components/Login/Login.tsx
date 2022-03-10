@@ -7,10 +7,7 @@ import { LoginProps } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
 import fetchUser from "../../redux/thunks/user";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import fetchNotifications from "../../redux/thunks/notifications";
-import store from "../../redux/store";
-import selectUser from "../../redux/selectors/user";
+import { useAppDispatch } from "../../redux/hooks";
 
 const avatarImg = require("../../assets/default-avatar.jpeg");
 

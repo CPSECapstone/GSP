@@ -39,7 +39,7 @@ function Notifications({ route, navigation }: NotificationsProps) {
           data={notifs}
           keyExtractor={(item, index) =>
             item?.Sender
-              ? item.Sender
+              ? item.Sender + index.toString()
               : `NO_SENDER${item?.userID}${index.toString()}`
           }
         />

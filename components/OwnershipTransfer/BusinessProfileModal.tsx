@@ -108,24 +108,27 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
 interface RequestProps {
   modalVisibilitySetter: Dispatch<boolean>;
   nextScreenIncr: Dispatch<number>;
+  businessOwnerID: string;
+  businessTitle: string;
 }
 
-function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
+function RequestView({
+  modalVisibilitySetter,
+  nextScreenIncr,
+  businessOwnerID,
+  businessTitle,
+}: RequestProps) {
   const [reqMessage, setReqMessage] = React.useState("");
   const [postDisabled, setPostDisabled] = React.useState(false);
   const currentUser = useAppSelector(selectUser);
 
-  const postNewRequest = async (
-    businessOwnerID: string,
-    message: string,
-    title: string
-  ) => {
+  const postNewRequest = async (ownerID: string, message: string) => {
     const notifObject = {
       message,
-      userID: businessOwnerID,
+      userID: ownerID,
       type: NotificationType.OWNERSHIPREQUEST,
       Sender: currentUser?.id,
-      title,
+      title: `Ownership Request for ${businessTitle}`,
     };
 
     const newNotif = await API.graphql({
@@ -186,7 +189,9 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
             onPress={async () => {
               setPostDisabled(true);
               // TODO: replace hardcoded ID with business owners User ID; create title using business name
-              await postNewRequest("test", reqMessage, "Title test");
+              postNewRequest(businessOwnerID, reqMessage).then(() =>
+                modalVisibilitySetter(false)
+              );
               setPostDisabled(false);
             }}
           >
@@ -201,11 +206,15 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
 interface FullModalProps {
   modalVisibilitySetter: Dispatch<boolean>;
   visible: boolean;
+  ownerID: string;
+  title: string;
 }
 
 function BusinessProfileModal({
   modalVisibilitySetter,
   visible,
+  ownerID,
+  title,
 }: FullModalProps) {
   const [screenindex, setScreenindex] = React.useState(0);
 
@@ -219,6 +228,8 @@ function BusinessProfileModal({
       )}
       {screenindex === 1 && (
         <RequestView
+          businessTitle={title}
+          businessOwnerID={ownerID}
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
         />
