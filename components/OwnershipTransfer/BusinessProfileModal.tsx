@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { API } from "aws-amplify";
 import React, { Dispatch } from "react";
 import {
   Modal,
@@ -8,6 +9,10 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import { useAppSelector } from "../../redux/hooks";
+import selectUser from "../../redux/selectors/user";
+import { createNotification } from "../../src/graphql/mutations";
+import { NotificationType } from "../../src/models";
 
 const styles = StyleSheet.create({
   navoptionpressable: {
@@ -106,6 +111,31 @@ interface RequestProps {
 }
 
 function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
+  const [reqMessage, setReqMessage] = React.useState("");
+  const [postDisabled, setPostDisabled] = React.useState(false);
+  const currentUser = useAppSelector(selectUser);
+
+  const postNewRequest = async (
+    businessOwnerID: string,
+    message: string,
+    title: string
+  ) => {
+    const notifObject = {
+      message,
+      userID: businessOwnerID,
+      type: NotificationType.OWNERSHIPREQUEST,
+      Sender: currentUser?.id,
+      title,
+    };
+
+    const newNotif = await API.graphql({
+      query: createNotification,
+      variables: { input: notifObject },
+    });
+
+    return newNotif;
+  };
+
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
@@ -125,6 +155,8 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
             margin: 10,
           }}
           placeholder="Message"
+          value={reqMessage}
+          onChangeText={setReqMessage}
         />
         <View
           style={{
@@ -149,6 +181,17 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
               paddingVertical: 10,
               borderRadius: 25,
               backgroundColor: "#FA4A0C",
+            }}
+            disabled={postDisabled}
+            onPress={async () => {
+              setPostDisabled(true);
+              // TODO: replace hardcoded ID with business owners User ID; create title using business name
+              const result = await postNewRequest(
+                "test",
+                reqMessage,
+                "Title test"
+              );
+              setPostDisabled(false);
             }}
           >
             <Text style={styles.sendreqbutton}>Send</Text>

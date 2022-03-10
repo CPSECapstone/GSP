@@ -15,6 +15,7 @@ const fetchUser =
     )) as {
       data: ListUsersQuery;
     };
+    console.log(res);
     const user = res?.data?.listUsers?.items[0] ?? undefined;
     dispatch(userRecieved(user));
   };

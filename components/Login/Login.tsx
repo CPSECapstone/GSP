@@ -7,8 +7,10 @@ import { LoginProps } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
 import fetchUser from "../../redux/thunks/user";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import fetchNotifications from "../../redux/thunks/notifications";
+import store from "../../redux/store";
+import selectUser from "../../redux/selectors/user";
 
 const avatarImg = require("../../assets/default-avatar.jpeg");
 
@@ -95,7 +97,6 @@ function Login({ navigation }: LoginProps) {
   Auth.currentSession()
     .then((user) => {
       dispatch(fetchUser(user.getIdToken().payload.email));
-      dispatch(fetchNotifications());
       navigation.navigate("App");
     })
     .catch(() => {}); // suppress unhandled Promise warning
@@ -123,7 +124,6 @@ function Login({ navigation }: LoginProps) {
       try {
         const user = await Auth.signIn(email, password);
         dispatch(fetchUser(user.attributes.email));
-        dispatch(fetchNotifications);
         setEmail("");
         setPassword("");
         navigation.navigate("App");

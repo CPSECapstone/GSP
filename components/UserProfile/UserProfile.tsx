@@ -5,8 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { UserProfileProps } from "../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import selectUser from "../../redux/selectors/user";
+import fetchNotifications from "../../redux/thunks/notifications";
 
 const profileData = {
   name: "Marvis Ighedosa",
@@ -84,6 +85,11 @@ function LogoutCell() {
 
 export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  if (user?.id !== undefined) {
+    dispatch(fetchNotifications(user?.id));
+  }
 
   return (
     <SafeAreaView style={styles.container}>

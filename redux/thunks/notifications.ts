@@ -1,4 +1,4 @@
-import { API, Auth } from "aws-amplify";
+import { API } from "aws-amplify";
 import { ThunkAction, AnyAction } from "@reduxjs/toolkit";
 import {
   notificationsLoading,
@@ -10,14 +10,13 @@ import { ListNotificationsQuery } from "../../src/API";
 import notEmpty from "./helper";
 
 const fetchNotifications =
-  (): ThunkAction<void, RootState, unknown, AnyAction> =>
+  (currentUserID: string): ThunkAction<void, RootState, unknown, AnyAction> =>
   async (dispatch: AppDispatch) => {
     dispatch(notificationsLoading());
 
-    const user = await Auth.currentAuthenticatedUser();
     const res = (await API.graphql({
       query: listNotifications,
-      variables: { userID: user?.id },
+      variables: { filter: { userID: { eq: currentUserID } } },
     })) as {
       data: ListNotificationsQuery;
     };
