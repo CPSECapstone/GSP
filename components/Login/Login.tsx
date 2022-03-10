@@ -122,7 +122,7 @@ function Login({ navigation }: LoginProps) {
     if (validateEmail() && validatePassword()) {
       try {
         const user = await Auth.signIn(email, password);
-        dispatch(fetchUser(user.getIdToken().payload.email));
+        dispatch(fetchUser(user.attributes.email));
         dispatch(fetchNotifications);
         setEmail("");
         setPassword("");

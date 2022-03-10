@@ -10,9 +10,8 @@ const fetchUser =
   async (dispatch) => {
     dispatch(userLoading());
     const filter = { email: { eq: email } };
-    const limit = 1;
     const res = (await API.graphql(
-      graphqlOperation(listUsers, { filter, limit })
+      graphqlOperation(listUsers, { filter })
     )) as {
       data: ListUsersQuery;
     };
