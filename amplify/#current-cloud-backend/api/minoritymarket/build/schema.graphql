@@ -14,9 +14,6 @@ type Notification @aws_iam @aws_api_key {
   title: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 type User @aws_iam @aws_api_key {
@@ -29,9 +26,6 @@ type User @aws_iam @aws_api_key {
   Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 enum BusinessType {
@@ -64,9 +58,6 @@ type Review @aws_iam @aws_api_key {
   businessID: ID
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 type Business @aws_iam @aws_api_key {
@@ -93,9 +84,6 @@ type Business @aws_iam @aws_api_key {
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 type Collection @aws_iam @aws_api_key {
@@ -107,9 +95,6 @@ type Collection @aws_iam @aws_api_key {
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 input ModelStringInput {
@@ -206,7 +191,6 @@ enum ModelSortDirection {
 type ModelNotificationConnection @aws_api_key @aws_iam {
   items: [Notification]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelNotificationTypeInput {
@@ -229,19 +213,14 @@ input ModelNotificationFilterInput {
 type Query {
   getNotification(id: ID!): Notification @aws_api_key @aws_iam
   listNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String): ModelNotificationConnection @aws_api_key @aws_iam
-  syncNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelNotificationConnection @aws_api_key @aws_iam
   getUser(id: ID!): User @aws_api_key @aws_iam
   listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
-  syncUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUserConnection @aws_api_key @aws_iam
   getReview(id: ID!): Review @aws_api_key @aws_iam
   listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam
-  syncReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReviewConnection @aws_api_key @aws_iam
   getBusiness(id: ID!): Business @aws_api_key @aws_iam
   listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam
-  syncBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBusinessConnection @aws_api_key @aws_iam
   getCollection(id: ID!): Collection @aws_api_key @aws_iam
   listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_api_key @aws_iam
-  syncCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCollectionConnection @aws_api_key @aws_iam
 }
 
 input ModelNotificationConditionInput {
@@ -262,7 +241,6 @@ input CreateNotificationInput {
   Sender: ID
   userID: ID!
   title: String!
-  _version: Int
 }
 
 input UpdateNotificationInput {
@@ -272,12 +250,10 @@ input UpdateNotificationInput {
   Sender: ID
   userID: ID
   title: String
-  _version: Int
 }
 
 input DeleteNotificationInput {
   id: ID!
-  _version: Int
 }
 
 type Mutation {
@@ -319,7 +295,6 @@ type Subscription {
 type ModelUserConnection @aws_api_key @aws_iam {
   items: [User]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelUserFilterInput {
@@ -346,7 +321,6 @@ input CreateUserInput {
   email: AWSEmail!
   profilePic: AWSURL
   name: String
-  _version: Int
 }
 
 input UpdateUserInput {
@@ -354,18 +328,15 @@ input UpdateUserInput {
   email: AWSEmail
   profilePic: AWSURL
   name: String
-  _version: Int
 }
 
 input DeleteUserInput {
   id: ID!
-  _version: Int
 }
 
 type ModelReviewConnection @aws_api_key @aws_iam {
   items: [Review]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelReviewFilterInput {
@@ -392,7 +363,6 @@ input CreateReviewInput {
   rating: Int
   comments: String
   businessID: ID
-  _version: Int
 }
 
 input UpdateReviewInput {
@@ -400,18 +370,15 @@ input UpdateReviewInput {
   rating: Int
   comments: String
   businessID: ID
-  _version: Int
 }
 
 input DeleteReviewInput {
   id: ID!
-  _version: Int
 }
 
 type ModelBusinessConnection @aws_iam @aws_api_key {
   items: [Business]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelMinorityGroupsListInput {
@@ -498,7 +465,6 @@ input CreateBusinessInput {
   profileImage: AWSURL!
   bannerImage: AWSURL
   userID: ID!
-  _version: Int
 }
 
 input UpdateBusinessInput {
@@ -522,18 +488,15 @@ input UpdateBusinessInput {
   profileImage: AWSURL
   bannerImage: AWSURL
   userID: ID
-  _version: Int
 }
 
 input DeleteBusinessInput {
   id: ID!
-  _version: Int
 }
 
 type ModelCollectionConnection @aws_iam @aws_api_key {
   items: [Collection]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelCollectionFilterInput {
@@ -563,7 +526,6 @@ input CreateCollectionInput {
   description: String
   color: String
   userID: ID!
-  _version: Int
 }
 
 input UpdateCollectionInput {
@@ -572,11 +534,9 @@ input UpdateCollectionInput {
   description: String
   color: String
   userID: ID
-  _version: Int
 }
 
 input DeleteCollectionInput {
   id: ID!
-  _version: Int
 }
 

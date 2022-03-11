@@ -25,6 +25,8 @@ function Notifications({ route, navigation }: NotificationsProps) {
               ) {
                 return (
                   <OwnershipNotif
+                    userID={item.userID}
+                    notifID={item.id}
                     title={item.title}
                     message={item.message}
                     senderID={item.Sender}

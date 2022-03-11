@@ -1,6 +1,10 @@
+import { API } from "aws-amplify";
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { useAppDispatch } from "../../redux/hooks";
+import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
+import { deleteNotification } from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
   container: {
@@ -59,17 +63,36 @@ function Divider() {
 }
 
 interface NotifProps {
+  notifID: string;
+  userID: string;
   title: string;
   message: string;
   senderID: string;
   type: NotificationType;
-  // switch type to enum when working on backend
-  // REQUEST, IGNORE, RESPONSE, OR ACCEPT notif types
 }
 
 // eslint-disable-next-line
-function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
+function OwnershipNotif({
+  notifID,
+  userID,
+  title,
+  message,
+  senderID,
+  type,
+}: NotifProps) {
+  const dispatch = useAppDispatch();
   let buttons;
+
+  const removeNotification = async () => {
+    const notifDetails = {
+      id: notifID,
+    };
+
+    await API.graphql({
+      query: deleteNotification,
+      variables: { input: notifDetails },
+    });
+  };
 
   switch (type) {
     case NotificationType.OWNERSHIPREQUEST:
@@ -77,7 +100,13 @@ function OwnershipNotif({ title, message, senderID, type }: NotifProps) {
         <View>
           <Divider />
           <View style={styles.buttonscontainer}>
-            <Pressable style={[styles.emptybutton, styles.button]}>
+            <Pressable
+              style={[styles.emptybutton, styles.button]}
+              onPress={() => {
+                removeNotification();
+                dispatch(notificationRemoval(notifID));
+              }}
+            >
               <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
                 Ignore
               </Text>

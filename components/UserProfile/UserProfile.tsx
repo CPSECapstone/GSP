@@ -7,7 +7,7 @@ import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import selectUser from "../../redux/selectors/user";
-import fetchNotifications from "../../redux/thunks/notifications";
+import notifications from "../../redux/thunks/notifications";
 
 const profileData = {
   name: "Marvis Ighedosa",
@@ -88,7 +88,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   const dispatch = useAppDispatch();
 
   if (user?.id !== undefined) {
-    dispatch(fetchNotifications(user?.id));
+    dispatch(notifications.fetchNotifications(user?.id));
   }
 
   return (
