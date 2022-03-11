@@ -80,6 +80,10 @@ function SignUp({ navigation, route }: SignUpProps) {
       setConfirmPasswordError("Password is required");
       return false;
     }
+    if (confirmPassword.length < 8) {
+      setConfirmPasswordError("Password must be 8 characters or more");
+      return false;
+    }
     if (password !== confirmPassword) {
       setConfirmPasswordError("Passwords must match");
       return false;
@@ -116,8 +120,14 @@ function SignUp({ navigation, route }: SignUpProps) {
 
         navigation.navigate("CreateAccountCode", { email });
       } catch (error) {
-        console.error(error);
-        setConfirmPasswordError("Failed to create account");
+        if (
+          error instanceof Error &&
+          error.name === "UsernameExistsException"
+        ) {
+          setConfirmPasswordError("Given email already has an account");
+        } else {
+          setConfirmPasswordError("Failed to create account");
+        }
       }
     }
   };
