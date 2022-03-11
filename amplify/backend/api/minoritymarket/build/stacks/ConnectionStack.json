@@ -72,10 +72,6 @@
               "/resolvers/User.Collections.res.vtl"
             ]
           ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
         }
       }
     },
@@ -211,10 +207,6 @@
               "/resolvers/User.Notifications.res.vtl"
             ]
           ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
         }
       }
     },
@@ -350,10 +342,6 @@
               "/resolvers/User.Businesses.res.vtl"
             ]
           ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
         }
       }
     },
@@ -489,10 +477,6 @@
               "/resolvers/Business.Reviews.res.vtl"
             ]
           ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
         }
       }
     },
@@ -628,10 +612,6 @@
               "/resolvers/Collection.Businesses.res.vtl"
             ]
           ]
-        },
-        "SyncConfig": {
-          "ConflictDetection": "VERSION",
-          "ConflictHandler": "AUTOMERGE"
         }
       }
     },

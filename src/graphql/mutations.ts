@@ -16,9 +16,6 @@ export const createNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -36,9 +33,6 @@ export const updateNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -56,9 +50,6 @@ export const deleteNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -73,22 +64,16 @@ export const createUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -103,22 +88,16 @@ export const updateUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -133,22 +112,16 @@ export const deleteUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -164,9 +137,6 @@ export const createReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -182,9 +152,6 @@ export const updateReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -200,9 +167,6 @@ export const deleteReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -225,7 +189,6 @@ export const createBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -238,9 +201,6 @@ export const createBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -263,7 +223,6 @@ export const updateBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -276,9 +235,6 @@ export const updateBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -301,7 +257,6 @@ export const deleteBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -314,9 +269,6 @@ export const deleteBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -332,14 +284,10 @@ export const createCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -355,14 +303,10 @@ export const updateCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -378,14 +322,10 @@ export const deleteCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

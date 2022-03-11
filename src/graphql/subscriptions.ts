@@ -13,9 +13,6 @@ export const onCreateNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -30,9 +27,6 @@ export const onUpdateNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -47,9 +41,6 @@ export const onDeleteNotification = /* GraphQL */ `
       title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -61,22 +52,16 @@ export const onCreateUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -88,22 +73,16 @@ export const onUpdateUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -115,22 +94,16 @@ export const onDeleteUser = /* GraphQL */ `
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
       }
       Businesses {
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -143,9 +116,6 @@ export const onCreateReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -158,9 +128,6 @@ export const onUpdateReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -173,9 +140,6 @@ export const onDeleteReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -195,7 +159,6 @@ export const onCreateBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -208,9 +171,6 @@ export const onCreateBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -230,7 +190,6 @@ export const onUpdateBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -243,9 +202,6 @@ export const onUpdateBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -265,7 +221,6 @@ export const onDeleteBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -278,9 +233,6 @@ export const onDeleteBusiness = /* GraphQL */ `
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -293,14 +245,10 @@ export const onCreateCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -313,14 +261,10 @@ export const onUpdateCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -333,14 +277,10 @@ export const onDeleteCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
