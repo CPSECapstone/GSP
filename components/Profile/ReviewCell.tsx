@@ -53,6 +53,7 @@ export interface ReviewCellProps {
   rating: Number;
   srcImage: string;
   description: String;
+  action: Function;
 }
 
 // react native vector icons. Carter has stars on the profile page.
@@ -74,13 +75,14 @@ function ReviewCell({
   rating,
   srcImage,
   description,
+  action,
 }: ReviewCellProps) {
   // can't call require with srcImage string here
   // how do I make this dang image inline with Text?
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <EditButton position={{ bottom: 0, right: -7 }} onPress={() => {}} />
+        <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
         <Text style={styles.restauraunt}>{restaurant}</Text>
         <Image style={styles.image} source={{ uri: srcImage }} />
       </View>

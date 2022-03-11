@@ -13,6 +13,7 @@ import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
 import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
+import ReviewModal from "./ReviewModal";
 
 const styles = StyleSheet.create({
   header: {
@@ -89,8 +90,15 @@ const reviewData = [
   },
 ];
 function BizReviewPage({ navigation }: BizReviewPageProps) {
+  const [modalVisible, setmodalVisible] = React.useState(false);
+
   return (
     <View>
+      <ReviewModal
+        visible={modalVisible}
+        modalVisibilitySetter={setmodalVisible}
+      />
+
       <BackButton action={navigation.goBack} />
       <View
         style={{
@@ -164,6 +172,9 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
                 description={item.description}
                 srcImage={item.srcImage}
                 rating={item.rating}
+                action={() => {
+                  setmodalVisible(true);
+                }}
               />
             </View>
           )}
