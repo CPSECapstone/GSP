@@ -13,7 +13,7 @@ function Notifications({ route, navigation }: NotificationsProps) {
       {notifs.length > 0 ? (
         <FlatList
           style={{ width: "100%" }}
-          contentContainerStyle={{ alignItems: "flex-start", marginTop: 25 }}
+          contentContainerStyle={{ flex: 1, marginTop: 25 }}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {

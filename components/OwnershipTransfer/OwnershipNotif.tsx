@@ -4,7 +4,10 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useAppDispatch } from "../../redux/hooks";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
-import { deleteNotification } from "../../src/graphql/mutations";
+import {
+  createNotification,
+  deleteNotification,
+} from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +86,7 @@ function OwnershipNotif({
   const dispatch = useAppDispatch();
   let buttons;
 
-  const removeNotification = async () => {
+  const deleteNotif = async () => {
     const notifDetails = {
       id: notifID,
     };
@@ -91,6 +94,21 @@ function OwnershipNotif({
     await API.graphql({
       query: deleteNotification,
       variables: { input: notifDetails },
+    });
+  };
+
+  const postNotifDismissal = async () => {
+    const rejectNotif = {
+      message: "Your ownership request was rejected.",
+      userID: senderID,
+      type: NotificationType.OWNERSHIPDENIED,
+      Sender: userID,
+      title,
+    };
+
+    await API.graphql({
+      query: createNotification,
+      variables: { input: rejectNotif },
     });
   };
 
@@ -103,8 +121,13 @@ function OwnershipNotif({
             <Pressable
               style={[styles.emptybutton, styles.button]}
               onPress={() => {
-                removeNotification();
-                dispatch(notificationRemoval(notifID));
+                try {
+                  deleteNotif();
+                  postNotifDismissal();
+                  dispatch(notificationRemoval(notifID));
+                } catch (e) {
+                  console.error(`Error removing notification: ${e}`);
+                }
               }}
             >
               <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
@@ -131,7 +154,17 @@ function OwnershipNotif({
         <View>
           <Divider />
           <View style={styles.buttonscontainer}>
-            <Pressable style={[styles.emptybutton, styles.button]}>
+            <Pressable
+              style={[styles.emptybutton, styles.button]}
+              onPress={() => {
+                try {
+                  deleteNotif();
+                  dispatch(notificationRemoval(notifID));
+                } catch (e) {
+                  console.error(`Error dismissing rejection notif: ${e}`);
+                }
+              }}
+            >
               <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
                 Dismiss
               </Text>
