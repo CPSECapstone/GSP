@@ -189,7 +189,7 @@ function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
         </Text>
         <TextInput
           style={{ height: 20, borderWidth: 1, borderColor: "#EDEDED" }}
-        ></TextInput>
+        />
         <Text
           style={{
             paddingTop: 10,
@@ -202,7 +202,7 @@ function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
         </Text>
         <TextInput
           style={{ height: 80, borderWidth: 1, borderColor: "#EDEDED" }}
-        ></TextInput>
+        />
         <View
           style={{
             flexDirection: "row",
