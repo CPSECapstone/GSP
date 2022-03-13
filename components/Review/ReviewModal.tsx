@@ -83,14 +83,16 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
-        <ModalNavOption index={0} title="Edit Review" navaction={() => {}} />
         <ModalNavOption
           index={1}
+          title="Edit Review"
+          navaction={nextScreenIncr}
+        />
+        <ModalNavOption
+          index={2}
           title="Delete Review"
           navaction={nextScreenIncr}
         />
-        <ModalNavOption index={2} title="Share Review" navaction={() => {}} />
-        <ModalNavOption index={3} title="Report Review" navaction={() => {}} />
 
         <Pressable
           style={{ alignItems: "center", padding: 5 }}
@@ -103,12 +105,15 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
   );
 }
 
-interface RequestProps {
+interface DeleteReviewProps {
   modalVisibilitySetter: Dispatch<boolean>;
   nextScreenIncr: Dispatch<number>;
 }
 
-function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
+function DeleteView({
+  modalVisibilitySetter,
+  nextScreenIncr,
+}: DeleteReviewProps) {
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
@@ -141,8 +146,97 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
               borderRadius: 25,
               backgroundColor: "#FA4A0C",
             }}
+            onPress={() => {
+              // 1. get all review data for user with: useAppSelector(selectAllReviews);
+              // 2. pass this data into flatlist
+              // 3. for each item in the flatlist, pass the review data
+              // 4. pass ID for current review along to "delete review"
+              // 5. on delete, call reducer to filter out current review ID
+            }}
           >
             <Text style={styles.sendreqbutton}>Delete</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+interface EditReviewProps {
+  modalVisibilitySetter: Dispatch<boolean>;
+  nextScreenIncr: Dispatch<number>;
+}
+
+function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
+  return (
+    <View style={styles.modalcontainer}>
+      <View style={styles.modalView}>
+        <Text
+          style={{ fontFamily: "Poppins-Regular", fontSize: 14, opacity: 0.5 }}
+        >
+          Edit this Review
+        </Text>
+
+        <Text
+          style={{
+            paddingTop: 10,
+            fontFamily: "Poppins-Regular",
+            fontSize: 14,
+            opacity: 0.5,
+          }}
+        >
+          Rating
+        </Text>
+        <TextInput
+          style={{ height: 20, borderWidth: 1, borderColor: "#EDEDED" }}
+        ></TextInput>
+        <Text
+          style={{
+            paddingTop: 10,
+            fontFamily: "Poppins-Regular",
+            fontSize: 14,
+            opacity: 0.5,
+          }}
+        >
+          Description
+        </Text>
+        <TextInput
+          style={{ height: 80, borderWidth: 1, borderColor: "#EDEDED" }}
+        ></TextInput>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 10,
+          }}
+        >
+          <Pressable
+            style={{ marginHorizontal: 10 }}
+            onPress={() => {
+              nextScreenIncr(0);
+              modalVisibilitySetter(false);
+            }}
+          >
+            <Text style={styles.modalcanceltext}>Cancel</Text>
+          </Pressable>
+          <Pressable
+            style={{
+              marginHorizontal: 10,
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              borderRadius: 25,
+              backgroundColor: "#FA4A0C",
+            }}
+            onPress={() => {
+              // 1. get all review data for user with: useAppSelector(selectAllReviews);
+              // 2. pass this data into flatlist
+              // 3. for each item in the flatlist, pass the review data
+              // 4. pass ID for current review along to "delete review"
+              // 5. on delete, call reducer to filter out current review ID
+            }}
+          >
+            <Text style={styles.sendreqbutton}>Confirm Changes</Text>
           </Pressable>
         </View>
       </View>
@@ -167,7 +261,13 @@ function ReviewModal({ modalVisibilitySetter, visible }: FullModalProps) {
         />
       )}
       {screenindex === 1 && (
-        <RequestView
+        <EditView
+          nextScreenIncr={setScreenindex}
+          modalVisibilitySetter={modalVisibilitySetter}
+        />
+      )}
+      {screenindex === 2 && (
+        <DeleteView
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
         />

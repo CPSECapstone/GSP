@@ -71,13 +71,13 @@ const styles = StyleSheet.create({
 
 const reviewData = [
   {
-    restaurant: "Tori L",
+    restaurant: "Marvis I. (My Review)",
     rating: 4.0,
     srcImage: "",
     description: "I love Milk In It. It is my go to shop for boba.",
   },
   {
-    restaurant: "Marvis I.",
+    restaurant: "Tori L",
     rating: 5.0,
     srcImage: "",
     description: "I love Milk In It. It is my go to shop for boba.",
