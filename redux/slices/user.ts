@@ -26,10 +26,13 @@ export const userSlice = createSlice({
         state.user = action.payload;
       }
     },
+    setUser(state, action: PayloadAction<UserType>) {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { userLoading, userRecieved } = userSlice.actions;
+export const { userLoading, userRecieved, setUser } = userSlice.actions;
 
 const userReducer = userSlice.reducer;
 export default userReducer;

@@ -5,15 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { UserProfileProps } from "../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import selectUser from "../../redux/selectors/user";
-
-const profileData = {
-  name: "Marvis Ighedosa",
-  profileImage: {
-    uri: "https://kodaandcrushmarketing.com/wp-content/uploads/2020/11/ToyFaces_Colored_BG_32-7QFYBYH-768x768.jpg",
-  },
-};
+import defaultUser from "../../constants/defaultData";
+import { setUser } from "../../redux/slices/user";
 
 const styles = StyleSheet.create({
   container: {
@@ -84,19 +79,16 @@ function LogoutCell() {
 
 export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
   return (
     <SafeAreaView style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
       <Image
         style={styles.profileImage}
-        source={
-          user?.profilePic
-            ? { uri: user?.profilePic }
-            : profileData.profileImage
-        }
+        source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
       />
-      <Text style={styles.name}>{user?.name ?? profileData.name}</Text>
+      <Text style={styles.name}>{user?.name ?? defaultUser.name}</Text>
       <View style={styles.cells}>
         <UserProfileCell
           action={() => navigation.navigate("ReviewPage")}
@@ -114,6 +106,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           onPress={async () => {
             try {
               await Auth.signOut();
+              dispatch(setUser(undefined));
               navigation.navigate("Login");
             } catch (error) {
               console.error("error signing out: ", error);

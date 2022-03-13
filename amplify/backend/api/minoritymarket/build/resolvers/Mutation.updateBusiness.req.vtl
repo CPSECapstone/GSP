@@ -20,12 +20,12 @@ $util.qr($mergedValues.putAll($util.defaultIfNull($args.input, {})))
 #end
 ## Model key **
 #if( $ctx.stash.metadata.modelObjectKey )
-  #set( $keyFields = ["_version", "_deleted", "_lastChangedAt"] )
+  #set( $keyFields = [] )
   #foreach( $entry in $ctx.stash.metadata.modelObjectKey.entrySet() )
     $util.qr($keyFields.add("$entry.key"))
   #end
 #else
-  #set( $keyFields = ["id", "_version", "_deleted", "_lastChangedAt"] )
+  #set( $keyFields = ["id"] )
 #end
 #foreach( $entry in $util.map.copyAndRemoveAllKeys($mergedValues, $keyFields).entrySet() )
   #if( !$util.isNull($ctx.stash.metadata.dynamodbNameOverrideMap) && $ctx.stash.metadata.dynamodbNameOverrideMap.containsKey("$entry.key") )
@@ -118,8 +118,7 @@ $util.qr($update.put("expression", "$expression"))
   "version": "2018-05-29",
   "operation": "UpdateItem",
   "key": $Key,
-  "update": $update,
-  "_version": $util.defaultIfNull($args.input["_version"], 0)
+  "update": $update
 } )
 #if( $Conditions )
   #if( $keyConditionExprNames )

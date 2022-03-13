@@ -54,6 +54,5 @@ $util.qr($DeleteRequest.put("key", $Key))
   #end
   $util.qr($DeleteRequest.put("condition", $Conditions))
 #end
-$util.qr($DeleteRequest.put("_version", $util.defaultIfNull($args.input["_version"], 0)))
 $util.toJson($DeleteRequest)
 ## [End] Delete Request template. **
