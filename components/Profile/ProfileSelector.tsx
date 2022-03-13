@@ -6,6 +6,8 @@ import {
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import defaultUser from "../../constants/defaultData";
+import selectUser from "../../redux/selectors/user";
 import UserProfile from "./User/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import { Business } from "../../src/API";
@@ -119,14 +121,16 @@ function Margin() {
 type BaseProps = NativeStackScreenProps<ProfileStackParamList, "Base">;
 function Base({ navigation }: BaseProps) {
   const businesses = React.useContext(BusinessContext);
+  const user = useAppSelector(selectUser);
+
   return (
     <SafeAreaView style={{ flex: 1, flexDirection: "row" }}>
       <Margin />
       <View style={{ flex: 10 }}>
         <Text style={styles.title}>Profile</Text>
         <Selector
-          title="User"
-          img="https://kodaandcrushmarketing.com/wp-content/uploads/2020/11/ToyFaces_Colored_BG_32-7QFYBYH-768x768.jpg"
+          title="My Profile"
+          img={user?.profilePic ?? defaultUser.profilePic}
           onPress={() => navigation.navigate("User")}
         />
         <Text style={styles.subtitle}>My Businesses</Text>

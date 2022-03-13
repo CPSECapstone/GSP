@@ -1,6 +1,6 @@
 import { DeepOmit } from './DeepOmit';
 import {
-  GetBusinessQuery, GetUserQuery, ListBusinessesQuery,
+  GetBusinessQuery, GetNotificationQuery, ListBusinessesQuery, ListNotificationsQuery, GetUserQuery
 } from './API';
 
 export type BusinessQueryType = NonNullable<ListBusinessesQuery['listBusinesses']>['items'];
@@ -11,3 +11,9 @@ export type BusinessType = DeepOmit<
 >;
 
 export type UserType = GetUserQuery['getUser']
+export type NotificationQueryType = NonNullable<ListNotificationsQuery['listNotifications']>['items'];
+
+export type NotificationType = DeepOmit<
+  Exclude<GetNotificationQuery['getNotification'], null | undefined>,
+  '__typename'
+>

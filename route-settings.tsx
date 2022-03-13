@@ -25,6 +25,7 @@ export type RootStackParamList = {
   ProfileEditor: undefined;
   ReviewPage: undefined;
   UserProfile: undefined;
+  BizReviewPage: undefined;
   Notifications: undefined;
 };
 
@@ -85,6 +86,11 @@ export type UserProfileProps = NativeStackScreenProps<
 export type ReviewPageProps = NativeStackScreenProps<
   RootStackParamList,
   "ReviewPage"
+>;
+
+export type BizReviewPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  "BizReviewPage"
 >;
 
 export const TabBarScreenOptions = ({
