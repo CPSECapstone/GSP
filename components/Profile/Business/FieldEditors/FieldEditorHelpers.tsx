@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Pressable, Text, View } from "react-native";
-import { Color } from "../Business";
 
 type HeaderButtonProps = { title: string; onPress: Function; style: Object };
 function HeaderButton({ title, onPress, style }: HeaderButtonProps) {
@@ -56,7 +55,7 @@ export function ColorOption({
   onPress,
   large,
 }: {
-  color: Color;
+  color: string;
   onPress: Function;
   large?: boolean;
 }) {

@@ -10,16 +10,17 @@ type Notification @model @auth(rules: [{allow: public}]) {
   type: NotificationType!
   Sender: ID
   userID: ID! @index(name: "byUser")
+  title: String!
 }
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   Collections: [Collection] @hasMany(indexName: "byUser", fields: ["id"])
   name: String
   Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
+  Businesses: [Business] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
 enum BusinessType {
@@ -45,14 +46,14 @@ enum MinorityGroups {
   SIKH
 }
 
-type Review @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
+type Review @model @auth(rules: [{allow: public}]) {
   id: ID!
   rating: Int
   comments: String
   businessID: ID @index(name: "byBusiness")
 }
 
-type Business @model @auth(rules: [{allow: public, operations: [create, read]}, {allow: owner}]) {
+type Business @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
   about: String!
@@ -73,9 +74,10 @@ type Business @model @auth(rules: [{allow: public, operations: [create, read]}, 
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
+  userID: ID! @index(name: "byUser")
 }
 
-type Collection @model @auth(rules: [{allow: owner}]) {
+type Collection @model @auth(rules: [{allow: public}]) {
   id: ID!
   title: String!
   description: String

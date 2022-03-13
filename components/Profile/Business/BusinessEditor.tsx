@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { Ionicons } from "@expo/vector-icons";
@@ -5,7 +6,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,9 +16,9 @@ import {
   ImageBackground,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Storage } from "@aws-amplify/storage";
-import { Address, BusinessType, BUSINESS_TYPES, ColorSet } from "./Business";
-import { ProfileEditorProps } from "../../../route-settings";
+import { useNavigation } from "@react-navigation/native";
+import { Color, Editor } from "./Business";
+
 import Field, {
   AboutUsField,
   AddressField,
@@ -45,13 +46,22 @@ import {
   URLEditor,
   ColorSetEditor,
 } from "./FieldEditors/FieldEditors";
-import dummyBusiness from "./tempdata";
+import { MinorityGroups, BusinessType, Business } from "../../../src/API";
+import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
 
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
-export default function ProfileEditor({ navigation }: ProfileEditorProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const submit = (): void => {};
+type BusinessEditorProps = {
+  business: Business;
+  submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
+};
+
+// eslint-disable-next-line prettier/prettier
+export default function BusinessEditor({
+  business,
+  submit,
+}: BusinessEditorProps) {
+  const navigation = useNavigation();
 
   return (
     <EditStack.Navigator
@@ -71,8 +81,11 @@ export default function ProfileEditor({ navigation }: ProfileEditorProps) {
         options={{
           headerLeft: () => ConfigureBackButton("Cancel", navigation.goBack),
         }}
-        component={BaseEditor}
-      />
+      >
+        {(props) => (
+          <BaseEditor {...props} submit={submit} business={business} />
+        )}
+      </EditStack.Screen>
       <EditStack.Screen name="EditText" component={TextEditor} />
       <EditStack.Screen name="EditPhone" component={PhoneEditor} />
       <EditStack.Screen name="EditAddress" component={AddressEditor} />
@@ -84,36 +97,34 @@ export default function ProfileEditor({ navigation }: ProfileEditorProps) {
   );
 }
 
-async function S3ImageUpload(file: string) {
-  const photo = await fetch(file);
-  const photoBlob = await photo.blob();
-
-  const { key } = await Storage.put("examples.png", photoBlob, {
-    level: "protected",
-    contentType: "image/png",
-  });
-
-  console.log("S3 Object key", key);
+type BaseEditorRouteProps = NativeStackScreenProps<EditStackParamList, "Base">;
+interface BaseEditorProps extends BaseEditorRouteProps {
+  business: Business;
+  submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
 }
-
-function BaseEditor({
-  navigation,
-  route,
-}: NativeStackScreenProps<EditStackParamList, "Base">) {
-  const business = dummyBusiness;
+function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
+  const editor = new Editor(business);
 
   if (route.params) {
-    business[route.params.key] = route.params.value;
+    editor.updateField(route.params.key, route.params.value);
   }
 
-  // const [profileImage, setProfileImage] = useState(business.profileImage);
-  const [bannerImage, setBannerImage] = useState(business.bannerImage);
+  const [pImg, setPImg] = useState<string>();
+  const [bImg, setBImg] = useState<string>();
 
-  useEffect(() =>
-    navigation.setOptions({ headerRight: () => ConfigureDoneButton(submit) })
+  const trySubmit = () => {
+    if (Object.keys(editor.edits).length < 2 && !(pImg || bImg)) {
+      navigation.goBack();
+    } else {
+      submit(editor.edits, pImg, bImg);
+    }
+  };
+
+  React.useEffect(() =>
+    navigation.setOptions({
+      headerRight: () => ConfigureDoneButton(trySubmit),
+    })
   );
-
-  const submit = (): void => {};
 
   const pickImage = async (setImage: Function) => {
     // No permissions request is necessary for launching the image library
@@ -125,7 +136,6 @@ function BaseEditor({
     });
 
     if (!result.cancelled) {
-      S3ImageUpload(result.uri);
       setImage(result.uri);
     }
   };
@@ -136,7 +146,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditText", {
           field: NameField,
-          currentValue: business.name,
+          currentValue: editor.business.name,
         }),
     },
     {
@@ -144,8 +154,8 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditSelection", {
           field: TypeField,
-          currentValue: business.businessType,
-          options: Array.from(BUSINESS_TYPES),
+          currentValue: editor.business.type,
+          options: Array.from(enumToArray(BusinessType)),
         }),
     },
     {
@@ -153,7 +163,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditPhone", {
           field: PhoneField,
-          currentValue: business.phone,
+          currentValue: editor.business.phone,
         }),
     },
     {
@@ -161,7 +171,12 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditAddress", {
           field: AddressField,
-          currentValue: business.address,
+          currentValue: {
+            address: editor.business.address,
+            city: editor.business.city,
+            state: editor.business.state,
+            zipcode: editor.business.zipcode,
+          },
         }),
     },
     {
@@ -169,7 +184,8 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditList", {
           field: TagsField,
-          currentValue: business.tags,
+          currentValue: editor.business.tags as string[],
+          options: enumToArray(MinorityGroups),
         }),
     },
     {
@@ -177,7 +193,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditText", {
           field: AboutUsField,
-          currentValue: business.aboutUs,
+          currentValue: editor.business.about,
         }),
     },
     {
@@ -185,7 +201,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditURL", {
           field: WebsiteField,
-          currentValue: business.website || "",
+          currentValue: editor.business.website || "",
         }),
     },
     {
@@ -193,7 +209,10 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditColorSet", {
           field: ColorSetField,
-          currentValue: business.colorSet,
+          currentValue: {
+            primary: editor.business.primarycolor as Color,
+            secondary: editor.business.secondarycolor as Color,
+          },
         }),
     },
   ];
@@ -201,32 +220,46 @@ function BaseEditor({
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 5, width: "100%", zIndex: 1 }}>
-        <ImageBackground
-          source={{ uri: bannerImage }}
-          resizeMode="cover"
-          style={styles.banner}
-        />
+        {bImg ? (
+          <ImageBackground
+            source={{ uri: bImg }}
+            resizeMode="cover"
+            style={styles.banner}
+          />
+        ) : (
+          <S3ImageBackground
+            S3key={`${editor.business.id}/banner`}
+            style={styles.banner}
+          />
+        )}
         <View style={styles.darkness} />
 
         <Margin />
         <View
-          style={[styles.avatar, { borderColor: business.colorSet.primary }]}
+          style={[styles.avatar, { borderColor: editor.business.primarycolor }]}
         >
-          <Image
-            style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
-            source={{
-              uri: "https://minoritymarket-imagestore24817-staging.s3.us-west-1.amazonaws.com/protected/us-west-1%3A9ee32d90-5911-41ef-85a5-e6240c050c8d/example.png?AWSAccessKeyId=ASIAW6COXMO5LC2EJOBT&Expires=1646443204&Signature=prPQ1vWGb8MP5mlDZG%2B73chdPcg%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEAEaCXVzLXdlc3QtMSJIMEYCIQCIjTlXTyH8vXsAsZBqKMFQ9QmF%2Fqs2w0ClHffHjvLLjAIhAOninvIHDmzbydZIWTLw2KhlCowwW8Yh2h%2BdihELWG5JKsQECGoQABoMNDc2OTA2NDgwNTcwIgy681%2Fswhz1xAMF2L0qoQQDZ5%2BO8jroSPAy53%2BiBwFaORI7u7v2s1LexGRCDV6yYMUr6vNpLu9n6Z%2BhB0B%2BmhrtnirODvVDXTs%2B8Xvlzx80iN7WNvED9blhlsyaNwN%2B2LdoE8gm2tlIlhCI1sCapfzUWwoQrquEamNhulcZ62lmNs25EmLlj%2B3dt0NzjdZ4xSqoQA9j6ZeWfBkT6vGKzGA39F8zl%2BT706gqYF5JRt1c5KjtgeX%2FzykCM%2BOGMynouNt1YFvY26IbOdUjQTTxcGT2JsZldx8rt0wKrgFh7N8UzdQDAUcVjDqdYu85RmaQ4uOx6W6JDSLe1xmG2R2YYKYErNKQA8hXrxYoNYqhZz3qy%2FfUIJtPM1fz4toyjl5aAWoIFn2eUKIY232qzHcPmHnQyCs%2BerslUrlXkAQjZagaY1yKe2ulbw46tfkxKgXKO9vw4eKYneVNjH19%2FBuNl9ke7vKiLuJ8WyvQ1h11LHNtC7l2qb%2Bgwnsxgdbx%2B7xqlu662CLI9RZpWiRG6vYoL9c6QpA38siVUq7p%2Bx79zgp3GS1hp0MDJ09Z4UD70fu6zLsKA7nyEumLhdV0N7IONKXClfYutL0fuig1f3lgUjTRgoqadwDS8IatvduWFR1wBSlUlb%2F60vuSRt7yZNfUaWVLALrIQeCfCHbpfuEDnN%2FTF%2Bv2%2BbEpPBaEm%2FjkQL2jS42BQVoEHiAKgl1zryrap4E3L2d6%2FCJDrHFbARAU3AKnrzCV84qRBjqEAgSGf6PczzLArwfXoToiLyxUF569NOD%2FKePMZwrJ74OvwObQO12Jd2ATLvhTzFEKBzHSp%2BBMy%2FSCkKT9idxw7AfOy5a8MNXqpnmEsDjebbbu8jv5dTToxqUFq4WYWdnWBH17qXIJi5xEH7dnkR1O9SM8p9%2FtDpoFR5rqggH2Hsm0TcRRWDjl%2BxNGXP2WuAWtz%2B4mgAVKK4%2FI9M36nX2YNkWXIljrsPoleVp4pGcJaafzmYeHLWuqBisyIRZJUNJWbGtxUOvfMp7XE2kaMwsIPSUYadcg6dWYWdzpJq3LHNCwpwje4ANdkfpDQDlfeqFzBD2Jpio5O7KAN0OYCcGdnsN54OfI",
-            }}
-          />
+          {pImg ? (
+            <Image
+              style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
+              source={{
+                uri: pImg,
+              }}
+            />
+          ) : (
+            <S3Image
+              style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
+              S3key={`${editor.business.id}/profile`}
+            />
+          )}
           <EditButton
             position={{ bottom: -7, right: -7 }}
-            onPress={() => pickImage(setProfileImage)}
+            onPress={() => pickImage(setPImg)}
           />
         </View>
         <Margin />
         <EditButton
           position={{ bottom: -25, right: 5 }}
-          onPress={() => pickImage(setBannerImage)}
+          onPress={() => pickImage(setBImg)}
         />
       </View>
 
@@ -238,7 +271,7 @@ function BaseEditor({
               key={x.field.displayTitle}
               onPress={x.function}
               field={x.field}
-              data={business[x.field.key]}
+              business={editor.business}
             />
           ))}
         </View>
@@ -246,6 +279,10 @@ function BaseEditor({
       </View>
     </View>
   );
+}
+
+function enumToArray(enumObj: object): string[] {
+  return Object.values(enumObj).filter((value) => typeof value === "string");
 }
 
 const styles = StyleSheet.create({
@@ -317,36 +354,30 @@ function DataLine() {
   );
 }
 
-type BusinessProperty =
-  | string
-  | ColorSet
-  | BusinessType
-  | Address
-  | URL
-  | string[]
-  | undefined;
-function getDisplay(data: BusinessProperty, field: Field, onPress: Function) {
-  let displayData;
+function getDisplay(business: Business, field: Field, onPress: Function) {
+  let displayData: string | number | undefined | null;
   if (field.key === "address") {
-    const { address, city } = data as Address;
-    displayData = `${address}, ${city}`;
-  } else if (field.key === "website" || field.key === "menu") {
-    displayData = data?.toString();
+    displayData = `${business.address}, ${business.city}`;
   } else if (field.key === "tags") {
-    const arr = data as string[];
-    displayData = `${arr[0]}, ${arr[1]}`;
+    const tags = business.tags!;
+    displayData = tags[0] as string;
+    for (let i = 1; i < business.tags!.length; i += 1) {
+      displayData += `, ${business.tags![i]}`;
+    }
   } else if (field.key === "phone") {
-    displayData = formatPhone(data as string);
+    displayData = formatPhone(business.phone);
   } else if (field.key === "colorSet") {
-    const { primary, secondary } = data as ColorSet;
     return (
       <Pressable style={{ flexDirection: "row", marginTop: 10 }}>
-        <ColorOption color={primary} onPress={() => onPress()} />
-        <ColorOption color={secondary} onPress={() => onPress()} />
+        <ColorOption color={business.primarycolor} onPress={() => onPress()} />
+        <ColorOption
+          color={business.secondarycolor}
+          onPress={() => onPress()}
+        />
       </Pressable>
     );
   } else {
-    displayData = data;
+    displayData = business[field.key];
   }
   return (
     <Pressable onPress={() => onPress()}>
@@ -358,15 +389,15 @@ function getDisplay(data: BusinessProperty, field: Field, onPress: Function) {
   );
 }
 
-type DataRowProps = { onPress: Function; field: Field; data: BusinessProperty };
-function DataRow({ onPress, field, data }: DataRowProps) {
+type DataRowProps = { onPress: Function; field: Field; business: Business };
+function DataRow({ onPress, field, business }: DataRowProps) {
   return (
     <View style={styles.dataRow}>
       <View style={styles.dataRowTitleContainer}>
         <Text style={styles.dataRowTitle}>{field.displayTitle}</Text>
       </View>
       <View style={styles.dataRowContainer}>
-        {getDisplay(data, field, onPress)}
+        {getDisplay(business, field, onPress)}
       </View>
     </View>
   );

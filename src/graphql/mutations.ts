@@ -13,11 +13,9 @@ export const createNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -32,11 +30,9 @@ export const updateNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -51,11 +47,9 @@ export const deleteNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -67,22 +61,19 @@ export const createUser = /* GraphQL */ `
     createUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
+      }
+      Businesses {
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -94,22 +85,19 @@ export const updateUser = /* GraphQL */ `
     updateUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
+      }
+      Businesses {
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -121,22 +109,19 @@ export const deleteUser = /* GraphQL */ `
     deleteUser(input: $input, condition: $condition) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
+      }
+      Businesses {
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -152,10 +137,6 @@ export const createReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -171,10 +152,6 @@ export const updateReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -190,10 +167,6 @@ export const deleteReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -216,7 +189,6 @@ export const createBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -226,12 +198,9 @@ export const createBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -254,7 +223,6 @@ export const updateBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -264,12 +232,9 @@ export const updateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -292,7 +257,6 @@ export const deleteBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -302,12 +266,9 @@ export const deleteBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -323,15 +284,10 @@ export const createCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -347,15 +303,10 @@ export const updateCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -371,15 +322,10 @@ export const deleteCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;

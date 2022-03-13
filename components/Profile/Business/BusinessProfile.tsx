@@ -3,27 +3,18 @@
 import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
-  ScrollView,
   Linking,
   Platform,
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Pressable,
-  ImageBackground,
 } from "react-native";
-import { BusinessProps } from "../../../route-settings";
-import Business, { BusinessAdapter } from "./Business";
-import { useAppSelector } from "../../../redux/hooks";
-import selectAllBusinesses from "../../../redux/selectors/business";
+import { useNavigation } from "@react-navigation/native";
+import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
-// import dummyBusiness from "./tempdata";
-
-const DEFAULT_BANNER =
-  "https://99designs-blog.imgix.net/blog/wp-content/uploads/2018/12/Gradient_builder_2.jpg?auto=format&q=60&w=1815&h=1361.25&fit=crop&crop=faces";
-// import dummyBusiness from "./tempdata";
+import { Business } from "../../../src/API";
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -119,175 +110,162 @@ const openMap = async (address: string, city: string, zipCode: string) => {
   openUrl(link);
 };
 
-export default function BusinessProfile({ navigation }: BusinessProps) {
-  const dummyBusiness: Business = new BusinessAdapter(
-    useAppSelector(selectAllBusinesses)[0]!
-  );
+type BusinessProfileProps = { business: Business; edit: () => void };
+export default function BusinessProfile({
+  business,
+  edit,
+}: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
+  const navigation = useNavigation();
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, height: "100%" }}>
-      <View>
-        <BusinessProfileModal
-          visible={modalVisible}
-          modalVisibilitySetter={setmodalVisible}
-        />
-        <ImageBackground
-          source={{ uri: dummyBusiness.bannerImage || DEFAULT_BANNER }}
-          resizeMode="cover"
-          style={[
-            styles.banner,
-            { borderColor: dummyBusiness.colorSet.primary },
-          ]}
-        />
-        <View
-          style={[
-            styles.darkness,
-            { borderBottomColor: dummyBusiness.colorSet.primary },
-          ]}
-        />
-        <View style={{ flexDirection: "row", position: "absolute" }}>
-          <Margin />
-          <View style={{ flex: 10 }}>
-            <View style={styles.header}>
-              <Pressable
-                style={styles.back}
-                onPress={() => navigation.goBack()}
-              >
-                <Ionicons name="chevron-back-outline" size={30} color="white" />
-              </Pressable>
-              <Pressable
-                style={styles.save}
-                onPress={() => navigation.navigate("ProfileEditor")}
-              >
-                <Ionicons name="bookmark-outline" size={25} color="white" />
-              </Pressable>
-              <Pressable
-                style={styles.share}
-                onPress={() => setmodalVisible(true)}
-              >
-                <SimpleLineIcons name="options" size={25} color="white" />
-              </Pressable>
-              <Image
+    <View>
+      <BusinessProfileModal
+        visible={modalVisible}
+        modalVisibilitySetter={setmodalVisible}
+      />
+      <S3ImageBackground
+        S3key={`${business.id}/banner`}
+        style={styles.banner}
+      />
+      <View
+        style={[styles.darkness, { borderBottomColor: business.primarycolor }]}
+      />
+      <View style={{ flexDirection: "row", position: "absolute" }}>
+        <Margin />
+        <View style={{ flex: 10 }}>
+          <View style={styles.header}>
+            <Pressable style={styles.back} onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back-outline" size={30} color="white" />
+            </Pressable>
+            <Pressable style={styles.save} onPress={edit}>
+              <Ionicons name="bookmark-outline" size={25} color="white" />
+            </Pressable>
+            <Pressable
+              style={styles.share}
+              onPress={() => setmodalVisible(true)}
+            >
+              <SimpleLineIcons name="options" size={25} color="white" />
+            </Pressable>
+            <S3Image
+              style={[styles.avatar, { borderColor: business.primarycolor }]}
+              S3key={`${business.id}/profile`}
+            />
+            {/* <Image
+                source={{uri: business.profileImage}}
                 style={[
                   styles.avatar,
-                  { borderColor: dummyBusiness.colorSet.primary },
+                  { borderColor: business.primarycolor },
                 ]}
-                source={{ uri: dummyBusiness.profileImage }}
+              /> */}
+            <Text style={styles.title}>{business.name}</Text>
+            <Text style={styles.details}>{`${business.type} • 3mi`}</Text>
+          </View>
+          <View style={styles.body}>
+            <Tags tags={business.tags as string[]} />
+            <View style={{ flexDirection: "row", marginTop: 20 }}>
+              <CircleButton
+                icon="call"
+                title="Call"
+                action={() => call(business.phone)}
+                color={business.primarycolor}
               />
-              <Text style={styles.title}>{dummyBusiness.name}</Text>
-              <Text style={styles.details}>
-                {`${dummyBusiness.businessType} • 3mi`}
+              <Margin />
+              <CircleButton
+                icon="map"
+                title="Map"
+                action={() =>
+                  openMap(
+                    business.address,
+                    business.city,
+                    business.zipcode.toString()
+                  )
+                }
+                color={business.primarycolor}
+              />
+              <Margin />
+              <CircleButton
+                icon="open"
+                title="Site"
+                action={() => openUrl(business.website!.toString())}
+                color={business.primarycolor}
+              />
+              <Margin />
+              {business.menu ? (
+                <CircleButton
+                  icon="restaurant"
+                  title="Menu"
+                  action={() => openUrl(business.menu!)}
+                  color={business.primarycolor}
+                />
+              ) : (
+                <CircleButton
+                  icon="bookmark"
+                  title="Save"
+                  action={() => {}}
+                  color={business.primarycolor}
+                />
+              )}
+            </View>
+
+            <Line />
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Star />
+              <Star />
+              <Star />
+              <Star />
+              <StarOutline />
+              <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+                {" "}
+                • 4.3 Stars • 62 Reviews
               </Text>
             </View>
-            <View style={styles.body}>
-              <Tags tags={dummyBusiness.tags} />
-              <View style={{ flexDirection: "row", marginTop: 20 }}>
-                <CircleButton
-                  icon="call"
-                  title="Call"
-                  action={() => call(dummyBusiness.phone)}
-                  color={dummyBusiness.colorSet.primary}
-                />
-                <Margin />
-                <CircleButton
-                  icon="map"
-                  title="Map"
-                  action={() =>
-                    openMap(
-                      dummyBusiness.address.address,
-                      dummyBusiness.address.city,
-                      dummyBusiness.address.zipcode.toString()
-                    )
-                  }
-                  color={dummyBusiness.colorSet.primary}
-                />
-                <Margin />
-                <CircleButton
-                  icon="open"
-                  title="Site"
-                  action={() => openUrl(dummyBusiness.website!.toString())}
-                  color={dummyBusiness.colorSet.primary}
-                />
-                <Margin />
-                {dummyBusiness.menu ? (
-                  <CircleButton
-                    icon="restaurant"
-                    title="Menu"
-                    action={() => openUrl(dummyBusiness.menu!)}
-                    color={dummyBusiness.colorSet.primary}
-                  />
-                ) : (
-                  <CircleButton
-                    icon="bookmark"
-                    title="Save"
-                    action={() => {}}
-                    color={dummyBusiness.colorSet.primary}
-                  />
-                )}
-              </View>
 
-              <Line />
-
-              <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Star />
-                <Star />
-                <Star />
-                <Star />
-                <StarOutline />
+            <View style={{ flexDirection: "row" }}>
+              <Pressable
+                style={[
+                  styles.ratingButton,
+                  {
+                    backgroundColor: business.secondarycolor,
+                    marginRight: 10,
+                  },
+                ]}
+              >
                 <Text
-                  style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}
+                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
                 >
-                  {" "}
-                  • 4.3 Stars • 62 Reviews
+                  Write a Review
                 </Text>
-              </View>
-
-              <View style={{ flexDirection: "row" }}>
-                <Pressable
-                  style={[
-                    styles.ratingButton,
-                    {
-                      backgroundColor: dummyBusiness.colorSet.secondary,
-                      marginRight: 10,
-                    },
-                  ]}
+              </Pressable>
+              <Pressable
+                style={[
+                  styles.ratingButton,
+                  {
+                    backgroundColor: business.secondarycolor,
+                    marginLeft: 10,
+                  },
+                ]}
+              >
+                <Text
+                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
                 >
-                  <Text
-                    style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
-                  >
-                    Write a Review
-                  </Text>
-                </Pressable>
-                <Pressable
-                  style={[
-                    styles.ratingButton,
-                    {
-                      backgroundColor: dummyBusiness.colorSet.secondary,
-                      marginLeft: 10,
-                    },
-                  ]}
-                >
-                  <Text
-                    style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
-                  >
-                    See All Reviews
-                  </Text>
-                </Pressable>
-              </View>
+                  See All Reviews
+                </Text>
+              </Pressable>
+            </View>
 
-              <Line />
+            <Line />
 
-              <View style={styles.bodyContent}>
-                <Text style={styles.heading}>About Us</Text>
-                <Text style={styles.description}>{dummyBusiness.aboutUs}</Text>
-              </View>
+            <View style={styles.bodyContent}>
+              <Text style={styles.heading}>About Us</Text>
+              <Text style={styles.description}>{business.about}</Text>
             </View>
           </View>
-          <Margin />
         </View>
+        <Margin />
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -328,7 +306,7 @@ const styles = StyleSheet.create({
     right: 35,
   },
   banner: {
-    height: 300,
+    height: 320,
     flex: 1,
     justifyContent: "center",
   },
@@ -337,11 +315,11 @@ const styles = StyleSheet.create({
     top: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: 300,
+    height: 320,
     borderBottomWidth: 3,
   },
   header: {
-    height: 300,
+    height: 320,
   },
   tags: {
     fontSize: 12,

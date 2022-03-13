@@ -8,7 +8,7 @@ export type CreateNotificationInput = {
   type: NotificationType,
   Sender?: string | null,
   userID: string,
-  _version?: number | null,
+  title: string,
 };
 
 export enum NotificationType {
@@ -23,6 +23,7 @@ export type ModelNotificationConditionInput = {
   type?: ModelNotificationTypeInput | null,
   Sender?: ModelIDInput | null,
   userID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
   not?: ModelNotificationConditionInput | null,
@@ -96,11 +97,9 @@ export type Notification = {
   type: NotificationType,
   Sender?: string | null,
   userID: string,
+  title: string,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateNotificationInput = {
@@ -109,26 +108,22 @@ export type UpdateNotificationInput = {
   type?: NotificationType | null,
   Sender?: string | null,
   userID?: string | null,
-  _version?: number | null,
+  title?: string | null,
 };
 
 export type DeleteNotificationInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateUserInput = {
   id?: string | null,
   email: string,
-  ownedBusinesses?: string | null,
   profilePic?: string | null,
   name?: string | null,
-  _version?: number | null,
 };
 
 export type ModelUserConditionInput = {
   email?: ModelStringInput | null,
-  ownedBusinesses?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -140,23 +135,19 @@ export type User = {
   __typename: "User",
   id: string,
   email: string,
-  ownedBusinesses?: string | null,
   profilePic?: string | null,
   Collections?: ModelCollectionConnection | null,
   name?: string | null,
   Notifications?: ModelNotificationConnection | null,
+  Businesses?: ModelBusinessConnection | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type ModelCollectionConnection = {
   __typename: "ModelCollectionConnection",
   items:  Array<Collection | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type Collection = {
@@ -169,17 +160,12 @@ export type Collection = {
   userID: string,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export type ModelBusinessConnection = {
   __typename: "ModelBusinessConnection",
   items:  Array<Business | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type Business = {
@@ -204,12 +190,9 @@ export type Business = {
   menu?: string | null,
   profileImage: string,
   bannerImage?: string | null,
+  userID: string,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export enum MinorityGroups {
@@ -241,7 +224,6 @@ export type ModelReviewConnection = {
   __typename: "ModelReviewConnection",
   items:  Array<Review | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type Review = {
@@ -252,31 +234,23 @@ export type Review = {
   businessID?: string | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-  owner?: string | null,
 };
 
 export type ModelNotificationConnection = {
   __typename: "ModelNotificationConnection",
   items:  Array<Notification | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
-  ownedBusinesses?: string | null,
   profilePic?: string | null,
   name?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteUserInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateReviewInput = {
@@ -284,7 +258,6 @@ export type CreateReviewInput = {
   rating?: number | null,
   comments?: string | null,
   businessID?: string | null,
-  _version?: number | null,
 };
 
 export type ModelReviewConditionInput = {
@@ -313,12 +286,10 @@ export type UpdateReviewInput = {
   rating?: number | null,
   comments?: string | null,
   businessID?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteReviewInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateBusinessInput = {
@@ -341,7 +312,7 @@ export type CreateBusinessInput = {
   menu?: string | null,
   profileImage: string,
   bannerImage?: string | null,
-  _version?: number | null,
+  userID: string,
 };
 
 export type ModelBusinessConditionInput = {
@@ -363,6 +334,7 @@ export type ModelBusinessConditionInput = {
   menu?: ModelStringInput | null,
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelBusinessConditionInput | null > | null,
   or?: Array< ModelBusinessConditionInput | null > | null,
   not?: ModelBusinessConditionInput | null,
@@ -400,12 +372,11 @@ export type UpdateBusinessInput = {
   menu?: string | null,
   profileImage?: string | null,
   bannerImage?: string | null,
-  _version?: number | null,
+  userID?: string | null,
 };
 
 export type DeleteBusinessInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreateCollectionInput = {
@@ -414,7 +385,6 @@ export type CreateCollectionInput = {
   description?: string | null,
   color?: string | null,
   userID: string,
-  _version?: number | null,
 };
 
 export type ModelCollectionConditionInput = {
@@ -433,12 +403,10 @@ export type UpdateCollectionInput = {
   description?: string | null,
   color?: string | null,
   userID?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteCollectionInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type ModelNotificationFilterInput = {
@@ -447,6 +415,7 @@ export type ModelNotificationFilterInput = {
   type?: ModelNotificationTypeInput | null,
   Sender?: ModelIDInput | null,
   userID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
   not?: ModelNotificationFilterInput | null,
@@ -455,7 +424,6 @@ export type ModelNotificationFilterInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   email?: ModelStringInput | null,
-  ownedBusinesses?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
@@ -467,7 +435,6 @@ export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelReviewFilterInput = {
@@ -500,6 +467,7 @@ export type ModelBusinessFilterInput = {
   menu?: ModelStringInput | null,
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelBusinessFilterInput | null > | null,
   or?: Array< ModelBusinessFilterInput | null > | null,
   not?: ModelBusinessFilterInput | null,
@@ -529,11 +497,9 @@ export type CreateNotificationMutation = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -550,11 +516,9 @@ export type UpdateNotificationMutation = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -571,11 +535,9 @@ export type DeleteNotificationMutation = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -589,24 +551,22 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -620,24 +580,22 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -651,24 +609,22 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -686,10 +642,6 @@ export type CreateReviewMutation = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -707,10 +659,6 @@ export type UpdateReviewMutation = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -728,10 +676,6 @@ export type DeleteReviewMutation = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -757,7 +701,6 @@ export type CreateBusinessMutation = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -767,12 +710,9 @@ export type CreateBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -798,7 +738,6 @@ export type UpdateBusinessMutation = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -808,12 +747,9 @@ export type UpdateBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -839,7 +775,6 @@ export type DeleteBusinessMutation = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -849,12 +784,9 @@ export type DeleteBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -873,15 +805,10 @@ export type CreateCollectionMutation = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -900,15 +827,10 @@ export type UpdateCollectionMutation = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -927,15 +849,10 @@ export type DeleteCollectionMutation = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -951,11 +868,9 @@ export type GetNotificationQuery = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -975,42 +890,11 @@ export type ListNotificationsQuery = {
       type: NotificationType,
       Sender?: string | null,
       userID: string,
+      title: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncNotificationsQueryVariables = {
-  filter?: ModelNotificationFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncNotificationsQuery = {
-  syncNotifications?:  {
-    __typename: "ModelNotificationConnection",
-    items:  Array< {
-      __typename: "Notification",
-      id: string,
-      message: string,
-      type: NotificationType,
-      Sender?: string | null,
-      userID: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -1023,24 +907,22 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1057,45 +939,12 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string,
       email: string,
-      ownedBusinesses?: string | null,
       profilePic?: string | null,
       name?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncUsersQueryVariables = {
-  filter?: ModelUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncUsersQuery = {
-  syncUsers?:  {
-    __typename: "ModelUserConnection",
-    items:  Array< {
-      __typename: "User",
-      id: string,
-      email: string,
-      ownedBusinesses?: string | null,
-      profilePic?: string | null,
-      name?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -1112,10 +961,6 @@ export type GetReviewQuery = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1136,41 +981,8 @@ export type ListReviewsQuery = {
       businessID?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncReviewsQueryVariables = {
-  filter?: ModelReviewFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncReviewsQuery = {
-  syncReviews?:  {
-    __typename: "ModelReviewConnection",
-    items:  Array< {
-      __typename: "Review",
-      id: string,
-      rating?: number | null,
-      comments?: string | null,
-      businessID?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -1195,7 +1007,6 @@ export type GetBusinessQuery = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -1205,12 +1016,9 @@ export type GetBusinessQuery = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1244,58 +1052,11 @@ export type ListBusinessesQuery = {
       menu?: string | null,
       profileImage: string,
       bannerImage?: string | null,
+      userID: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncBusinessesQueryVariables = {
-  filter?: ModelBusinessFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncBusinessesQuery = {
-  syncBusinesses?:  {
-    __typename: "ModelBusinessConnection",
-    items:  Array< {
-      __typename: "Business",
-      id: string,
-      name: string,
-      about: string,
-      phone: string,
-      address: string,
-      website?: string | null,
-      tags?: Array< MinorityGroups > | null,
-      type: BusinessType,
-      primarycolor: string,
-      secondarycolor: string,
-      rating?: number | null,
-      collectionID?: string | null,
-      email: string,
-      city: string,
-      state: string,
-      zipcode: number,
-      menu?: string | null,
-      profileImage: string,
-      bannerImage?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -1313,15 +1074,10 @@ export type GetCollectionQuery = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -1343,42 +1099,8 @@ export type ListCollectionsQuery = {
       userID: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncCollectionsQueryVariables = {
-  filter?: ModelCollectionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncCollectionsQuery = {
-  syncCollections?:  {
-    __typename: "ModelCollectionConnection",
-    items:  Array< {
-      __typename: "Collection",
-      id: string,
-      title: string,
-      description?: string | null,
-      color?: string | null,
-      userID: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -1390,11 +1112,9 @@ export type OnCreateNotificationSubscription = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1406,11 +1126,9 @@ export type OnUpdateNotificationSubscription = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1422,11 +1140,9 @@ export type OnDeleteNotificationSubscription = {
     type: NotificationType,
     Sender?: string | null,
     userID: string,
+    title: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1435,24 +1151,22 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1461,24 +1175,22 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -1487,29 +1199,23 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string,
     email: string,
-    ownedBusinesses?: string | null,
     profilePic?: string | null,
     Collections?:  {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     name?: string | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
+    } | null,
+    Businesses?:  {
+      __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
-};
-
-export type OnCreateReviewSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnCreateReviewSubscription = {
@@ -1521,15 +1227,7 @@ export type OnCreateReviewSubscription = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateReviewSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateReviewSubscription = {
@@ -1541,15 +1239,7 @@ export type OnUpdateReviewSubscription = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteReviewSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteReviewSubscription = {
@@ -1561,15 +1251,7 @@ export type OnDeleteReviewSubscription = {
     businessID?: string | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnCreateBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnCreateBusinessSubscription = {
@@ -1589,7 +1271,6 @@ export type OnCreateBusinessSubscription = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -1599,17 +1280,10 @@ export type OnCreateBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateBusinessSubscription = {
@@ -1629,7 +1303,6 @@ export type OnUpdateBusinessSubscription = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -1639,17 +1312,10 @@ export type OnUpdateBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteBusinessSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteBusinessSubscription = {
@@ -1669,7 +1335,6 @@ export type OnDeleteBusinessSubscription = {
     Reviews?:  {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     collectionID?: string | null,
     email: string,
@@ -1679,17 +1344,10 @@ export type OnDeleteBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnCreateCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnCreateCollectionSubscription = {
@@ -1702,20 +1360,11 @@ export type OnCreateCollectionSubscription = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnUpdateCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnUpdateCollectionSubscription = {
@@ -1728,20 +1377,11 @@ export type OnUpdateCollectionSubscription = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
-};
-
-export type OnDeleteCollectionSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteCollectionSubscription = {
@@ -1754,14 +1394,9 @@ export type OnDeleteCollectionSubscription = {
     Businesses?:  {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };

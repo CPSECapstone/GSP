@@ -137,7 +137,7 @@
           ]
         },
         "Description": "api key description",
-        "Expires": 1649211292
+        "Expires": 1649540937
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -152,175 +152,6 @@
         "Name": "NONE_DS",
         "Type": "NONE",
         "Description": "None Data Source for Pipeline functions"
-      }
-    },
-    "DataStore": {
-      "Type": "AWS::DynamoDB::Table",
-      "Properties": {
-        "KeySchema": [
-          {
-            "AttributeName": "ds_pk",
-            "KeyType": "HASH"
-          },
-          {
-            "AttributeName": "ds_sk",
-            "KeyType": "RANGE"
-          }
-        ],
-        "AttributeDefinitions": [
-          {
-            "AttributeName": "ds_pk",
-            "AttributeType": "S"
-          },
-          {
-            "AttributeName": "ds_sk",
-            "AttributeType": "S"
-          }
-        ],
-        "BillingMode": "PAY_PER_REQUEST",
-        "StreamSpecification": {
-          "StreamViewType": "NEW_AND_OLD_IMAGES"
-        },
-        "TableName": {
-          "Fn::Join": [
-            "",
-            [
-              "AmplifyDataStore-",
-              {
-                "Fn::GetAtt": [
-                  "GraphQLAPI",
-                  "ApiId"
-                ]
-              },
-              "-",
-              {
-                "Ref": "env"
-              }
-            ]
-          ]
-        },
-        "TimeToLiveSpecification": {
-          "AttributeName": "_ttl",
-          "Enabled": true
-        }
-      },
-      "UpdateReplacePolicy": "Delete",
-      "DeletionPolicy": "Delete"
-    },
-    "AmplifyDataStoreIAMRole8DE05A49": {
-      "Type": "AWS::IAM::Role",
-      "Properties": {
-        "AssumeRolePolicyDocument": {
-          "Statement": [
-            {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": {
-                "Service": "appsync.amazonaws.com"
-              }
-            }
-          ],
-          "Version": "2012-10-17"
-        },
-        "RoleName": {
-          "Fn::Join": [
-            "",
-            [
-              "AmplifyDataStoreIAMRb752cd-",
-              {
-                "Fn::GetAtt": [
-                  "GraphQLAPI",
-                  "ApiId"
-                ]
-              },
-              "-",
-              {
-                "Ref": "env"
-              }
-            ]
-          ]
-        }
-      }
-    },
-    "DynamoDBAccess71ABE5AE": {
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": [
-                "dynamodb:BatchGetItem",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:PutItem",
-                "dynamodb:DeleteItem",
-                "dynamodb:GetItem",
-                "dynamodb:Scan",
-                "dynamodb:Query",
-                "dynamodb:UpdateItem"
-              ],
-              "Effect": "Allow",
-              "Resource": [
-                {
-                  "Fn::Sub": [
-                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}",
-                    {
-                      "tablename": {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "AmplifyDataStore-",
-                            {
-                              "Fn::GetAtt": [
-                                "GraphQLAPI",
-                                "ApiId"
-                              ]
-                            },
-                            "-",
-                            {
-                              "Ref": "env"
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  ]
-                },
-                {
-                  "Fn::Sub": [
-                    "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*",
-                    {
-                      "tablename": {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "AmplifyDataStore-",
-                            {
-                              "Fn::GetAtt": [
-                                "GraphQLAPI",
-                                "ApiId"
-                              ]
-                            },
-                            "-",
-                            {
-                              "Ref": "env"
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "Version": "2012-10-17"
-        },
-        "PolicyName": "DynamoDBAccess71ABE5AE",
-        "Roles": [
-          {
-            "Ref": "AmplifyDataStoreIAMRole8DE05A49"
-          }
-        ]
       }
     },
     "Notification": {
@@ -779,18 +610,6 @@
               "Outputs.transformerrootstackNotificationNotificationTable5B6F14BERef"
             ]
           },
-          "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewDataSource924E2306Name": {
-            "Fn::GetAtt": [
-              "Review",
-              "Outputs.transformerrootstackReviewReviewDataSource924E2306Name"
-            ]
-          },
-          "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewTableEAC51F2ARef": {
-            "Fn::GetAtt": [
-              "Review",
-              "Outputs.transformerrootstackReviewReviewTableEAC51F2ARef"
-            ]
-          },
           "referencetotransformerrootstackBusinessNestedStackBusinessNestedStackResource11E35CC0OutputstransformerrootstackBusinessBusinessDataSourceFC65CA0EName": {
             "Fn::GetAtt": [
               "Business",
@@ -801,6 +620,18 @@
             "Fn::GetAtt": [
               "Business",
               "Outputs.transformerrootstackBusinessBusinessTable34E17224Ref"
+            ]
+          },
+          "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewDataSource924E2306Name": {
+            "Fn::GetAtt": [
+              "Review",
+              "Outputs.transformerrootstackReviewReviewDataSource924E2306Name"
+            ]
+          },
+          "referencetotransformerrootstackReviewNestedStackReviewNestedStackResource73D7177DOutputstransformerrootstackReviewReviewTableEAC51F2ARef": {
+            "Fn::GetAtt": [
+              "Review",
+              "Outputs.transformerrootstackReviewReviewTableEAC51F2ARef"
             ]
           }
         }

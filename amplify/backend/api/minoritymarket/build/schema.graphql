@@ -11,26 +11,21 @@ type Notification @aws_iam @aws_api_key {
   type: NotificationType!
   Sender: ID
   userID: ID!
+  title: String!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 type User @aws_iam @aws_api_key {
   id: ID!
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
   name: String
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
+  Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
 }
 
 enum BusinessType {
@@ -56,20 +51,16 @@ enum MinorityGroups {
   SIKH
 }
 
-type Review @aws_iam @aws_cognito_user_pools @aws_api_key {
+type Review @aws_iam @aws_api_key {
   id: ID!
   rating: Int
   comments: String
   businessID: ID
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
-type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
+type Business @aws_iam @aws_api_key {
   id: ID!
   name: String!
   about: String!
@@ -90,15 +81,12 @@ type Business @aws_iam @aws_cognito_user_pools @aws_api_key {
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
+  userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
-type Collection @aws_iam @aws_cognito_user_pools {
+type Collection @aws_iam @aws_api_key {
   id: ID!
   title: String!
   description: String
@@ -107,10 +95,6 @@ type Collection @aws_iam @aws_cognito_user_pools {
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
-  _version: Int!
-  _deleted: Boolean
-  _lastChangedAt: AWSTimestamp!
-  owner: String
 }
 
 input ModelStringInput {
@@ -207,7 +191,6 @@ enum ModelSortDirection {
 type ModelNotificationConnection @aws_api_key @aws_iam {
   items: [Notification]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelNotificationTypeInput {
@@ -221,6 +204,7 @@ input ModelNotificationFilterInput {
   type: ModelNotificationTypeInput
   Sender: ModelIDInput
   userID: ModelIDInput
+  title: ModelStringInput
   and: [ModelNotificationFilterInput]
   or: [ModelNotificationFilterInput]
   not: ModelNotificationFilterInput
@@ -229,19 +213,14 @@ input ModelNotificationFilterInput {
 type Query {
   getNotification(id: ID!): Notification @aws_api_key @aws_iam
   listNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String): ModelNotificationConnection @aws_api_key @aws_iam
-  syncNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelNotificationConnection @aws_api_key @aws_iam
   getUser(id: ID!): User @aws_api_key @aws_iam
   listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
-  syncUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelUserConnection @aws_api_key @aws_iam
-  getReview(id: ID!): Review @aws_api_key @aws_iam @aws_cognito_user_pools
-  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools
-  syncReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools
-  getBusiness(id: ID!): Business @aws_api_key @aws_iam @aws_cognito_user_pools
-  listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools
-  syncBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools
-  getCollection(id: ID!): Collection @aws_iam @aws_cognito_user_pools
-  listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_iam @aws_cognito_user_pools
-  syncCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String, lastSync: AWSTimestamp): ModelCollectionConnection @aws_iam @aws_cognito_user_pools
+  getReview(id: ID!): Review @aws_api_key @aws_iam
+  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam
+  getBusiness(id: ID!): Business @aws_api_key @aws_iam
+  listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam
+  getCollection(id: ID!): Collection @aws_api_key @aws_iam
+  listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_api_key @aws_iam
 }
 
 input ModelNotificationConditionInput {
@@ -249,6 +228,7 @@ input ModelNotificationConditionInput {
   type: ModelNotificationTypeInput
   Sender: ModelIDInput
   userID: ModelIDInput
+  title: ModelStringInput
   and: [ModelNotificationConditionInput]
   or: [ModelNotificationConditionInput]
   not: ModelNotificationConditionInput
@@ -260,7 +240,7 @@ input CreateNotificationInput {
   type: NotificationType!
   Sender: ID
   userID: ID!
-  _version: Int
+  title: String!
 }
 
 input UpdateNotificationInput {
@@ -269,12 +249,11 @@ input UpdateNotificationInput {
   type: NotificationType
   Sender: ID
   userID: ID
-  _version: Int
+  title: String
 }
 
 input DeleteNotificationInput {
   id: ID!
-  _version: Int
 }
 
 type Mutation {
@@ -284,15 +263,15 @@ type Mutation {
   createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
   updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
   deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
-  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam @aws_cognito_user_pools
-  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review @aws_iam @aws_cognito_user_pools
-  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review @aws_iam @aws_cognito_user_pools
-  createBusiness(input: CreateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam @aws_cognito_user_pools
-  updateBusiness(input: UpdateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_iam @aws_cognito_user_pools
-  deleteBusiness(input: DeleteBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_iam @aws_cognito_user_pools
-  createCollection(input: CreateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
-  updateCollection(input: UpdateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
-  deleteCollection(input: DeleteCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_iam @aws_cognito_user_pools
+  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  createBusiness(input: CreateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  updateBusiness(input: UpdateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  deleteBusiness(input: DeleteBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  createCollection(input: CreateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
+  updateCollection(input: UpdateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
+  deleteCollection(input: DeleteCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
 }
 
 type Subscription {
@@ -302,27 +281,25 @@ type Subscription {
   onCreateUser: User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam
   onUpdateUser: User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam
   onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam
-  onCreateReview(owner: String): Review @aws_subscribe(mutations: ["createReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onUpdateReview(owner: String): Review @aws_subscribe(mutations: ["updateReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onDeleteReview(owner: String): Review @aws_subscribe(mutations: ["deleteReview"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onCreateBusiness(owner: String): Business @aws_subscribe(mutations: ["createBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onUpdateBusiness(owner: String): Business @aws_subscribe(mutations: ["updateBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onDeleteBusiness(owner: String): Business @aws_subscribe(mutations: ["deleteBusiness"]) @aws_api_key @aws_iam @aws_cognito_user_pools
-  onCreateCollection(owner: String): Collection @aws_subscribe(mutations: ["createCollection"]) @aws_iam @aws_cognito_user_pools
-  onUpdateCollection(owner: String): Collection @aws_subscribe(mutations: ["updateCollection"]) @aws_iam @aws_cognito_user_pools
-  onDeleteCollection(owner: String): Collection @aws_subscribe(mutations: ["deleteCollection"]) @aws_iam @aws_cognito_user_pools
+  onCreateReview: Review @aws_subscribe(mutations: ["createReview"]) @aws_api_key @aws_iam
+  onUpdateReview: Review @aws_subscribe(mutations: ["updateReview"]) @aws_api_key @aws_iam
+  onDeleteReview: Review @aws_subscribe(mutations: ["deleteReview"]) @aws_api_key @aws_iam
+  onCreateBusiness: Business @aws_subscribe(mutations: ["createBusiness"]) @aws_api_key @aws_iam
+  onUpdateBusiness: Business @aws_subscribe(mutations: ["updateBusiness"]) @aws_api_key @aws_iam
+  onDeleteBusiness: Business @aws_subscribe(mutations: ["deleteBusiness"]) @aws_api_key @aws_iam
+  onCreateCollection: Collection @aws_subscribe(mutations: ["createCollection"]) @aws_api_key @aws_iam
+  onUpdateCollection: Collection @aws_subscribe(mutations: ["updateCollection"]) @aws_api_key @aws_iam
+  onDeleteCollection: Collection @aws_subscribe(mutations: ["deleteCollection"]) @aws_api_key @aws_iam
 }
 
 type ModelUserConnection @aws_api_key @aws_iam {
   items: [User]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelUserFilterInput {
   id: ModelIDInput
   email: ModelStringInput
-  ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
   and: [ModelUserFilterInput]
@@ -332,7 +309,6 @@ input ModelUserFilterInput {
 
 input ModelUserConditionInput {
   email: ModelStringInput
-  ownedBusinesses: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
   and: [ModelUserConditionInput]
@@ -343,30 +319,24 @@ input ModelUserConditionInput {
 input CreateUserInput {
   id: ID
   email: AWSEmail!
-  ownedBusinesses: String
   profilePic: AWSURL
   name: String
-  _version: Int
 }
 
 input UpdateUserInput {
   id: ID!
   email: AWSEmail
-  ownedBusinesses: String
   profilePic: AWSURL
   name: String
-  _version: Int
 }
 
 input DeleteUserInput {
   id: ID!
-  _version: Int
 }
 
-type ModelReviewConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+type ModelReviewConnection @aws_api_key @aws_iam {
   items: [Review]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelReviewFilterInput {
@@ -393,7 +363,6 @@ input CreateReviewInput {
   rating: Int
   comments: String
   businessID: ID
-  _version: Int
 }
 
 input UpdateReviewInput {
@@ -401,18 +370,15 @@ input UpdateReviewInput {
   rating: Int
   comments: String
   businessID: ID
-  _version: Int
 }
 
 input DeleteReviewInput {
   id: ID!
-  _version: Int
 }
 
-type ModelBusinessConnection @aws_api_key @aws_iam @aws_cognito_user_pools {
+type ModelBusinessConnection @aws_iam @aws_api_key {
   items: [Business]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelMinorityGroupsListInput {
@@ -447,6 +413,7 @@ input ModelBusinessFilterInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
   not: ModelBusinessFilterInput
@@ -471,6 +438,7 @@ input ModelBusinessConditionInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
   not: ModelBusinessConditionInput
@@ -496,7 +464,7 @@ input CreateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL!
   bannerImage: AWSURL
-  _version: Int
+  userID: ID!
 }
 
 input UpdateBusinessInput {
@@ -519,18 +487,16 @@ input UpdateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL
   bannerImage: AWSURL
-  _version: Int
+  userID: ID
 }
 
 input DeleteBusinessInput {
   id: ID!
-  _version: Int
 }
 
-type ModelCollectionConnection @aws_iam @aws_api_key @aws_cognito_user_pools {
+type ModelCollectionConnection @aws_iam @aws_api_key {
   items: [Collection]!
   nextToken: String
-  startedAt: AWSTimestamp
 }
 
 input ModelCollectionFilterInput {
@@ -560,7 +526,6 @@ input CreateCollectionInput {
   description: String
   color: String
   userID: ID!
-  _version: Int
 }
 
 input UpdateCollectionInput {
@@ -569,11 +534,9 @@ input UpdateCollectionInput {
   description: String
   color: String
   userID: ID
-  _version: Int
 }
 
 input DeleteCollectionInput {
   id: ID!
-  _version: Int
 }
 

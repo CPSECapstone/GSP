@@ -217,7 +217,7 @@
             "Ref": "UnauthRoleName"
           },
           "S3DeploymentBucket": "amplify-minoritymarket-staging-24817-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/897d1a8d7ea63b0d6dc932f0967f5cc0f2de940e",
+          "S3DeploymentRootKey": "amplify-appsync-files/22c6f502b87fff2f42cdc6f3ce30c703169674a0",
           "env": "staging"
         }
       }

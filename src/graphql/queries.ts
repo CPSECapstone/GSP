@@ -10,11 +10,9 @@ export const getNotification = /* GraphQL */ `
       type
       Sender
       userID
+      title
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -31,44 +29,11 @@ export const listNotifications = /* GraphQL */ `
         type
         Sender
         userID
+        title
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncNotifications = /* GraphQL */ `
-  query SyncNotifications(
-    $filter: ModelNotificationFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncNotifications(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        message
-        type
-        Sender
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -77,22 +42,19 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       email
-      ownedBusinesses
       profilePic
       Collections {
         nextToken
-        startedAt
       }
       name
       Notifications {
         nextToken
-        startedAt
+      }
+      Businesses {
+        nextToken
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;
@@ -106,47 +68,12 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         email
-        ownedBusinesses
         profilePic
         name
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncUsers = /* GraphQL */ `
-  query SyncUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        email
-        ownedBusinesses
-        profilePic
-        name
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -159,10 +86,6 @@ export const getReview = /* GraphQL */ `
       businessID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -180,43 +103,8 @@ export const listReviews = /* GraphQL */ `
         businessID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncReviews = /* GraphQL */ `
-  query SyncReviews(
-    $filter: ModelReviewFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncReviews(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        rating
-        comments
-        businessID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -236,7 +124,6 @@ export const getBusiness = /* GraphQL */ `
       rating
       Reviews {
         nextToken
-        startedAt
       }
       collectionID
       email
@@ -246,12 +133,9 @@ export const getBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -282,60 +166,11 @@ export const listBusinesses = /* GraphQL */ `
         menu
         profileImage
         bannerImage
+        userID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncBusinesses = /* GraphQL */ `
-  query SyncBusinesses(
-    $filter: ModelBusinessFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncBusinesses(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        about
-        phone
-        address
-        website
-        tags
-        type
-        primarycolor
-        secondarycolor
-        rating
-        collectionID
-        email
-        city
-        state
-        zipcode
-        menu
-        profileImage
-        bannerImage
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -348,15 +183,10 @@ export const getCollection = /* GraphQL */ `
       color
       Businesses {
         nextToken
-        startedAt
       }
       userID
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;
@@ -375,44 +205,8 @@ export const listCollections = /* GraphQL */ `
         userID
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCollections = /* GraphQL */ `
-  query SyncCollections(
-    $filter: ModelCollectionFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCollections(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        title
-        description
-        color
-        userID
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      nextToken
-      startedAt
     }
   }
 `;
