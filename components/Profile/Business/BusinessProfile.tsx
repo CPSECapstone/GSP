@@ -214,7 +214,10 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                   Write a Review
                 </Text>
               </Pressable>
-              <Pressable style={[styles.ratingButton, { marginLeft: 10 }]}>
+              <Pressable
+                style={[styles.ratingButton, { marginLeft: 10 }]}
+                onPress={() => navigation.navigate("BizReviewPage")}
+              >
                 <Text
                   style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
                 >

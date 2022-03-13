@@ -5,6 +5,10 @@ import {
 } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import defaultUser from "../../constants/defaultData";
+import { useAppSelector } from "../../redux/hooks";
+import selectUser from "../../redux/selectors/user";
 import UserProfile from "../UserProfile/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import dummyBusiness from "./Business/tempdata";
@@ -41,14 +45,16 @@ function Margin() {
 
 type BaseProps = NativeStackScreenProps<ProfileStackParamList, "Base">;
 function Base({ navigation }: BaseProps) {
+  const user = useAppSelector(selectUser);
+
   return (
-    <View style={{ flex: 1, flexDirection: "row" }}>
+    <SafeAreaView style={{ flex: 1, flexDirection: "row" }}>
       <Margin />
       <View style={{ flex: 10 }}>
         <Text style={styles.title}>Profile</Text>
         <Selector
-          title="User"
-          img="https://kodaandcrushmarketing.com/wp-content/uploads/2020/11/ToyFaces_Colored_BG_32-7QFYBYH-768x768.jpg"
+          title="My Profile"
+          img={user?.profilePic ?? defaultUser.profilePic}
           onPress={() => navigation.navigate("User")}
         />
         <Text style={styles.subtitle}>My Businesses</Text>
@@ -60,7 +66,7 @@ function Base({ navigation }: BaseProps) {
         />
       </View>
       <Margin />
-    </View>
+    </SafeAreaView>
   );
 }
 
