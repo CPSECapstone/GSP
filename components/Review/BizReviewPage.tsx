@@ -9,10 +9,11 @@ import {
   SafeAreaView,
 } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
-import BackButton from "../UserProfile/BackButton";
-import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
-import dummyBusiness from "../Profile/Business/tempdata";
+import BackButton from "../Profile/User/BackButton";
+import ReviewCell, { Star, StarOutline } from "./ReviewCell";
 import LargeButton from "../Misc/LargeButton";
+import { useAppSelector } from "../../redux/hooks";
+import selectAllBusinesses from "../../redux/selectors/business";
 
 const styles = StyleSheet.create({
   header: {
@@ -89,6 +90,8 @@ const reviewData = [
   },
 ];
 function BizReviewPage({ navigation }: BizReviewPageProps) {
+  const business = useAppSelector(selectAllBusinesses)[0]!;
+
   return (
     <View>
       <BackButton action={navigation.goBack} />
@@ -102,10 +105,10 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <View>
           <Image
             style={styles.bizImage}
-            source={{ uri: dummyBusiness.profileImage }}
+            source={{ uri: business.profileImage }}
           />
 
-          <Text style={styles.header}>{dummyBusiness.name}</Text>
+          <Text style={styles.header}>{business.name}</Text>
           <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
         </View>
 
