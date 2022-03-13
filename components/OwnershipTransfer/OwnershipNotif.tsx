@@ -179,7 +179,23 @@ function OwnershipNotif({
       );
       break;
     default:
-      buttons = <View />;
+      buttons = (
+        <View>
+          <Pressable
+            style={[styles.button, styles.filledbutton]}
+            onPress={() => {
+              try {
+                deleteNotif();
+                dispatch(notificationRemoval(notifID));
+              } catch (e) {
+                console.error(`Error dismissing notif: ${e}`);
+              }
+            }}
+          >
+            <Text style={styles.buttontext}>Dismiss</Text>
+          </Pressable>
+        </View>
+      );
   }
 
   return (
