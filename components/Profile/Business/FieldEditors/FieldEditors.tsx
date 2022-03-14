@@ -119,18 +119,8 @@ export function URLEditor({
   const { field, currentValue } = route.params;
   const [value, setValue] = useState(currentValue.toString());
 
-  let validURL = true;
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const test = new URL(value);
-  } catch (error) {
-    validURL = false;
-  }
-
   const validate = () => {
-    if (validURL) {
-      navigation.navigate("Base", { key: field.key, value: new URL(value) });
-    }
+    navigation.navigate("Base", { key: field.key, value });
   };
 
   useEffect(() =>
@@ -150,14 +140,14 @@ export function URLEditor({
           defaultValue={value}
         />
         <Line />
-        <Text
+        {/* <Text
           style={[
             styles.editDetails,
             { color: value.length < 10 ? "red" : "#7D7D7D" },
           ]}
         >
           {!validURL && "Invalid URL\n"}
-        </Text>
+        </Text> */}
         <Text style={styles.editDetails}>{field.description}</Text>
       </View>
       <Margin />
@@ -165,6 +155,7 @@ export function URLEditor({
   );
 }
 
+/*
 export function ListEditor({
   navigation,
   route,
@@ -210,6 +201,49 @@ export function ListEditor({
           onChangeText={setText}
           defaultValue={text}
         />
+        <Line />
+        <Text style={styles.editDetails}>{field.description}</Text>
+      </View>
+      <Margin />
+    </View>
+  );
+}
+*/
+
+export function ListEditor({
+  navigation,
+  route,
+}: NativeStackScreenProps<EditStackParamList, "EditList">) {
+  const { field, currentValue, options } = route.params;
+  const [selectedValue, setSelectedValue] = useState(currentValue[0]);
+
+  const validate = () => {
+    if (selectedValue) {
+      navigation.navigate("Base", { key: field.key, value: [selectedValue] });
+    }
+  };
+
+  useEffect(() =>
+    navigation.setOptions({ headerRight: () => ConfigureDoneButton(validate) })
+  );
+
+  return (
+    <View style={{ flexDirection: "row" }}>
+      <Margin />
+      <View style={{ flex: 10, flexDirection: "column", marginTop: 20 }}>
+        <Text style={styles.editTitle}>{field.displayTitle}</Text>
+        <View style={{ alignItems: "center" }}>
+          <Picker
+            selectedValue={selectedValue}
+            style={{ height: 230, width: "100%" }}
+            onValueChange={(itemValue) => setSelectedValue(itemValue)}
+          >
+            {options.map((x) => (
+              <Picker.Item key={x} label={x} value={x} />
+            ))}
+          </Picker>
+        </View>
+
         <Line />
         <Text style={styles.editDetails}>{field.description}</Text>
       </View>

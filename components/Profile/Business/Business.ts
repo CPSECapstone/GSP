@@ -1,22 +1,24 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 
-export const BUSINESS_TYPES = [
-  "Restaurant",
-  "Store",
-  "Market",
-  "Beauty",
-  "Automotive",
-  "Education",
-  "EventPlanning",
-  "Financial",
-  "Medical",
-  "HomeServices",
-  "Pets",
-  "ProfessionalServices",
-  "Other",
-] as const;
-export type BusinessType = typeof BUSINESS_TYPES[number];
+import { Business } from "../../../src/API";
+
+// export const BUSINESS_TYPES = [
+//   "Restaurant",
+//   "Store",
+//   "Market",
+//   "Beauty",
+//   "Automotive",
+//   "Education",
+//   "EventPlanning",
+//   "Financial",
+//   "Medical",
+//   "HomeServices",
+//   "Pets",
+//   "ProfessionalServices",
+//   "Other",
+// ] as const;
+// export type BusinessType = typeof BUSINESS_TYPES[number];
 
 export const BUSINESS_COLORS = [
   "#F81515",
@@ -46,53 +48,120 @@ export type Address = {
   address: string;
   city: string;
   state: string;
-  zipcode: Number;
+  zipcode: number;
 };
 
-export default class Business {
-  name: string;
-  email: string;
-  businessType: BusinessType;
-  colorSet: ColorSet;
-  phone: string;
-  address: Address;
-  website: URL;
-  tags: Array<string>;
-  profileImage: string;
-  bannerImage: string;
-  aboutUs: string;
-  menu?: string;
+// export default class Business {
+//   name: string;
+//   email: string;
+//   type: BusinessType;
+//   colorSet: ColorSet;
+//   phone: string;
+//   address: Address;
+//   website: string | null | undefined;
+//   tags: Array<MinorityGroups>;
+//   profileImage: string;
+//   bannerImage: string | null | undefined;
+//   aboutUs: string;
+//   menu?: string;
 
-  constructor(
-    name: string,
-    email: string,
-    businessType: BusinessType,
-    colorPrimary: Color,
-    colorSecondary: Color,
-    phone: string,
-    address: string,
-    city: string,
-    state: string,
-    zipcode: Number,
-    website: string,
-    tags: Array<string>,
-    profileImage: string,
-    bannerImage: string,
-    aboutUs: string,
-    menu?: string
-  ) {
-    this.name = name;
-    this.email = email;
-    this.businessType = businessType;
-    this.colorSet = { primary: colorPrimary, secondary: colorSecondary };
-    this.phone = phone;
-    this.address = { address, city, state, zipcode };
-    this.website = new URL(website);
-    this.tags = tags;
-    this.profileImage = profileImage;
-    this.bannerImage = bannerImage;
-    this.menu = menu;
-    this.aboutUs = aboutUs;
-    this.email = email;
+//   constructor(
+//     name: string,
+//     email: string,
+//     type: BusinessType,
+//     colorPrimary: Color,
+//     colorSecondary: Color,
+//     phone: string,
+//     address: string,
+//     city: string,
+//     state: string,
+//     zipcode: number,
+//     website: string | null | undefined,
+//     tags: Array<MinorityGroups>,
+//     profileImage: string,
+//     bannerImage: string | null | undefined,
+//     aboutUs: string,
+//     menu?: string
+//   ) {
+//     this.name = name;
+//     this.email = email;
+//     this.type = type;
+//     this.colorSet = { primary: colorPrimary, secondary: colorSecondary };
+//     this.phone = phone;
+//     this.address = { address, city, state, zipcode };
+//     this.website = website;
+//     this.tags = tags;
+//     this.profileImage = profileImage;
+//     this.bannerImage = bannerImage;
+//     this.aboutUs = aboutUs;
+//     this.menu = menu;
+//   }
+// }
+
+// export class BusinessAdapter extends Business {
+//   constructor(business: BackendBusiness) {
+//     super(
+//       business.name,
+//       business.email,
+//       business.type as BusinessType,
+//       business.primarycolor as Color,
+//       business.secondarycolor as Color,
+//       business.phone,
+//       business.address,
+//       business.city,
+//       business.state,
+//       business.zipcode,
+//       business.website,
+//       business.tags!,
+//       business.profileImage,
+//       business.bannerImage,
+//       business.about,
+//       business.menu ? business.menu : undefined
+//     );
+//   }
+// }
+
+export type FrontendBusinessField =
+  | "name"
+  | "type"
+  | "phone"
+  | "address"
+  | "tags"
+  | "about"
+  | "website"
+  | "menu"
+  | "colorSet";
+
+export class Editor {
+  edits: Partial<Business>;
+  business: Business;
+
+  constructor(business: Business) {
+    // Received business is readonly; we make a copy.
+    this.business = { ...business };
+    this.edits = { id: business.id };
+  }
+
+  updateField(key: FrontendBusinessField, value: any) {
+    if (key === "colorSet") {
+      const { primary, secondary } = value as ColorSet;
+      this.business.primarycolor = primary;
+      this.edits.primarycolor = primary;
+      this.business.secondarycolor = secondary;
+      this.edits.secondarycolor = secondary;
+    } else if (key === "address") {
+      const { address, city, state, zipcode } = value as Address;
+      this.business.address = address;
+      this.edits.address = address;
+      this.business.city = city;
+      this.edits.city = city;
+      this.business.state = state;
+      this.edits.state = state;
+      this.business.zipcode = zipcode;
+      this.edits.zipcode = zipcode;
+    } else {
+      this.business[key] = value;
+      this.edits[key] = value;
+    }
   }
 }

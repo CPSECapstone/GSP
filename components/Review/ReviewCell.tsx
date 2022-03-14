@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
-import StarRating from "./StarRating";
-import { EditButton } from "../Profile/Business/ProfileEditor";
+import { Ionicons } from "@expo/vector-icons";
+import { EditButton } from "../Profile/Business/BusinessEditor";
 
 export const styles = StyleSheet.create({
   reviewCell: {
@@ -26,13 +26,49 @@ export const styles = StyleSheet.create({
   },
 });
 
+export function Star() {
+  return (
+    <Ionicons
+      name="star"
+      style={{ marginRight: 2 }}
+      size={22}
+      color="#DA5125"
+    />
+  );
+}
+
+export function StarOutline() {
+  return (
+    <Ionicons
+      name="star-outline"
+      style={{ marginRight: 5 }}
+      size={22}
+      color="#DA5125"
+    />
+  );
+}
+
 export interface ReviewCellProps {
   restaurant: String;
-  rating: number;
-  srcImage?: string;
-  description?: String | null | undefined;
-  action?: Function;
+  rating: Number;
+  srcImage: string;
+  description: String;
+  action: Function;
 }
+
+// react native vector icons. Carter has stars on the profile page.
+
+// maybe hardcode height in case you want to press 'more'
+
+/**
+  * <ReviewCell restaurant={"Taqueria Santa Cruz"}
+        description={"One of my favorite restaurants in San Luis Obispo. They are always consistent with their food. While it is not the most amazing value out there, they never fail to deliver and have an amazing family atmosphere."}
+        srcImage={"myTestImage.png"}
+        rating={2.0}
+        
+        ></ReviewCell> 
+  * 
+  */
 
 function ReviewCell({
   restaurant,
@@ -41,26 +77,90 @@ function ReviewCell({
   description,
   action,
 }: ReviewCellProps) {
+  // can't call require with srcImage string here
+  // how do I make this dang image inline with Text?
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        {action && (
-          <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
-        )}
+        <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
         <Text style={styles.restauraunt}>{restaurant}</Text>
 
-        {srcImage && <Image style={styles.image} source={{ uri: srcImage }} />}
+        <Image style={styles.image} source={{ uri: srcImage }} />
       </View>
-      <StarRating rating={rating} label={`${Math.round(rating)} Stars`} />
+
+      {rating === 1 && (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Star />
+          <StarOutline />
+          <StarOutline />
+          <StarOutline />
+          <StarOutline />
+
+          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+            {" "}
+            • {rating} Stars
+          </Text>
+        </View>
+      )}
+      {rating === 2 && (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Star />
+          <Star />
+          <StarOutline />
+          <StarOutline />
+          <StarOutline />
+
+          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+            {" "}
+            • {rating} Stars
+          </Text>
+        </View>
+      )}
+      {rating === 3 && (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Star />
+          <Star />
+          <Star />
+          <StarOutline />
+          <StarOutline />
+
+          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+            {" "}
+            • {rating} Stars
+          </Text>
+        </View>
+      )}
+      {rating === 4 && (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+          <StarOutline />
+
+          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+            {" "}
+            • {rating} Stars
+          </Text>
+        </View>
+      )}
+      {rating === 5 && (
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+          <Star />
+
+          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+            {" "}
+            • {rating} Stars
+          </Text>
+        </View>
+      )}
       <Text style={styles.description}>{description}</Text>
     </View>
   );
 }
-
-ReviewCell.defaultProps = {
-  srcImage: undefined,
-  description: undefined,
-  action: undefined,
-};
 
 export default ReviewCell;

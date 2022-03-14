@@ -7,7 +7,7 @@ import { selectReviewsByUser } from "../../redux/selectors/review";
 import { selectUser } from "../../redux/selectors/user";
 import { ReviewPageProps } from "../../route-settings";
 import ReviewCell from "./ReviewCell";
-import BackButton from "../UserProfile/BackButton";
+import BackButton from "../Profile/User/BackButton";
 import ReviewModal from "./ReviewModal";
 
 const styles = StyleSheet.create({

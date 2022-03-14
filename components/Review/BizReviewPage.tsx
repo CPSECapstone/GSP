@@ -9,11 +9,11 @@ import {
   SafeAreaView,
 } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
-import BackButton from "../UserProfile/BackButton";
+import BackButton from "../Profile/User/BackButton";
 import ReviewCell from "./ReviewCell";
 import LargeButton from "../Misc/LargeButton";
-import ReviewModal from "./ReviewModal";
 import { useAppSelector } from "../../redux/hooks";
+import ReviewModal from "./ReviewModal";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
 import { selectAllUsers } from "../../redux/selectors/user";
 import { selectBusinessById } from "../../redux/selectors/business";
@@ -162,6 +162,8 @@ function BizReviewPage({ navigation, route }: BizReviewPageProps) {
                   restaurant={user?.name}
                   description={item.comments}
                   rating={item.rating}
+                  action={() => {}}
+                  srcImage=""
                 />
               </View>
             );
