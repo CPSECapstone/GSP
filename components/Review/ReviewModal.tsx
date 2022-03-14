@@ -1,5 +1,4 @@
 import { Entypo } from "@expo/vector-icons";
-import { API } from "aws-amplify";
 import React, { Dispatch } from "react";
 import {
   Modal,
@@ -9,10 +8,6 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { useAppSelector } from "../../redux/hooks";
-import selectUser from "../../redux/selectors/user";
-import { createNotification } from "../../src/graphql/mutations";
-import { NotificationType } from "../../src/models";
 
 const styles = StyleSheet.create({
   navoptionpressable: {
@@ -88,12 +83,17 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
-        <ModalNavOption index={0} title="Share Business" navaction={() => {}} />
         <ModalNavOption
           index={1}
-          title="Request Ownership"
+          title="Edit Review"
           navaction={nextScreenIncr}
         />
+        <ModalNavOption
+          index={2}
+          title="Delete Review"
+          navaction={nextScreenIncr}
+        />
+
         <Pressable
           style={{ alignItems: "center", padding: 5 }}
           onPress={() => modalVisibilitySetter(false)}
@@ -105,62 +105,23 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
   );
 }
 
-interface RequestProps {
+interface DeleteReviewProps {
   modalVisibilitySetter: Dispatch<boolean>;
   nextScreenIncr: Dispatch<number>;
-  businessOwnerID: string;
-  businessTitle: string;
 }
 
-function RequestView({
+function DeleteView({
   modalVisibilitySetter,
   nextScreenIncr,
-  businessOwnerID,
-  businessTitle,
-}: RequestProps) {
-  const [reqMessage, setReqMessage] = React.useState("");
-  const [postDisabled, setPostDisabled] = React.useState(false);
-  const currentUser = useAppSelector(selectUser);
-
-  const postNewRequest = async (ownerID: string, message: string) => {
-    const notifObject = {
-      message,
-      userID: ownerID,
-      type: NotificationType.OWNERSHIPREQUEST,
-      Sender: currentUser?.id,
-      title: `Ownership Request for ${businessTitle}`,
-    };
-
-    const newNotif = await API.graphql({
-      query: createNotification,
-      variables: { input: notifObject },
-    });
-
-    return newNotif;
-  };
-
+}: DeleteReviewProps) {
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
         <Text
           style={{ fontFamily: "Poppins-Regular", fontSize: 14, opacity: 0.5 }}
         >
-          Write a short message to go with your request:
+          Confirm Deletion of this Review
         </Text>
-        <TextInput
-          numberOfLines={2}
-          multiline
-          style={{
-            borderColor: "#6E6E6E",
-            borderWidth: 1,
-            borderRadius: 15,
-            padding: 10,
-            margin: 10,
-          }}
-          placeholder="Message"
-          value={reqMessage}
-          onChangeText={setReqMessage}
-        />
         <View
           style={{
             flexDirection: "row",
@@ -185,17 +146,97 @@ function RequestView({
               borderRadius: 25,
               backgroundColor: "#FA4A0C",
             }}
-            disabled={postDisabled}
-            onPress={async () => {
-              setPostDisabled(true);
-              // TODO: replace hardcoded ID with business owners User ID; create title using business name
-              postNewRequest(businessOwnerID, reqMessage).then(() =>
-                modalVisibilitySetter(false)
-              );
-              setPostDisabled(false);
+            onPress={() => {
+              // 1. get all review data for user with: useAppSelector(selectAllReviews);
+              // 2. pass this data into flatlist
+              // 3. for each item in the flatlist, pass the review data
+              // 4. pass ID for current review along to "delete review"
+              // 5. on delete, call reducer to filter out current review ID
             }}
           >
-            <Text style={styles.sendreqbutton}>Send</Text>
+            <Text style={styles.sendreqbutton}>Delete</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+interface EditReviewProps {
+  modalVisibilitySetter: Dispatch<boolean>;
+  nextScreenIncr: Dispatch<number>;
+}
+
+function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
+  return (
+    <View style={styles.modalcontainer}>
+      <View style={styles.modalView}>
+        <Text
+          style={{ fontFamily: "Poppins-Regular", fontSize: 14, opacity: 0.5 }}
+        >
+          Edit this Review
+        </Text>
+
+        <Text
+          style={{
+            paddingTop: 10,
+            fontFamily: "Poppins-Regular",
+            fontSize: 14,
+            opacity: 0.5,
+          }}
+        >
+          Rating
+        </Text>
+        <TextInput
+          style={{ height: 20, borderWidth: 1, borderColor: "#EDEDED" }}
+        />
+        <Text
+          style={{
+            paddingTop: 10,
+            fontFamily: "Poppins-Regular",
+            fontSize: 14,
+            opacity: 0.5,
+          }}
+        >
+          Description
+        </Text>
+        <TextInput
+          style={{ height: 80, borderWidth: 1, borderColor: "#EDEDED" }}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 10,
+          }}
+        >
+          <Pressable
+            style={{ marginHorizontal: 10 }}
+            onPress={() => {
+              nextScreenIncr(0);
+              modalVisibilitySetter(false);
+            }}
+          >
+            <Text style={styles.modalcanceltext}>Cancel</Text>
+          </Pressable>
+          <Pressable
+            style={{
+              marginHorizontal: 10,
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              borderRadius: 25,
+              backgroundColor: "#FA4A0C",
+            }}
+            onPress={() => {
+              // 1. get all review data for user with: useAppSelector(selectAllReviews);
+              // 2. pass this data into flatlist
+              // 3. for each item in the flatlist, pass the review data
+              // 4. pass ID for current review along to "delete review"
+              // 5. on delete, call reducer to filter out current review ID
+            }}
+          >
+            <Text style={styles.sendreqbutton}>Confirm Changes</Text>
           </Pressable>
         </View>
       </View>
@@ -206,16 +247,9 @@ function RequestView({
 interface FullModalProps {
   modalVisibilitySetter: Dispatch<boolean>;
   visible: boolean;
-  ownerID: string;
-  title: string;
 }
 
-function BusinessProfileModal({
-  modalVisibilitySetter,
-  visible,
-  ownerID,
-  title,
-}: FullModalProps) {
+function ReviewModal({ modalVisibilitySetter, visible }: FullModalProps) {
   const [screenindex, setScreenindex] = React.useState(0);
 
   return (
@@ -227,9 +261,13 @@ function BusinessProfileModal({
         />
       )}
       {screenindex === 1 && (
-        <RequestView
-          businessTitle={title}
-          businessOwnerID={ownerID}
+        <EditView
+          nextScreenIncr={setScreenindex}
+          modalVisibilitySetter={modalVisibilitySetter}
+        />
+      )}
+      {screenindex === 2 && (
+        <DeleteView
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
         />
@@ -238,4 +276,4 @@ function BusinessProfileModal({
   );
 }
 
-export default BusinessProfileModal;
+export default ReviewModal;

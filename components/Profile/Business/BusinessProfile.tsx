@@ -121,6 +121,8 @@ export default function BusinessProfile({
   return (
     <View>
       <BusinessProfileModal
+        title={business.name}
+        ownerID="aee0f25e-0c09-4878-b73d-096f3d927b75"
         visible={modalVisible}
         modalVisibilitySetter={setmodalVisible}
       />
@@ -239,7 +241,10 @@ export default function BusinessProfile({
                 </Text>
               </Pressable>
               <Pressable
-                style={[styles.ratingButton, { marginLeft: 10 }]}
+                style={[
+                  styles.ratingButton,
+                  { backgroundColor: business.secondarycolor, marginLeft: 10 },
+                ]}
                 onPress={() => navigation.navigate("BizReviewPage")}
               >
                 <Text
