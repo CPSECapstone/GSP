@@ -93,7 +93,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
 
   return (
-    <View>
+    <SafeAreaView>
       <ReviewModal
         visible={modalVisible}
         modalVisibilitySetter={setmodalVisible}
@@ -166,7 +166,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
           contentContainerStyle={{ alignItems: "center", padding: 30 }}
           data={reviewData}
           renderItem={({ item }) => (
-            <View style={{ paddingBottom: 30 }}>
+            <View style={{ paddingBottom: 20 }}>
               <ReviewCell
                 restaurant={item.restaurant}
                 description={item.description}
@@ -186,7 +186,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         action={() => console.log("Write a Review")}
         label="Write a Review"
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
