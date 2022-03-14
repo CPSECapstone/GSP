@@ -24,6 +24,7 @@ type User @aws_iam @aws_api_key {
   name: String
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
   Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
+  Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -56,6 +57,7 @@ type Review @aws_iam @aws_api_key {
   rating: Int
   comments: String
   businessID: ID
+  userID: ID
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -334,7 +336,7 @@ input DeleteUserInput {
   id: ID!
 }
 
-type ModelReviewConnection @aws_api_key @aws_iam {
+type ModelReviewConnection @aws_iam @aws_api_key {
   items: [Review]!
   nextToken: String
 }
@@ -344,6 +346,7 @@ input ModelReviewFilterInput {
   rating: ModelIntInput
   comments: ModelStringInput
   businessID: ModelIDInput
+  userID: ModelIDInput
   and: [ModelReviewFilterInput]
   or: [ModelReviewFilterInput]
   not: ModelReviewFilterInput
@@ -353,6 +356,7 @@ input ModelReviewConditionInput {
   rating: ModelIntInput
   comments: ModelStringInput
   businessID: ModelIDInput
+  userID: ModelIDInput
   and: [ModelReviewConditionInput]
   or: [ModelReviewConditionInput]
   not: ModelReviewConditionInput
@@ -363,6 +367,7 @@ input CreateReviewInput {
   rating: Int
   comments: String
   businessID: ID
+  userID: ID
 }
 
 input UpdateReviewInput {
@@ -370,6 +375,7 @@ input UpdateReviewInput {
   rating: Int
   comments: String
   businessID: ID
+  userID: ID
 }
 
 input DeleteReviewInput {

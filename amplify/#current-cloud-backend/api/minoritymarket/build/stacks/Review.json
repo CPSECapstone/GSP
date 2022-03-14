@@ -115,6 +115,10 @@
           {
             "AttributeName": "businessID",
             "AttributeType": "S"
+          },
+          {
+            "AttributeName": "userID",
+            "AttributeType": "S"
           }
         ],
         "BillingMode": {
@@ -132,6 +136,34 @@
             "KeySchema": [
               {
                 "AttributeName": "businessID",
+                "KeyType": "HASH"
+              }
+            ],
+            "Projection": {
+              "ProjectionType": "ALL"
+            },
+            "ProvisionedThroughput": {
+              "Fn::If": [
+                "ShouldUsePayPerRequestBilling",
+                {
+                  "Ref": "AWS::NoValue"
+                },
+                {
+                  "ReadCapacityUnits": {
+                    "Ref": "DynamoDBModelTableReadIOPS"
+                  },
+                  "WriteCapacityUnits": {
+                    "Ref": "DynamoDBModelTableWriteIOPS"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "IndexName": "byUser",
+            "KeySchema": [
+              {
+                "AttributeName": "userID",
                 "KeyType": "HASH"
               }
             ],

@@ -72,6 +72,9 @@ export const createUser = /* GraphQL */ `
       Businesses {
         nextToken
       }
+      Reviews {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -94,6 +97,9 @@ export const updateUser = /* GraphQL */ `
         nextToken
       }
       Businesses {
+        nextToken
+      }
+      Reviews {
         nextToken
       }
       createdAt
@@ -120,6 +126,9 @@ export const deleteUser = /* GraphQL */ `
       Businesses {
         nextToken
       }
+      Reviews {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -135,6 +144,7 @@ export const createReview = /* GraphQL */ `
       rating
       comments
       businessID
+      userID
       createdAt
       updatedAt
     }
@@ -150,6 +160,7 @@ export const updateReview = /* GraphQL */ `
       rating
       comments
       businessID
+      userID
       createdAt
       updatedAt
     }
@@ -165,6 +176,7 @@ export const deleteReview = /* GraphQL */ `
       rating
       comments
       businessID
+      userID
       createdAt
       updatedAt
     }
