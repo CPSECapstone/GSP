@@ -1,22 +1,5 @@
 export const categories = ["Restaurant", "Shopping", "Markets", "Beauty"];
 
-export const businesses = [
-  {
-    imageurl: "../assets/icon.png",
-    title: "Taqueria Santa Cruz",
-    distance: 3,
-    category: "Restaurant",
-    minoritygroup: "LatinX",
-  },
-  {
-    imageurl: "../assets/icon.png",
-    title: "Taqueria Santa Cruz",
-    distance: 3,
-    category: "Restaurant",
-    minoritygroup: "LatinX",
-  },
-];
-
 const all = require("../assets/icons/all.png");
 const aaimg = require("../assets/icons/asianamerican.png");
 const afam = require("../assets/icons/africanamerican.png");

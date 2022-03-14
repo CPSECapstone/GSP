@@ -1,4 +1,4 @@
-import { MinorityGroups, BusinessType } from "./src/models";
+import { BusinessType, MinorityGroups } from "../src/models";
 
 export function returnMinorityGroupValue(key: MinorityGroups) {
   let value;

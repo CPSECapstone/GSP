@@ -21,7 +21,10 @@ import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
 import { Business } from "../../src/API";
-import { returnBusinessTypeValue, returnMinorityGroupValue } from "../../api";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../constants/enumconverters";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
