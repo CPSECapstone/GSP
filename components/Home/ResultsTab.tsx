@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
   TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 
 const styles = StyleSheet.create({
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     minHeight: "40%",
+    maxHeight: "70%",
     alignItems: "center",
   },
   sliderIndicatorRow: {

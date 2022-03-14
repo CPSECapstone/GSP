@@ -16,6 +16,7 @@ import { Business } from "../../src/API";
 import { minoritygroups } from "../../constants/exploredata";
 import ResultsTab from "./ResultsTab";
 import BusinessCard from "../BusinessCard/BusinessCard";
+import { returnMinorityGroupValue } from "../../api";
 
 const width = Dimensions.get("screen").width * 0.3;
 const height = Dimensions.get("screen").height * 0.04;
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
     marginTop: minorityGroupCellPadding,
     width,
     height,
-    // minHeight: height,
     // minWidth: width + 10,
     // maxWidth: width + 10,
     flex: 1,
@@ -71,6 +71,46 @@ export default function HomePage() {
   const [resultBusinesses, setResultBusinesses] = useState(allBusinesses);
   const [openModal, setopenModal] = useState(false);
   const [searchText, setsearchText] = useState("");
+  const [selectedBusiness, setselectedBusiness] = useState(allBusinesses);
+  console.log(allBusinesses);
+
+  const testdata = [
+    {
+      name: "test1",
+      distance: "4",
+      rating: "2",
+    },
+    {
+      name: "test2",
+      distance: "3",
+      rating: "5",
+    },
+    {
+      name: "test3",
+      distance: "5",
+      rating: "1",
+    },
+    {
+      name: "test3",
+      distance: "5",
+      rating: "1",
+    },
+    {
+      name: "test3",
+      distance: "5",
+      rating: "1",
+    },
+    {
+      name: "test3",
+      distance: "5",
+      rating: "1",
+    },
+    {
+      name: "test3",
+      distance: "5",
+      rating: "1",
+    },
+  ];
 
   const onDismiss = () => {
     setopenModal(false);
@@ -89,12 +129,23 @@ export default function HomePage() {
     const resBusiness: Business[] = [];
     allBusinesses.forEach((business) => {
       business?.tags?.every((tag) => {
-        if (tag != null && minorityGroupsByName.includes(tag)) return true;
-        return false;
+        if (
+          tag != null &&
+          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
+            minorityGroupsByName.includes("All"))
+        ) {
+          resBusiness.push(business);
+          return false;
+        }
+        return true;
       });
     });
     setResultBusinesses(resBusiness);
   }, [selectedMinorityGroups]);
+
+  React.useEffect(() => {
+    resultBusinesses;
+  }, [selectedBusiness]);
 
   return (
     <View style={styles.container}>
@@ -143,9 +194,42 @@ export default function HomePage() {
         )}
         keyExtractor={(item, index) => item.title + index.toString()}
       />
+      {selectedBusiness.length === 1 ? (
+        <BusinessCard
+          name={selectedBusiness[0]!.name}
+          distance={"2"}
+          rating={"4"}
+        />
+      ) : (
+        <View />
+      )}
       {openModal && (
         <ResultsTab onDismiss={onDismiss} visible>
-          <BusinessCard name="Test" distance="4" rating="2" />
+          <FlatList
+            data={resultBusinesses}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => {
+              if (item !== undefined && item !== null) {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      setselectedBusiness([item]);
+                    }}
+                  >
+                    <View onStartShouldSetResponder={() => true}>
+                      <BusinessCard
+                        name={item.name}
+                        distance={"2"}
+                        rating={"3"}
+                      />
+                    </View>
+                  </Pressable>
+                );
+              }
+              return <Text>Something went wrong</Text>;
+            }}
+            keyExtractor={(item, index) => item!.name + index.toString()}
+          />
           {/* <View
             style={{
               justifyContent: "center",

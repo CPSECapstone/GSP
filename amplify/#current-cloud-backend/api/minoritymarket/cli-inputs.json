@@ -3,17 +3,13 @@
   "serviceConfiguration": {
     "apiName": "minoritymarket",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-aeabfea0-d7aa-4846-afb7-a847376d1cca/amplify/backend/api/minoritymarket/schema.graphql",
+    "gqlSchemaPath": "/Users/cartercromer/Desktop/GSP/GSP/amplify/backend/api/minoritymarket/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",
       "expirationTime": 30
     },
-    "conflictResolution": {
-      "defaultResolutionStrategy": {
-        "type": "AUTOMERGE"
-      }
-    },
+    "conflictResolution": {},
     "additionalAuthTypes": [
       {
         "mode": "AWS_IAM"
