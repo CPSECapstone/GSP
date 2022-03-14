@@ -50,6 +50,12 @@ const awsmobile = {
                     }
                 },
                 "default": "SearchMap-staging"
+            },
+            "search_indices": {
+                "items": [
+                    "placeindexe915d01c-staging"
+                ],
+                "default": "placeindexe915d01c-staging"
             }
         }
     }

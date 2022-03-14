@@ -102,6 +102,14 @@
       "mapStyle": "VectorEsriStreets",
       "pricingPlan": "RequestBasedUsage",
       "accessType": "AuthorizedUsers"
+    },
+    "placeindexe915d01c": {
+      "isDefault": true,
+      "providerPlugin": "awscloudformation",
+      "service": "PlaceIndex",
+      "dataProvider": "HERE",
+      "dataSourceIntendedUse": "SingleUse",
+      "accessType": "AuthorizedAndGuestUsers"
     }
   },
   "storage": {
