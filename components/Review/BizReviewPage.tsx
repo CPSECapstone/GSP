@@ -10,13 +10,19 @@ import {
 } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../UserProfile/BackButton";
-import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
+import ReviewCell from "./ReviewCell";
 import LargeButton from "../Misc/LargeButton";
 import ReviewModal from "./ReviewModal";
 import { useAppSelector } from "../../redux/hooks";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
 import { selectAllUsers } from "../../redux/selectors/user";
 import { selectBusinessById } from "../../redux/selectors/business";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../constants/enumconverters";
+import StarRating from "./StarRating";
+import { average } from "../../constants/math";
 
 const styles = StyleSheet.create({
   header: {
@@ -70,6 +76,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingRight: 30,
   },
+  center: {
+    alignItems: "center",
+  },
 });
 
 function BizReviewPage({ navigation, route }: BizReviewPageProps) {
@@ -80,6 +89,9 @@ function BizReviewPage({ navigation, route }: BizReviewPageProps) {
   const reviews = useAppSelector(selectReviewsByBusiness(busID));
   const users = useAppSelector(selectAllUsers);
   const business = useAppSelector(selectBusinessById(busID));
+
+  const ratings = reviews.map((review) => review.rating) as number[]; // TODO: remove type declaration after rating is required
+  const avgRating = average(ratings);
 
   return (
     <SafeAreaView>
@@ -103,27 +115,13 @@ function BizReviewPage({ navigation, route }: BizReviewPageProps) {
           />
 
           <Text style={styles.header}>{business?.name}</Text>
-          <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            alignSelf: "center",
-            paddingLeft: 30,
-          }}
-        >
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • 50 Reviews
+          <Text style={styles.subtitle}>
+            {returnBusinessTypeValue(business?.type)} •{" "}
+            {returnMinorityGroupValue(business?.tags?.[0])}
           </Text>
+        </View>
+        <View style={styles.center}>
+          <StarRating rating={avgRating} label={`${reviews.length} Reviews`} />
         </View>
       </View>
 

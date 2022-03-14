@@ -6,7 +6,7 @@ import { selectAllBusinesses } from "../../redux/selectors/business";
 import { selectReviewsByUser } from "../../redux/selectors/review";
 import { selectUser } from "../../redux/selectors/user";
 import { ReviewPageProps } from "../../route-settings";
-import ReviewCell from "../Profile/ReviewCell";
+import ReviewCell from "./ReviewCell";
 import BackButton from "../UserProfile/BackButton";
 import ReviewModal from "./ReviewModal";
 
