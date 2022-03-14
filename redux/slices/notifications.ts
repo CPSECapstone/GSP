@@ -26,11 +26,20 @@ export const notificationSlice = createSlice({
         state.loading = "idle";
       }
     },
+    notificationRemoval(state, action: PayloadAction<string>) {
+      const newState = state.notifications.filter(
+        (n) => n?.id !== action.payload
+      );
+      state.notifications = newState;
+    },
   },
 });
 
-export const { notificationsLoading, notificationsRecieved } =
-  notificationSlice.actions;
+export const {
+  notificationsLoading,
+  notificationsRecieved,
+  notificationRemoval,
+} = notificationSlice.actions;
 
 const notificationsReducer = notificationSlice.reducer;
 export default notificationsReducer;

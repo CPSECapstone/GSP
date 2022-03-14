@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Auth } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import CleanInput from "./CleanInput";
 import { RootStackParamList } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
+import { createUser } from "../../src/graphql/mutations";
+import { useAppDispatch } from "../../redux/hooks";
+import { setUser } from "../../redux/slices/user";
+import { CreateUserMutation } from "../../src/API";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -42,6 +46,8 @@ function SignUp({ navigation, route }: SignUpProps) {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
+  const dispatch = useAppDispatch();
+
   const validateName = () => {
     if (!name) {
       setNameError("Name is required");
@@ -74,6 +80,10 @@ function SignUp({ navigation, route }: SignUpProps) {
       setConfirmPasswordError("Password is required");
       return false;
     }
+    if (confirmPassword.length < 8) {
+      setConfirmPasswordError("Password must be 8 characters or more");
+      return false;
+    }
     if (password !== confirmPassword) {
       setConfirmPasswordError("Passwords must match");
       return false;
@@ -90,8 +100,9 @@ function SignUp({ navigation, route }: SignUpProps) {
 
   const submit = async () => {
     if (validateAll()) {
+      // Create user through authentication
       try {
-        const { user } = await Auth.signUp({
+        await Auth.signUp({
           username: email,
           password,
           attributes: {
@@ -99,10 +110,24 @@ function SignUp({ navigation, route }: SignUpProps) {
             email,
           },
         });
-        console.log(user);
+
+        // Create user through datastore
+        const input = { email, name };
+        const res = (await API.graphql(
+          graphqlOperation(createUser, { input })
+        )) as { data: CreateUserMutation };
+        dispatch(setUser(res?.data?.createUser));
+
         navigation.navigate("CreateAccountCode", { email });
-      } catch {
-        setConfirmPasswordError("Failed to create account");
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.name === "UsernameExistsException"
+        ) {
+          setConfirmPasswordError("Given email already has an account");
+        } else {
+          setConfirmPasswordError("Failed to create account");
+        }
       }
     }
   };

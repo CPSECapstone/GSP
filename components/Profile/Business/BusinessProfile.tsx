@@ -114,6 +114,9 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
   return (
     <View>
       <BusinessProfileModal
+        // TOOD: replace this dummy data with actual data from businesses
+        title={dummyBusiness.name}
+        ownerID="aee0f25e-0c09-4878-b73d-096f3d927b75"
         visible={modalVisible}
         modalVisibilitySetter={setmodalVisible}
       />

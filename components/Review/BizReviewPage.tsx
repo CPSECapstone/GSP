@@ -13,6 +13,7 @@ import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
 import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
+import ReviewModal from "./ReviewModal";
 
 const styles = StyleSheet.create({
   header: {
@@ -70,13 +71,13 @@ const styles = StyleSheet.create({
 
 const reviewData = [
   {
-    restaurant: "Tori L",
+    restaurant: "Marvis I. (My Review)",
     rating: 4.0,
     srcImage: "",
     description: "I love Milk In It. It is my go to shop for boba.",
   },
   {
-    restaurant: "Marvis I.",
+    restaurant: "Tori L",
     rating: 5.0,
     srcImage: "",
     description: "I love Milk In It. It is my go to shop for boba.",
@@ -89,8 +90,15 @@ const reviewData = [
   },
 ];
 function BizReviewPage({ navigation }: BizReviewPageProps) {
+  const [modalVisible, setmodalVisible] = React.useState(false);
+
   return (
-    <View>
+    <SafeAreaView>
+      <ReviewModal
+        visible={modalVisible}
+        modalVisibilitySetter={setmodalVisible}
+      />
+
       <BackButton action={navigation.goBack} />
       <View
         style={{
@@ -158,12 +166,15 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
           contentContainerStyle={{ alignItems: "center", padding: 30 }}
           data={reviewData}
           renderItem={({ item }) => (
-            <View style={{ paddingBottom: 30 }}>
+            <View style={{ paddingBottom: 20 }}>
               <ReviewCell
                 restaurant={item.restaurant}
                 description={item.description}
                 srcImage={item.srcImage}
                 rating={item.rating}
+                action={() => {
+                  setmodalVisible(true);
+                }}
               />
             </View>
           )}
@@ -175,7 +186,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         action={() => console.log("Write a Review")}
         label="Write a Review"
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
