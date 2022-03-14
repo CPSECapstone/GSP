@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserType } from "../../src/APITypes";
 
 interface UserState {
-  user: UserType;
+  users: UserType[];
+  curUserEmail: string | undefined;
   loading: "idle" | "pending";
 }
 
 const initialState: UserState = {
-  user: undefined,
+  users: [],
+  curUserEmail: undefined,
   loading: "idle",
 };
 
@@ -20,14 +22,14 @@ export const userSlice = createSlice({
         state.loading = "pending";
       }
     },
-    userRecieved(state, action: PayloadAction<UserType>) {
+    userRecieved(state, action: PayloadAction<UserType[]>) {
       if (state.loading === "pending") {
         state.loading = "idle";
-        state.user = action.payload;
+        state.users = action.payload;
       }
     },
-    setUser(state, action: PayloadAction<UserType>) {
-      state.user = action.payload;
+    setUser(state, action: PayloadAction<string | undefined>) {
+      state.curUserEmail = action.payload;
     },
   },
 });
