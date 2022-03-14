@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
@@ -50,25 +51,11 @@ export function StarOutline() {
 
 export interface ReviewCellProps {
   restaurant: String;
-  rating: Number;
+  rating: number;
   srcImage: string;
-  description: String;
+  description: String | null | undefined;
   action: Function;
 }
-
-// react native vector icons. Carter has stars on the profile page.
-
-// maybe hardcode height in case you want to press 'more'
-
-/**
-  * <ReviewCell restaurant={"Taqueria Santa Cruz"}
-        description={"One of my favorite restaurants in San Luis Obispo. They are always consistent with their food. While it is not the most amazing value out there, they never fail to deliver and have an amazing family atmosphere."}
-        srcImage={"myTestImage.png"}
-        rating={2.0}
-        
-        ></ReviewCell> 
-  * 
-  */
 
 function ReviewCell({
   restaurant,
@@ -77,8 +64,9 @@ function ReviewCell({
   description,
   action,
 }: ReviewCellProps) {
-  // can't call require with srcImage string here
-  // how do I make this dang image inline with Text?
+  const numStar = rating;
+  const numStarOutline = 5 - rating;
+
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -87,77 +75,18 @@ function ReviewCell({
 
         <Image style={styles.image} source={{ uri: srcImage }} />
       </View>
-
-      {rating === 1 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 2 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 3 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 4 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 5 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {[...Array(numStar)].map((junk, idx) => (
+          <Star key={idx} />
+        ))}
+        {[...Array(numStarOutline)].map((junk, idx) => (
+          <StarOutline key={idx} />
+        ))}
+        <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
+          {" "}
+          • {rating} Stars
+        </Text>
+      </View>
       <Text style={styles.description}>{description}</Text>
     </View>
   );
