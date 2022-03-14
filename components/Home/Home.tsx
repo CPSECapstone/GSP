@@ -17,6 +17,7 @@ import { minoritygroups } from "../../constants/exploredata";
 import ResultsTab from "./ResultsTab";
 import BusinessCard from "../BusinessCard/BusinessCard";
 import { returnMinorityGroupValue } from "../../api";
+import computeDistance from "../../constants/distance";
 
 const width = Dimensions.get("screen").width * 0.3;
 const height = Dimensions.get("screen").height * 0.04;
@@ -72,48 +73,18 @@ export default function HomePage() {
   const [openModal, setopenModal] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [selectedBusiness, setselectedBusiness] = useState(allBusinesses);
-  console.log(allBusinesses);
 
-  const testdata = [
-    {
-      name: "test1",
-      distance: "4",
-      rating: "2",
-    },
-    {
-      name: "test2",
-      distance: "3",
-      rating: "5",
-    },
-    {
-      name: "test3",
-      distance: "5",
-      rating: "1",
-    },
-    {
-      name: "test3",
-      distance: "5",
-      rating: "1",
-    },
-    {
-      name: "test3",
-      distance: "5",
-      rating: "1",
-    },
-    {
-      name: "test3",
-      distance: "5",
-      rating: "1",
-    },
-    {
-      name: "test3",
-      distance: "5",
-      rating: "1",
-    },
-  ];
+  const sourceAddress = "1 Grand Ave San Luis Obispo";
+
+  const submitEdit = () => {
+    setopenModal(true);
+    setselectedBusiness([]);
+  };
 
   const onDismiss = () => {
     setopenModal(false);
+    if (selectedBusiness.length === 1) {
+    }
   };
 
   let minorityGroupsByName: string[] = [];
@@ -143,10 +114,6 @@ export default function HomePage() {
     setResultBusinesses(resBusiness);
   }, [selectedMinorityGroups]);
 
-  React.useEffect(() => {
-    resultBusinesses;
-  }, [selectedBusiness]);
-
   return (
     <View style={styles.container}>
       <Map />
@@ -154,6 +121,7 @@ export default function HomePage() {
         searchText={searchText}
         setsearchText={setsearchText}
         setopenModal={setopenModal}
+        submitEdit={submitEdit}
       />
       <FlatList
         horizontal
@@ -198,7 +166,7 @@ export default function HomePage() {
         <BusinessCard
           name={selectedBusiness[0]!.name}
           distance={"2"}
-          rating={"4"}
+          rating={String(selectedBusiness[0]!.rating)}
         />
       ) : (
         <View />
@@ -211,19 +179,23 @@ export default function HomePage() {
             renderItem={({ item }) => {
               if (item !== undefined && item !== null) {
                 return (
-                  <Pressable
-                    onPress={() => {
-                      setselectedBusiness([item]);
-                    }}
-                  >
-                    <View onStartShouldSetResponder={() => true}>
+                  <View onStartShouldSetResponder={() => true}>
+                    <Pressable
+                      onPress={() => {
+                        setselectedBusiness([item]);
+                      }}
+                    >
                       <BusinessCard
                         name={item.name}
-                        distance={"2"}
-                        rating={"3"}
+                        distance={"4"}
+                        rating={
+                          item.rating == null
+                            ? "0 Reviews"
+                            : String(item.rating)
+                        }
                       />
-                    </View>
-                  </Pressable>
+                    </Pressable>
+                  </View>
                 );
               }
               return <Text>Something went wrong</Text>;

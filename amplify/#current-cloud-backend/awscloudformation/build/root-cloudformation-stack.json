@@ -301,6 +301,25 @@
         }
       }
     },
+    "geoplaceindexe915d01c": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-minoritymarket-staging-24817-deployment/amplify-cfn-templates/geo/placeindexe915d01c-cloudformation-template.json",
+        "Parameters": {
+          "authRoleName": {
+            "Ref": "AuthRoleName"
+          },
+          "unauthRoleName": {
+            "Ref": "UnauthRoleName"
+          },
+          "indexName": "placeindexe915d01c",
+          "dataProvider": "Here",
+          "dataSourceIntendedUse": "SingleUse",
+          "isDefault": true,
+          "env": "staging"
+        }
+      }
+    },
     "storages3minoritymarketimagestore": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
