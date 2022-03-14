@@ -57,4 +57,10 @@ function ReviewCell({
   );
 }
 
+ReviewCell.defaultProps = {
+  srcImage: undefined,
+  description: undefined,
+  action: undefined,
+};
+
 export default ReviewCell;
