@@ -52,9 +52,9 @@ export function StarOutline() {
 export interface ReviewCellProps {
   restaurant: String;
   rating: number;
-  srcImage: string;
-  description: String | null | undefined;
-  action: Function;
+  srcImage?: string;
+  description?: String | null | undefined;
+  action?: Function;
 }
 
 function ReviewCell({
@@ -70,10 +70,12 @@ function ReviewCell({
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
+        {action && (
+          <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
+        )}
         <Text style={styles.restauraunt}>{restaurant}</Text>
 
-        <Image style={styles.image} source={{ uri: srcImage }} />
+        {srcImage && <Image style={styles.image} source={{ uri: srcImage }} />}
       </View>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         {[...Array(numStar)].map((junk, idx) => (

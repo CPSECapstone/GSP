@@ -19,7 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { categories, minoritygroups } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
-import selectAllBusinesses from "../../redux/selectors/business";
+import { selectAllBusinesses } from "../../redux/selectors/business";
 import { Business } from "../../src/API";
 
 const width = Dimensions.get("screen").width * 0.16;

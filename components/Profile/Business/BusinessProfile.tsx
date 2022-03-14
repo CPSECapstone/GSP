@@ -213,7 +213,11 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
               </Pressable>
               <Pressable
                 style={[styles.ratingButton, { marginLeft: 10 }]}
-                onPress={() => navigation.navigate("BizReviewPage")}
+                onPress={() =>
+                  navigation.navigate("BizReviewPage", {
+                    busID: "90c44163-3c82-4d91-8010-41a75a666670",
+                  })
+                }
               >
                 <Text
                   style={{ color: "white", fontWeight: "bold", fontSize: 16 }}

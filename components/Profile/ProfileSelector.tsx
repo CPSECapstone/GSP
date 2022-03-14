@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import defaultUser from "../../constants/defaultData";
 import { useAppSelector } from "../../redux/hooks";
-import selectUser from "../../redux/selectors/user";
+import { selectUser } from "../../redux/selectors/user";
 import UserProfile from "../UserProfile/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import dummyBusiness from "./Business/tempdata";

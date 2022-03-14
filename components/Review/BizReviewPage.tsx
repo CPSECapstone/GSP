@@ -11,9 +11,12 @@ import {
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../UserProfile/BackButton";
 import ReviewCell, { Star, StarOutline } from "../Profile/ReviewCell";
-import dummyBusiness from "../Profile/Business/tempdata";
 import LargeButton from "../Misc/LargeButton";
 import ReviewModal from "./ReviewModal";
+import { useAppSelector } from "../../redux/hooks";
+import { selectReviewsByBusiness } from "../../redux/selectors/review";
+import { selectAllUsers } from "../../redux/selectors/user";
+import { selectBusinessById } from "../../redux/selectors/business";
 
 const styles = StyleSheet.create({
   header: {
@@ -69,28 +72,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const reviewData = [
-  {
-    restaurant: "Marvis I. (My Review)",
-    rating: 4.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-  {
-    restaurant: "Tori L",
-    rating: 5.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-  {
-    restaurant: "Tessa S.",
-    rating: 5.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-];
-function BizReviewPage({ navigation }: BizReviewPageProps) {
+function BizReviewPage({ navigation, route }: BizReviewPageProps) {
+  const { busID } = route.params;
+
   const [modalVisible, setmodalVisible] = React.useState(false);
+
+  const reviews = useAppSelector(selectReviewsByBusiness(busID));
+  const users = useAppSelector(selectAllUsers);
+  const business = useAppSelector(selectBusinessById(busID));
 
   return (
     <SafeAreaView>
@@ -110,10 +99,10 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <View>
           <Image
             style={styles.bizImage}
-            source={{ uri: dummyBusiness.profileImage }}
+            source={{ uri: business?.profileImage }}
           />
 
-          <Text style={styles.header}>{dummyBusiness.name}</Text>
+          <Text style={styles.header}>{business?.name}</Text>
           <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
         </View>
 
@@ -164,21 +153,22 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
       <SafeAreaView>
         <FlatList
           contentContainerStyle={{ alignItems: "center", padding: 30 }}
-          data={reviewData}
-          renderItem={({ item }) => (
-            <View style={{ paddingBottom: 20 }}>
-              <ReviewCell
-                restaurant={item.restaurant}
-                description={item.description}
-                srcImage={item.srcImage}
-                rating={item.rating}
-                action={() => {
-                  setmodalVisible(true);
-                }}
-              />
-            </View>
-          )}
-          keyExtractor={(review) => review.restaurant}
+          data={reviews}
+          renderItem={({ item }) => {
+            const user = users.find((u) => u.id === item.userID);
+            if (!user || !user.name || !item.rating) return null;
+
+            return (
+              <View style={{ paddingBottom: 20 }}>
+                <ReviewCell
+                  restaurant={user?.name}
+                  description={item.comments}
+                  rating={item.rating}
+                />
+              </View>
+            );
+          }}
+          keyExtractor={(review) => review.id}
         />
       </SafeAreaView>
 

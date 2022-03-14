@@ -12,7 +12,10 @@ export type BusinessType = DeepOmit<
   '__typename'
 >;
 
-export type UserType = GetUserQuery['getUser']
+export type UserType = DeepOmit<
+  Exclude<GetUserQuery['getUser'], null | undefined>,
+  '__typename'
+>
 export type NotificationQueryType = NonNullable<ListNotificationsQuery['listNotifications']>['items'];
 
 export type NotificationType = DeepOmit<
