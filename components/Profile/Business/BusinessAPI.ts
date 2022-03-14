@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import { createBusiness, updateBusiness } from "../../../src/graphql/mutations";
 import { Business } from "../../../src/API";
+import { useAppSelector } from "../../../redux/hooks";
+import selectUser from "../../../redux/selectors/user";
 
 export default class BusinessAPI {
   static async create(business: Business) {
-    const user = await Auth.currentAuthenticatedUser();
-    const emailAttribute = user.attributes.email;
+    const user = useAppSelector(selectUser);
 
-    const businessObj = { ...business, email: emailAttribute };
+    const businessObj = { ...business, email: user.email, userID: user.id };
 
     return API.graphql(
       graphqlOperation(createBusiness, { input: businessObj })

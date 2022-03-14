@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
 import { Storage } from "@aws-amplify/storage";
