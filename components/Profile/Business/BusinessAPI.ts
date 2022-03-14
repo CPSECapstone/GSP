@@ -3,7 +3,7 @@ import { API, graphqlOperation, Storage } from "aws-amplify";
 import { createBusiness, updateBusiness } from "../../../src/graphql/mutations";
 import { Business } from "../../../src/API";
 import { useAppSelector } from "../../../redux/hooks";
-import selectUser from "../../../redux/selectors/user";
+import { selectUser } from "../../../redux/selectors/user";
 
 export default class BusinessAPI {
   static async create(business: Business) {
