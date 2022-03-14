@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { API } from "aws-amplify";
 import React, { Dispatch } from "react";
 import {
   Modal,
@@ -8,6 +9,10 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import { useAppSelector } from "../../redux/hooks";
+import selectUser from "../../redux/selectors/user";
+import { createNotification } from "../../src/graphql/mutations";
+import { NotificationType } from "../../src/models";
 
 const styles = StyleSheet.create({
   navoptionpressable: {
@@ -103,9 +108,37 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
 interface RequestProps {
   modalVisibilitySetter: Dispatch<boolean>;
   nextScreenIncr: Dispatch<number>;
+  businessOwnerID: string;
+  businessTitle: string;
 }
 
-function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
+function RequestView({
+  modalVisibilitySetter,
+  nextScreenIncr,
+  businessOwnerID,
+  businessTitle,
+}: RequestProps) {
+  const [reqMessage, setReqMessage] = React.useState("");
+  const [postDisabled, setPostDisabled] = React.useState(false);
+  const currentUser = useAppSelector(selectUser);
+
+  const postNewRequest = async (ownerID: string, message: string) => {
+    const notifObject = {
+      message,
+      userID: ownerID,
+      type: NotificationType.OWNERSHIPREQUEST,
+      Sender: currentUser?.id,
+      title: `Ownership Request for ${businessTitle}`,
+    };
+
+    const newNotif = await API.graphql({
+      query: createNotification,
+      variables: { input: notifObject },
+    });
+
+    return newNotif;
+  };
+
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
@@ -125,6 +158,8 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
             margin: 10,
           }}
           placeholder="Message"
+          value={reqMessage}
+          onChangeText={setReqMessage}
         />
         <View
           style={{
@@ -150,6 +185,15 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
               borderRadius: 25,
               backgroundColor: "#FA4A0C",
             }}
+            disabled={postDisabled}
+            onPress={async () => {
+              setPostDisabled(true);
+              // TODO: replace hardcoded ID with business owners User ID; create title using business name
+              postNewRequest(businessOwnerID, reqMessage).then(() =>
+                modalVisibilitySetter(false)
+              );
+              setPostDisabled(false);
+            }}
           >
             <Text style={styles.sendreqbutton}>Send</Text>
           </Pressable>
@@ -162,11 +206,15 @@ function RequestView({ modalVisibilitySetter, nextScreenIncr }: RequestProps) {
 interface FullModalProps {
   modalVisibilitySetter: Dispatch<boolean>;
   visible: boolean;
+  ownerID: string;
+  title: string;
 }
 
 function BusinessProfileModal({
   modalVisibilitySetter,
   visible,
+  ownerID,
+  title,
 }: FullModalProps) {
   const [screenindex, setScreenindex] = React.useState(0);
 
@@ -180,6 +228,8 @@ function BusinessProfileModal({
       )}
       {screenindex === 1 && (
         <RequestView
+          businessTitle={title}
+          businessOwnerID={ownerID}
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
         />

@@ -21,6 +21,10 @@ import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllBusinesses from "../../redux/selectors/business";
 import { Business } from "../../src/API";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../constants/enumconverters";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
@@ -140,10 +144,14 @@ function Explore() {
       business?.tags?.every((tag) => {
         if (
           tag != null &&
-          (minorityGroupsByName.includes(tag) ||
+          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
             minorityGroupsByName.includes("All"))
         ) {
-          if (business.type === categories[selectedCategoryIndex]) {
+          if (
+            business.type != null &&
+            returnBusinessTypeValue(business.type) ===
+              categories[selectedCategoryIndex]
+          ) {
             resBusiness.push(business);
             return false;
           }
@@ -203,15 +211,10 @@ function Explore() {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
             data={resultBusinesses}
             renderItem={({ item }) => {
               if (
                 item?.name !== undefined &&
-                item.type !== undefined &&
-                item.type !== null &&
-                item.primarycolor !== null &&
-                item.primarycolor !== undefined &&
                 item.tags !== null &&
                 item.tags !== undefined
               ) {
@@ -219,8 +222,10 @@ function Explore() {
                   <ExploreResultCell
                     title={item.name}
                     distance={3}
-                    category={item.type}
-                    minoritygroups={item.tags}
+                    category={returnBusinessTypeValue(item.type)}
+                    minoritygroups={item.tags.map((tag) =>
+                      returnMinorityGroupValue(tag)
+                    )}
                     primarycolor={item.primarycolor}
                   />
                 );
