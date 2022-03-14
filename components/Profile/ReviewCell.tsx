@@ -84,6 +84,7 @@ function ReviewCell({
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
         <Text style={styles.restauraunt}>{restaurant}</Text>
+
         <Image style={styles.image} source={{ uri: srcImage }} />
       </View>
 
