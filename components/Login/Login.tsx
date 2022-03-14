@@ -6,8 +6,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { LoginProps } from "../../route-settings";
 import LargeButton from "../Misc/LargeButton";
 import CleanInput from "./CleanInput";
-import fetchUser from "../../redux/thunks/user";
 import { useAppDispatch } from "../../redux/hooks";
+import { setUser } from "../../redux/slices/user";
 
 const avatarImg = require("../../assets/default-avatar.jpeg");
 
@@ -93,7 +93,7 @@ function Login({ navigation }: LoginProps) {
 
   Auth.currentSession()
     .then((user) => {
-      dispatch(fetchUser(user.getIdToken().payload.email));
+      dispatch(setUser(user.getIdToken().payload.email));
       navigation.navigate("App");
     })
     .catch(() => {}); // suppress unhandled Promise warning
@@ -120,7 +120,7 @@ function Login({ navigation }: LoginProps) {
     if (validateEmail() && validatePassword()) {
       try {
         const user = await Auth.signIn(email, password);
-        dispatch(fetchUser(user.attributes.email));
+        dispatch(setUser(user.attributes.email));
         setEmail("");
         setPassword("");
         navigation.navigate("App");

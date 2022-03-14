@@ -10,11 +10,19 @@ import {
 } from "react-native";
 import { BizReviewPageProps } from "../../route-settings";
 import BackButton from "../Profile/User/BackButton";
-import ReviewCell, { Star, StarOutline } from "./ReviewCell";
+import ReviewCell from "./ReviewCell";
 import LargeButton from "../Misc/LargeButton";
 import { useAppSelector } from "../../redux/hooks";
-import selectAllBusinesses from "../../redux/selectors/business";
 import ReviewModal from "./ReviewModal";
+import { selectReviewsByBusiness } from "../../redux/selectors/review";
+import { selectAllUsers } from "../../redux/selectors/user";
+import { selectBusinessById } from "../../redux/selectors/business";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../constants/enumconverters";
+import StarRating from "./StarRating";
+import { average } from "../../constants/math";
 
 const styles = StyleSheet.create({
   header: {
@@ -68,31 +76,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     paddingRight: 30,
   },
+  center: {
+    alignItems: "center",
+  },
 });
 
-const reviewData = [
-  {
-    restaurant: "Marvis I. (My Review)",
-    rating: 4.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-  {
-    restaurant: "Tori L",
-    rating: 5.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-  {
-    restaurant: "Tessa S.",
-    rating: 5.0,
-    srcImage: "",
-    description: "I love Milk In It. It is my go to shop for boba.",
-  },
-];
-function BizReviewPage({ navigation }: BizReviewPageProps) {
-  const business = useAppSelector(selectAllBusinesses)[0]!;
+function BizReviewPage({ navigation, route }: BizReviewPageProps) {
+  const { busID } = route.params;
+
   const [modalVisible, setmodalVisible] = React.useState(false);
+
+  const reviews = useAppSelector(selectReviewsByBusiness(busID));
+  const users = useAppSelector(selectAllUsers);
+  const business = useAppSelector(selectBusinessById(busID));
+
+  const ratings = reviews.map((review) => review.rating) as number[]; // TODO: remove type declaration after rating is required
+  const avgRating = average(ratings);
 
   return (
     <SafeAreaView>
@@ -112,31 +111,17 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         <View>
           <Image
             style={styles.bizImage}
-            source={{ uri: business.profileImage }}
+            source={{ uri: business?.profileImage }}
           />
 
-          <Text style={styles.header}>{business.name}</Text>
-          <Text style={styles.subtitle}>Restaurant • 3 miles</Text>
-        </View>
-
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            alignSelf: "center",
-            paddingLeft: 30,
-          }}
-        >
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • 50 Reviews
+          <Text style={styles.header}>{business?.name}</Text>
+          <Text style={styles.subtitle}>
+            {returnBusinessTypeValue(business?.type)} •{" "}
+            {returnMinorityGroupValue(business?.tags?.[0])}
           </Text>
+        </View>
+        <View style={styles.center}>
+          <StarRating rating={avgRating} label={`${reviews.length} Reviews`} />
         </View>
       </View>
 
@@ -166,21 +151,24 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
       <SafeAreaView>
         <FlatList
           contentContainerStyle={{ alignItems: "center", padding: 30 }}
-          data={reviewData}
-          renderItem={({ item }) => (
-            <View style={{ paddingBottom: 20 }}>
-              <ReviewCell
-                restaurant={item.restaurant}
-                description={item.description}
-                srcImage={item.srcImage}
-                rating={item.rating}
-                action={() => {
-                  setmodalVisible(true);
-                }}
-              />
-            </View>
-          )}
-          keyExtractor={(review) => review.restaurant}
+          data={reviews}
+          renderItem={({ item }) => {
+            const user = users.find((u) => u.id === item.userID);
+            if (!user || !user.name || !item.rating) return null;
+
+            return (
+              <View style={{ paddingBottom: 20 }}>
+                <ReviewCell
+                  restaurant={user?.name}
+                  description={item.comments}
+                  rating={item.rating}
+                  action={() => {}}
+                  srcImage=""
+                />
+              </View>
+            );
+          }}
+          keyExtractor={(review) => review.id}
         />
       </SafeAreaView>
 

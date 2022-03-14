@@ -1,6 +1,6 @@
 import { BusinessType, MinorityGroups } from "../src/models";
 
-export function returnMinorityGroupValue(key: MinorityGroups) {
+export function returnMinorityGroupValue(key: MinorityGroups | undefined) {
   let value;
   switch (key) {
     case MinorityGroups.AFRICANAMERICAN:
@@ -44,13 +44,13 @@ export function returnMinorityGroupValue(key: MinorityGroups) {
       break;
 
     default:
-      value = "ERROR";
+      value = key;
       break;
   }
   return value;
 }
 
-export function returnBusinessTypeValue(key: BusinessType) {
+export function returnBusinessTypeValue(key: BusinessType | undefined) {
   let value;
   switch (key) {
     case BusinessType.RESTAURANT:
@@ -66,7 +66,7 @@ export function returnBusinessTypeValue(key: BusinessType) {
       value = "Shopping";
       break;
     default:
-      value = "ERROR";
+      value = key;
       break;
   }
   return value;

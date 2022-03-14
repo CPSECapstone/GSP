@@ -11,6 +11,7 @@ import { createUser } from "../../src/graphql/mutations";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/slices/user";
 import { CreateUserMutation } from "../../src/API";
+import fetchUsers from "../../redux/thunks/user";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -116,7 +117,8 @@ function SignUp({ navigation, route }: SignUpProps) {
         const res = (await API.graphql(
           graphqlOperation(createUser, { input })
         )) as { data: CreateUserMutation };
-        dispatch(setUser(res?.data?.createUser));
+        await fetchUsers();
+        dispatch(setUser(res?.data?.createUser?.email));
 
         navigation.navigate("CreateAccountCode", { email });
       } catch (error) {

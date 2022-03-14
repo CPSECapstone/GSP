@@ -1,5 +1,8 @@
 import { RootState } from "../store";
 
-const selectUser = (state: RootState) => state.user.user;
+const selectUser = (state: RootState) =>
+  state.user.users.find((user) => user?.email === state.user.curUserEmail);
 
-export default selectUser;
+const selectAllUsers = (state: RootState) => state.user.users;
+
+export { selectUser, selectAllUsers };

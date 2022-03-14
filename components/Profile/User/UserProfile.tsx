@@ -6,7 +6,7 @@ import { UserProfileProps } from "../../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import selectUser from "../../../redux/selectors/user";
+import { selectUser } from "../../../redux/selectors/user";
 import notifications from "../../../redux/thunks/notifications";
 import defaultUser from "../../../constants/defaultData";
 import { setUser } from "../../../redux/slices/user";

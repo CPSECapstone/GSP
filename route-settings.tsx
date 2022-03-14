@@ -25,7 +25,7 @@ export type RootStackParamList = {
   ProfileEditor: undefined;
   ReviewPage: undefined;
   UserProfile: undefined;
-  BizReviewPage: undefined;
+  BizReviewPage: { busID: string };
   Notifications: undefined;
 };
 

@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
-import selectUser from "../../redux/selectors/user";
+import { selectUser } from "../../redux/selectors/user";
 import { createNotification } from "../../src/graphql/mutations";
 import { NotificationType } from "../../src/models";
 
