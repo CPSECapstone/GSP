@@ -1,4 +1,5 @@
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import React from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { View, StyleSheet, Dimensions } from "react-native";
 import mapStyle from "../../constants/map";
 
@@ -15,7 +16,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Map() {
+interface MapProps {
+  length: number;
+  coordinate: any;
+  name: string;
+}
+
+export default function Map({ coordinate, length, name }: MapProps) {
   return (
     <View style={styles.container}>
       <MapView
@@ -28,7 +35,17 @@ export default function Map() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
-      />
+      >
+        {length === 2 ? (
+          <Marker
+            coordinate={{ latitude: coordinate[1], longitude: coordinate[0] }}
+            title={name}
+            image={require("../../assets/map-marker.png")}
+          />
+        ) : (
+          <View />
+        )}
+      </MapView>
     </View>
   );
 }

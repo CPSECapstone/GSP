@@ -17,7 +17,6 @@ import { minoritygroups } from "../../constants/exploredata";
 import ResultsTab from "./ResultsTab";
 import BusinessCard from "../BusinessCard/BusinessCard";
 import { returnMinorityGroupValue } from "../../api";
-import computeDistance from "../../constants/distance";
 
 const width = Dimensions.get("screen").width * 0.3;
 const height = Dimensions.get("screen").height * 0.04;
@@ -40,8 +39,6 @@ const styles = StyleSheet.create({
     marginTop: minorityGroupCellPadding,
     width,
     height,
-    // minWidth: width + 10,
-    // maxWidth: width + 10,
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
@@ -55,13 +52,11 @@ const styles = StyleSheet.create({
     borderRadius: imgdimensions,
     marginLeft: "5%",
     marginRight: "5%",
-    // marginTop: 5,
   },
   minoritycelltitle: {
     fontFamily: "Mada-Medium",
     fontSize: 12,
     textAlign: "center",
-    // padding: 10,
   },
   resultCard: {
     position: "absolute",
@@ -77,18 +72,14 @@ export default function HomePage() {
   const [openModal, setopenModal] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [selectedBusiness, setselectedBusiness] = useState(allBusinesses);
-
-  const sourceAddress = "1 Grand Ave San Luis Obispo";
+  const [coordinate, setcoordinate] = useState([]);
+  const [findText, setfindText] = useState("");
 
   const submitEdit = () => {
     setopenModal(true);
     setselectedBusiness([]);
-  };
-
-  const onDismiss = () => {
-    setopenModal(false);
-    if (selectedBusiness.length === 1) {
-    }
+    setcoordinate([]);
+    setfindText(searchText);
   };
 
   let minorityGroupsByName: string[] = [];
@@ -101,7 +92,7 @@ export default function HomePage() {
   }, [selectedMinorityGroups]);
 
   React.useEffect(() => {
-    const resBusiness: Business[] = [];
+    const tagBusiness: Business[] = [];
     allBusinesses.forEach((business) => {
       business?.tags?.every((tag) => {
         if (
@@ -109,22 +100,45 @@ export default function HomePage() {
           (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
             minorityGroupsByName.includes("All"))
         ) {
-          resBusiness.push(business);
-          return false;
+          tagBusiness.push(business);
         }
-        return true;
       });
     });
+    const resBusiness: Business[] = [];
+    console.log(tagBusiness);
+    tagBusiness.forEach((business) => {
+      if (business != null) {
+        const businessFields = [
+          business?.address,
+          business?.city,
+          business?.name,
+          business?.state,
+          business?.type,
+          String(business?.zipcode),
+        ];
+        if (
+          businessFields.some((b) => findText.includes(b)) ||
+          business?.tags?.some((b) => findText.includes(b))
+        ) {
+          resBusiness.push(business);
+        }
+      }
+    });
     setResultBusinesses(resBusiness);
-  }, [selectedMinorityGroups]);
+  }, [selectedMinorityGroups, findText]);
 
   return (
     <View style={styles.container}>
-      <Map />
+      <Map
+        coordinate={coordinate}
+        length={coordinate.length}
+        name={
+          selectedBusiness[0] == null ? "Not found" : selectedBusiness[0].name
+        }
+      />
       <SearchBar
         searchText={searchText}
         setsearchText={setsearchText}
-        setopenModal={setopenModal}
         submitEdit={submitEdit}
       />
       <FlatList
@@ -138,8 +152,7 @@ export default function HomePage() {
             onPress={() => {
               if (index === 0 && !selectedMinorityGroups.includes(index)) {
                 setselectedMinorityGroups([0]);
-              }
-              if (selectedMinorityGroups.includes(index)) {
+              } else if (selectedMinorityGroups.includes(index)) {
                 setselectedMinorityGroups(
                   selectedMinorityGroups.filter(
                     (listitem) => listitem !== index
@@ -181,10 +194,11 @@ export default function HomePage() {
       )}
       {openModal && (
         <ResultsTab
-          onDismiss={onDismiss}
+          onDismiss={() => setopenModal(false)}
           visible
           resultBusinesses={resultBusinesses}
           setselectedBusiness={setselectedBusiness}
+          setcoordinates={setcoordinate}
         />
       )}
     </View>

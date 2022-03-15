@@ -12,6 +12,7 @@ import {
   Text,
 } from "react-native";
 import BusinessCard from "../BusinessCard/BusinessCard";
+import { getCoordinates } from "../../constants/location";
 
 const styles = StyleSheet.create({
   overlay: {
@@ -47,6 +48,7 @@ interface ResultsTabProps {
   visible: boolean;
   resultBusinesses: any;
   setselectedBusiness: any;
+  setcoordinates: any;
 }
 
 function ResultsTab({
@@ -54,6 +56,7 @@ function ResultsTab({
   visible,
   resultBusinesses,
   setselectedBusiness,
+  setcoordinates,
 }: ResultsTabProps) {
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
@@ -141,12 +144,15 @@ function ResultsTab({
                         <Pressable
                           onPress={() => {
                             setselectedBusiness([item]);
+                            getCoordinates(item.address).then((res) =>
+                              setcoordinates(res)
+                            );
                             handleDismiss();
                           }}
                         >
                           <BusinessCard
                             name={item.name}
-                            distance={"4"}
+                            distance="4"
                             rating={
                               item.rating == null
                                 ? "0 Reviews"
