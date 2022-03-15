@@ -1,6 +1,6 @@
 # Minority Market
 
-Insert slogan here
+Welcome to the Minority Market GitHub repo!
 
 ## CI Server
 
@@ -14,25 +14,49 @@ To download our repository, open your terminal and go to the directory in which 
 git clone https://github.com/CPSECapstone/GSP.git
 ```
 
-to make a local copy. Next, open the "frontend" folder, and run the command
+to make a local copy. Next, run the command
 
 ```bash
 npm i
 ```
 
-to install the necessary dependencies. Now, you are able to run our app and any tests with
+to install the necessary dependencies. After that, run the following commands to set up the AWS Amplify backend:
+
+```bash
+npm install -g @aws-amplify/cli
+amplify configure
+amplify pull
+```
+
+Note that this assumes that your AWS account has already been added as a collaborator.
+
+Now, you are able to run our app with
 
 ```bash
 npm start
 ```
 
-and
+## Useful commands
+
+To run local unit tests:
 
 ```bash
 npm test
 ```
 
-but at this moment we have not written any code or tests. This will be done in Winter 2022 (CSC402).
+To check for linting errors:
+
+```bash
+npm run lint
+```
+
+To fix linting errors:
+
+```bash
+npm run lint-fix
+```
+
+## Resources
 
 Font resource:
 https://fonts.google.com/specimen/Mada
