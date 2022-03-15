@@ -123,7 +123,7 @@ export default function BusinessProfile({
       <BusinessProfileModal
         businessID={business.id}
         title={business.name}
-        ownerID="aee0f25e-0c09-4878-b73d-096f3d927b75"
+        ownerID={business.userID}
         visible={modalVisible}
         modalVisibilitySetter={setmodalVisible}
       />

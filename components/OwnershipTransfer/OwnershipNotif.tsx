@@ -2,7 +2,7 @@ import { API } from "aws-amplify";
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectUser } from "../../redux/selectors/user";
+import { selectAllUsers, selectUser } from "../../redux/selectors/user";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
 import {
@@ -89,8 +89,14 @@ function OwnershipNotif({
 }: NotifProps) {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectUser);
+  const users = useAppSelector(selectAllUsers);
 
   let buttons;
+
+  const findSenderName = () => {
+    let res = users.find((user) => user.id === senderID);
+    return res === undefined ? "Unkown user" : res.name;
+  };
 
   const deleteNotif = async () => {
     const notifDetails = {
@@ -243,6 +249,9 @@ function OwnershipNotif({
     <View style={[styles.container, styles.shadow]}>
       <Text style={{ fontFamily: "Mada-Medium", fontSize: 17, padding: 5 }}>
         {title}
+      </Text>
+      <Text style={{ opacity: 0.5, fontFamily: "Mada-Regular", padding: 2 }}>
+        From: {findSenderName()}
       </Text>
       <Divider />
       <Text style={{ fontFamily: "Mada-Regular", fontSize: 15, padding: 10 }}>

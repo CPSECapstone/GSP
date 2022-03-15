@@ -8,6 +8,7 @@ import {
   Pressable,
   StyleSheet,
   TextInput,
+  Alert,
 } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
 import { selectUser } from "../../redux/selectors/user";
@@ -190,11 +191,27 @@ function RequestView({
             }}
             disabled={postDisabled}
             onPress={async () => {
-              setPostDisabled(true);
-              postNewRequest(businessOwnerID, reqMessage).then(() =>
-                modalVisibilitySetter(false)
-              );
-              setPostDisabled(false);
+              if (currentUser?.id === businessOwnerID) {
+                Alert.alert(
+                  "Unable to Send Request",
+                  "You already own this business.",
+                  [{ text: "OK" }]
+                );
+              } else {
+                if (reqMessage.length < 5) {
+                  Alert.alert(
+                    "Invalid Message",
+                    "Please type a message to accompany your request.",
+                    [{ text: "OK" }]
+                  );
+                } else {
+                  setPostDisabled(true);
+                  postNewRequest(businessOwnerID, reqMessage).then(() =>
+                    modalVisibilitySetter(false)
+                  );
+                  setPostDisabled(false);
+                }
+              }
             }}
           >
             <Text style={styles.sendreqbutton}>Send</Text>
