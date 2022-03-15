@@ -94,7 +94,7 @@ function OwnershipNotif({
   let buttons;
 
   const findSenderName = () => {
-    let res = users.find((user) => user.id === senderID);
+    const res = users.find((user) => user.id === senderID);
     return res === undefined ? "Unkown user" : res.name;
   };
 

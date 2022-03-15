@@ -197,20 +197,18 @@ function RequestView({
                   "You already own this business.",
                   [{ text: "OK" }]
                 );
+              } else if (reqMessage.length < 5) {
+                Alert.alert(
+                  "Invalid Message",
+                  "Please type a message to accompany your request.",
+                  [{ text: "OK" }]
+                );
               } else {
-                if (reqMessage.length < 5) {
-                  Alert.alert(
-                    "Invalid Message",
-                    "Please type a message to accompany your request.",
-                    [{ text: "OK" }]
-                  );
-                } else {
-                  setPostDisabled(true);
-                  postNewRequest(businessOwnerID, reqMessage).then(() =>
-                    modalVisibilitySetter(false)
-                  );
-                  setPostDisabled(false);
-                }
+                setPostDisabled(true);
+                postNewRequest(businessOwnerID, reqMessage).then(() =>
+                  modalVisibilitySetter(false)
+                );
+                setPostDisabled(false);
               }
             }}
           >
