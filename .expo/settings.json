@@ -5,6 +5,6 @@
   "minify": false,
   "urlRandomness": null,
   "https": false,
-  "scheme": "exp+frontend",
+  "scheme": null,
   "devClient": false
 }

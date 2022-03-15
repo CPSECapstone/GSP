@@ -9,6 +9,7 @@ export type CreateNotificationInput = {
   Sender?: string | null,
   userID: string,
   title: string,
+  businessRequestID: string,
 };
 
 export enum NotificationType {
@@ -24,6 +25,7 @@ export type ModelNotificationConditionInput = {
   Sender?: ModelIDInput | null,
   userID?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  businessRequestID?: ModelIDInput | null,
   and?: Array< ModelNotificationConditionInput | null > | null,
   or?: Array< ModelNotificationConditionInput | null > | null,
   not?: ModelNotificationConditionInput | null,
@@ -98,6 +100,7 @@ export type Notification = {
   Sender?: string | null,
   userID: string,
   title: string,
+  businessRequestID: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -109,6 +112,7 @@ export type UpdateNotificationInput = {
   Sender?: string | null,
   userID?: string | null,
   title?: string | null,
+  businessRequestID?: string | null,
 };
 
 export type DeleteNotificationInput = {
@@ -421,6 +425,7 @@ export type ModelNotificationFilterInput = {
   Sender?: ModelIDInput | null,
   userID?: ModelIDInput | null,
   title?: ModelStringInput | null,
+  businessRequestID?: ModelIDInput | null,
   and?: Array< ModelNotificationFilterInput | null > | null,
   or?: Array< ModelNotificationFilterInput | null > | null,
   not?: ModelNotificationFilterInput | null,
@@ -504,6 +509,7 @@ export type CreateNotificationMutation = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -523,6 +529,7 @@ export type UpdateNotificationMutation = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -542,6 +549,7 @@ export type DeleteNotificationMutation = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -890,6 +898,7 @@ export type GetNotificationQuery = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -912,6 +921,7 @@ export type ListNotificationsQuery = {
       Sender?: string | null,
       userID: string,
       title: string,
+      businessRequestID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1140,6 +1150,7 @@ export type OnCreateNotificationSubscription = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1154,6 +1165,7 @@ export type OnUpdateNotificationSubscription = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1168,6 +1180,7 @@ export type OnDeleteNotificationSubscription = {
     Sender?: string | null,
     userID: string,
     title: string,
+    businessRequestID: string,
     createdAt: string,
     updatedAt: string,
   } | null,

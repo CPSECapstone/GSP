@@ -1,3 +1,4 @@
+import React from "react";
 import { FlatList, View, Text } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
 import selectAllUserNotifs from "../../redux/selectors/notifications";
@@ -31,6 +32,7 @@ function Notifications({ route, navigation }: NotificationsProps) {
                     message={item.message}
                     senderID={item.Sender}
                     type={item.type}
+                    businessID={item.businessRequestID}
                   />
                 );
               }

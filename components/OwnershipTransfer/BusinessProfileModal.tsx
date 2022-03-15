@@ -110,6 +110,7 @@ interface RequestProps {
   nextScreenIncr: Dispatch<number>;
   businessOwnerID: string;
   businessTitle: string;
+  businessID: string;
 }
 
 function RequestView({
@@ -117,6 +118,7 @@ function RequestView({
   nextScreenIncr,
   businessOwnerID,
   businessTitle,
+  businessID,
 }: RequestProps) {
   const [reqMessage, setReqMessage] = React.useState("");
   const [postDisabled, setPostDisabled] = React.useState(false);
@@ -129,6 +131,7 @@ function RequestView({
       type: NotificationType.OWNERSHIPREQUEST,
       Sender: currentUser?.id,
       title: `Ownership Request for ${businessTitle}`,
+      businessRequestID: businessID,
     };
 
     const newNotif = await API.graphql({
@@ -188,7 +191,6 @@ function RequestView({
             disabled={postDisabled}
             onPress={async () => {
               setPostDisabled(true);
-              // TODO: replace hardcoded ID with business owners User ID; create title using business name
               postNewRequest(businessOwnerID, reqMessage).then(() =>
                 modalVisibilitySetter(false)
               );
@@ -208,6 +210,7 @@ interface FullModalProps {
   visible: boolean;
   ownerID: string;
   title: string;
+  businessID: string;
 }
 
 function BusinessProfileModal({
@@ -215,6 +218,7 @@ function BusinessProfileModal({
   visible,
   ownerID,
   title,
+  businessID,
 }: FullModalProps) {
   const [screenindex, setScreenindex] = React.useState(0);
 
@@ -228,6 +232,7 @@ function BusinessProfileModal({
       )}
       {screenindex === 1 && (
         <RequestView
+          businessID={businessID}
           businessTitle={title}
           businessOwnerID={ownerID}
           nextScreenIncr={setScreenindex}

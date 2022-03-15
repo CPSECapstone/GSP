@@ -11,6 +11,7 @@ type Notification @model @auth(rules: [{allow: public}]) {
   Sender: ID
   userID: ID! @index(name: "byUser")
   title: String!
+  businessRequestID: ID!
 }
 
 type User @model @auth(rules: [{allow: public}]) {

@@ -1,12 +1,14 @@
 import { API } from "aws-amplify";
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useAppDispatch } from "../../redux/hooks";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/selectors/user";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
 import {
   createNotification,
   deleteNotification,
+  updateBusiness,
 } from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
@@ -72,6 +74,7 @@ interface NotifProps {
   message: string;
   senderID: string;
   type: NotificationType;
+  businessID: string;
 }
 
 // eslint-disable-next-line
@@ -82,8 +85,11 @@ function OwnershipNotif({
   message,
   senderID,
   type,
+  businessID,
 }: NotifProps) {
   const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(selectUser);
+
   let buttons;
 
   const deleteNotif = async () => {
@@ -104,12 +110,38 @@ function OwnershipNotif({
       type: NotificationType.OWNERSHIPDENIED,
       Sender: userID,
       title,
+      businessID,
     };
 
     await API.graphql({
       query: createNotification,
       variables: { input: rejectNotif },
     });
+  };
+
+  const ownershipTransfer = async () => {
+    const busDataUpdate = {
+      userID: currentUser?.id,
+      id: businessID,
+    };
+
+    Alert.alert("Confirm", "Are you sure you want to transfer ownership?", [
+      {
+        text: "Cancel",
+        onPress: () => {},
+      },
+      {
+        text: "Confirm",
+        onPress: async () => {
+          await API.graphql({
+            query: updateBusiness,
+            variables: { input: busDataUpdate },
+          });
+          deleteNotif();
+          dispatch(notificationRemoval(notifID));
+        },
+      },
+    ]);
   };
 
   switch (type) {
@@ -139,7 +171,16 @@ function OwnershipNotif({
                 Reply
               </Text>
             </Pressable>
-            <Pressable style={[styles.filledbutton, styles.button]}>
+            <Pressable
+              style={[styles.filledbutton, styles.button]}
+              onPress={() => {
+                try {
+                  ownershipTransfer();
+                } catch (e) {
+                  console.error(e);
+                }
+              }}
+            >
               <Text style={[styles.buttontext, { color: "white" }]}>
                 Accept
               </Text>
