@@ -14,6 +14,7 @@ export const createNotification = /* GraphQL */ `
       Sender
       userID
       title
+      businessRequestID
       createdAt
       updatedAt
     }
@@ -31,6 +32,7 @@ export const updateNotification = /* GraphQL */ `
       Sender
       userID
       title
+      businessRequestID
       createdAt
       updatedAt
     }
@@ -48,6 +50,7 @@ export const deleteNotification = /* GraphQL */ `
       Sender
       userID
       title
+      businessRequestID
       createdAt
       updatedAt
     }
