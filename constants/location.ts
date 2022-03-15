@@ -31,6 +31,7 @@ const computeDistance = async (source: string, destination: string) => {
     return String(geolib.convertDistance(distance, "mi"));
   } catch (e) {
     console.log(`Error loading address ${e}`);
+    return false;
   }
 };
 
@@ -40,6 +41,7 @@ const getCoordinates = async (loc: string) => {
     return locGeo[0].geometry!.point;
   } catch (e) {
     console.log(`Error searching address ${e}`);
+    return false;
   }
 };
 

@@ -40,6 +40,7 @@ export default function Map({ coordinate, length, name }: MapProps) {
           <Marker
             coordinate={{ latitude: coordinate[1], longitude: coordinate[0] }}
             title={name}
+            /* eslint-disable global-require */
             image={require("../../assets/map-marker.png")}
           />
         ) : (

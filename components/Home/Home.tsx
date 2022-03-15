@@ -73,7 +73,7 @@ export default function HomePage() {
   const [searchText, setsearchText] = useState("");
   const [selectedBusiness, setselectedBusiness] = useState(allBusinesses);
   const [coordinate, setcoordinate] = useState([]);
-  const [findText, setfindText] = useState("");
+  const [findText, setfindText] = useState(" ");
 
   const submitEdit = () => {
     setopenModal(true);
@@ -98,14 +98,16 @@ export default function HomePage() {
         if (
           tag != null &&
           (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
-            minorityGroupsByName.includes("All"))
+            minorityGroupsByName.includes("All") ||
+            minorityGroupsByName.length === 0)
         ) {
           tagBusiness.push(business);
+          return false;
         }
+        return true;
       });
     });
     const resBusiness: Business[] = [];
-    console.log(tagBusiness);
     tagBusiness.forEach((business) => {
       if (business != null) {
         const businessFields = [
@@ -117,15 +119,15 @@ export default function HomePage() {
           String(business?.zipcode),
         ];
         if (
-          businessFields.some((b) => findText.includes(b)) ||
-          business?.tags?.some((b) => findText.includes(b))
+          businessFields.some((b) => b.includes(findText)) ||
+          business?.tags?.some((b) => b.includes(findText))
         ) {
           resBusiness.push(business);
         }
       }
     });
     setResultBusinesses(resBusiness);
-  }, [selectedMinorityGroups, findText]);
+  }, [findText, selectedMinorityGroups]);
 
   return (
     <View style={styles.container}>
@@ -184,7 +186,7 @@ export default function HomePage() {
           <Pressable onPress={() => console.log(selectedBusiness[0]!.name)}>
             <BusinessCard
               name={selectedBusiness[0]!.name}
-              distance={"4"}
+              distance="4"
               rating={String(selectedBusiness[0]!.rating)}
             />
           </Pressable>
