@@ -53,6 +53,9 @@ export const getUser = /* GraphQL */ `
       Businesses {
         nextToken
       }
+      Reviews {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -84,6 +87,7 @@ export const getReview = /* GraphQL */ `
       rating
       comments
       businessID
+      userID
       createdAt
       updatedAt
     }
@@ -101,6 +105,7 @@ export const listReviews = /* GraphQL */ `
         rating
         comments
         businessID
+        userID
         createdAt
         updatedAt
       }

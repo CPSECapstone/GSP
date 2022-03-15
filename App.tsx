@@ -15,7 +15,6 @@ import Collections from "./components/Collections/Collections";
 import Login from "./components/Login/Login";
 import ForgotPass from "./components/Login/ForgotPass";
 import BizReviewPage from "./components/Review/BizReviewPage";
-import ProfileEditor from "./components/Profile/Business/ProfileEditor";
 import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
@@ -130,7 +129,6 @@ function InnerApp() {
         <Stack.Screen name="OpenCollection" component={OpenCollection} />
         <Stack.Screen name="ReviewPage" component={ReviewPage} />
         <Stack.Screen name="BizReviewPage" component={BizReviewPage} />
-        <Stack.Screen name="ProfileEditor" component={ProfileEditor} />
         <Stack.Screen
           name="Notifications"
           component={Notifications}

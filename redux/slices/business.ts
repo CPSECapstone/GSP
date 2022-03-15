@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Business } from "../../src/API";
 import { BusinessQueryType } from "../../src/APITypes";
 
 interface BusinessState {
@@ -26,10 +27,19 @@ export const businessSlice = createSlice({
         state.businesses = action.payload;
       }
     },
+    updateBusiness(state, action: PayloadAction<Business>) {
+      const index = state.businesses.findIndex(
+        (business) => business!.id === action.payload.id
+      );
+      const newArray = [...state.businesses];
+      newArray[index] = action.payload;
+      state.businesses = newArray;
+    },
   },
 });
 
-export const { businessLoading, businessReceived } = businessSlice.actions;
+export const { businessLoading, businessReceived, updateBusiness } =
+  businessSlice.actions;
 
 const businessReducer = businessSlice.reducer;
 export default businessReducer;

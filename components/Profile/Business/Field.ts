@@ -1,7 +1,7 @@
-import Business from "./Business";
+import { FrontendBusinessField } from "./Business";
 
 export default interface Field {
-  key: keyof Business;
+  key: FrontendBusinessField;
   displayTitle: string;
   description: string;
   characterLimit?: number;
@@ -11,46 +11,51 @@ export default interface Field {
 export const NameField: Field = {
   key: "name",
   displayTitle: "Name",
-  description: "test1",
+  description:
+    "Help people discover your business by using the name your business is known by. You can only change your business name once a month.",
   characterLimit: 50,
   characterMin: 3,
 };
 export const TypeField: Field = {
-  key: "businessType",
+  key: "type",
   displayTitle: "Business Type",
-  description: "test4",
+  description: "Select which category your business falls under.",
 };
 export const PhoneField: Field = {
   key: "phone",
   displayTitle: "Phone Number",
-  description: "test2",
+  description:
+    "Include the main phone number customers can reach your business at.",
   characterLimit: 10,
   characterMin: 10,
 };
 export const AddressField: Field = {
   key: "address",
   displayTitle: "Address",
-  description: "test3",
+  description: "Direct customers to your business with its address.",
 };
 export const TagsField: Field = {
   key: "tags",
   displayTitle: "Tags",
-  description: "test5",
+  description:
+    "Help people discover and understand your business by adding tags.",
 };
 export const AboutUsField: Field = {
-  key: "aboutUs",
+  key: "about",
   displayTitle: "About Us",
-  description: "test6",
+  description:
+    "Include a description about your business to convey your history and values as a minority owned business.",
   characterLimit: 300,
   characterMin: 50,
 };
 export const WebsiteField: Field = {
   key: "website",
   displayTitle: "Website",
-  description: "test7",
+  description: "Share your link to your businesses website here.",
 };
 export const ColorSetField: Field = {
   key: "colorSet",
   displayTitle: "Profile Colors",
-  description: "test8",
+  description:
+    "Customize your profile’s color accents to match your business’s branding.",
 };

@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { Auth } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { UserProfileProps } from "../../route-settings";
+import { UserProfileProps } from "../../../route-settings";
 import UserProfileCell from "./UserProfileCell";
 import BackButton from "./BackButton";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import selectUser from "../../redux/selectors/user";
-import notifications from "../../redux/thunks/notifications";
-import defaultUser from "../../constants/defaultData";
-import { setUser } from "../../redux/slices/user";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { selectUser } from "../../../redux/selectors/user";
+import notifications from "../../../redux/thunks/notifications";
+import defaultUser from "../../../constants/defaultData";
+import { setUser } from "../../../redux/slices/user";
 
 const styles = StyleSheet.create({
   container: {
@@ -78,8 +78,17 @@ function LogoutCell() {
   );
 }
 
+type AuthAttributes = { email: string; name: string };
+async function getAttributes(): Promise<AuthAttributes> {
+  const user = await Auth.currentAuthenticatedUser();
+  const { attributes } = user;
+  // console.log(attributes);
+  return attributes;
+}
+
 export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
+  getAttributes();
   const dispatch = useAppDispatch();
 
   if (user?.id !== undefined) {

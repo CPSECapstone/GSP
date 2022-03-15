@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { Ionicons } from "@expo/vector-icons";
@@ -5,7 +6,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,8 +16,9 @@ import {
   ImageBackground,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Address, BusinessType, BUSINESS_TYPES, ColorSet } from "./Business";
-import { ProfileEditorProps } from "../../../route-settings";
+import { useNavigation } from "@react-navigation/native";
+import { Color, Editor } from "./Business";
+
 import Field, {
   AboutUsField,
   AddressField,
@@ -44,13 +46,22 @@ import {
   URLEditor,
   ColorSetEditor,
 } from "./FieldEditors/FieldEditors";
-import dummyBusiness from "./tempdata";
+import { MinorityGroups, BusinessType, Business } from "../../../src/API";
+import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
 
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
-export default function ProfileEditor({ navigation }: ProfileEditorProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const submit = (): void => {};
+type BusinessEditorProps = {
+  business: Business;
+  submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
+};
+
+// eslint-disable-next-line prettier/prettier
+export default function BusinessEditor({
+  business,
+  submit,
+}: BusinessEditorProps) {
+  const navigation = useNavigation();
 
   return (
     <EditStack.Navigator
@@ -70,8 +81,11 @@ export default function ProfileEditor({ navigation }: ProfileEditorProps) {
         options={{
           headerLeft: () => ConfigureBackButton("Cancel", navigation.goBack),
         }}
-        component={BaseEditor}
-      />
+      >
+        {(props) => (
+          <BaseEditor {...props} submit={submit} business={business} />
+        )}
+      </EditStack.Screen>
       <EditStack.Screen name="EditText" component={TextEditor} />
       <EditStack.Screen name="EditPhone" component={PhoneEditor} />
       <EditStack.Screen name="EditAddress" component={AddressEditor} />
@@ -83,24 +97,34 @@ export default function ProfileEditor({ navigation }: ProfileEditorProps) {
   );
 }
 
-function BaseEditor({
-  navigation,
-  route,
-}: NativeStackScreenProps<EditStackParamList, "Base">) {
-  const business = dummyBusiness;
+type BaseEditorRouteProps = NativeStackScreenProps<EditStackParamList, "Base">;
+interface BaseEditorProps extends BaseEditorRouteProps {
+  business: Business;
+  submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
+}
+function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
+  const editor = new Editor(business);
 
   if (route.params) {
-    business[route.params.key] = route.params.value;
+    editor.updateField(route.params.key, route.params.value);
   }
 
-  const [profileImage, setProfileImage] = useState(business.profileImage);
-  const [bannerImage, setBannerImage] = useState(business.bannerImage);
+  const [pImg, setPImg] = useState<string>();
+  const [bImg, setBImg] = useState<string>();
 
-  useEffect(() =>
-    navigation.setOptions({ headerRight: () => ConfigureDoneButton(submit) })
+  const trySubmit = () => {
+    if (Object.keys(editor.edits).length < 2 && !(pImg || bImg)) {
+      navigation.goBack();
+    } else {
+      submit(editor.edits, pImg, bImg);
+    }
+  };
+
+  React.useEffect(() =>
+    navigation.setOptions({
+      headerRight: () => ConfigureDoneButton(trySubmit),
+    })
   );
-
-  const submit = (): void => {};
 
   const pickImage = async (setImage: Function) => {
     // No permissions request is necessary for launching the image library
@@ -122,7 +146,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditText", {
           field: NameField,
-          currentValue: business.name,
+          currentValue: editor.business.name,
         }),
     },
     {
@@ -130,8 +154,8 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditSelection", {
           field: TypeField,
-          currentValue: business.businessType,
-          options: Array.from(BUSINESS_TYPES),
+          currentValue: editor.business.type,
+          options: Array.from(enumToArray(BusinessType)),
         }),
     },
     {
@@ -139,7 +163,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditPhone", {
           field: PhoneField,
-          currentValue: business.phone,
+          currentValue: editor.business.phone,
         }),
     },
     {
@@ -147,7 +171,12 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditAddress", {
           field: AddressField,
-          currentValue: business.address,
+          currentValue: {
+            address: editor.business.address,
+            city: editor.business.city,
+            state: editor.business.state,
+            zipcode: editor.business.zipcode,
+          },
         }),
     },
     {
@@ -155,7 +184,8 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditList", {
           field: TagsField,
-          currentValue: business.tags,
+          currentValue: editor.business.tags as string[],
+          options: enumToArray(MinorityGroups),
         }),
     },
     {
@@ -163,7 +193,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditText", {
           field: AboutUsField,
-          currentValue: business.aboutUs,
+          currentValue: editor.business.about,
         }),
     },
     {
@@ -171,7 +201,7 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditURL", {
           field: WebsiteField,
-          currentValue: business.website,
+          currentValue: editor.business.website || "",
         }),
     },
     {
@@ -179,7 +209,10 @@ function BaseEditor({
       function: () =>
         navigation.navigate("EditColorSet", {
           field: ColorSetField,
-          currentValue: business.colorSet,
+          currentValue: {
+            primary: editor.business.primarycolor as Color,
+            secondary: editor.business.secondarycolor as Color,
+          },
         }),
     },
   ];
@@ -187,30 +220,46 @@ function BaseEditor({
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 5, width: "100%", zIndex: 1 }}>
-        <ImageBackground
-          source={{ uri: bannerImage }}
-          resizeMode="cover"
-          style={styles.banner}
-        />
+        {bImg ? (
+          <ImageBackground
+            source={{ uri: bImg }}
+            resizeMode="cover"
+            style={styles.banner}
+          />
+        ) : (
+          <S3ImageBackground
+            S3key={`${editor.business.id}/banner`}
+            style={styles.banner}
+          />
+        )}
         <View style={styles.darkness} />
 
         <Margin />
         <View
-          style={[styles.avatar, { borderColor: business.colorSet.primary }]}
+          style={[styles.avatar, { borderColor: editor.business.primarycolor }]}
         >
-          <Image
-            style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
-            source={{ uri: profileImage }}
-          />
+          {pImg ? (
+            <Image
+              style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
+              source={{
+                uri: pImg,
+              }}
+            />
+          ) : (
+            <S3Image
+              style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
+              S3key={`${editor.business.id}/profile`}
+            />
+          )}
           <EditButton
             position={{ bottom: -7, right: -7 }}
-            onPress={() => pickImage(setProfileImage)}
+            onPress={() => pickImage(setPImg)}
           />
         </View>
         <Margin />
         <EditButton
           position={{ bottom: -25, right: 5 }}
-          onPress={() => pickImage(setBannerImage)}
+          onPress={() => pickImage(setBImg)}
         />
       </View>
 
@@ -222,7 +271,7 @@ function BaseEditor({
               key={x.field.displayTitle}
               onPress={x.function}
               field={x.field}
-              data={business[x.field.key]}
+              business={editor.business}
             />
           ))}
         </View>
@@ -230,6 +279,10 @@ function BaseEditor({
       </View>
     </View>
   );
+}
+
+function enumToArray(enumObj: object): string[] {
+  return Object.values(enumObj).filter((value) => typeof value === "string");
 }
 
 const styles = StyleSheet.create({
@@ -301,36 +354,30 @@ function DataLine() {
   );
 }
 
-type BusinessProperty =
-  | string
-  | ColorSet
-  | BusinessType
-  | Address
-  | URL
-  | string[]
-  | undefined;
-function getDisplay(data: BusinessProperty, field: Field, onPress: Function) {
-  let displayData;
+function getDisplay(business: Business, field: Field, onPress: Function) {
+  let displayData: string | number | undefined | null;
   if (field.key === "address") {
-    const { address, city } = data as Address;
-    displayData = `${address}, ${city}`;
-  } else if (field.key === "website" || field.key === "menu") {
-    displayData = data?.toString();
+    displayData = `${business.address}, ${business.city}`;
   } else if (field.key === "tags") {
-    const arr = data as string[];
-    displayData = `${arr[0]}, ${arr[1]}`;
+    const tags = business.tags!;
+    displayData = tags[0] as string;
+    for (let i = 1; i < business.tags!.length; i += 1) {
+      displayData += `, ${business.tags![i]}`;
+    }
   } else if (field.key === "phone") {
-    displayData = formatPhone(data as string);
+    displayData = formatPhone(business.phone);
   } else if (field.key === "colorSet") {
-    const { primary, secondary } = data as ColorSet;
     return (
       <Pressable style={{ flexDirection: "row", marginTop: 10 }}>
-        <ColorOption color={primary} onPress={() => onPress()} />
-        <ColorOption color={secondary} onPress={() => onPress()} />
+        <ColorOption color={business.primarycolor} onPress={() => onPress()} />
+        <ColorOption
+          color={business.secondarycolor}
+          onPress={() => onPress()}
+        />
       </Pressable>
     );
   } else {
-    displayData = data;
+    displayData = business[field.key];
   }
   return (
     <Pressable onPress={() => onPress()}>
@@ -342,15 +389,15 @@ function getDisplay(data: BusinessProperty, field: Field, onPress: Function) {
   );
 }
 
-type DataRowProps = { onPress: Function; field: Field; data: BusinessProperty };
-function DataRow({ onPress, field, data }: DataRowProps) {
+type DataRowProps = { onPress: Function; field: Field; business: Business };
+function DataRow({ onPress, field, business }: DataRowProps) {
   return (
     <View style={styles.dataRow}>
       <View style={styles.dataRowTitleContainer}>
         <Text style={styles.dataRowTitle}>{field.displayTitle}</Text>
       </View>
       <View style={styles.dataRowContainer}>
-        {getDisplay(data, field, onPress)}
+        {getDisplay(business, field, onPress)}
       </View>
     </View>
   );

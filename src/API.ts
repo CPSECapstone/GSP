@@ -140,6 +140,7 @@ export type User = {
   name?: string | null,
   Notifications?: ModelNotificationConnection | null,
   Businesses?: ModelBusinessConnection | null,
+  Reviews?: ModelReviewConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -232,6 +233,7 @@ export type Review = {
   rating?: number | null,
   comments?: string | null,
   businessID?: string | null,
+  userID?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -258,12 +260,14 @@ export type CreateReviewInput = {
   rating?: number | null,
   comments?: string | null,
   businessID?: string | null,
+  userID?: string | null,
 };
 
 export type ModelReviewConditionInput = {
   rating?: ModelIntInput | null,
   comments?: ModelStringInput | null,
   businessID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelReviewConditionInput | null > | null,
   or?: Array< ModelReviewConditionInput | null > | null,
   not?: ModelReviewConditionInput | null,
@@ -286,6 +290,7 @@ export type UpdateReviewInput = {
   rating?: number | null,
   comments?: string | null,
   businessID?: string | null,
+  userID?: string | null,
 };
 
 export type DeleteReviewInput = {
@@ -442,6 +447,7 @@ export type ModelReviewFilterInput = {
   rating?: ModelIntInput | null,
   comments?: ModelStringInput | null,
   businessID?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
   and?: Array< ModelReviewFilterInput | null > | null,
   or?: Array< ModelReviewFilterInput | null > | null,
   not?: ModelReviewFilterInput | null,
@@ -565,6 +571,10 @@ export type CreateUserMutation = {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
     } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -592,6 +602,10 @@ export type UpdateUserMutation = {
     } | null,
     Businesses?:  {
       __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
+    } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -623,6 +637,10 @@ export type DeleteUserMutation = {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
     } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -640,6 +658,7 @@ export type CreateReviewMutation = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -657,6 +676,7 @@ export type UpdateReviewMutation = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -674,6 +694,7 @@ export type DeleteReviewMutation = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -921,6 +942,10 @@ export type GetUserQuery = {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
     } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -959,6 +984,7 @@ export type GetReviewQuery = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -979,6 +1005,7 @@ export type ListReviewsQuery = {
       rating?: number | null,
       comments?: string | null,
       businessID?: string | null,
+      userID?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1165,6 +1192,10 @@ export type OnCreateUserSubscription = {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
     } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1187,6 +1218,10 @@ export type OnUpdateUserSubscription = {
     } | null,
     Businesses?:  {
       __typename: "ModelBusinessConnection",
+      nextToken?: string | null,
+    } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
     createdAt: string,
@@ -1213,6 +1248,10 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelBusinessConnection",
       nextToken?: string | null,
     } | null,
+    Reviews?:  {
+      __typename: "ModelReviewConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1225,6 +1264,7 @@ export type OnCreateReviewSubscription = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1237,6 +1277,7 @@ export type OnUpdateReviewSubscription = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1249,6 +1290,7 @@ export type OnDeleteReviewSubscription = {
     rating?: number | null,
     comments?: string | null,
     businessID?: string | null,
+    userID?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

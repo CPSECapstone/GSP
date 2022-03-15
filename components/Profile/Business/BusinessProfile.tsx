@@ -8,31 +8,32 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableOpacity,
   Pressable,
-  ImageBackground,
 } from "react-native";
-import { BusinessProps } from "../../../route-settings";
+import { useNavigation } from "@react-navigation/native";
+import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
-import dummyBusiness from "./tempdata";
+import { Business } from "../../../src/API";
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
 }
 
-function CircleButton({
-  icon,
-  title,
-  action,
-}: {
+type CircleButtonProps = {
   icon: any;
   title: string;
   action: Function;
-}) {
+  color: string;
+};
+
+function CircleButton({ icon, title, action, color }: CircleButtonProps) {
   return (
     <View style={styles.circleButtonContainer}>
-      <TouchableOpacity onPress={() => action()} style={styles.circleButton}>
+      <TouchableOpacity
+        onPress={() => action()}
+        style={[styles.circleButton, { backgroundColor: color }]}
+      >
         <Ionicons name={icon} size={20} color="white" />
       </TouchableOpacity>
       <Text style={styles.circleButtonText}>{title}</Text>
@@ -77,15 +78,16 @@ function StarOutline() {
   );
 }
 
-function Tags() {
+function Tags({ tags }: { tags: string[] }) {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
-  dummyBusiness.tags.forEach((tag) => (tagList += `${tag} • `));
+  tags.forEach((tag) => (tagList += `${tag} • `));
   tagList = tagList.substring(0, tagList.length - 3);
   return <Text style={styles.tags}>{tagList}</Text>;
 }
 
-function call(phoneNumber: string) {
+async function call(phoneNumber: string) {
+  alert(phoneNumber);
   Linking.openURL(`tel:${phoneNumber}`);
 }
 
@@ -108,24 +110,29 @@ const openMap = async (address: string, city: string, zipCode: string) => {
   openUrl(link);
 };
 
-export default function BusinessProfile({ navigation }: BusinessProps) {
+type BusinessProfileProps = { business: Business; edit: () => void };
+export default function BusinessProfile({
+  business,
+  edit,
+}: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
+  const navigation = useNavigation();
 
   return (
     <View>
       <BusinessProfileModal
-        // TOOD: replace this dummy data with actual data from businesses
-        title={dummyBusiness.name}
+        title={business.name}
         ownerID="aee0f25e-0c09-4878-b73d-096f3d927b75"
         visible={modalVisible}
         modalVisibilitySetter={setmodalVisible}
       />
-      <ImageBackground
-        source={{ uri: dummyBusiness.bannerImage }}
-        resizeMode="cover"
+      <S3ImageBackground
+        S3key={`${business.id}/banner`}
         style={styles.banner}
       />
-      <View style={styles.darkness} />
+      <View
+        style={[styles.darkness, { borderBottomColor: business.primarycolor }]}
+      />
       <View style={{ flexDirection: "row", position: "absolute" }}>
         <Margin />
         <View style={{ flex: 10 }}>
@@ -133,10 +140,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
             <Pressable style={styles.back} onPress={() => navigation.goBack()}>
               <Ionicons name="chevron-back-outline" size={30} color="white" />
             </Pressable>
-            <Pressable
-              style={styles.save}
-              onPress={() => navigation.navigate("ProfileEditor")}
-            >
+            <Pressable style={styles.save} onPress={edit}>
               <Ionicons name="bookmark-outline" size={25} color="white" />
             </Pressable>
             <Pressable
@@ -145,22 +149,28 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
             >
               <SimpleLineIcons name="options" size={25} color="white" />
             </Pressable>
-            <Image
-              style={styles.avatar}
-              source={{ uri: dummyBusiness.profileImage }}
+            <S3Image
+              style={[styles.avatar, { borderColor: business.primarycolor }]}
+              S3key={`${business.id}/profile`}
             />
-            <Text style={styles.title}>{dummyBusiness.name}</Text>
-            <Text style={styles.details}>
-              {`${dummyBusiness.businessType} • 3mi`}
-            </Text>
+            {/* <Image
+                source={{uri: business.profileImage}}
+                style={[
+                  styles.avatar,
+                  { borderColor: business.primarycolor },
+                ]}
+              /> */}
+            <Text style={styles.title}>{business.name}</Text>
+            <Text style={styles.details}>{`${business.type} • 3mi`}</Text>
           </View>
           <View style={styles.body}>
-            <Tags />
+            <Tags tags={business.tags as string[]} />
             <View style={{ flexDirection: "row", marginTop: 20 }}>
               <CircleButton
                 icon="call"
                 title="Call"
-                action={() => call(dummyBusiness.phone)}
+                action={() => call(business.phone)}
+                color={business.primarycolor}
               />
               <Margin />
               <CircleButton
@@ -168,27 +178,35 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                 title="Map"
                 action={() =>
                   openMap(
-                    dummyBusiness.address.address,
-                    dummyBusiness.address.city,
-                    dummyBusiness.address.zipcode.toString()
+                    business.address,
+                    business.city,
+                    business.zipcode.toString()
                   )
                 }
+                color={business.primarycolor}
               />
               <Margin />
               <CircleButton
                 icon="open"
                 title="Site"
-                action={() => openUrl(dummyBusiness.website.toString())}
+                action={() => openUrl(business.website!.toString())}
+                color={business.primarycolor}
               />
               <Margin />
-              {dummyBusiness.menu ? (
+              {business.menu ? (
                 <CircleButton
                   icon="restaurant"
                   title="Menu"
-                  action={() => openUrl(dummyBusiness.menu!)}
+                  action={() => openUrl(business.menu!)}
+                  color={business.primarycolor}
                 />
               ) : (
-                <CircleButton icon="bookmark" title="Save" action={() => {}} />
+                <CircleButton
+                  icon="bookmark"
+                  title="Save"
+                  action={() => {}}
+                  color={business.primarycolor}
+                />
               )}
             </View>
 
@@ -207,7 +225,15 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
             </View>
 
             <View style={{ flexDirection: "row" }}>
-              <Pressable style={[styles.ratingButton, { marginRight: 10 }]}>
+              <Pressable
+                style={[
+                  styles.ratingButton,
+                  {
+                    backgroundColor: business.secondarycolor,
+                    marginRight: 10,
+                  },
+                ]}
+              >
                 <Text
                   style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
                 >
@@ -215,8 +241,15 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
                 </Text>
               </Pressable>
               <Pressable
-                style={[styles.ratingButton, { marginLeft: 10 }]}
-                onPress={() => navigation.navigate("BizReviewPage")}
+                style={[
+                  styles.ratingButton,
+                  { backgroundColor: business.secondarycolor, marginLeft: 10 },
+                ]}
+                onPress={() =>
+                  navigation.navigate("BizReviewPage", {
+                    busID: "90c44163-3c82-4d91-8010-41a75a666670",
+                  })
+                }
               >
                 <Text
                   style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
@@ -230,7 +263,7 @@ export default function BusinessProfile({ navigation }: BusinessProps) {
 
             <View style={styles.bodyContent}>
               <Text style={styles.heading}>About Us</Text>
-              <Text style={styles.description}>{dummyBusiness.aboutUs}</Text>
+              <Text style={styles.description}>{business.about}</Text>
             </View>
           </View>
         </View>
@@ -277,20 +310,20 @@ const styles = StyleSheet.create({
     right: 35,
   },
   banner: {
-    borderColor: dummyBusiness.colorSet.primary,
-    height: 300,
+    height: 320,
     flex: 1,
     justifyContent: "center",
   },
   darkness: {
+    position: "absolute",
+    top: 0,
     backgroundColor: "rgba(0,0,0,0.5)",
     width: "100%",
-    height: 300,
+    height: 320,
     borderBottomWidth: 3,
-    borderBottomColor: dummyBusiness.colorSet.primary,
   },
   header: {
-    height: 300,
+    height: 320,
   },
   tags: {
     fontSize: 12,
@@ -307,7 +340,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    backgroundColor: dummyBusiness.colorSet.primary,
   },
   circleButtonText: {
     paddingTop: 8,
@@ -320,7 +352,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderRadius: 100,
     borderWidth: 4,
-    borderColor: dummyBusiness.colorSet.primary,
     alignSelf: "center",
     marginTop: 60,
     backgroundColor: "black",
@@ -360,7 +391,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#00BFFF",
   },
   ratingButton: {
-    backgroundColor: dummyBusiness.colorSet.secondary,
     flex: 1,
     borderRadius: 10,
     marginTop: 10,

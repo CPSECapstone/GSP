@@ -14,6 +14,7 @@ module.exports = {
       rules: {
         "react/react-in-jsx-scope": "off",
         "no-underscore-dangle": "off",
+        "prefer-default-export": "off",
       },
     },
   ],

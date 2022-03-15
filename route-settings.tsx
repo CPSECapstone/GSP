@@ -25,7 +25,7 @@ export type RootStackParamList = {
   ProfileEditor: undefined;
   ReviewPage: undefined;
   UserProfile: undefined;
-  BizReviewPage: undefined;
+  BizReviewPage: { busID: string };
   Notifications: undefined;
 };
 
@@ -98,7 +98,7 @@ export const TabBarScreenOptions = ({
 }: any): Partial<BottomTabNavigationOptions> => ({
   tabBarShowLabel: false,
   headerShown: false,
-  tabBarStyle: { height: 70, backgroundColor: "F5F5F8", borderTopWidth: 0 },
+  tabBarStyle: { height: 100, backgroundColor: "F5F5F8", borderTopWidth: 0 },
   tabBarIcon: ({
     focused,
     color,
@@ -118,17 +118,25 @@ export const TabBarScreenOptions = ({
       iconName = "ios-bookmark";
     } else if (route.name === "Profile") {
       iconName = "ios-person";
-    } else if (route.name === "Business") {
-      iconName = "business";
     }
 
     if (!focused) {
       iconName += "-outline";
+      return <Ionicons name={iconName} size={size} color="#ADADAF" />;
     }
-
-    // You can return any component that you like here!
-
-    return <Ionicons name={iconName} size={size} color={color} />;
+    return (
+      <Ionicons
+        style={{
+          shadowColor: color,
+          shadowOpacity: 0.8,
+          shadowRadius: 14,
+          shadowOffset: { width: 0, height: 6 },
+        }}
+        name={iconName}
+        size={size}
+        color={color}
+      />
+    );
   },
   tabBarActiveTintColor: "tomato",
   tabBarInactiveTintColor: "tomato",
