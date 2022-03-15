@@ -19,16 +19,16 @@ const computeDistance = async (source: string, destination: string) => {
     );
     const sourceCoords = sourceGeo[0].geometry;
     const destCoords = destGeo[0].geometry;
-    const test1 = {
+    const src = {
       latitude: sourceCoords!["point"][1],
       longitude: sourceCoords!["point"][0],
     };
-    const test2 = {
+    const dest = {
       latitude: destCoords!["point"][1],
       longitude: destCoords!["point"][0],
     };
-    const distance = geolib.getDistance(test1, test2);
-    return geolib.convertDistance(distance, "mi");
+    const distance = geolib.getDistance(src, dest);
+    return String(geolib.convertDistance(distance, "mi"));
   } catch (e) {
     console.log(`Error loading address ${e}`);
   }

@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
-import selectAllBusinesses from "../../redux/selectors/business";
+import { selectAllBusinesses } from "../../redux/selectors/business";
 import SearchBar from "../SearchBar/SearchBar";
 import Map from "./Map";
 import { Business } from "../../src/API";
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
     // padding: 10,
+  },
+  resultCard: {
+    position: "absolute",
+    bottom: "1%",
   },
 });
 
@@ -163,82 +167,25 @@ export default function HomePage() {
         keyExtractor={(item, index) => item.title + index.toString()}
       />
       {selectedBusiness.length === 1 ? (
-        <BusinessCard
-          name={selectedBusiness[0]!.name}
-          distance={"2"}
-          rating={String(selectedBusiness[0]!.rating)}
-        />
+        <View style={styles.resultCard}>
+          <Pressable onPress={() => console.log(selectedBusiness[0]!.name)}>
+            <BusinessCard
+              name={selectedBusiness[0]!.name}
+              distance={"4"}
+              rating={String(selectedBusiness[0]!.rating)}
+            />
+          </Pressable>
+        </View>
       ) : (
         <View />
       )}
       {openModal && (
-        <ResultsTab onDismiss={onDismiss} visible>
-          <FlatList
-            data={resultBusinesses}
-            showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => {
-              if (item !== undefined && item !== null) {
-                return (
-                  <View onStartShouldSetResponder={() => true}>
-                    <Pressable
-                      onPress={() => {
-                        setselectedBusiness([item]);
-                      }}
-                    >
-                      <BusinessCard
-                        name={item.name}
-                        distance={"4"}
-                        rating={
-                          item.rating == null
-                            ? "0 Reviews"
-                            : String(item.rating)
-                        }
-                      />
-                    </Pressable>
-                  </View>
-                );
-              }
-              return <Text>Something went wrong</Text>;
-            }}
-            keyExtractor={(item, index) => item!.name + index.toString()}
-          />
-          {/* <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginVertical: 20,
-              padding: 10,
-              minHeight: 350,
-            }}
-          >
-            {resultBusinesses.length === 0 ? (
-              <Text
-                style={{
-                  color: "#FA4A0C",
-                  fontFamily: "Mada-Regular",
-                  fontSize: 24,
-                  textAlign: "center",
-                }}
-              >
-                No businesses returned from selected filters.
-              </Text>
-            ) : (
-              <FlatList
-                contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
-                data={resultBusinesses}
-                renderItem={({ item }) => {
-                  if (item?.name !== undefined) {
-                    return (
-                      <BusinessCard name={item.name} distance="3" rating="4" />
-                    );
-                  }
-                  return <Text>Something went wrong</Text>;
-                }}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            )}
-          </View> */}
-        </ResultsTab>
+        <ResultsTab
+          onDismiss={onDismiss}
+          visible
+          resultBusinesses={resultBusinesses}
+          setselectedBusiness={setselectedBusiness}
+        />
       )}
     </View>
   );

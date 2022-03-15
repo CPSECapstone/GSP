@@ -8,7 +8,10 @@ import {
   View,
   TouchableWithoutFeedback,
   Pressable,
+  FlatList,
+  Text,
 } from "react-native";
+import BusinessCard from "../BusinessCard/BusinessCard";
 
 const styles = StyleSheet.create({
   overlay: {
@@ -42,10 +45,16 @@ const styles = StyleSheet.create({
 interface ResultsTabProps {
   onDismiss: () => void;
   visible: boolean;
-  children: React.ReactNode;
+  resultBusinesses: any;
+  setselectedBusiness: any;
 }
 
-function ResultsTab({ onDismiss, visible, children }: ResultsTabProps) {
+function ResultsTab({
+  onDismiss,
+  visible,
+  resultBusinesses,
+  setselectedBusiness,
+}: ResultsTabProps) {
   const screenHeight = Dimensions.get("screen").height;
   const panY = useRef(new Animated.Value(screenHeight)).current;
 
@@ -109,7 +118,52 @@ function ResultsTab({ onDismiss, visible, children }: ResultsTabProps) {
             <View style={styles.sliderIndicatorRow}>
               <View style={styles.sliderIndicator} />
             </View>
-            {children}
+            {resultBusinesses.length === 0 ? (
+              <Text
+                style={{
+                  color: "#FA4A0C",
+                  fontFamily: "Mada-Regular",
+                  fontSize: 24,
+                  textAlign: "center",
+                  top: "40%",
+                }}
+              >
+                No businesses returned.
+              </Text>
+            ) : (
+              <FlatList
+                data={resultBusinesses}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  if (item !== undefined && item !== null) {
+                    return (
+                      <View onStartShouldSetResponder={() => true}>
+                        <Pressable
+                          onPress={() => {
+                            setselectedBusiness([item]);
+                            handleDismiss();
+                          }}
+                        >
+                          <BusinessCard
+                            name={item.name}
+                            distance={"4"}
+                            rating={
+                              item.rating == null
+                                ? "0 Reviews"
+                                : String(item.rating)
+                            }
+                          />
+                        </Pressable>
+                      </View>
+                    );
+                  }
+                  return <Text>Something went wrong</Text>;
+                }}
+                keyExtractor={(item, index) =>
+                  item.toString() + index.toString()
+                }
+              />
+            )}
           </Animated.View>
         </View>
       </TouchableWithoutFeedback>
@@ -118,56 +172,3 @@ function ResultsTab({ onDismiss, visible, children }: ResultsTabProps) {
 }
 
 export default ResultsTab;
-
-/* <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          marginVertical: 20,
-          padding: 10,
-          minHeight: 350,
-        }}
-      >
-        {resultBusinesses.length === 0 ? (
-          <Text
-            style={{
-              color: "#FA4A0C",
-              fontFamily: "Mada-Regular",
-              fontSize: 24,
-              textAlign: "center",
-            }}
-          >
-            No businesses returned from selected filters.
-          </Text>
-        ) : (
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ paddingLeft: 25, width: "100%" }}
-            data={resultBusinesses}
-            renderItem={({ item }) => {
-              if (
-                item?.name !== undefined &&
-                item.type !== undefined &&
-                item.type !== null &&
-                item.primarycolor !== null &&
-                item.primarycolor !== undefined &&
-                item.tags !== null &&
-                item.tags !== undefined
-              ) {
-                return (
-                  <View />
-                  <ExploreResultCell
-                    title={item.name}
-                    distance={3}
-                    category={item.type}
-                    minoritygroups={item.tags}
-                    primarycolor={item.primarycolor}
-                  />
-                );
-              }
-              return <Text>Something went wrong</Text>;
-            }}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        )} */
