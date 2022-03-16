@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 import { Image, ImageBackground } from "react-native";
 
@@ -9,18 +9,25 @@ const PLACEHOLDER_BANNER = require("./PlaceholderImages/banner.jpeg");
 
 type S3ImageProps = { S3key: string; style: object };
 export function S3Image({ S3key, style }: S3ImageProps) {
-  const [source, setSource] = React.useState(PLACEHOLDER_IMG_URL);
-  getImage(S3key).then((response) => {
-    if (response) setSource({ uri: response });
-  });
+  const [source, setSource] = useState(PLACEHOLDER_IMG_URL);
+
+  useEffect(() => {
+    getImage(S3key).then((response) => {
+      if (response) setSource({ uri: response });
+    });
+  }, [S3key]);
+
   return <Image source={source} style={style} />;
 }
 
 export function S3ImageBackground({ S3key, style }: S3ImageProps) {
-  const [source, setSource] = React.useState(PLACEHOLDER_BANNER);
-  getImage(S3key).then((response) => {
-    if (response) setSource({ uri: response });
-  });
+  const [source, setSource] = useState(PLACEHOLDER_BANNER);
+
+  useEffect(() => {
+    getImage(S3key).then((response) => {
+      if (response) setSource({ uri: response });
+    });
+  }, [S3key]);
 
   return <ImageBackground resizeMode="cover" source={source} style={style} />;
 }
