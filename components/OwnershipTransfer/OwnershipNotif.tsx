@@ -78,7 +78,6 @@ interface NotifProps {
   businessID: string;
 }
 
-// eslint-disable-next-line
 function OwnershipNotif({
   notifID,
   userID,
@@ -120,7 +119,7 @@ function OwnershipNotif({
       type: NotificationType.OWNERSHIPDENIED,
       Sender: userID,
       title,
-      businessID,
+      businessRequestID: businessID,
     };
 
     await API.graphql({
@@ -138,7 +137,7 @@ function OwnershipNotif({
       type: NotificationType.OWNERSHIPAPPROVED,
       Sender: userID,
       title,
-      businessID,
+      businessRequestID: businessID,
     };
 
     await API.graphql({
@@ -270,7 +269,14 @@ function OwnershipNotif({
 
   return (
     <View style={[styles.container, styles.shadow]}>
-      <Text style={{ fontFamily: "Mada-Medium", fontSize: 17, padding: 5 }}>
+      <Text
+        style={{
+          fontFamily: "Mada-Medium",
+          fontSize: 17,
+          padding: 5,
+          textAlign: "center",
+        }}
+      >
         {title}
       </Text>
       <Text style={{ opacity: 0.5, fontFamily: "Mada-Regular", padding: 2 }}>
