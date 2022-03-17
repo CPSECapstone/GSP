@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectAllBusinesses } from "../../redux/selectors/business";
-import { selectAllUsers, selectUser } from "../../redux/selectors/user";
+import { selectAllUsers } from "../../redux/selectors/user";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
 import {
@@ -88,7 +88,6 @@ function OwnershipNotif({
   businessID,
 }: NotifProps) {
   const dispatch = useAppDispatch();
-  const currentUser = useAppSelector(selectUser);
   const users = useAppSelector(selectAllUsers);
   const businesses = useAppSelector(selectAllBusinesses);
   const currentBusiness = businesses.find((b) => b?.id === businessID);
@@ -145,7 +144,7 @@ function OwnershipNotif({
 
   const ownershipTransfer = async () => {
     const busDataUpdate = {
-      userID: currentUser?.id,
+      userID: senderID,
       id: businessID,
     };
 
@@ -258,7 +257,7 @@ function OwnershipNotif({
               }
             }}
           >
-            <Text style={styles.buttontext}>Dismiss</Text>
+            <Text style={[styles.buttontext, { color: "white" }]}>Dismiss</Text>
           </Pressable>
         </View>
       );
