@@ -166,9 +166,7 @@ function ResultsTab({
                   }
                   return <Text>Something went wrong</Text>;
                 }}
-                keyExtractor={(item, index) =>
-                  item.toString() + index.toString()
-                }
+                keyExtractor={(item, index) => item.id ?? index.toString()}
               />
             )}
           </Animated.View>

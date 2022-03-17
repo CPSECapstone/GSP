@@ -190,7 +190,7 @@ function HomeView({ navigation }: HomeProps) {
             </View>
           </Pressable>
         )}
-        keyExtractor={(item, index) => item.title + index.toString()}
+        keyExtractor={(item, index) => item.title ?? index.toString()}
       />
       {selectedBusiness.length === 1 ? (
         <View style={styles.resultCard}>

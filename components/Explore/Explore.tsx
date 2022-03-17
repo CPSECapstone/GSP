@@ -244,7 +244,7 @@ function ExploreView({ navigation }: ExploreProps) {
               }
               return <Text>Something went wrong</Text>;
             }}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item?.id ?? index.toString()}
           />
         )}
       </View>
