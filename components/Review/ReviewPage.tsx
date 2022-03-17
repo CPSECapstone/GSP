@@ -34,20 +34,19 @@ function ReviewPage({ navigation }: ReviewPageProps) {
     <SafeAreaView>
       <BackButton action={() => navigation.goBack()} />
       <Text style={styles.title}>My Reviews</Text>
-      {reviews.map(({ comments, rating, businessID, id }) => {
-        const business = businesses.find((b) => b?.id === businessID);
-        if (!business || !rating) {
+      {reviews.map((review) => {
+        const business = businesses.find((b) => b?.id === review.businessID);
+        if (!business || !review.rating || !user) {
           // TODO: Make rating required on backend
           return undefined;
         }
 
         return (
-          <View style={styles.review} key={id}>
+          <View style={styles.review} key={review.id}>
             <ReviewCell
-              restaurant={business?.name}
-              rating={rating}
-              srcImage={business?.profileImage}
-              description={comments}
+              user={user}
+              review={review}
+              clientId={user?.id}
               action={() => setModalVisible(true)}
             />
           </View>

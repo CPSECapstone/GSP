@@ -2,8 +2,8 @@
 import React from "react";
 import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Review, User } from "../../src/API";
 import RatingView from "./RatingView";
+import { ReviewType, UserType } from "../../src/APITypes";
 
 export const styles = StyleSheet.create({
   reviewCell: {
@@ -40,8 +40,8 @@ export const styles = StyleSheet.create({
 });
 
 export interface ReviewCellProps {
-  user: User;
-  review: Review;
+  user: UserType;
+  review: ReviewType;
   clientId: string;
   action: () => void;
 }
