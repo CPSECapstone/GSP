@@ -7,6 +7,7 @@ amplify
 src
 .prettierignore
 assets/fonts
+assets/map-marker.png
 .husky/pre-commit
 assets/icons
 components/Misc/PlaceholderImages
