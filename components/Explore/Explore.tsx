@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -16,6 +17,7 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { categories, minoritygroups } from "../../constants/exploredata";
 import ExploreResultCell from "./ExploreResultCell";
 import { useAppSelector } from "../../redux/hooks";
@@ -25,6 +27,7 @@ import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../constants/enumconverters";
+import WithBusinessView from "../Profile/Business/WithBusinessView";
 
 const width = Dimensions.get("screen").width * 0.16;
 const height = Dimensions.get("screen").height * 0.096;
@@ -122,7 +125,15 @@ const categoryicons = [
   />,
 ];
 
-function Explore() {
+export default function ExplorePage() {
+  return <WithBusinessView Component={ExploreView} />;
+}
+
+type ExploreProps = NativeStackScreenProps<
+  { BusinessView: { id: string }; Component: undefined },
+  "Component"
+>;
+function ExploreView({ navigation }: ExploreProps) {
   const allBusinesses = useAppSelector(selectAllBusinesses);
 
   const [selectedCategoryIndex, setselectedCategoryIndex] = useState(0);
@@ -220,19 +231,20 @@ function Explore() {
               ) {
                 return (
                   <ExploreResultCell
-                    title={item.name}
+                    onPress={() =>
+                      navigation.navigate("BusinessView", { id: item.id })
+                    }
                     distance={3}
-                    category={returnBusinessTypeValue(item.type)}
+                    business={item}
                     minoritygroups={item.tags.map((tag) =>
                       returnMinorityGroupValue(tag)
                     )}
-                    primarycolor={item.primarycolor}
                   />
                 );
               }
               return <Text>Something went wrong</Text>;
             }}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item?.id ?? index.toString()}
           />
         )}
       </View>
@@ -277,5 +289,3 @@ function Explore() {
     </SafeAreaView>
   );
 }
-
-export default Explore;

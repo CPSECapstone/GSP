@@ -101,6 +101,9 @@ function SignUp({ navigation, route }: SignUpProps) {
 
   const submit = async () => {
     if (validateAll()) {
+      if (isMBO) {
+        navigation.navigate("CreateBusinessProfile");
+      }
       // Create user through authentication
       try {
         await Auth.signUp({

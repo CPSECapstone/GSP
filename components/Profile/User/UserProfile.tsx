@@ -78,17 +78,8 @@ function LogoutCell() {
   );
 }
 
-type AuthAttributes = { email: string; name: string };
-async function getAttributes(): Promise<AuthAttributes> {
-  const user = await Auth.currentAuthenticatedUser();
-  const { attributes } = user;
-  // console.log(attributes);
-  return attributes;
-}
-
 export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
-  getAttributes();
   const dispatch = useAppDispatch();
 
   if (user?.id !== undefined) {

@@ -48,11 +48,15 @@ import {
 } from "./FieldEditors/FieldEditors";
 import { MinorityGroups, BusinessType, Business } from "../../../src/API";
 import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../../constants/enumconverters";
 
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
 type BusinessEditorProps = {
-  business: Business;
+  business: Business | undefined;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
 };
 
@@ -99,7 +103,7 @@ export default function BusinessEditor({
 
 type BaseEditorRouteProps = NativeStackScreenProps<EditStackParamList, "Base">;
 interface BaseEditorProps extends BaseEditorRouteProps {
-  business: Business;
+  business: Business | undefined;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
 }
 function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
@@ -357,15 +361,15 @@ function DataLine() {
 function getDisplay(business: Business, field: Field, onPress: Function) {
   let displayData: string | number | undefined | null;
   if (field.key === "address") {
-    displayData = `${business.address}, ${business.city}`;
+    if (business.address) displayData = `${business.address}, ${business.city}`;
   } else if (field.key === "tags") {
     const tags = business.tags!;
-    displayData = tags[0] as string;
+    displayData = returnMinorityGroupValue(tags[0]);
     for (let i = 1; i < business.tags!.length; i += 1) {
-      displayData += `, ${business.tags![i]}`;
+      displayData += `, ${returnMinorityGroupValue(business.tags![i])}`;
     }
   } else if (field.key === "phone") {
-    displayData = formatPhone(business.phone);
+    if (business.phone) displayData = formatPhone(business.phone);
   } else if (field.key === "colorSet") {
     return (
       <Pressable style={{ flexDirection: "row", marginTop: 10 }}>
@@ -376,6 +380,8 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
         />
       </Pressable>
     );
+  } else if (field.key === "type") {
+    displayData = returnBusinessTypeValue(business.type);
   } else {
     displayData = business[field.key];
   }
@@ -404,7 +410,7 @@ function DataRow({ onPress, field, business }: DataRowProps) {
 }
 
 type EditButtonProps = { position: Object; onPress: Function };
-export function EditButton({ position, onPress }: EditButtonProps) {
+function EditButton({ position, onPress }: EditButtonProps) {
   return (
     <Pressable style={[styles.editButton, position]} onPress={() => onPress()}>
       <Ionicons name="pencil" size={30} color="black" />

@@ -32,7 +32,10 @@ const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 export default function ProfileSelector() {
   return (
     <BusinessContext.Provider value={useAppSelector(selectAllBusinesses)}>
-      <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+      <ProfileStack.Navigator
+        initialRouteName="Base"
+        screenOptions={{ headerShown: false }}
+      >
         <ProfileStack.Screen name="Base" component={Base} />
         <ProfileStack.Screen name="User" component={UserProfile} />
         <ProfileStack.Screen name="Business" component={BusinessScreen} />

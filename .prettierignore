@@ -6,8 +6,7 @@ babel.config.js
 amplify
 src
 .prettierignore
-assets/fonts
-assets/map-marker.png
+assets/*
 .husky/pre-commit
 assets/icons
 components/Misc/PlaceholderImages

@@ -2,6 +2,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable, Picker } from "react-native";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../../../constants/enumconverters";
 import { Address, BUSINESS_COLORS, Color } from "../Business";
 import { EditStackParamList } from "../EditRoutes";
 import {
@@ -239,7 +243,11 @@ export function ListEditor({
             onValueChange={(itemValue) => setSelectedValue(itemValue)}
           >
             {options.map((x) => (
-              <Picker.Item key={x} label={x} value={x} />
+              <Picker.Item
+                key={x}
+                label={returnMinorityGroupValue(x)!}
+                value={x}
+              />
             ))}
           </Picker>
         </View>
@@ -281,7 +289,11 @@ export function SelectionEditor({
             onValueChange={(itemValue) => setSelectedValue(itemValue)}
           >
             {options.map((x) => (
-              <Picker.Item key={x} label={x} value={x} />
+              <Picker.Item
+                key={x}
+                label={returnBusinessTypeValue(x)!}
+                value={x}
+              />
             ))}
           </Picker>
         </View>
