@@ -25,6 +25,10 @@ import { updateBusiness } from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
 // eslint-disable-next-line import/no-cycle
 import BizReviewPage from "../../Review/BizReviewPage";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../../constants/enumconverters";
 
 export type BProfileStackParamList = {
   BusinessProfile: undefined;
@@ -108,9 +112,9 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                       S3key={`${business.id}/profile`}
                     />
                     <Text style={styles.title}>{business.name}</Text>
-                    <Text
-                      style={styles.details}
-                    >{`${business.type} • 3mi`}</Text>
+                    <Text style={styles.details}>{`${returnBusinessTypeValue(
+                      business.type
+                    )} • 3mi`}</Text>
                   </View>
                   <View style={styles.body}>
                     <Tags tags={business.tags as string[]} />
@@ -291,7 +295,7 @@ function Line() {
 function Tags({ tags }: { tags: string[] }) {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
-  tags.forEach((tag) => (tagList += `${tag} • `));
+  tags.forEach((tag) => (tagList += `${returnMinorityGroupValue(tag)} • `));
   tagList = tagList.substring(0, tagList.length - 3);
   return <Text style={styles.tags}>{tagList}</Text>;
 }

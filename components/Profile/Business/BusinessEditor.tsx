@@ -48,6 +48,10 @@ import {
 } from "./FieldEditors/FieldEditors";
 import { MinorityGroups, BusinessType, Business } from "../../../src/API";
 import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../../constants/enumconverters";
 
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
@@ -360,9 +364,9 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
     if (business.address) displayData = `${business.address}, ${business.city}`;
   } else if (field.key === "tags") {
     const tags = business.tags!;
-    displayData = tags[0] as string;
+    displayData = returnMinorityGroupValue(tags[0]);
     for (let i = 1; i < business.tags!.length; i += 1) {
-      displayData += `, ${business.tags![i]}`;
+      displayData += `, ${returnMinorityGroupValue(business.tags![i])}`;
     }
   } else if (field.key === "phone") {
     if (business.phone) displayData = formatPhone(business.phone);
@@ -376,6 +380,8 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
         />
       </Pressable>
     );
+  } else if (field.key === "type") {
+    displayData = returnBusinessTypeValue(business.type);
   } else {
     displayData = business[field.key];
   }
