@@ -1,12 +1,15 @@
 import { API } from "aws-amplify";
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useAppDispatch } from "../../redux/hooks";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectAllBusinesses } from "../../redux/selectors/business";
+import { selectAllUsers } from "../../redux/selectors/user";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
 import {
   createNotification,
   deleteNotification,
+  updateBusiness,
 } from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
@@ -72,9 +75,9 @@ interface NotifProps {
   message: string;
   senderID: string;
   type: NotificationType;
+  businessID: string;
 }
 
-// eslint-disable-next-line
 function OwnershipNotif({
   notifID,
   userID,
@@ -82,9 +85,19 @@ function OwnershipNotif({
   message,
   senderID,
   type,
+  businessID,
 }: NotifProps) {
   const dispatch = useAppDispatch();
+  const users = useAppSelector(selectAllUsers);
+  const businesses = useAppSelector(selectAllBusinesses);
+  const currentBusiness = businesses.find((b) => b?.id === businessID);
+
   let buttons;
+
+  const findSenderName = () => {
+    const res = users.find((user) => user.id === senderID);
+    return res === undefined ? "Unkown user" : res.name;
+  };
 
   const deleteNotif = async () => {
     const notifDetails = {
@@ -99,17 +112,60 @@ function OwnershipNotif({
 
   const postNotifDismissal = async () => {
     const rejectNotif = {
-      message: "Your ownership request was rejected.",
+      message: `Your ownership request for ${currentBusiness?.name}was rejected.`,
       userID: senderID,
       type: NotificationType.OWNERSHIPDENIED,
       Sender: userID,
       title,
+      businessRequestID: businessID,
     };
 
     await API.graphql({
       query: createNotification,
       variables: { input: rejectNotif },
     });
+  };
+
+  const postNotifApproval = async () => {
+    const acceptNotif = {
+      message: `Your ownership request was accepted, you are now the owner of ${currentBusiness?.name}`,
+      userID: senderID,
+      type: NotificationType.OWNERSHIPAPPROVED,
+      Sender: userID,
+      title,
+      businessRequestID: businessID,
+    };
+
+    await API.graphql({
+      query: createNotification,
+      variables: { input: acceptNotif },
+    });
+  };
+
+  const ownershipTransfer = async () => {
+    const busDataUpdate = {
+      userID: senderID,
+      id: businessID,
+    };
+
+    Alert.alert("Confirm", "Are you sure you want to transfer ownership?", [
+      {
+        text: "Cancel",
+        onPress: () => {},
+      },
+      {
+        text: "Confirm",
+        onPress: async () => {
+          await API.graphql({
+            query: updateBusiness,
+            variables: { input: busDataUpdate },
+          });
+          postNotifApproval();
+          deleteNotif();
+          dispatch(notificationRemoval(notifID));
+        },
+      },
+    ]);
   };
 
   switch (type) {
@@ -139,7 +195,16 @@ function OwnershipNotif({
                 Reply
               </Text>
             </Pressable>
-            <Pressable style={[styles.filledbutton, styles.button]}>
+            <Pressable
+              style={[styles.filledbutton, styles.button]}
+              onPress={() => {
+                try {
+                  ownershipTransfer();
+                } catch (e) {
+                  console.error(e);
+                }
+              }}
+            >
               <Text style={[styles.buttontext, { color: "white" }]}>
                 Accept
               </Text>
@@ -192,7 +257,7 @@ function OwnershipNotif({
               }
             }}
           >
-            <Text style={styles.buttontext}>Dismiss</Text>
+            <Text style={[styles.buttontext, { color: "white" }]}>Dismiss</Text>
           </Pressable>
         </View>
       );
@@ -200,8 +265,18 @@ function OwnershipNotif({
 
   return (
     <View style={[styles.container, styles.shadow]}>
-      <Text style={{ fontFamily: "Mada-Medium", fontSize: 17, padding: 5 }}>
+      <Text
+        style={{
+          fontFamily: "Mada-Medium",
+          fontSize: 17,
+          padding: 5,
+          textAlign: "center",
+        }}
+      >
         {title}
+      </Text>
+      <Text style={{ opacity: 0.5, fontFamily: "Mada-Regular", padding: 2 }}>
+        From: {findSenderName()}
       </Text>
       <Divider />
       <Text style={{ fontFamily: "Mada-Regular", fontSize: 15, padding: 10 }}>

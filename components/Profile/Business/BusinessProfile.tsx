@@ -60,7 +60,8 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
             <View>
               <BusinessProfileModal
                 title={business.name}
-                ownerID="aee0f25e-0c09-4878-b73d-096f3d927b75"
+                ownerID={business.userID}
+                businessID={business.id}
                 visible={modalVisible}
                 modalVisibilitySetter={setmodalVisible}
               />

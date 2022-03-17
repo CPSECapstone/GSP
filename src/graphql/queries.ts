@@ -11,6 +11,7 @@ export const getNotification = /* GraphQL */ `
       Sender
       userID
       title
+      businessRequestID
       createdAt
       updatedAt
     }
@@ -30,6 +31,7 @@ export const listNotifications = /* GraphQL */ `
         Sender
         userID
         title
+        businessRequestID
         createdAt
         updatedAt
       }
