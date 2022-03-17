@@ -2,6 +2,7 @@ import { API } from "aws-amplify";
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectAllBusinesses } from "../../redux/selectors/business";
 import { selectAllUsers, selectUser } from "../../redux/selectors/user";
 import { notificationRemoval } from "../../redux/slices/notifications";
 import { NotificationType } from "../../src/API";
@@ -90,6 +91,8 @@ function OwnershipNotif({
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectUser);
   const users = useAppSelector(selectAllUsers);
+  const businesses = useAppSelector(selectAllBusinesses);
+  const currentBusiness = businesses.find((b) => b?.id === businessID);
 
   let buttons;
 
@@ -111,7 +114,8 @@ function OwnershipNotif({
 
   const postNotifDismissal = async () => {
     const rejectNotif = {
-      message: "Your ownership request was rejected.",
+      message:
+        "Your ownership request for " + currentBusiness?.name + "was rejected.",
       userID: senderID,
       type: NotificationType.OWNERSHIPDENIED,
       Sender: userID,
@@ -122,6 +126,24 @@ function OwnershipNotif({
     await API.graphql({
       query: createNotification,
       variables: { input: rejectNotif },
+    });
+  };
+
+  const postNotifApproval = async () => {
+    const acceptNotif = {
+      message:
+        "Your ownership request was accepted, you are now the owner of " +
+        currentBusiness?.name,
+      userID: senderID,
+      type: NotificationType.OWNERSHIPAPPROVED,
+      Sender: userID,
+      title,
+      businessID,
+    };
+
+    await API.graphql({
+      query: createNotification,
+      variables: { input: acceptNotif },
     });
   };
 
@@ -143,6 +165,7 @@ function OwnershipNotif({
             query: updateBusiness,
             variables: { input: busDataUpdate },
           });
+          postNotifApproval();
           deleteNotif();
           dispatch(notificationRemoval(notifID));
         },
