@@ -1,14 +1,18 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { EditButton } from "../Profile/Business/BusinessEditor";
+import RatingView from "./RatingView";
+import { ReviewType, UserType } from "../../src/APITypes";
 
 export const styles = StyleSheet.create({
   reviewCell: {
-    width: 300,
+    zIndex: 10,
+    width: "100%",
     backgroundColor: "white",
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
+    paddingRight: 50,
   },
   restauraunt: {
     fontWeight: "bold",
@@ -24,142 +28,48 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     marginLeft: 10,
   },
+  editButton: {
+    width: 30,
+    position: "absolute",
+    aspectRatio: 1,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#D9D9D9",
+  },
 });
 
-export function Star() {
-  return (
-    <Ionicons
-      name="star"
-      style={{ marginRight: 2 }}
-      size={22}
-      color="#DA5125"
-    />
-  );
-}
-
-export function StarOutline() {
-  return (
-    <Ionicons
-      name="star-outline"
-      style={{ marginRight: 5 }}
-      size={22}
-      color="#DA5125"
-    />
-  );
-}
-
 export interface ReviewCellProps {
-  restaurant: String;
-  rating: Number;
-  srcImage: string;
-  description: String;
-  action: Function;
+  user: UserType;
+  review: ReviewType;
+  clientId: string;
+  action: () => void;
 }
 
-// react native vector icons. Carter has stars on the profile page.
-
-// maybe hardcode height in case you want to press 'more'
-
-/**
-  * <ReviewCell restaurant={"Taqueria Santa Cruz"}
-        description={"One of my favorite restaurants in San Luis Obispo. They are always consistent with their food. While it is not the most amazing value out there, they never fail to deliver and have an amazing family atmosphere."}
-        srcImage={"myTestImage.png"}
-        rating={2.0}
-        
-        ></ReviewCell> 
-  * 
-  */
-
-function ReviewCell({
-  restaurant,
-  rating,
-  srcImage,
-  description,
-  action,
-}: ReviewCellProps) {
-  // can't call require with srcImage string here
-  // how do I make this dang image inline with Text?
+function ReviewCell({ user, review, clientId, action }: ReviewCellProps) {
+  const isOwnReview = clientId === review.userID;
   return (
     <View style={styles.reviewCell}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <EditButton position={{ bottom: 0, right: -7 }} onPress={action} />
-        <Text style={styles.restauraunt}>{restaurant}</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        {isOwnReview && (
+          <EditButton position={{ bottom: -4, right: -40 }} onPress={action} />
+        )}
+        <Text style={styles.restauraunt}>{user.name}</Text>
 
-        <Image style={styles.image} source={{ uri: srcImage }} />
+        {/* <Image style={styles.image} source={{ uri: srcImage }} /> */}
+        <RatingView rating={review.rating!} userName={user.name!} />
       </View>
-
-      {rating === 1 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 2 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <StarOutline />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 3 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 4 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <StarOutline />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      {rating === 5 && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-          <Star />
-
-          <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-            {" "}
-            • {rating} Stars
-          </Text>
-        </View>
-      )}
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.description}>{review.comments}</Text>
     </View>
+  );
+}
+
+type EditButtonProps = { position: Object; onPress: Function };
+function EditButton({ position, onPress }: EditButtonProps) {
+  return (
+    <Pressable style={[styles.editButton, position]} onPress={() => onPress()}>
+      <Ionicons name="pencil" size={18} color="black" />
+    </Pressable>
   );
 }
 

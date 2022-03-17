@@ -1,8 +1,10 @@
-import { Entypo, FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { S3Image } from "../Misc/S3Util";
 
 interface BusinessCardProps {
+  id: string;
   name: string;
   distance: string;
   rating: string;
@@ -37,12 +39,23 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-SemiBold",
     fontSize: 18,
   },
+  avatar: {
+    width: 80,
+    aspectRatio: 1,
+    borderRadius: 100,
+    borderWidth: 2,
+    alignSelf: "center",
+    backgroundColor: "black",
+  },
 });
 
-function BusinessCard({ name, distance, rating }: BusinessCardProps) {
+function BusinessCard({ id, name, distance, rating }: BusinessCardProps) {
   return (
     <View style={styles.container}>
-      <FontAwesome name="gg-circle" size={75} style={{ borderRadius: 75 }} />
+      <S3Image
+        style={[styles.avatar, { borderColor: "red" }]}
+        S3key={`${id}/profile`}
+      />
       <View style={styles.subcontainer}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.distancetext}>{`${distance} mi`}</Text>

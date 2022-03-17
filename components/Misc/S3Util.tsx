@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 import { Image, ImageBackground } from "react-native";
 
-const PLACEHOLDER_IMG_URL = require("./PlaceholderImages/profile.png");
+const PLACEHOLDER_IMG_URL = {
+  uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1K8ypPsfNVQU8lVxl1i2_ajismMS_w6FA4Q&usqp=CAU",
+};
 
 const PLACEHOLDER_BANNER = require("./PlaceholderImages/banner.jpeg");
 

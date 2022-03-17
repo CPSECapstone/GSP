@@ -9,7 +9,7 @@ import CleanInput from "./CleanInput";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/slices/user";
 
-const avatarImg = require("../../assets/default-avatar.jpeg");
+const avatarImg = require("../../assets/user.png");
 
 export const styles = StyleSheet.create({
   login: {
@@ -20,9 +20,8 @@ export const styles = StyleSheet.create({
   },
 
   account: {
-    width: 150,
-    height: 150,
-    marginTop: 10,
+    width: 200,
+    height: 200,
     alignSelf: "center",
   },
 

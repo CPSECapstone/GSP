@@ -11,10 +11,247 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {
+  createNativeStackNavigator,
+  NativeStackScreenProps,
+} from "@react-navigation/native-stack";
 import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business } from "../../../src/API";
+import { AverageRating } from "../../Review/RatingView";
+import { useAppDispatch } from "../../../redux/hooks";
+import BusinessAPI from "./BusinessAPI";
+import { updateBusiness } from "../../../redux/slices/business";
+import BusinessEditor from "./BusinessEditor";
+// eslint-disable-next-line import/no-cycle
+import BizReviewPage from "../../Review/BizReviewPage";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../../constants/enumconverters";
+
+export type BProfileStackParamList = {
+  BusinessProfile: undefined;
+  BusinessEditor: undefined;
+  Reviews: { edit: boolean };
+};
+
+const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
+
+export const BusinessContext = React.createContext<Business>(undefined!);
+type BusinessProfileProps = { business: Business };
+export default function BusinessProfile({ business }: BusinessProfileProps) {
+  const [modalVisible, setmodalVisible] = React.useState(false);
+  // const navigation = useNavigation();
+
+  return (
+    <BusinessContext.Provider value={business}>
+      <BProfileStack.Navigator
+        initialRouteName="BusinessProfile"
+        screenOptions={{ headerShown: false }}
+      >
+        <BProfileStack.Screen
+          name="BusinessEditor"
+          component={BusinessEditorScreen}
+        />
+        <BProfileStack.Screen name="Reviews" component={BizReviewPage} />
+        <BProfileStack.Screen name="BusinessProfile">
+          {({ navigation }) => (
+            <View>
+              <BusinessProfileModal
+                title={business.name}
+                ownerID={business.userID}
+                businessID={business.id}
+                visible={modalVisible}
+                modalVisibilitySetter={setmodalVisible}
+              />
+              <S3ImageBackground
+                S3key={`${business.id}/banner`}
+                style={styles.banner}
+              />
+              <View
+                style={[
+                  styles.darkness,
+                  { borderBottomColor: business.primarycolor },
+                ]}
+              />
+              <View style={{ flexDirection: "row", position: "absolute" }}>
+                <Margin />
+                <View style={{ flex: 10 }}>
+                  <View style={styles.header}>
+                    <Pressable
+                      style={styles.back}
+                      onPress={() => navigation.goBack()}
+                    >
+                      <Ionicons
+                        name="chevron-back-outline"
+                        size={30}
+                        color="white"
+                      />
+                    </Pressable>
+                    <Pressable
+                      style={styles.save}
+                      onPress={() => navigation.navigate("BusinessEditor")}
+                    >
+                      <Ionicons
+                        name="bookmark-outline"
+                        size={25}
+                        color="white"
+                      />
+                    </Pressable>
+                    <Pressable
+                      style={styles.share}
+                      onPress={() => setmodalVisible(true)}
+                    >
+                      <SimpleLineIcons name="options" size={25} color="white" />
+                    </Pressable>
+                    <S3Image
+                      style={[
+                        styles.avatar,
+                        { borderColor: business.primarycolor },
+                      ]}
+                      S3key={`${business.id}/profile`}
+                    />
+                    <Text style={styles.title}>{business.name}</Text>
+                    <Text style={styles.details}>{`${returnBusinessTypeValue(
+                      business.type
+                    )} • 3mi`}</Text>
+                  </View>
+                  <View style={styles.body}>
+                    <Tags tags={business.tags as string[]} />
+                    <View style={{ flexDirection: "row", marginTop: 20 }}>
+                      <CircleButton
+                        icon="call"
+                        title="Call"
+                        action={() => call(business.phone)}
+                        color={business.primarycolor}
+                      />
+                      <Margin />
+                      <CircleButton
+                        icon="map"
+                        title="Map"
+                        action={() =>
+                          openMap(
+                            business.address,
+                            business.city,
+                            business.zipcode.toString()
+                          )
+                        }
+                        color={business.primarycolor}
+                      />
+                      <Margin />
+                      <CircleButton
+                        icon="open"
+                        title="Site"
+                        action={() => openUrl(business.website!.toString())}
+                        color={business.primarycolor}
+                      />
+                      <Margin />
+                      {business.menu ? (
+                        <CircleButton
+                          icon="restaurant"
+                          title="Menu"
+                          action={() => openUrl(business.menu!)}
+                          color={business.primarycolor}
+                        />
+                      ) : (
+                        <CircleButton
+                          icon="bookmark"
+                          title="Save"
+                          action={() => {}}
+                          color={business.primarycolor}
+                        />
+                      )}
+                    </View>
+
+                    <Line />
+
+                    <AverageRating businessId={business.id} />
+
+                    <View style={{ flexDirection: "row" }}>
+                      <Pressable
+                        style={[
+                          styles.ratingButton,
+                          {
+                            backgroundColor: business.secondarycolor,
+                            marginRight: 10,
+                          },
+                        ]}
+                        onPress={() =>
+                          navigation.navigate("Reviews", { edit: true })
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontWeight: "bold",
+                            fontSize: 16,
+                          }}
+                        >
+                          Write a Review
+                        </Text>
+                      </Pressable>
+                      <Pressable
+                        style={[
+                          styles.ratingButton,
+                          {
+                            backgroundColor: business.secondarycolor,
+                            marginLeft: 10,
+                            alignSelf: "flex-start",
+                          },
+                        ]}
+                        onPress={() =>
+                          navigation.navigate("Reviews", { edit: false })
+                        }
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontWeight: "bold",
+                            fontSize: 16,
+                          }}
+                        >
+                          See All Reviews
+                        </Text>
+                      </Pressable>
+                    </View>
+
+                    <Line />
+
+                    <View style={styles.bodyContent}>
+                      <Text style={styles.heading}>About Us</Text>
+                      <Text style={styles.description}>{business.about}</Text>
+                    </View>
+                  </View>
+                </View>
+                <Margin />
+              </View>
+            </View>
+          )}
+        </BProfileStack.Screen>
+      </BProfileStack.Navigator>
+    </BusinessContext.Provider>
+  );
+}
+
+type EditorScreenProps = NativeStackScreenProps<
+  BProfileStackParamList,
+  "BusinessEditor"
+>;
+function BusinessEditorScreen({ navigation }: EditorScreenProps) {
+  const business = React.useContext(BusinessContext);
+  const dispatch = useAppDispatch();
+
+  const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
+    BusinessAPI.update(edits, pImg, bImg)
+      .then((response) => {
+        navigation.navigate("BusinessProfile");
+        dispatch(updateBusiness(response.data.updateBusiness));
+      })
+      .catch((err) => console.log(err));
+  };
+  return <BusinessEditor business={business} submit={submit} />;
+}
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -56,32 +293,10 @@ function Line() {
   );
 }
 
-function Star() {
-  return (
-    <Ionicons
-      name="star"
-      style={{ marginRight: 2 }}
-      size={22}
-      color="#DA5125"
-    />
-  );
-}
-
-function StarOutline() {
-  return (
-    <Ionicons
-      name="star-outline"
-      style={{ marginRight: 5 }}
-      size={22}
-      color="#DA5125"
-    />
-  );
-}
-
 function Tags({ tags }: { tags: string[] }) {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
-  tags.forEach((tag) => (tagList += `${tag} • `));
+  tags.forEach((tag) => (tagList += `${returnMinorityGroupValue(tag)} • `));
   tagList = tagList.substring(0, tagList.length - 3);
   return <Text style={styles.tags}>{tagList}</Text>;
 }
@@ -109,170 +324,6 @@ const openMap = async (address: string, city: string, zipCode: string) => {
 
   openUrl(link);
 };
-
-type BusinessProfileProps = { business: Business; edit: () => void };
-export default function BusinessProfile({
-  business,
-  edit,
-}: BusinessProfileProps) {
-  const [modalVisible, setmodalVisible] = React.useState(false);
-  const navigation = useNavigation();
-
-  return (
-    <View>
-      <BusinessProfileModal
-        businessID={business.id}
-        title={business.name}
-        ownerID={business.userID}
-        visible={modalVisible}
-        modalVisibilitySetter={setmodalVisible}
-      />
-      <S3ImageBackground
-        S3key={`${business.id}/banner`}
-        style={styles.banner}
-      />
-      <View
-        style={[styles.darkness, { borderBottomColor: business.primarycolor }]}
-      />
-      <View style={{ flexDirection: "row", position: "absolute" }}>
-        <Margin />
-        <View style={{ flex: 10 }}>
-          <View style={styles.header}>
-            <Pressable style={styles.back} onPress={() => navigation.goBack()}>
-              <Ionicons name="chevron-back-outline" size={30} color="white" />
-            </Pressable>
-            <Pressable style={styles.save} onPress={edit}>
-              <Ionicons name="bookmark-outline" size={25} color="white" />
-            </Pressable>
-            <Pressable
-              style={styles.share}
-              onPress={() => setmodalVisible(true)}
-            >
-              <SimpleLineIcons name="options" size={25} color="white" />
-            </Pressable>
-            <S3Image
-              style={[styles.avatar, { borderColor: business.primarycolor }]}
-              S3key={`${business.id}/profile`}
-            />
-            {/* <Image
-                source={{uri: business.profileImage}}
-                style={[
-                  styles.avatar,
-                  { borderColor: business.primarycolor },
-                ]}
-              /> */}
-            <Text style={styles.title}>{business.name}</Text>
-            <Text style={styles.details}>{`${business.type} • 3mi`}</Text>
-          </View>
-          <View style={styles.body}>
-            <Tags tags={business.tags as string[]} />
-            <View style={{ flexDirection: "row", marginTop: 20 }}>
-              <CircleButton
-                icon="call"
-                title="Call"
-                action={() => call(business.phone)}
-                color={business.primarycolor}
-              />
-              <Margin />
-              <CircleButton
-                icon="map"
-                title="Map"
-                action={() =>
-                  openMap(
-                    business.address,
-                    business.city,
-                    business.zipcode.toString()
-                  )
-                }
-                color={business.primarycolor}
-              />
-              <Margin />
-              <CircleButton
-                icon="open"
-                title="Site"
-                action={() => openUrl(business.website!.toString())}
-                color={business.primarycolor}
-              />
-              <Margin />
-              {business.menu ? (
-                <CircleButton
-                  icon="restaurant"
-                  title="Menu"
-                  action={() => openUrl(business.menu!)}
-                  color={business.primarycolor}
-                />
-              ) : (
-                <CircleButton
-                  icon="bookmark"
-                  title="Save"
-                  action={() => {}}
-                  color={business.primarycolor}
-                />
-              )}
-            </View>
-
-            <Line />
-
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <StarOutline />
-              <Text style={{ fontWeight: "bold", fontSize: 13, color: "grey" }}>
-                {" "}
-                • 4.3 Stars • 62 Reviews
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Pressable
-                style={[
-                  styles.ratingButton,
-                  {
-                    backgroundColor: business.secondarycolor,
-                    marginRight: 10,
-                  },
-                ]}
-              >
-                <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
-                >
-                  Write a Review
-                </Text>
-              </Pressable>
-              <Pressable
-                style={[
-                  styles.ratingButton,
-                  { backgroundColor: business.secondarycolor, marginLeft: 10 },
-                ]}
-                onPress={() =>
-                  navigation.navigate("BizReviewPage", {
-                    busID: "90c44163-3c82-4d91-8010-41a75a666670",
-                  })
-                }
-              >
-                <Text
-                  style={{ color: "white", fontWeight: "bold", fontSize: 16 }}
-                >
-                  See All Reviews
-                </Text>
-              </Pressable>
-            </View>
-
-            <Line />
-
-            <View style={styles.bodyContent}>
-              <Text style={styles.heading}>About Us</Text>
-              <Text style={styles.description}>{business.about}</Text>
-            </View>
-          </View>
-        </View>
-        <Margin />
-      </View>
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   title: {
@@ -395,7 +446,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 10,
     marginTop: 10,
-    marginRight: 10,
     height: 40,
     alignItems: "center",
     justifyContent: "center",

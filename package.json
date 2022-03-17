@@ -15,7 +15,7 @@
   "dependencies": {
     "@aws-amplify/api-graphql": "^2.2.21",
     "@aws-amplify/datastore": "^3.7.4",
-    "@aws-amplify/storage": "^4.4.16",
+    "@aws-amplify/storage": "^4.4.17",
     "@expo-google-fonts/mada": "^0.2.0",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-async-storage/async-storage": "~1.15.0",

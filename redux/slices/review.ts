@@ -26,10 +26,15 @@ export const reviewSlice = createSlice({
         state.loading = "idle";
       }
     },
+    addReview(state, action: PayloadAction<ReviewType>) {
+      const newArray = [...state.reviews, action.payload];
+      state.reviews = newArray;
+    },
   },
 });
 
-export const { reviewsLoading, reviewsRecieved } = reviewSlice.actions;
+export const { reviewsLoading, reviewsRecieved, addReview } =
+  reviewSlice.actions;
 
 const reviewReducer = reviewSlice.reducer;
 export default reviewReducer;
