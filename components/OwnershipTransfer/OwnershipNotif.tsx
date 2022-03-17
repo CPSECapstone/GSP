@@ -113,8 +113,7 @@ function OwnershipNotif({
 
   const postNotifDismissal = async () => {
     const rejectNotif = {
-      message:
-        "Your ownership request for " + currentBusiness?.name + "was rejected.",
+      message: `Your ownership request for ${currentBusiness?.name}was rejected.`,
       userID: senderID,
       type: NotificationType.OWNERSHIPDENIED,
       Sender: userID,
@@ -130,9 +129,7 @@ function OwnershipNotif({
 
   const postNotifApproval = async () => {
     const acceptNotif = {
-      message:
-        "Your ownership request was accepted, you are now the owner of " +
-        currentBusiness?.name,
+      message: `Your ownership request was accepted, you are now the owner of ${currentBusiness?.name}`,
       userID: senderID,
       type: NotificationType.OWNERSHIPAPPROVED,
       Sender: userID,
