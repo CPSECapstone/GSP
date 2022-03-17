@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import { returnBusinessTypeValue } from "../../constants/enumconverters";
 import { Business } from "../../src/API";
 import { S3Image } from "../Misc/S3Util";
 
@@ -67,7 +68,9 @@ function ExploreResultCell(props: ResultCellProps) {
         <Text style={styles.titletext}>{business.name}</Text>
         <Text style={styles.distancetext}>{`${distance}mi`}</Text>
       </View>
-      <Text style={styles.littletext}>{business.type}</Text>
+      <Text style={styles.littletext}>
+        {returnBusinessTypeValue(business.type)}
+      </Text>
       <View
         style={{
           justifyContent: "center",
