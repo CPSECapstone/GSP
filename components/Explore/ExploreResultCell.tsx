@@ -1,4 +1,5 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import React from "react";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 
 const placeholdericon = require("../../assets/icon.png");
 
@@ -8,6 +9,7 @@ interface ResultCellProps {
   category: string;
   minoritygroups: (string | null)[];
   primarycolor: string;
+  onPress: () => void;
 }
 
 const styles = StyleSheet.create({
@@ -52,10 +54,11 @@ const styles = StyleSheet.create({
 });
 
 function ExploreResultCell(props: ResultCellProps) {
-  const { title, distance, category, minoritygroups, primarycolor } = props;
+  const { title, distance, category, minoritygroups, primarycolor, onPress } =
+    props;
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Image
         style={[
           styles.image,
@@ -86,7 +89,7 @@ function ExploreResultCell(props: ResultCellProps) {
           </Text>
         ))}
       </View>
-    </View>
+    </Pressable>
   );
 }
 

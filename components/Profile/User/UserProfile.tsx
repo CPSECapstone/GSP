@@ -88,7 +88,6 @@ async function getAttributes(): Promise<AuthAttributes> {
 
 export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
-  getAttributes();
   const dispatch = useAppDispatch();
 
   if (user?.id !== undefined) {

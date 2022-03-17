@@ -7,7 +7,7 @@ import { selectUser } from "../../../redux/selectors/user";
 
 export default class BusinessAPI {
   static async create(business: Business) {
-    const user = useAppSelector(selectUser);
+    const user = useAppSelector(selectUser)!;
 
     const businessObj = { ...business, email: user.email, userID: user.id };
 
