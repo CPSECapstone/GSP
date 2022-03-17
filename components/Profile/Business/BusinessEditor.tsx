@@ -52,7 +52,7 @@ import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
 type BusinessEditorProps = {
-  business: Business;
+  business: Business | undefined;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
 };
 
@@ -99,7 +99,7 @@ export default function BusinessEditor({
 
 type BaseEditorRouteProps = NativeStackScreenProps<EditStackParamList, "Base">;
 interface BaseEditorProps extends BaseEditorRouteProps {
-  business: Business;
+  business: Business | undefined;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
 }
 function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
@@ -357,7 +357,7 @@ function DataLine() {
 function getDisplay(business: Business, field: Field, onPress: Function) {
   let displayData: string | number | undefined | null;
   if (field.key === "address") {
-    displayData = `${business.address}, ${business.city}`;
+    if (business.address) displayData = `${business.address}, ${business.city}`;
   } else if (field.key === "tags") {
     const tags = business.tags!;
     displayData = tags[0] as string;
@@ -365,7 +365,7 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
       displayData += `, ${business.tags![i]}`;
     }
   } else if (field.key === "phone") {
-    displayData = formatPhone(business.phone);
+    if (business.phone) displayData = formatPhone(business.phone);
   } else if (field.key === "colorSet") {
     return (
       <Pressable style={{ flexDirection: "row", marginTop: 10 }}>

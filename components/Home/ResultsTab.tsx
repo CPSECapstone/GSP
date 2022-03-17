@@ -151,6 +151,7 @@ function ResultsTab({
                           }}
                         >
                           <BusinessCard
+                            id={item.id}
                             name={item.name}
                             distance="4"
                             rating={

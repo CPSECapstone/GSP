@@ -23,6 +23,7 @@ import { useAppDispatch } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
 import { updateBusiness } from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
+// eslint-disable-next-line import/no-cycle
 import BizReviewPage from "../../Review/BizReviewPage";
 
 export type BProfileStackParamList = {
@@ -283,17 +284,6 @@ function Line() {
         marginRight: "-10%",
         marginLeft: "-10%",
       }}
-    />
-  );
-}
-
-function Star() {
-  return (
-    <Ionicons
-      name="star"
-      style={{ marginRight: 2 }}
-      size={22}
-      color="#DA5125"
     />
   );
 }

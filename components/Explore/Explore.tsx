@@ -234,13 +234,11 @@ function ExploreView({ navigation }: ExploreProps) {
                     onPress={() =>
                       navigation.navigate("BusinessView", { id: item.id })
                     }
-                    title={item.name}
                     distance={3}
-                    category={returnBusinessTypeValue(item.type)}
+                    business={item}
                     minoritygroups={item.tags.map((tag) =>
                       returnMinorityGroupValue(tag)
                     )}
-                    primarycolor={item.primarycolor}
                   />
                 );
               }

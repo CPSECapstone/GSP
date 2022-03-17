@@ -32,15 +32,18 @@ function getStars(
 
   for (let i = 0; i < rating; i += 1) {
     stars.push(
-      <Pressable onPress={() => onPress(i + 1)}>
-        <Star size={size} key={`${i} star + ${key}`} />
+      <Pressable key={`${i} star + ${key}`} onPress={() => onPress(i + 1)}>
+        <Star size={size} />
       </Pressable>
     );
   }
   for (let i = 0; i < 5 - rating; i += 1) {
     stars.push(
-      <Pressable onPress={() => onPress(i + 1 + rating)}>
-        <Star outline size={size} key={`${i} star-outline ${key}`} />
+      <Pressable
+        key={`${i} star-outline ${key}`}
+        onPress={() => onPress(i + 1 + rating)}
+      >
+        <Star outline size={size} />
       </Pressable>
     );
   }

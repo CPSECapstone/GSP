@@ -5,7 +5,6 @@ import {
   Text,
   StyleSheet,
   Pressable,
-  Image,
   FlatList,
   SafeAreaView,
   TextInput,
@@ -23,7 +22,7 @@ import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../constants/enumconverters";
-import { AverageRating, RatingInput } from "./RatingView";
+import { RatingInput } from "./RatingView";
 import { average } from "../../constants/math";
 import { S3Image } from "../Misc/S3Util";
 import StarRating from "./StarRating";
@@ -32,7 +31,6 @@ import {
   BProfileStackParamList,
   BusinessContext,
 } from "../Profile/Business/BusinessProfile";
-import { Review } from "../../src/API";
 import ReviewAPI from "./ReviewAPI";
 import { addReview } from "../../redux/slices/review";
 

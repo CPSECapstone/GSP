@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -8,6 +9,7 @@ import {
   Text,
   Dimensions,
 } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAppSelector } from "../../redux/hooks";
 import { selectAllBusinesses } from "../../redux/selectors/business";
 import SearchBar from "../SearchBar/SearchBar";
@@ -17,6 +19,7 @@ import { minoritygroups } from "../../constants/exploredata";
 import ResultsTab from "./ResultsTab";
 import BusinessCard from "../BusinessCard/BusinessCard";
 import { returnMinorityGroupValue } from "../../api";
+import WithBusinessView from "../Profile/Business/WithBusinessView";
 
 const width = Dimensions.get("screen").width * 0.3;
 const height = Dimensions.get("screen").height * 0.04;
@@ -65,6 +68,14 @@ const styles = StyleSheet.create({
 });
 
 export default function HomePage() {
+  return <WithBusinessView Component={HomeView} />;
+}
+
+type HomeProps = NativeStackScreenProps<
+  { BusinessView: { id: string }; Component: undefined },
+  "Component"
+>;
+function HomeView({ navigation }: HomeProps) {
   const allBusinesses = useAppSelector(selectAllBusinesses);
 
   const [selectedMinorityGroups, setselectedMinorityGroups] = useState([0]);
@@ -183,8 +194,15 @@ export default function HomePage() {
       />
       {selectedBusiness.length === 1 ? (
         <View style={styles.resultCard}>
-          <Pressable onPress={() => console.log(selectedBusiness[0]!.name)}>
+          <Pressable
+            onPress={() =>
+              navigation.navigate("BusinessView", {
+                id: selectedBusiness[0]!.id,
+              })
+            }
+          >
             <BusinessCard
+              id={selectedBusiness[0]!.id}
               name={selectedBusiness[0]!.name}
               distance="4"
               rating={String(selectedBusiness[0]!.rating)}

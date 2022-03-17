@@ -15,8 +15,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 export type RootStackParamList = {
   Login: undefined;
   ChooseAccountType: undefined;
-  CreateAccount: { isMBO?: boolean };
-  CreateAccountCode: { email: string };
+  CreateAccount: { isMBO: boolean };
+  CreateAccountCode: { email: string; isMBO: boolean };
+  CreateBusinessProfile: undefined;
   App: undefined;
   ForgotPass: undefined;
   ForgotPass2: { email: string };

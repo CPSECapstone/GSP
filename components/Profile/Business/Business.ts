@@ -132,14 +132,26 @@ export type FrontendBusinessField =
   | "menu"
   | "colorSet";
 
+const DEFAULT_BUSINESS: Partial<Business> = {
+  name: "",
+  phone: "",
+  tags: [],
+  about: "",
+  website: "",
+  address: "",
+  city: "",
+  state: "",
+  zipcode: "",
+};
+
 export class Editor {
   edits: Partial<Business>;
-  business: Business;
+  business: Partial<Business>;
 
-  constructor(business: Business) {
+  constructor(business: Business | undefined) {
     // Received business is readonly; we make a copy.
-    this.business = { ...business };
-    this.edits = { id: business.id };
+    this.business = business ? { ...business } : DEFAULT_BUSINESS;
+    this.edits = business ? { id: business.id } : DEFAULT_BUSINESS;
   }
 
   updateField(key: FrontendBusinessField, value: any) {

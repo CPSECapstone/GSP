@@ -1,14 +1,12 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-
-const placeholdericon = require("../../assets/icon.png");
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { Business } from "../../src/API";
+import { S3Image } from "../Misc/S3Util";
 
 interface ResultCellProps {
-  title: string;
+  business: Business;
   distance: number;
-  category: string;
   minoritygroups: (string | null)[];
-  primarycolor: string;
   onPress: () => void;
 }
 
@@ -54,23 +52,22 @@ const styles = StyleSheet.create({
 });
 
 function ExploreResultCell(props: ResultCellProps) {
-  const { title, distance, category, minoritygroups, primarycolor, onPress } =
-    props;
+  const { business, distance, minoritygroups, onPress } = props;
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <Image
+      <S3Image
         style={[
           styles.image,
-          { borderWidth: 2, borderColor: `${primarycolor}` },
+          { borderWidth: 2, borderColor: `${business.primarycolor}` },
         ]}
-        source={placeholdericon}
+        S3key={`${business.id}/profile`}
       />
       <View style={styles.horizview}>
-        <Text style={styles.titletext}>{title}</Text>
+        <Text style={styles.titletext}>{business.name}</Text>
         <Text style={styles.distancetext}>{`${distance}mi`}</Text>
       </View>
-      <Text style={styles.littletext}>{category}</Text>
+      <Text style={styles.littletext}>{business.type}</Text>
       <View
         style={{
           justifyContent: "center",

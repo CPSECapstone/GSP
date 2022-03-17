@@ -32,6 +32,7 @@ import initializeRedux from "./redux/initialize";
 import { useAppDispatch } from "./redux/hooks";
 import Notifications from "./components/OwnershipTransfer/NotificationsPage";
 import ProfileSelector from "./components/Profile/ProfileSelector";
+import BusinessEditor from "./components/Profile/Business/BusinessEditor";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -125,6 +126,7 @@ function InnerApp() {
             headerShown: true,
           }}
         />
+        <Stack.Screen name="CreateBusinessProfile" component={BusinessEditor} />
         <Stack.Screen name="App" component={AuthenticatedApp} />
         <Stack.Screen name="OpenCollection" component={OpenCollection} />
         <Stack.Screen name="ReviewPage" component={ReviewPage} />
