@@ -10,7 +10,7 @@ import notEmpty from "./helper";
 import { ListNotificationsQuery } from "../../src/API";
 
 const fetchNotifications =
-  (currentUserID: string): ThunkAction<void, RootState, unknown, AnyAction> =>
+  (currentUserID: string): ThunkAction<void, RootState, undefined, AnyAction> =>
   async (dispatch: AppDispatch) => {
     dispatch(notificationsLoading());
 
