@@ -51,7 +51,7 @@ function ReviewCell({ user, review, clientId, action }: ReviewCellProps) {
   return (
     <View style={styles.reviewCell}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        {isOwnReview && (
+        {isOwnReview && action && (
           <EditButton position={{ bottom: -4, right: -40 }} onPress={action} />
         )}
         <Text style={styles.restauraunt}>{user.name}</Text>

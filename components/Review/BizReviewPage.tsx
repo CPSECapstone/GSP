@@ -149,6 +149,7 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
                         review={item}
                         user={user}
                         clientId={clientId}
+                        action={() => setmodalVisible(true)}
                       />
                     </View>
                   );
