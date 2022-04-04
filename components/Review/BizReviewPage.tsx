@@ -138,7 +138,11 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
           <View>
             <View>
               <FlatList
-                contentContainerStyle={{ paddingTop: 40 }}
+                contentContainerStyle={{
+                  paddingTop: 40,
+                  paddingLeft: 12,
+                  paddingRight: 12,
+                }}
                 data={reviews}
                 renderItem={({ item }) => {
                   const user = users.find((u) => u.id === item.userID);
@@ -148,6 +152,7 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
                       <ReviewCell
                         review={item}
                         user={user}
+                        title={user.name}
                         clientId={clientId}
                         action={() => setmodalVisible(true)}
                       />

@@ -45,8 +45,10 @@ function ReviewPage({ navigation }: ReviewPageProps) {
           <View style={styles.review} key={review.id}>
             <ReviewCell
               user={user}
+              title={business.name}
               review={review}
               clientId={user?.id}
+              srcImage={business.profileImage}
               action={() => setModalVisible(true)}
             />
           </View>
