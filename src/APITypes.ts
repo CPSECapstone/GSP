@@ -2,7 +2,7 @@
 
 import { DeepOmit } from './DeepOmit';
 import {
-  GetBusinessQuery, GetNotificationQuery, ListBusinessesQuery, ListNotificationsQuery, GetUserQuery, GetReviewQuery, ListCollectionsQuery
+  GetBusinessQuery, GetNotificationQuery, ListBusinessesQuery, ListNotificationsQuery, GetUserQuery, GetReviewQuery, ListCollectionsQuery, GetCollectionQuery
 } from './API';
 
 export type BusinessQueryType = NonNullable<ListBusinessesQuery['listBusinesses']>['items'];
@@ -29,3 +29,8 @@ export type ReviewType = DeepOmit<
 > 
 
 export type CollectionQueryType = NonNullable<ListCollectionsQuery['listCollections']>['items'];
+
+export type CollectionType = DeepOmit<
+  Exclude<GetCollectionQuery['getCollection'], null | undefined>,
+  '__typename'
+>
