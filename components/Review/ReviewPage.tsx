@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
 function ReviewPage({ navigation }: ReviewPageProps) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedReview, setSelectedReview] = useState("");
 
   const user = useAppSelector(selectUser);
   const reviews = useAppSelector(selectReviewsByUser(user?.id));
@@ -49,7 +50,10 @@ function ReviewPage({ navigation }: ReviewPageProps) {
               review={review}
               clientId={user?.id}
               srcImage={business.profileImage}
-              action={() => setModalVisible(true)}
+              action={() => {
+                setModalVisible(true);
+                setSelectedReview(review.id);
+              }}
             />
           </View>
         );
@@ -58,6 +62,7 @@ function ReviewPage({ navigation }: ReviewPageProps) {
       <ReviewModal
         visible={modalVisible}
         modalVisibilitySetter={setModalVisible}
+        reviewID={selectedReview}
       />
     </SafeAreaView>
   );
