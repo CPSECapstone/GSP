@@ -29,10 +29,13 @@ import {
 import Home from "./components/Home/Home";
 import store from "./redux/store";
 import initializeRedux from "./redux/initialize";
-import { useAppDispatch } from "./redux/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import Notifications from "./components/OwnershipTransfer/NotificationsPage";
 import ProfileSelector from "./components/Profile/ProfileSelector";
 import BusinessEditor from "./components/Profile/Business/BusinessEditor";
+import { selectUser } from "./redux/selectors/user";
+import notifications from "./redux/thunks/notifications";
+import collections from "./redux/thunks/collections";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -59,6 +62,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
 
 function AuthenticatedApp() {
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  if (user?.id !== undefined) {
+    console.log("loading data...");
+    dispatch(notifications.fetchNotifications(user.id));
+    dispatch(collections.fetchCollections(user.id));
+  }
+
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
       <Tab.Screen name="Home" component={Home} />

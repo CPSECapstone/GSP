@@ -20,7 +20,6 @@ const fetchNotifications =
     })) as {
       data: ListNotificationsQuery;
     };
-
     const notifs = res?.data?.listNotifications?.items ?? [];
     const noNullNotifs = notifs.filter(notEmpty);
     dispatch(notificationsRecieved(noNullNotifs));

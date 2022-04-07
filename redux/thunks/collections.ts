@@ -18,7 +18,6 @@ const fetchCollections =
     })) as {
       data: ListCollectionsQuery;
     };
-
     const collections = res?.data?.listCollections?.items ?? [];
     const noNullCollections = collections.filter(notEmpty);
     dispatch(collectionsRecieved(noNullCollections));

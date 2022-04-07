@@ -17,15 +17,11 @@ export const collectionSlice = createSlice({
   initialState,
   reducers: {
     collectionsLoading(state) {
-      if (state.loading === "idle") {
-        state.loading = "pending";
-      }
+      state.loading = "pending";
     },
     collectionsRecieved(state, action: PayloadAction<CollectionQueryType>) {
-      if (state.loading === "pending") {
-        state.collections = action.payload;
-        state.loading = "idle";
-      }
+      state.collections = action.payload;
+      state.loading = "idle";
     },
     collectionRemoval(state, action: PayloadAction<string>) {
       const newState = state.collections.filter(
