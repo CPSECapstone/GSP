@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Collection } from "../../src/API";
-import { CollectionQueryType, CollectionType } from "../../src/APITypes";
+import { CreateCollectionMutation } from "../../src/API";
+import { CollectionQueryType } from "../../src/APITypes";
 
 interface CollectionState {
-  collections: CollectionType[];
+  collections: CollectionQueryType;
   loading: "idle" | "pending";
 }
 
@@ -21,7 +21,7 @@ export const collectionSlice = createSlice({
         state.loading = "pending";
       }
     },
-    collectionsRecieved(state, action: PayloadAction<CollectionType[]>) {
+    collectionsRecieved(state, action: PayloadAction<CollectionQueryType>) {
       if (state.loading === "pending") {
         state.collections = action.payload;
         state.loading = "idle";
@@ -33,9 +33,14 @@ export const collectionSlice = createSlice({
       );
       state.collections = newState;
     },
-    addCollection(state, action: PayloadAction<CollectionType>) {
-      const newCollections = [...state.collections, action.payload];
-      state.collections = newCollections;
+    addCollection(
+      state,
+      action: PayloadAction<CreateCollectionMutation["createCollection"]>
+    ) {
+      if (action.payload !== undefined) {
+        const newCollections = [...state.collections, action.payload];
+        state.collections = newCollections;
+      }
     },
   },
 });

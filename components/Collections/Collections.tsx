@@ -1,4 +1,3 @@
-import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { API } from "aws-amplify";
 import React from "react";
 import {
@@ -17,10 +16,8 @@ import selectAllUserCollections from "../../redux/selectors/collections";
 import { selectUser } from "../../redux/selectors/user";
 import { addCollection } from "../../redux/slices/collection";
 import { CollectionProps } from "../../route-settings";
-import { Collection } from "../../src/API";
-import { CollectionType } from "../../src/APITypes";
+import { CreateCollectionMutation } from "../../src/API";
 import { createCollection } from "../../src/graphql/mutations";
-import { BusinessType } from "../../src/models";
 import BusinessCell from "../Misc/BusinessCell";
 import CollectionCell from "./CollectionCell";
 import ColorPicker from "./ColorPicker";
@@ -122,10 +119,10 @@ function Collections({ navigation }: CollectionProps) {
 
   const userCollections = useAppSelector(selectAllUserCollections);
 
-  let color = "#B27129";
+  let collectionColor = "#B27129";
 
   const updateColor = (val: string) => {
-    color = val;
+    collectionColor = val;
   };
 
   const pushNewCollection = async (
@@ -143,8 +140,9 @@ function Collections({ navigation }: CollectionProps) {
       const res = (await API.graphql({
         query: createCollection,
         variables: { input: newCollection },
-      })) as GraphQLResult<any>;
-      dispatch(addCollection(res.data));
+      })) as { data: CreateCollectionMutation };
+      console.log(res);
+      dispatch(addCollection(res.data.createCollection));
     } catch (e) {
       console.error(e);
     }
@@ -207,7 +205,7 @@ function Collections({ navigation }: CollectionProps) {
                     description,
                   });
                   setModalVisible(false);
-                  pushNewCollection(color, title, description);
+                  pushNewCollection(collectionColor, title, description);
                 }}
                 style={{
                   backgroundColor: "#FA4A0C",
@@ -278,7 +276,7 @@ function Collections({ navigation }: CollectionProps) {
               />
             </Pressable>
           )}
-          keyExtractor={(item, index) => item?.id ?? "undefined" + index}
+          keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
         />
       ) : (
         <View style={{ alignItems: "center" }}>
