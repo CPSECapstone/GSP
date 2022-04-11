@@ -141,7 +141,7 @@ function Collections({ navigation }: CollectionProps) {
         query: createCollection,
         variables: { input: newCollection },
       })) as { data: CreateCollectionMutation };
-      console.log(res);
+
       dispatch(addCollection(res.data.createCollection));
     } catch (e) {
       console.error(e);
@@ -257,27 +257,30 @@ function Collections({ navigation }: CollectionProps) {
         </Pressable>
       </View>
       {userCollections.length > 0 ? (
-        <FlatList
-          contentContainerStyle={styles.verticalflatlist}
-          showsVerticalScrollIndicator={false}
-          data={userCollections}
-          renderItem={({ item }) => (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("OpenCollection", {
-                  name: item?.title ?? "No Collection Title",
-                  description: item?.description ?? "No Collection Description",
-                })
-              }
-            >
-              <CollectionCell
-                color={item?.color ?? "#FFFFFF"}
-                title={item?.title ?? "Error"}
-              />
-            </Pressable>
-          )}
-          keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
-        />
+        <View>
+          <FlatList
+            contentContainerStyle={styles.verticalflatlist}
+            showsVerticalScrollIndicator={false}
+            data={userCollections}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("OpenCollection", {
+                    name: item?.title ?? "No Collection Title",
+                    description:
+                      item?.description ?? "No Collection Description",
+                  })
+                }
+              >
+                <CollectionCell
+                  color={item?.color ?? "#FFFFFF"}
+                  title={item?.title ?? "Error"}
+                />
+              </Pressable>
+            )}
+            keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
+          />
+        </View>
       ) : (
         <View style={{ alignItems: "center" }}>
           <Text style={styles.emptytext}>Add your first collection!</Text>

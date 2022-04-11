@@ -66,7 +66,6 @@ function AuthenticatedApp() {
   const dispatch = useAppDispatch();
 
   if (user?.id !== undefined) {
-    console.log("loading data...");
     dispatch(notifications.fetchNotifications(user.id));
     dispatch(collections.fetchCollections(user.id));
   }
