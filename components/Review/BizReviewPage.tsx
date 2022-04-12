@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -18,14 +18,7 @@ import { useAppSelector } from "../../redux/hooks";
 import ReviewModal from "./ReviewModal";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
 import { selectAllUsers, selectUser } from "../../redux/selectors/user";
-import {
-  returnBusinessTypeValue,
-  returnMinorityGroupValue,
-} from "../../constants/enumconverters";
 import { RatingInput } from "./RatingView";
-import { average } from "../../constants/math";
-import { S3Image } from "../Misc/S3Util";
-import StarRating from "./StarRating";
 // eslint-disable-next-line import/no-cycle
 import {
   BProfileStackParamList,
@@ -33,6 +26,7 @@ import {
 } from "../Profile/Business/BusinessProfile";
 import ReviewAPI from "./ReviewAPI";
 import { addReview } from "../../redux/slices/review";
+import BizReviewHeader from "./BizReviewHeader";
 
 type ReviewPageProps = NativeStackScreenProps<
   BProfileStackParamList,
@@ -44,14 +38,13 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
   const [writing, setWriting] = React.useState(route.params.edit);
   const [newRating, setNewRating] = React.useState(0);
   const [text, setText] = React.useState("");
+  const [selectedReview, setSelectedReview] = useState("");
 
   const business = React.useContext(BusinessContext);
   const reviews = useAppSelector(selectReviewsByBusiness(business.id));
   const users = useAppSelector(selectAllUsers);
   const clientId = useAppSelector(selectUser)!.id;
 
-  const ratings = reviews.map((review) => review.rating) as number[]; // TODO: remove type declaration after rating is required
-  const avgRating = ratings.length === 0 ? 0 : average(ratings);
   const cancelWriting = () => setWriting(false);
   const submitReview = () => {
     if (!newRating || !text) {
@@ -75,6 +68,7 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
         <ReviewModal
           visible={modalVisible}
           modalVisibilitySetter={setmodalVisible}
+          reviewID={selectedReview}
         />
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -83,32 +77,7 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
             <PostButton action={writing ? submitReview : navigation.goBack} />
           )}
         </View>
-        <View
-          style={{
-            paddingBottom: 10,
-            borderBottomColor: "#B1B1B3",
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ flex: 2 }}>
-            <Text style={styles.header}>{business.name}</Text>
-            <Text style={styles.subtitle}>
-              {returnBusinessTypeValue(business.type)} •{" "}
-              {returnMinorityGroupValue(business.tags?.[0])}
-            </Text>
-            <StarRating
-              rating={avgRating}
-              label={`${ratings.length} reviews`}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <S3Image
-              style={[styles.avatar, { borderColor: business.primarycolor }]}
-              S3key={`${business.id}/profile`}
-            />
-          </View>
-        </View>
+        <BizReviewHeader businessID={business.id} />
         <Line />
         {/* Commenting out until functional
         <Text style={{ color: "grey", paddingLeft: 30, paddingTop: 10 }}>
@@ -138,7 +107,11 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
           <View>
             <View>
               <FlatList
-                contentContainerStyle={{ paddingTop: 40 }}
+                contentContainerStyle={{
+                  paddingTop: 40,
+                  paddingLeft: 12,
+                  paddingRight: 12,
+                }}
                 data={reviews}
                 renderItem={({ item }) => {
                   const user = users.find((u) => u.id === item.userID);
@@ -148,7 +121,12 @@ function BizReviewPage({ navigation, route }: ReviewPageProps) {
                       <ReviewCell
                         review={item}
                         user={user}
+                        title={user.name}
                         clientId={clientId}
+                        action={() => {
+                          setmodalVisible(true);
+                          setSelectedReview(item.id);
+                        }}
                       />
                     </View>
                   );
@@ -219,17 +197,6 @@ function Margin() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    fontFamily: "Mada-Black",
-    fontSize: 24,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  subtitle: {
-    fontFamily: "Mada-Black",
-    fontSize: 18,
-    paddingBottom: 10,
-  },
   image: {
     height: 50,
     width: 50,
@@ -261,16 +228,6 @@ const styles = StyleSheet.create({
     borderColor: "#D7D7D7",
     marginLeft: 30,
     marginTop: 5,
-  },
-  avatar: {
-    aspectRatio: 1,
-    maxWidth: "80%",
-    maxHeight: "80%",
-    width: "80%",
-    borderRadius: 100,
-    borderWidth: 2,
-    alignSelf: "center",
-    backgroundColor: "black",
   },
   center: {
     alignItems: "center",

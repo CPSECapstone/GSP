@@ -30,10 +30,14 @@ export const reviewSlice = createSlice({
       const newArray = [...state.reviews, action.payload];
       state.reviews = newArray;
     },
+    deleteReviewRedux(state, action: PayloadAction<string>) {
+      const newArray = state.reviews.filter((r) => r.id !== action.payload);
+      state.reviews = newArray;
+    },
   },
 });
 
-export const { reviewsLoading, reviewsRecieved, addReview } =
+export const { reviewsLoading, reviewsRecieved, addReview, deleteReviewRedux } =
   reviewSlice.actions;
 
 const reviewReducer = reviewSlice.reducer;

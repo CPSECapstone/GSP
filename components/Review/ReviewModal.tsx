@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { API, graphqlOperation } from "aws-amplify";
 import React, { Dispatch } from "react";
 import {
   Modal,
@@ -8,6 +9,9 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import { useAppDispatch } from "../../redux/hooks";
+import { deleteReviewRedux } from "../../redux/slices/review";
+import { deleteReview } from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
   navoptionpressable: {
@@ -108,12 +112,16 @@ function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
 interface DeleteReviewProps {
   modalVisibilitySetter: Dispatch<boolean>;
   nextScreenIncr: Dispatch<number>;
+  reviewID: string;
 }
 
 function DeleteView({
   modalVisibilitySetter,
   nextScreenIncr,
+  reviewID,
 }: DeleteReviewProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
@@ -147,11 +155,11 @@ function DeleteView({
               backgroundColor: "#FA4A0C",
             }}
             onPress={() => {
-              // 1. get all review data for user with: useAppSelector(selectAllReviews);
-              // 2. pass this data into flatlist
-              // 3. for each item in the flatlist, pass the review data
-              // 4. pass ID for current review along to "delete review"
-              // 5. on delete, call reducer to filter out current review ID
+              dispatch(deleteReviewRedux(reviewID)); // Remove from redux
+              const input = { id: reviewID };
+              API.graphql(graphqlOperation(deleteReview, { input }));
+              nextScreenIncr(0);
+              modalVisibilitySetter(false);
             }}
           >
             <Text style={styles.sendreqbutton}>Delete</Text>
@@ -247,9 +255,14 @@ function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
 interface FullModalProps {
   modalVisibilitySetter: Dispatch<boolean>;
   visible: boolean;
+  reviewID: string;
 }
 
-function ReviewModal({ modalVisibilitySetter, visible }: FullModalProps) {
+function ReviewModal({
+  modalVisibilitySetter,
+  visible,
+  reviewID,
+}: FullModalProps) {
   const [screenindex, setScreenindex] = React.useState(0);
 
   return (
@@ -270,6 +283,7 @@ function ReviewModal({ modalVisibilitySetter, visible }: FullModalProps) {
         <DeleteView
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
+          reviewID={reviewID}
         />
       )}
     </Modal>
