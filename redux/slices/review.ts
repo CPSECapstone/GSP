@@ -30,6 +30,10 @@ export const reviewSlice = createSlice({
       const newArray = [...state.reviews, action.payload];
       state.reviews = newArray;
     },
+    editReview(state, action: PayloadAction<ReviewType>) {
+      const idx = state.reviews.findIndex((r) => r.id === action.payload.id);
+      state.reviews[idx] = action.payload;
+    },
     deleteReviewRedux(state, action: PayloadAction<string>) {
       const newArray = state.reviews.filter((r) => r.id !== action.payload);
       state.reviews = newArray;
@@ -37,8 +41,13 @@ export const reviewSlice = createSlice({
   },
 });
 
-export const { reviewsLoading, reviewsRecieved, addReview, deleteReviewRedux } =
-  reviewSlice.actions;
+export const {
+  reviewsLoading,
+  reviewsRecieved,
+  addReview,
+  editReview,
+  deleteReviewRedux,
+} = reviewSlice.actions;
 
 const reviewReducer = reviewSlice.reducer;
 export default reviewReducer;

@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { API, graphqlOperation } from "aws-amplify";
 import React, { Dispatch } from "react";
 import {
@@ -9,8 +10,10 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { useAppDispatch } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectReviewById } from "../../redux/selectors/review";
 import { deleteReviewRedux } from "../../redux/slices/review";
+import { ReviewPageProps } from "../../route-settings";
 import { deleteReview } from "../../src/graphql/mutations";
 
 const styles = StyleSheet.create({
@@ -83,15 +86,32 @@ interface ModalProps {
   nextScreenIncr: Dispatch<number>;
 }
 
-function OptionsView({ modalVisibilitySetter, nextScreenIncr }: ModalProps) {
+interface OptionsProps extends ModalProps {
+  reviewID: string;
+}
+
+function OptionsView({
+  modalVisibilitySetter,
+  nextScreenIncr,
+  reviewID,
+}: OptionsProps) {
+  const navigation = useNavigation<ReviewPageProps["navigation"]>();
+  const review = useAppSelector(selectReviewById(reviewID));
+
+  const editReview = () => {
+    if (review?.businessID) {
+      navigation.navigate("CreateEditReview", {
+        busID: review?.businessID,
+        editReviewId: reviewID,
+      });
+      modalVisibilitySetter(false);
+    }
+  };
+
   return (
     <View style={styles.modalcontainer}>
       <View style={styles.modalView}>
-        <ModalNavOption
-          index={1}
-          title="Edit Review"
-          navaction={nextScreenIncr}
-        />
+        <ModalNavOption index={1} title="Edit Review" navaction={editReview} />
         <ModalNavOption
           index={2}
           title="Delete Review"
@@ -271,6 +291,7 @@ function ReviewModal({
         <OptionsView
           nextScreenIncr={setScreenindex}
           modalVisibilitySetter={modalVisibilitySetter}
+          reviewID={reviewID}
         />
       )}
       {screenindex === 1 && (
