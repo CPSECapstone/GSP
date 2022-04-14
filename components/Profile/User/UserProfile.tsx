@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-SemiBold",
     fontSize: 18,
     padding: 10,
-    color: "#FA4A0C",
+    color: "#7300ff",
   },
   logoutCell: {
     justifyContent: "center",

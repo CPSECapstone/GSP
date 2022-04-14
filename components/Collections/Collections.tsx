@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   subheader: {
     marginLeft: 50,
     fontFamily: "Mada-Medium",
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 18,
   },
   subcontainer: {
@@ -198,7 +198,7 @@ function Collections({ navigation }: CollectionProps) {
                   });
                 }}
                 style={{
-                  backgroundColor: "#FA4A0C",
+                  backgroundColor: "#7300ff",
                   borderRadius: 30,
                   padding: 12,
                   paddingHorizontal: 40,

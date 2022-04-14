@@ -187,7 +187,7 @@ function RequestView({
               paddingHorizontal: 20,
               paddingVertical: 10,
               borderRadius: 25,
-              backgroundColor: "#FA4A0C",
+              backgroundColor: "#7300ff",
             }}
             disabled={postDisabled}
             onPress={async () => {

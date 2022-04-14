@@ -9,7 +9,7 @@ import CleanInput from "./CleanInput";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/slices/user";
 
-const avatarImg = require("../../assets/user.png");
+const logo = require("../../assets/MMLogo.png");
 
 export const styles = StyleSheet.create({
   login: {
@@ -135,7 +135,7 @@ function Login({ navigation }: LoginProps) {
       <KeyboardAwareScrollView scrollEnabled={false}>
         <Text style={styles.login}>Log In</Text>
         <View style={styles.userInfo}>
-          <Image source={avatarImg} style={styles.account} />
+          <Image source={logo} style={styles.account} />
           <View style={styles.inputWrapper}>
             <CleanInput
               label="Email Address"
@@ -159,7 +159,7 @@ function Login({ navigation }: LoginProps) {
           <Pressable onPress={() => navigation.navigate("ForgotPass")}>
             <Text
               style={{
-                color: "rgb(250, 74, 12)",
+                color: "#021a3e",
                 paddingBottom: 20,
                 marginLeft: 20,
                 marginRight: 40,
@@ -177,7 +177,7 @@ function Login({ navigation }: LoginProps) {
             <Pressable>
               <Text
                 style={{
-                  color: "rgb(250, 74, 12)",
+                  color: "#021a3e",
                   textDecorationLine: "underline",
                 }}
                 onPress={() => navigation.navigate("ChooseAccountType")}

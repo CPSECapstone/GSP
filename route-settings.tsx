@@ -128,14 +128,14 @@ export const TabBarScreenOptions = ({
     return (
       <Ionicons
         style={{
-          shadowColor: color,
-          shadowOpacity: 0.8,
+          shadowColor: "#7300ff",
+          shadowOpacity: 0.6,
           shadowRadius: 14,
           shadowOffset: { width: 0, height: 6 },
         }}
         name={iconName}
         size={size}
-        color={color}
+        color="#7300ff"
       />
     );
   },

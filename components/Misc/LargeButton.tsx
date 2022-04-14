@@ -5,7 +5,7 @@ const LoginButtonStyle = StyleSheet.create({
   LargeButton: {
     height: 70,
     width: 314,
-    backgroundColor: "rgb(250, 74, 12)",
+    backgroundColor: "#7300ff",
     borderRadius: 50,
     alignSelf: "center",
   },

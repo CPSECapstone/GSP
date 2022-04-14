@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 const colors = [
   "#B27129",
   "#202020",
-  "#FA4A0C",
+  "#7300ff",
   "#FFE600",
   "#0085FF",
   "#8F00FF",

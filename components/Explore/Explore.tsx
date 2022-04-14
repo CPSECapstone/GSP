@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   title2: {
     marginLeft: 50,
     fontFamily: "Mada-Medium",
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 18,
   },
   categorycontainer: {
@@ -188,7 +188,7 @@ function ExploreView({ navigation }: ExploreProps) {
               style={[
                 styles.categorycontainer,
                 styles.shadow,
-                selectedCategoryIndex === index && { borderColor: "#FA4A0C" },
+                selectedCategoryIndex === index && { borderColor: "#7300ff" },
               ]}
             >
               {categoryicons[index]}
@@ -210,7 +210,7 @@ function ExploreView({ navigation }: ExploreProps) {
         {resultBusinesses.length === 0 ? (
           <Text
             style={{
-              color: "#FA4A0C",
+              color: "#7300ff",
               fontFamily: "Mada-Regular",
               fontSize: 24,
               textAlign: "center",
@@ -275,7 +275,7 @@ function ExploreView({ navigation }: ExploreProps) {
                 styles.minoritycellcontainer,
                 { borderWidth: 2, borderColor: "#FFFFFF" },
                 selectedMinorityGroups.includes(index) && {
-                  borderColor: "#FA4A0C",
+                  borderColor: "#7300ff",
                 },
               ]}
             >

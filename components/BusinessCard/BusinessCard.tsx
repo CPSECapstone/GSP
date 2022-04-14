@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     color: "#9A9A9D",
   },
   ratingtext: {
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontFamily: "Mada-SemiBold",
     fontSize: 18,
   },
@@ -60,7 +60,7 @@ function BusinessCard({ id, name, distance, rating }: BusinessCardProps) {
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.distancetext}>{`${distance} mi`}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Entypo name="star" size={23} color="#FA4A0C" />
+          <Entypo name="star" size={23} color="#7300ff" />
           <Text>{rating}</Text>
         </View>
       </View>

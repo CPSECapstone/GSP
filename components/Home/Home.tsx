@@ -181,7 +181,7 @@ function HomeView({ navigation }: HomeProps) {
                 styles.minoritycellcontainer,
                 { borderWidth: 2, borderColor: "#7b7b7c" },
                 selectedMinorityGroups.includes(index) && {
-                  borderColor: "#FA4A0C",
+                  borderColor: "#7300ff",
                 },
               ]}
             >
