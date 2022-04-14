@@ -100,15 +100,7 @@ export const TabBarScreenOptions = ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: { height: 100, backgroundColor: "F5F5F8", borderTopWidth: 0 },
-  tabBarIcon: ({
-    focused,
-    color,
-    size,
-  }: {
-    focused: any;
-    color: any;
-    size: any;
-  }) => {
+  tabBarIcon: ({ focused, size }: { focused: any; size: any }) => {
     let iconName: any;
 
     if (route.name === "Home") {
