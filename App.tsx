@@ -33,6 +33,7 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import Notifications from "./components/OwnershipTransfer/NotificationsPage";
 import ProfileSelector from "./components/Profile/ProfileSelector";
 import BusinessEditor from "./components/Profile/Business/BusinessEditor";
+import CreateEditReview from "./components/Review/CreateEditReview";
 import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
@@ -142,6 +143,7 @@ function InnerApp() {
         <Stack.Screen name="OpenCollection" component={OpenCollection} />
         <Stack.Screen name="ReviewPage" component={ReviewPage} />
         <Stack.Screen name="BizReviewPage" component={BizReviewPage} />
+        <Stack.Screen name="CreateEditReview" component={CreateEditReview} />
         <Stack.Screen
           name="Notifications"
           component={Notifications}

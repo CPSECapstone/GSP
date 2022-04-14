@@ -33,7 +33,7 @@ import {
 export type BProfileStackParamList = {
   BusinessProfile: undefined;
   BusinessEditor: undefined;
-  Reviews: { edit: boolean };
+  Reviews: undefined;
 };
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
@@ -178,7 +178,9 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                           },
                         ]}
                         onPress={() =>
-                          navigation.navigate("Reviews", { edit: true })
+                          navigation.navigate("CreateEditReview", {
+                            busID: business.id,
+                          })
                         }
                       >
                         <Text

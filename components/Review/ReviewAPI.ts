@@ -7,13 +7,11 @@ export default class ReviewAPI {
     return API.graphql(graphqlOperation(createReview, { input: reviewObj }));
   }
 
-  static async update(review: Review) {
+  static async update(newReview: Omit<Review, "__typename">) {
+    const { createdAt, updatedAt, ...trimReview } = newReview;
     return API.graphql(
       graphqlOperation(updateReview, {
-        input: {
-          id: review.id,
-          website: "https://direct.chownow.com/order/26027/locations/38533",
-        },
+        input: trimReview,
       })
     );
   }
