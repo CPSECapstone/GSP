@@ -1,3 +1,4 @@
+import { API } from "aws-amplify";
 import React from "react";
 import {
   View,
@@ -10,7 +11,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { placeholderbusinesses } from "../../constants/placeholderdata";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import selectAllUserCollections from "../../redux/selectors/collections";
+import { selectUser } from "../../redux/selectors/user";
+import { addCollection } from "../../redux/slices/collection";
 import { CollectionProps } from "../../route-settings";
+import { CreateCollectionMutation } from "../../src/API";
+import { createCollection } from "../../src/graphql/mutations";
 import BusinessCell from "../Misc/BusinessCell";
 import CollectionCell from "./CollectionCell";
 import ColorPicker from "./ColorPicker";
@@ -105,32 +112,40 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO: when a new collection is created, data must be appended to this list
-// Its content should be added to redux as well as posted to the collections category of the user in the DB
-const collectionplaceholder = [
-  {
-    color: "#E92736",
-    title: "Authentic Thai",
-    description: "The best thai restaurants in town!",
-  },
-  {
-    color: "black",
-    title: "Black Hairdressers",
-    description: "My favorite local black-owned hairdressers",
-  },
-  {
-    color: "#8F00FF",
-    title: "Pride Month",
-    description: "LQBTQ owned businesses in my area.",
-  },
-];
-
 function Collections({ navigation }: CollectionProps) {
   const [modalVisible, setModalVisible] = React.useState(false);
-  let color = "#B27129";
+  const user = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  const userCollections = useAppSelector(selectAllUserCollections);
+
+  let collectionColor = "#B27129";
 
   const updateColor = (val: string) => {
-    color = val;
+    collectionColor = val;
+  };
+
+  const pushNewCollection = async (
+    color: string,
+    title: string,
+    description: string
+  ) => {
+    const newCollection = {
+      color,
+      title,
+      description,
+      userID: user?.id,
+    };
+    try {
+      const res = (await API.graphql({
+        query: createCollection,
+        variables: { input: newCollection },
+      })) as { data: CreateCollectionMutation };
+
+      dispatch(addCollection(res.data.createCollection));
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   // eslint-disable-next-line
@@ -190,12 +205,7 @@ function Collections({ navigation }: CollectionProps) {
                     description,
                   });
                   setModalVisible(false);
-                  // TODO: replace this with redux/database push!
-                  collectionplaceholder.push({
-                    color,
-                    title,
-                    description,
-                  });
+                  pushNewCollection(collectionColor, title, description);
                 }}
                 style={{
                   backgroundColor: "#FA4A0C",
@@ -246,28 +256,34 @@ function Collections({ navigation }: CollectionProps) {
           <Text style={styles.addcollectiontext}>+ Add Collection</Text>
         </Pressable>
       </View>
-      {collectionplaceholder.length > 0 ? (
-        <FlatList
-          contentContainerStyle={styles.verticalflatlist}
-          showsVerticalScrollIndicator={false}
-          data={collectionplaceholder}
-          renderItem={({ item }) => (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("OpenCollection", {
-                  name: item.title,
-                  description: item.description,
-                })
-              }
-            >
-              <CollectionCell color={item.color} title={item.title} />
-            </Pressable>
-          )}
-          keyExtractor={(item, index) => item.title + item.color + index}
-        />
+      {userCollections.length > 0 ? (
+        <View>
+          <FlatList
+            contentContainerStyle={styles.verticalflatlist}
+            showsVerticalScrollIndicator={false}
+            data={userCollections}
+            renderItem={({ item }) => (
+              <Pressable
+                onPress={() =>
+                  navigation.navigate("OpenCollection", {
+                    name: item?.title ?? "No Collection Title",
+                    description:
+                      item?.description ?? "No Collection Description",
+                  })
+                }
+              >
+                <CollectionCell
+                  color={item?.color ?? "#FFFFFF"}
+                  title={item?.title ?? "Error"}
+                />
+              </Pressable>
+            )}
+            keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
+          />
+        </View>
       ) : (
         <View style={{ alignItems: "center" }}>
-          <Text style={styles.emptytext}>Add you first collection!</Text>
+          <Text style={styles.emptytext}>Add your first collection!</Text>
         </View>
       )}
     </SafeAreaView>
