@@ -15,8 +15,9 @@ export const styles = StyleSheet.create({
   login: {
     fontSize: 34,
     marginLeft: 50,
-    marginBottom: 25,
+    marginBottom: 5,
     fontFamily: "Mada-Bold",
+    marginTop: 20,
   },
 
   account: {
@@ -162,7 +163,7 @@ function Login({ navigation }: LoginProps) {
                 color: "#021a3e",
                 paddingBottom: 20,
                 marginLeft: 20,
-                marginRight: 40,
+                marginRight: 60,
                 textAlign: "right",
                 fontWeight: "bold",
               }}
