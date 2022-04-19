@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
   Linking,
@@ -112,7 +112,16 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                       ]}
                       S3key={`${business.id}/profile`}
                     />
-                    <Text style={styles.title}>{business.name}</Text>
+                    <Text style={styles.title}>
+                      {business.name}{" "}
+                      {business.isVerified && (
+                        <MaterialIcons
+                          name="verified"
+                          size={25}
+                          color="#2089e6"
+                        />
+                      )}
+                    </Text>
                     <Text style={styles.details}>{`${returnBusinessTypeValue(
                       business.type
                     )} • 3mi`}</Text>

@@ -195,6 +195,7 @@ export type Business = {
   menu?: string | null,
   profileImage: string,
   bannerImage?: string | null,
+  isVerified?: boolean | null,
   userID: string,
   createdAt: string,
   updatedAt: string,
@@ -321,6 +322,7 @@ export type CreateBusinessInput = {
   menu?: string | null,
   profileImage: string,
   bannerImage?: string | null,
+  isVerified?: boolean | null,
   userID: string,
 };
 
@@ -343,6 +345,7 @@ export type ModelBusinessConditionInput = {
   menu?: ModelStringInput | null,
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
+  isVerified?: ModelBooleanInput | null,
   userID?: ModelIDInput | null,
   and?: Array< ModelBusinessConditionInput | null > | null,
   or?: Array< ModelBusinessConditionInput | null > | null,
@@ -359,6 +362,13 @@ export type ModelMinorityGroupsListInput = {
 export type ModelBusinessTypeInput = {
   eq?: BusinessType | null,
   ne?: BusinessType | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateBusinessInput = {
@@ -381,6 +391,7 @@ export type UpdateBusinessInput = {
   menu?: string | null,
   profileImage?: string | null,
   bannerImage?: string | null,
+  isVerified?: boolean | null,
   userID?: string | null,
 };
 
@@ -478,6 +489,7 @@ export type ModelBusinessFilterInput = {
   menu?: ModelStringInput | null,
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
+  isVerified?: ModelBooleanInput | null,
   userID?: ModelIDInput | null,
   and?: Array< ModelBusinessFilterInput | null > | null,
   or?: Array< ModelBusinessFilterInput | null > | null,
@@ -739,6 +751,7 @@ export type CreateBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -776,6 +789,7 @@ export type UpdateBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -813,6 +827,7 @@ export type DeleteBusinessMutation = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1053,6 +1068,7 @@ export type GetBusinessQuery = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1089,6 +1105,7 @@ export type ListBusinessesQuery = {
       menu?: string | null,
       profileImage: string,
       bannerImage?: string | null,
+      isVerified?: boolean | null,
       userID: string,
       createdAt: string,
       updatedAt: string,
@@ -1335,6 +1352,7 @@ export type OnCreateBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1367,6 +1385,7 @@ export type OnUpdateBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1399,6 +1418,7 @@ export type OnDeleteBusinessSubscription = {
     menu?: string | null,
     profileImage: string,
     bannerImage?: string | null,
+    isVerified?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
