@@ -119,34 +119,37 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                   </View>
                   <View style={styles.body}>
                     <Tags tags={business.tags as string[]} />
-                    <View style={{ flexDirection: "row", marginTop: 20 }}>
-                      <CircleButton
-                        icon="call"
-                        title="Call"
-                        action={() => call(business.phone)}
-                        color={business.primarycolor}
-                      />
-                      <Margin />
-                      <CircleButton
-                        icon="map"
-                        title="Map"
-                        action={() =>
-                          openMap(
-                            business.address,
-                            business.city,
-                            business.zipcode.toString()
-                          )
-                        }
-                        color={business.primarycolor}
-                      />
-                      <Margin />
-                      <CircleButton
-                        icon="open"
-                        title="Site"
-                        action={() => openUrl(business.website!.toString())}
-                        color={business.primarycolor}
-                      />
-                      <Margin />
+                    <View style={styles.buttonWrapper}>
+                      {business.phone && (
+                        <CircleButton
+                          icon="call"
+                          title="Call"
+                          action={() => call(business.phone)}
+                          color={business.primarycolor}
+                        />
+                      )}
+                      {business.address && (
+                        <CircleButton
+                          icon="map"
+                          title="Map"
+                          action={() =>
+                            openMap(
+                              business.address,
+                              business.city,
+                              business.zipcode.toString()
+                            )
+                          }
+                          color={business.primarycolor}
+                        />
+                      )}
+                      {business.website && (
+                        <CircleButton
+                          icon="open"
+                          title="Site"
+                          action={() => openUrl(business.website!.toString())}
+                          color={business.primarycolor}
+                        />
+                      )}
                       {business.menu ? (
                         <CircleButton
                           icon="restaurant"
@@ -389,7 +392,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   circleButton: {
-    width: "100%",
+    width: 60,
     aspectRatio: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -412,6 +415,11 @@ const styles = StyleSheet.create({
   },
   body: {
     marginTop: 20,
+  },
+  buttonWrapper: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "space-around",
   },
   bodyContent: {
     flex: 1,
