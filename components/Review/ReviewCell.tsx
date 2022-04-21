@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
-    minWidth: 300,
+    width: 300,
   },
   title: {
     fontWeight: "bold",
@@ -80,7 +80,9 @@ function ReviewCell({
         )}
       </View>
       {srcImage && <RatingView rating={review.rating!} userName={user.name!} />}
-      <Text style={styles.description}>{review.comments}</Text>
+      {!!review.comments?.trim() && (
+        <Text style={styles.description}>{review.comments}</Text>
+      )}
       {isOwnReview && action && <EditButton onPress={action} />}
     </View>
   );
