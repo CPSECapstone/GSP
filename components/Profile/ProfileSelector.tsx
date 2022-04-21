@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: "Mada-Medium",
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 18,
     marginTop: 30,
     marginBottom: 15,

@@ -16,11 +16,10 @@ import { useAppSelector } from "../../redux/hooks";
 import ReviewModal from "./ReviewModal";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
 import { selectAllUsers, selectUser } from "../../redux/selectors/user";
-// eslint-disable-next-line import/no-cycle
 import {
   BProfileStackParamList,
   BusinessContext,
-} from "../Profile/Business/BusinessProfile";
+} from "../Profile/Business/bizDependencies";
 import BizReviewHeader from "./BizReviewHeader";
 import { RootStackParamList } from "../../route-settings";
 

@@ -10,6 +10,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Animated,
 } from "react-native";
 import {
   createNativeStackNavigator,
@@ -23,26 +24,35 @@ import { useAppDispatch } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
 import { updateBusiness } from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
-// eslint-disable-next-line import/no-cycle
 import BizReviewPage from "../../Review/BizReviewPage";
+import { BProfileStackParamList, BusinessContext } from "./bizDependencies";
 import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 
-export type BProfileStackParamList = {
-  BusinessProfile: undefined;
-  BusinessEditor: undefined;
-  Reviews: undefined;
-};
-
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
-export const BusinessContext = React.createContext<Business>(undefined!);
 type BusinessProfileProps = { business: Business };
 export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
-  // const navigation = useNavigation();
+  const backgroundOpactiy = new Animated.Value(1.0);
+
+  React.useEffect(() => {
+    if (modalVisible) {
+      Animated.timing(backgroundOpactiy, {
+        toValue: 0.5,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.timing(backgroundOpactiy, {
+        toValue: 1.0,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [modalVisible]);
 
   return (
     <BusinessContext.Provider value={business}>
@@ -57,7 +67,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
         <BProfileStack.Screen name="Reviews" component={BizReviewPage} />
         <BProfileStack.Screen name="BusinessProfile">
           {({ navigation }) => (
-            <View>
+            <Animated.View style={{ opacity: backgroundOpactiy }}>
               <BusinessProfileModal
                 title={business.name}
                 ownerID={business.userID}
@@ -115,34 +125,37 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                   </View>
                   <View style={styles.body}>
                     <Tags tags={business.tags as string[]} />
-                    <View style={{ flexDirection: "row", marginTop: 20 }}>
-                      <CircleButton
-                        icon="call"
-                        title="Call"
-                        action={() => call(business.phone)}
-                        color={business.primarycolor}
-                      />
-                      <Margin />
-                      <CircleButton
-                        icon="map"
-                        title="Map"
-                        action={() =>
-                          openMap(
-                            business.address,
-                            business.city,
-                            business.zipcode.toString()
-                          )
-                        }
-                        color={business.primarycolor}
-                      />
-                      <Margin />
-                      <CircleButton
-                        icon="open"
-                        title="Site"
-                        action={() => openUrl(business.website!.toString())}
-                        color={business.primarycolor}
-                      />
-                      <Margin />
+                    <View style={styles.buttonWrapper}>
+                      {business.phone && (
+                        <CircleButton
+                          icon="call"
+                          title="Call"
+                          action={() => call(business.phone)}
+                          color={business.primarycolor}
+                        />
+                      )}
+                      {business.address && (
+                        <CircleButton
+                          icon="map"
+                          title="Map"
+                          action={() =>
+                            openMap(
+                              business.address,
+                              business.city,
+                              business.zipcode.toString()
+                            )
+                          }
+                          color={business.primarycolor}
+                        />
+                      )}
+                      {business.website && (
+                        <CircleButton
+                          icon="open"
+                          title="Site"
+                          action={() => openUrl(business.website!.toString())}
+                          color={business.primarycolor}
+                        />
+                      )}
                       {business.menu ? (
                         <CircleButton
                           icon="restaurant"
@@ -224,7 +237,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                 </View>
                 <Margin />
               </View>
-            </View>
+            </Animated.View>
           )}
         </BProfileStack.Screen>
       </BProfileStack.Navigator>
@@ -385,7 +398,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   circleButton: {
-    width: "100%",
+    width: 60,
     aspectRatio: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -408,6 +421,11 @@ const styles = StyleSheet.create({
   },
   body: {
     marginTop: 20,
+  },
+  buttonWrapper: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "space-around",
   },
   bodyContent: {
     flex: 1,

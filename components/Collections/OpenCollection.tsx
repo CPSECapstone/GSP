@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   collectiontitle: {
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 24,
     fontFamily: "Mada-Medium",
     marginRight: 50,
@@ -99,7 +99,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
               <AntDesign
                 style={{ marginHorizontal: 10 }}
                 name="minuscircle"
-                color="#FA4A0C"
+                color="#7300ff"
                 size={20}
               />
             </Animated.View>

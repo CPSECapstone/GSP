@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   distancetext: {
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 17,
     fontFamily: "Mada-Bold",
   },
