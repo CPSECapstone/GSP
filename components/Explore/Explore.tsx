@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
     minHeight: height,
     minWidth: width + 10,
     maxWidth: width + 10,
-    flex: 1,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
+    flex: 7,
   },
   minoritycellimage: {
     width: imgdimensions,
@@ -204,7 +204,7 @@ function ExploreView({ navigation }: ExploreProps) {
           alignItems: "center",
           marginVertical: 20,
           padding: 10,
-          minHeight: 350,
+          minHeight: 325,
         }}
       >
         {resultBusinesses.length === 0 ? (
