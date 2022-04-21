@@ -124,7 +124,7 @@ function ResultsTab({
             {resultBusinesses.length === 0 ? (
               <Text
                 style={{
-                  color: "#FA4A0C",
+                  color: "#7300ff",
                   fontFamily: "Mada-Regular",
                   fontSize: 24,
                   textAlign: "center",

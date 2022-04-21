@@ -101,15 +101,7 @@ export const TabBarScreenOptions = ({
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: { height: 100, backgroundColor: "F5F5F8", borderTopWidth: 0 },
-  tabBarIcon: ({
-    focused,
-    color,
-    size,
-  }: {
-    focused: any;
-    color: any;
-    size: any;
-  }) => {
+  tabBarIcon: ({ focused, size }: { focused: any; size: any }) => {
     let iconName: any;
 
     if (route.name === "Home") {
@@ -129,14 +121,14 @@ export const TabBarScreenOptions = ({
     return (
       <Ionicons
         style={{
-          shadowColor: color,
-          shadowOpacity: 0.8,
+          shadowColor: "#7300ff",
+          shadowOpacity: 0.6,
           shadowRadius: 14,
           shadowOffset: { width: 0, height: 6 },
         }}
         name={iconName}
         size={size}
-        color={color}
+        color="#7300ff"
       />
     );
   },

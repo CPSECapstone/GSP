@@ -172,7 +172,7 @@ function DeleteView({
               paddingHorizontal: 20,
               paddingVertical: 10,
               borderRadius: 25,
-              backgroundColor: "#FA4A0C",
+              backgroundColor: "#7300ff",
             }}
             onPress={() => {
               dispatch(deleteReviewRedux(reviewID)); // Remove from redux
@@ -254,7 +254,7 @@ function EditView({ modalVisibilitySetter, nextScreenIncr }: EditReviewProps) {
               paddingHorizontal: 20,
               paddingVertical: 10,
               borderRadius: 25,
-              backgroundColor: "#FA4A0C",
+              backgroundColor: "#7300ff",
             }}
             onPress={() => {
               // 1. get all review data for user with: useAppSelector(selectAllReviews);
