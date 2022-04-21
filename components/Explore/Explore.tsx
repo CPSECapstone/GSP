@@ -222,7 +222,12 @@ function ExploreView({ navigation }: ExploreProps) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{ width: "100%", justifyContent: "center" }}
+            contentContainerStyle={
+              resultBusinesses.length === 1 && {
+                width: "100%",
+                justifyContent: "center",
+              }
+            }
             data={resultBusinesses}
             renderItem={({ item }) => {
               if (
