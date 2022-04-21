@@ -103,11 +103,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                       style={styles.save}
                       onPress={() => navigation.navigate("BusinessEditor")}
                     >
-                      <Ionicons
-                        name="bookmark-outline"
-                        size={25}
-                        color="white"
-                      />
+                      <Ionicons name="pencil" size={20} color="white" />
                     </Pressable>
                     <Pressable
                       style={styles.share}
