@@ -155,7 +155,7 @@ function ExploreView({ navigation }: ExploreProps) {
       business?.tags?.every((tag) => {
         if (
           tag != null &&
-          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
+          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)!) ||
             minorityGroupsByName.includes("All"))
         ) {
           if (
@@ -222,6 +222,7 @@ function ExploreView({ navigation }: ExploreProps) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ width: "100%", justifyContent: "center" }}
             data={resultBusinesses}
             renderItem={({ item }) => {
               if (
@@ -236,8 +237,8 @@ function ExploreView({ navigation }: ExploreProps) {
                     }
                     distance={3}
                     business={item}
-                    minoritygroups={item.tags.map((tag) =>
-                      returnMinorityGroupValue(tag)
+                    minoritygroups={item.tags.map(
+                      (tag) => returnMinorityGroupValue(tag)!
                     )}
                   />
                 );
