@@ -10,6 +10,7 @@ import {
   View,
   TouchableOpacity,
   Pressable,
+  Animated,
 } from "react-native";
 import {
   createNativeStackNavigator,
@@ -42,7 +43,23 @@ export const BusinessContext = React.createContext<Business>(undefined!);
 type BusinessProfileProps = { business: Business };
 export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
-  // const navigation = useNavigation();
+  const backgroundOpactiy = new Animated.Value(1.0);
+
+  React.useEffect(() => {
+    if (modalVisible) {
+      Animated.timing(backgroundOpactiy, {
+        toValue: 0.5,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.timing(backgroundOpactiy, {
+        toValue: 1.0,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [modalVisible]);
 
   return (
     <BusinessContext.Provider value={business}>
@@ -57,7 +74,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
         <BProfileStack.Screen name="Reviews" component={BizReviewPage} />
         <BProfileStack.Screen name="BusinessProfile">
           {({ navigation }) => (
-            <View>
+            <Animated.View style={{ opacity: backgroundOpactiy }}>
               <BusinessProfileModal
                 title={business.name}
                 ownerID={business.userID}
@@ -228,7 +245,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                 </View>
                 <Margin />
               </View>
-            </View>
+            </Animated.View>
           )}
         </BProfileStack.Screen>
       </BProfileStack.Navigator>
