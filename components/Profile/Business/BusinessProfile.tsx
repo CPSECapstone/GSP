@@ -23,22 +23,15 @@ import { useAppDispatch } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
 import { updateBusiness } from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
-// eslint-disable-next-line import/no-cycle
 import BizReviewPage from "../../Review/BizReviewPage";
+import { BProfileStackParamList, BusinessContext } from "./bizDependencies";
 import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 
-export type BProfileStackParamList = {
-  BusinessProfile: undefined;
-  BusinessEditor: undefined;
-  Reviews: undefined;
-};
-
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
-export const BusinessContext = React.createContext<Business>(undefined!);
 type BusinessProfileProps = { business: Business };
 export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
