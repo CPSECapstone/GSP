@@ -323,7 +323,7 @@ export function AddressEditor({
         address: street,
         city,
         state: st,
-        zipcode: zip as unknown as number,
+        zipcode: zip as unknown as string,
       };
       navigation.navigate("Base", { key: field.key, value: newAddress });
     }

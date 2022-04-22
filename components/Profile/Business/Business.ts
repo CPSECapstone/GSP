@@ -48,7 +48,7 @@ export type Address = {
   address: string;
   city: string;
   state: string;
-  zipcode: number;
+  zipcode: string;
 };
 
 // export default class Business {

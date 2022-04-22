@@ -191,7 +191,7 @@ export type Business = {
   email: string,
   city: string,
   state: string,
-  zipcode: number,
+  zipcode: string,
   menu?: string | null,
   profileImage: string,
   bannerImage?: string | null,
