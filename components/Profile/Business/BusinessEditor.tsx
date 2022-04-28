@@ -6,7 +6,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -29,7 +29,7 @@ import Field, {
   TypeField,
   WebsiteField,
 } from "./Field";
-import { EditStackParamList } from "./EditRoutes";
+import { EditorContext, EditStackParamList } from "./EditRoutes";
 import {
   ColorOption,
   ConfigureBackButton,
@@ -56,62 +56,67 @@ import {
 const EditStack = createNativeStackNavigator<EditStackParamList>();
 
 type BusinessEditorProps = {
-  business: Business | undefined;
+  business?: Business;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
+  del?: () => void;
 };
 
 // eslint-disable-next-line prettier/prettier
 export default function BusinessEditor({
   business,
   submit,
+  del,
 }: BusinessEditorProps) {
   const navigation = useNavigation();
+  const editor = useMemo(() => new Editor(business), []);
+  const headerTitle = business ? "Edit Profile" : "Create Profile";
 
   return (
-    <EditStack.Navigator
-      initialRouteName="Base"
-      // eslint-disable-next-line @typescript-eslint/no-shadow
-      screenOptions={({ navigation, route }) => ({
-        title:
-          route.params && "field" in route.params
-            ? route.params.field.displayTitle
-            : "Edit Profile",
-        headerStyle: { backgroundColor: "#f2f2f2" },
-        headerLeft: () => ConfigureBackButton("Back", navigation.goBack),
-      })}
-    >
-      <EditStack.Screen
-        name="Base"
-        options={{
-          headerLeft: () => ConfigureBackButton("Cancel", navigation.goBack),
-        }}
+    <EditorContext.Provider value={editor}>
+      <EditStack.Navigator
+        initialRouteName="Base"
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        screenOptions={({ navigation, route }) => ({
+          title:
+            route.params && "field" in route.params
+              ? route.params.field.displayTitle
+              : headerTitle,
+          headerStyle: { backgroundColor: "#f2f2f2" },
+          headerLeft: () => ConfigureBackButton("Back", navigation.goBack),
+        })}
       >
-        {(props) => (
-          <BaseEditor {...props} submit={submit} business={business} />
-        )}
-      </EditStack.Screen>
-      <EditStack.Screen name="EditText" component={TextEditor} />
-      <EditStack.Screen name="EditPhone" component={PhoneEditor} />
-      <EditStack.Screen name="EditAddress" component={AddressEditor} />
-      <EditStack.Screen name="EditSelection" component={SelectionEditor} />
-      <EditStack.Screen name="EditList" component={ListEditor} />
-      <EditStack.Screen name="EditURL" component={URLEditor} />
-      <EditStack.Screen name="EditColorSet" component={ColorSetEditor} />
-    </EditStack.Navigator>
+        <EditStack.Screen
+          name="Base"
+          options={{
+            headerLeft: () => ConfigureBackButton("Cancel", navigation.goBack),
+          }}
+        >
+          {(props) => <BaseEditor {...props} submit={submit} del={del} />}
+        </EditStack.Screen>
+        <EditStack.Screen name="EditText" component={TextEditor} />
+        <EditStack.Screen name="EditPhone" component={PhoneEditor} />
+        <EditStack.Screen name="EditAddress" component={AddressEditor} />
+        <EditStack.Screen name="EditSelection" component={SelectionEditor} />
+        <EditStack.Screen name="EditList" component={ListEditor} />
+        <EditStack.Screen name="EditURL" component={URLEditor} />
+        <EditStack.Screen name="EditColorSet" component={ColorSetEditor} />
+      </EditStack.Navigator>
+    </EditorContext.Provider>
   );
 }
 
+BusinessEditor.defaultProps = {
+  business: undefined,
+  del: () => {},
+};
+
 type BaseEditorRouteProps = NativeStackScreenProps<EditStackParamList, "Base">;
 interface BaseEditorProps extends BaseEditorRouteProps {
-  business: Business | undefined;
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
+  del: () => void;
 }
-function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
-  const editor = new Editor(business);
-
-  if (route.params) {
-    editor.updateField(route.params.key, route.params.value);
-  }
+function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
+  const editor = useContext(EditorContext);
 
   const [pImg, setPImg] = useState<string>();
   const [bImg, setBImg] = useState<string>();
@@ -150,7 +155,6 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditText", {
           field: NameField,
-          currentValue: editor.business.name,
         }),
     },
     {
@@ -158,7 +162,6 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditSelection", {
           field: TypeField,
-          currentValue: editor.business.type,
           options: Array.from(enumToArray(BusinessType)),
         }),
     },
@@ -167,7 +170,6 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditPhone", {
           field: PhoneField,
-          currentValue: editor.business.phone,
         }),
     },
     {
@@ -175,12 +177,6 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditAddress", {
           field: AddressField,
-          currentValue: {
-            address: editor.business.address,
-            city: editor.business.city,
-            state: editor.business.state,
-            zipcode: editor.business.zipcode,
-          },
         }),
     },
     {
@@ -188,7 +184,7 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditList", {
           field: TagsField,
-          currentValue: editor.business.tags as string[],
+          //currentValue: editor.business.tags as string[],
           options: enumToArray(MinorityGroups),
         }),
     },
@@ -197,7 +193,6 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditText", {
           field: AboutUsField,
-          currentValue: editor.business.about,
         }),
     },
     {
@@ -205,7 +200,7 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditURL", {
           field: WebsiteField,
-          currentValue: editor.business.website || "",
+          // currentValue: editor.business.website || "",
         }),
     },
     {
@@ -213,10 +208,10 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditColorSet", {
           field: ColorSetField,
-          currentValue: {
-            primary: editor.business.primarycolor as Color,
-            secondary: editor.business.secondarycolor as Color,
-          },
+          // currentValue: {
+          //   primary: editor.business.primarycolor as Color,
+          //   secondary: editor.business.secondarycolor as Color,
+          // },
         }),
     },
   ];
@@ -278,6 +273,11 @@ function BaseEditor({ navigation, route, business, submit }: BaseEditorProps) {
               business={editor.business}
             />
           ))}
+          {editor.business.id && (
+            <Pressable style={styles.deleteButton} onPress={() => del()}>
+              <Text style={styles.deleteText}>Delete Business</Text>
+            </Pressable>
+          )}
         </View>
         <Margin />
       </View>
@@ -342,6 +342,15 @@ const styles = StyleSheet.create({
     fontFamily: "Mada-Black",
     color: "#4F4F4F",
   },
+  deleteButton: {
+    alignItems: "center",
+    backgroundColor: "#ff504a",
+    height: 45,
+    borderRadius: 8,
+    marginTop: 20,
+    justifyContent: "center",
+  },
+  deleteText: { fontSize: 18, fontWeight: "bold", color: "white" },
 });
 
 function DataLine() {
@@ -358,7 +367,11 @@ function DataLine() {
   );
 }
 
-function getDisplay(business: Business, field: Field, onPress: Function) {
+function getDisplay(
+  business: Partial<Business>,
+  field: Field,
+  onPress: Function
+) {
   let displayData: string | number | undefined | null;
   if (field.key === "address") {
     if (business.address) displayData = `${business.address}, ${business.city}`;
@@ -373,11 +386,8 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
   } else if (field.key === "colorSet") {
     return (
       <Pressable style={{ flexDirection: "row", marginTop: 10 }}>
-        <ColorOption color={business.primarycolor} onPress={() => onPress()} />
-        <ColorOption
-          color={business.secondarycolor}
-          onPress={() => onPress()}
-        />
+        <ColorOption color={business.primarycolor!} onPress={onPress} />
+        <ColorOption color={business.secondarycolor!} onPress={onPress} />
       </Pressable>
     );
   } else if (field.key === "type") {
@@ -395,7 +405,11 @@ function getDisplay(business: Business, field: Field, onPress: Function) {
   );
 }
 
-type DataRowProps = { onPress: Function; field: Field; business: Business };
+type DataRowProps = {
+  onPress: Function;
+  field: Field;
+  business: Partial<Business>;
+};
 function DataRow({ onPress, field, business }: DataRowProps) {
   return (
     <View style={styles.dataRow}>

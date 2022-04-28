@@ -140,6 +140,7 @@ export const getBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -173,6 +174,7 @@ export const listBusinesses = /* GraphQL */ `
         menu
         profileImage
         bannerImage
+        isVerified
         userID
         createdAt
         updatedAt

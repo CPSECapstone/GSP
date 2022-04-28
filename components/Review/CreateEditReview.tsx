@@ -153,7 +153,11 @@ function CreateEditReview({ navigation, route }: CreateEditReviewProps) {
 
         <View>
           <Text style={styles.descriptor}>Star Rating</Text>
-          <RatingInput rating={newRating} submit={setNewRating} />
+          <RatingInput
+            rating={newRating}
+            color="#7300ff"
+            submit={setNewRating}
+          />
           <Line />
           <Text style={styles.descriptor}>Comments</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>

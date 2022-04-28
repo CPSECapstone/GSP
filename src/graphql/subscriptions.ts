@@ -183,6 +183,7 @@ export const onCreateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -214,6 +215,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -245,6 +247,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt

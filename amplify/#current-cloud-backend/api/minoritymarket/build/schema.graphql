@@ -82,8 +82,9 @@ type Business @aws_iam @aws_api_key {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -424,6 +425,7 @@ input ModelBusinessFilterInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  isVerified: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
@@ -449,6 +451,7 @@ input ModelBusinessConditionInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  isVerified: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
@@ -473,8 +476,9 @@ input CreateBusinessInput {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID!
 }
 
@@ -498,6 +502,7 @@ input UpdateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID
 }
 
