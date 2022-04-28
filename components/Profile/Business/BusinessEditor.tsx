@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useNavigation } from "@react-navigation/native";
-import { Color, Editor } from "./Business";
+import { Editor } from "./Business";
 
 import Field, {
   AboutUsField,
@@ -184,7 +184,7 @@ function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
       function: () =>
         navigation.navigate("EditList", {
           field: TagsField,
-          //currentValue: editor.business.tags as string[],
+          // currentValue: editor.business.tags as string[],
           options: enumToArray(MinorityGroups),
         }),
     },

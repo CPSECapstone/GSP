@@ -7,7 +7,7 @@ import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../../../constants/enumconverters";
-import { Address, BUSINESS_COLORS, Color, Editor } from "../Business";
+import { BUSINESS_COLORS } from "../Business";
 import { EditorContext, EditStackParamList } from "../EditRoutes";
 import {
   ColorOption,

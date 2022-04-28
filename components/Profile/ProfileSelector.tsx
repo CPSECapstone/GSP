@@ -20,14 +20,10 @@ import BusinessProfile from "./Business/BusinessProfile";
 import BusinessEditor from "./Business/BusinessEditor";
 import { Business } from "../../src/API";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  selectAllBusinesses,
-  selectBusinessByUser,
-  selectBusinessesByUser,
-} from "../../redux/selectors/business";
+import { selectBusinessesByUser } from "../../redux/selectors/business";
 import { S3Image } from "../Misc/S3Util";
 import BusinessAPI from "./Business/BusinessAPI";
-import { addBusiness, updateBusiness } from "../../redux/slices/business";
+import { addBusiness } from "../../redux/slices/business";
 
 const plusImage = require("../../assets/plus.png");
 
@@ -46,7 +42,7 @@ export default function ProfileSelector() {
   const user = useAppSelector(selectUser);
   return (
     <BusinessContext.Provider
-      value={user ? useAppSelector(selectBusinessesByUser(user.id)) : []}
+      value={user ? useAppSelector(selectBusinessesByUser(user.id)) : undefined}
     >
       <ProfileStack.Navigator
         initialRouteName="Base"
