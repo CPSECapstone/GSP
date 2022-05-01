@@ -49,6 +49,7 @@ export const getUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -75,6 +76,7 @@ export const listUsers = /* GraphQL */ `
         email
         profilePic
         name
+        isModerator
         createdAt
         updatedAt
       }

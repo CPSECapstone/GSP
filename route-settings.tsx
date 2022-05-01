@@ -29,6 +29,7 @@ export type RootStackParamList = {
   BizReviewPage: { busID: string };
   CreateEditReview: { busID: string; editReviewId?: string };
   Notifications: undefined;
+  Moderation: undefined;
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;

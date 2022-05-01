@@ -37,6 +37,7 @@ import CreateEditReview from "./components/Review/CreateEditReview";
 import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
+import Moderation from "./components/Moderation/Moderation";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -149,6 +150,7 @@ function InnerApp() {
           component={Notifications}
           options={{ title: "Notifications", headerShown: true }}
         />
+        <Stack.Screen name="Moderation" component={Moderation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

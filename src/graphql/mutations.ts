@@ -69,6 +69,7 @@ export const createUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -96,6 +97,7 @@ export const updateUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -123,6 +125,7 @@ export const deleteUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }

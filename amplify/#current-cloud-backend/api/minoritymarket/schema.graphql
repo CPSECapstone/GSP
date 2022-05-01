@@ -20,6 +20,7 @@ type User @model @auth(rules: [{allow: public}]) {
   profilePic: AWSURL
   Collections: [Collection] @hasMany(indexName: "byUser", fields: ["id"])
   name: String
+  isModerator: Boolean
   Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
   Businesses: [Business] @hasMany(indexName: "byUser", fields: ["id"])
   Reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])

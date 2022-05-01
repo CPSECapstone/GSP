@@ -124,15 +124,24 @@ export type CreateUserInput = {
   email: string,
   profilePic?: string | null,
   name?: string | null,
+  isModerator?: boolean | null,
 };
 
 export type ModelUserConditionInput = {
   email?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  isModerator?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type User = {
@@ -142,6 +151,7 @@ export type User = {
   profilePic?: string | null,
   Collections?: ModelCollectionConnection | null,
   name?: string | null,
+  isModerator?: boolean | null,
   Notifications?: ModelNotificationConnection | null,
   Businesses?: ModelBusinessConnection | null,
   Reviews?: ModelReviewConnection | null,
@@ -254,6 +264,7 @@ export type UpdateUserInput = {
   email?: string | null,
   profilePic?: string | null,
   name?: string | null,
+  isModerator?: boolean | null,
 };
 
 export type DeleteUserInput = {
@@ -364,13 +375,6 @@ export type ModelBusinessTypeInput = {
   ne?: BusinessType | null,
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type UpdateBusinessInput = {
   id: string,
   name?: string | null,
@@ -447,6 +451,7 @@ export type ModelUserFilterInput = {
   email?: ModelStringInput | null,
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
+  isModerator?: ModelBooleanInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -583,6 +588,7 @@ export type CreateUserMutation = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -616,6 +622,7 @@ export type UpdateUserMutation = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -649,6 +656,7 @@ export type DeleteUserMutation = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -959,6 +967,7 @@ export type GetUserQuery = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -991,6 +1000,7 @@ export type ListUsersQuery = {
       email: string,
       profilePic?: string | null,
       name?: string | null,
+      isModerator?: boolean | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1214,6 +1224,7 @@ export type OnCreateUserSubscription = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -1242,6 +1253,7 @@ export type OnUpdateUserSubscription = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,
@@ -1270,6 +1282,7 @@ export type OnDeleteUserSubscription = {
       nextToken?: string | null,
     } | null,
     name?: string | null,
+    isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
       nextToken?: string | null,

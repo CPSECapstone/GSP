@@ -107,6 +107,12 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           action={() => navigation.navigate("Notifications")}
           title="Notifications"
         />
+        {user?.isModerator && (
+          <UserProfileCell
+            action={() => navigation.navigate("Moderation")}
+            title="Moderation"
+          />
+        )}
         <Pressable
           onPress={async () => {
             try {
