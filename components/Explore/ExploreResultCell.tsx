@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   distancetext: {
     fontFamily: "Mada-Bold",
     fontSize: 17,
-    color: "#FA4A0C",
+    color: "#7300ff",
     padding: 10,
   },
   horizview: {

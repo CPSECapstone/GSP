@@ -4,19 +4,25 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  ImageSourcePropType,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import defaultUser from "../../constants/defaultData";
 import { selectUser } from "../../redux/selectors/user";
 import UserProfile from "./User/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
 import { Business } from "../../src/API";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import { selectAllBusinesses } from "../../redux/selectors/business";
-import BusinessEditor from "./Business/BusinessEditor";
-import BusinessAPI from "./Business/BusinessAPI";
-import { updateBusiness } from "../../redux/slices/business";
 import { S3Image } from "../Misc/S3Util";
+
+const plusImage = require("../../assets/plus.png");
 
 const BusinessContext = React.createContext<Business[]>([]);
 
@@ -24,7 +30,6 @@ export type ProfileStackParamList = {
   Base: undefined;
   User: undefined;
   Business: { reduxIndex: number };
-  BusinessEditor: { reduxIndex: number };
 };
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
@@ -39,10 +44,6 @@ export default function ProfileSelector() {
         <ProfileStack.Screen name="Base" component={Base} />
         <ProfileStack.Screen name="User" component={UserProfile} />
         <ProfileStack.Screen name="Business" component={BusinessScreen} />
-        <ProfileStack.Screen
-          name="BusinessEditor"
-          component={BusinessEditorScreen}
-        />
       </ProfileStack.Navigator>
     </BusinessContext.Provider>
   );
@@ -52,48 +53,23 @@ type BusinessScreenProps = NativeStackScreenProps<
   ProfileStackParamList,
   "Business"
 >;
-function BusinessScreen({ navigation, route }: BusinessScreenProps) {
+function BusinessScreen({ route }: BusinessScreenProps) {
   const index = route.params.reduxIndex;
   const business = React.useContext(BusinessContext)[index];
-  return (
-    <BusinessProfile
-      business={business}
-      edit={() => navigation.navigate("BusinessEditor", { reduxIndex: index })}
-    />
-  );
-}
-
-type EditorScreenProps = NativeStackScreenProps<
-  ProfileStackParamList,
-  "BusinessEditor"
->;
-function BusinessEditorScreen({ navigation, route }: EditorScreenProps) {
-  const index = route.params.reduxIndex;
-  const business = React.useContext(BusinessContext)[index];
-  const dispatch = useAppDispatch();
-
-  const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
-    BusinessAPI.update(edits, pImg, bImg)
-      .then((response) => {
-        navigation.navigate("Business", { reduxIndex: index });
-        dispatch(updateBusiness(response.data.updateBusiness));
-      })
-      .catch((err) => console.log(err));
-  };
-  return <BusinessEditor business={business} submit={submit} />;
+  return <BusinessProfile business={business} />;
 }
 
 type SelectorProps = {
   title: string;
   onPress: Function;
-  img: string;
+  source: ImageSourcePropType;
   details?: string;
 };
 
-function Selector({ title, onPress, img, details }: SelectorProps) {
+function Selector({ title, onPress, source, details }: SelectorProps) {
   return (
     <Pressable style={styles.selector} onPress={() => onPress()}>
-      <Image style={styles.selectorImage} source={{ uri: img }} />
+      <Image style={styles.selectorImage} source={source} />
       <View style={{ flex: 7 }}>
         <Text style={styles.selectorText}>{title}</Text>
         {details && <Text style={styles.selectorDetails}>{details}</Text>}
@@ -133,17 +109,24 @@ function Base({ navigation }: BaseProps) {
         <Text style={styles.title}>Profile</Text>
         <Selector
           title="My Profile"
-          img={user?.profilePic ?? defaultUser.profilePic}
+          source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
           onPress={() => navigation.navigate("User")}
         />
         <Text style={styles.subtitle}>My Businesses</Text>
-        {businesses.map((b, i) => (
-          <BusinessSelector
-            key={b!.id}
-            business={b!}
-            onPress={() => navigation.navigate("Business", { reduxIndex: i })}
-          />
-        ))}
+        {businesses
+          .filter((b) => b.userID === user!.id)
+          .map((b, i) => (
+            <BusinessSelector
+              key={b!.id}
+              business={b!}
+              onPress={() => navigation.navigate("Business", { reduxIndex: i })}
+            />
+          ))}
+        <Selector
+          title="Create New Business"
+          source={plusImage}
+          onPress={() => navigation.navigate("User")}
+        />
       </View>
       <Margin />
     </SafeAreaView>
@@ -158,7 +141,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: "Mada-Medium",
-    color: "#FA4A0C",
+    color: "#5300b9",
     fontSize: 18,
     marginTop: 30,
     marginBottom: 15,

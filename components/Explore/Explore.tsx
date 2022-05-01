@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   title2: {
     marginLeft: 50,
     fontFamily: "Mada-Medium",
-    color: "#FA4A0C",
+    color: "#7300ff",
     fontSize: 18,
   },
   categorycontainer: {
@@ -85,9 +85,9 @@ const styles = StyleSheet.create({
     minHeight: height,
     minWidth: width + 10,
     maxWidth: width + 10,
-    flex: 1,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
+    flex: 7,
   },
   minoritycellimage: {
     width: imgdimensions,
@@ -155,7 +155,7 @@ function ExploreView({ navigation }: ExploreProps) {
       business?.tags?.every((tag) => {
         if (
           tag != null &&
-          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)) ||
+          (minorityGroupsByName.includes(returnMinorityGroupValue(tag)!) ||
             minorityGroupsByName.includes("All"))
         ) {
           if (
@@ -188,7 +188,7 @@ function ExploreView({ navigation }: ExploreProps) {
               style={[
                 styles.categorycontainer,
                 styles.shadow,
-                selectedCategoryIndex === index && { borderColor: "#FA4A0C" },
+                selectedCategoryIndex === index && { borderColor: "#7300ff" },
               ]}
             >
               {categoryicons[index]}
@@ -204,13 +204,13 @@ function ExploreView({ navigation }: ExploreProps) {
           alignItems: "center",
           marginVertical: 20,
           padding: 10,
-          minHeight: 350,
+          minHeight: 325,
         }}
       >
         {resultBusinesses.length === 0 ? (
           <Text
             style={{
-              color: "#FA4A0C",
+              color: "#7300ff",
               fontFamily: "Mada-Regular",
               fontSize: 24,
               textAlign: "center",
@@ -222,6 +222,12 @@ function ExploreView({ navigation }: ExploreProps) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
+            contentContainerStyle={
+              resultBusinesses.length === 1 && {
+                width: "100%",
+                justifyContent: "center",
+              }
+            }
             data={resultBusinesses}
             renderItem={({ item }) => {
               if (
@@ -236,8 +242,8 @@ function ExploreView({ navigation }: ExploreProps) {
                     }
                     distance={3}
                     business={item}
-                    minoritygroups={item.tags.map((tag) =>
-                      returnMinorityGroupValue(tag)
+                    minoritygroups={item.tags.map(
+                      (tag) => returnMinorityGroupValue(tag)!
                     )}
                   />
                 );
@@ -275,7 +281,7 @@ function ExploreView({ navigation }: ExploreProps) {
                 styles.minoritycellcontainer,
                 { borderWidth: 2, borderColor: "#FFFFFF" },
                 selectedMinorityGroups.includes(index) && {
-                  borderColor: "#FA4A0C",
+                  borderColor: "#7300ff",
                 },
               ]}
             >

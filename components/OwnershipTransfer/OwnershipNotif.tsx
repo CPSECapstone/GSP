@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   emptybutton: {
-    borderColor: "#FA4A0C",
+    borderColor: "#7300ff",
     borderWidth: 1,
   },
   buttontext: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   filledbutton: {
-    backgroundColor: "#FA4A0C",
+    backgroundColor: "#7300ff",
   },
   shadow: {
     shadowColor: "#000",
@@ -186,12 +186,12 @@ function OwnershipNotif({
                 }
               }}
             >
-              <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
+              <Text style={[styles.buttontext, { color: "#7300ff" }]}>
                 Ignore
               </Text>
             </Pressable>
             <Pressable style={[styles.emptybutton, styles.button]}>
-              <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
+              <Text style={[styles.buttontext, { color: "#7300ff" }]}>
                 Reply
               </Text>
             </Pressable>
@@ -230,12 +230,12 @@ function OwnershipNotif({
                 }
               }}
             >
-              <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
+              <Text style={[styles.buttontext, { color: "#7300ff" }]}>
                 Dismiss
               </Text>
             </Pressable>
             <Pressable style={[styles.emptybutton, styles.button]}>
-              <Text style={[styles.buttontext, { color: "#FA4A0C" }]}>
+              <Text style={[styles.buttontext, { color: "#7300ff" }]}>
                 Appeal
               </Text>
             </Pressable>
