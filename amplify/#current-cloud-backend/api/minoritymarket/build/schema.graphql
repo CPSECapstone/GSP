@@ -23,6 +23,7 @@ type User @aws_iam @aws_api_key {
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
   name: String
+  isModerator: Boolean
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
   Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
@@ -310,6 +311,7 @@ input ModelUserFilterInput {
   email: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
+  isModerator: ModelBooleanInput
   and: [ModelUserFilterInput]
   or: [ModelUserFilterInput]
   not: ModelUserFilterInput
@@ -319,6 +321,7 @@ input ModelUserConditionInput {
   email: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
+  isModerator: ModelBooleanInput
   and: [ModelUserConditionInput]
   or: [ModelUserConditionInput]
   not: ModelUserConditionInput
@@ -329,6 +332,7 @@ input CreateUserInput {
   email: AWSEmail!
   profilePic: AWSURL
   name: String
+  isModerator: Boolean
 }
 
 input UpdateUserInput {
@@ -336,6 +340,7 @@ input UpdateUserInput {
   email: AWSEmail
   profilePic: AWSURL
   name: String
+  isModerator: Boolean
 }
 
 input DeleteUserInput {
