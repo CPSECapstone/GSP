@@ -20,9 +20,9 @@ import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business } from "../../../src/API";
 import { AverageRating } from "../../Review/RatingView";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
-import { updateBusiness } from "../../../redux/slices/business";
+import { deleteBusiness, updateBusiness } from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
 import BizReviewPage from "../../Review/BizReviewPage";
 import { BProfileStackParamList, BusinessContext } from "./bizDependencies";
@@ -30,6 +30,7 @@ import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
+import { selectUser } from "../../../redux/selectors/user";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -37,6 +38,7 @@ type BusinessProfileProps = { business: Business };
 export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
+  const currentUser = useAppSelector(selectUser)!;
 
   React.useEffect(() => {
     if (modalVisible) {
@@ -99,14 +101,16 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                         color="white"
                       />
                     </Pressable>
+                    {currentUser.id === business.userID && (
+                      <Pressable
+                        style={styles.edit}
+                        onPress={() => navigation.navigate("BusinessEditor")}
+                      >
+                        <Ionicons name="pencil" size={20} color="white" />
+                      </Pressable>
+                    )}
                     <Pressable
-                      style={styles.save}
-                      onPress={() => navigation.navigate("BusinessEditor")}
-                    >
-                      <Ionicons name="pencil" size={20} color="white" />
-                    </Pressable>
-                    <Pressable
-                      style={styles.share}
+                      style={styles.more}
                       onPress={() => setmodalVisible(true)}
                     >
                       <SimpleLineIcons name="options" size={25} color="white" />
@@ -184,7 +188,10 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
 
                     <Line />
 
-                    <AverageRating businessId={business.id} />
+                    <AverageRating
+                      businessId={business.id}
+                      color={business.primarycolor}
+                    />
 
                     <View style={{ flexDirection: "row" }}>
                       <Pressable
@@ -262,15 +269,24 @@ function BusinessEditorScreen({ navigation }: EditorScreenProps) {
   const business = React.useContext(BusinessContext);
   const dispatch = useAppDispatch();
 
-  const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
-    BusinessAPI.update(edits, pImg, bImg)
-      .then((response) => {
-        navigation.navigate("BusinessProfile");
-        dispatch(updateBusiness(response.data.updateBusiness));
+  const del = () => {
+    BusinessAPI.delete(business.id)
+      .then(() => {
+        navigation.goBack();
+        navigation.goBack();
+        dispatch(deleteBusiness(business.id));
       })
       .catch((err) => console.log(err));
   };
-  return <BusinessEditor business={business} submit={submit} />;
+  const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
+    BusinessAPI.update(edits, pImg, bImg)
+      .then((response) => {
+        dispatch(updateBusiness(response.data.updateBusiness));
+        navigation.navigate("BusinessProfile");
+      })
+      .catch((err) => console.log(err));
+  };
+  return <BusinessEditor business={business} submit={submit} del={del} />;
 }
 
 function Margin() {
@@ -367,14 +383,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginLeft: -10,
   },
-  save: {
+  more: {
     marginBottom: 10,
     alignSelf: "flex-end",
     position: "absolute",
     marginTop: 40,
     marginRight: -10,
   },
-  share: {
+  edit: {
     marginBottom: 10,
     alignSelf: "flex-end",
     position: "absolute",

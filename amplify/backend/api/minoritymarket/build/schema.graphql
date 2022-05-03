@@ -83,7 +83,7 @@ type Business @aws_iam @aws_api_key {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
   userID: ID!
@@ -481,7 +481,7 @@ input CreateBusinessInput {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
   userID: ID!

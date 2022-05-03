@@ -101,9 +101,6 @@ function SignUp({ navigation, route }: SignUpProps) {
 
   const submit = async () => {
     if (validateAll()) {
-      if (isMBO) {
-        navigation.navigate("CreateBusinessProfile");
-      }
       // Create user through authentication
       try {
         await Auth.signUp({
@@ -123,7 +120,7 @@ function SignUp({ navigation, route }: SignUpProps) {
         await fetchUsers();
         dispatch(setUser(res?.data?.createUser?.email));
 
-        navigation.navigate("CreateAccountCode", { email });
+        navigation.navigate("CreateAccountCode", { email, isMBO });
       } catch (error) {
         if (
           error instanceof Error &&

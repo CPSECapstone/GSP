@@ -15,7 +15,7 @@ export function ConfigureDoneButton(onPress: Function) {
     <HeaderButton
       title="Done"
       onPress={onPress}
-      style={{ fontWeight: "bold", color: "#DA5125" }}
+      style={{ fontWeight: "bold", color: "#7300ff" }}
     />
   );
 }
@@ -24,7 +24,10 @@ export function ConfigureBackButton(title: string, onPress: Function) {
   return <HeaderButton title={title} onPress={onPress} style={{}} />;
 }
 
-export function formatPhone(phone: string) {
+export function formatPhone(phone: string | undefined) {
+  if (!phone) {
+    return "";
+  }
   return `(${phone.substring(0, 3)}) ${phone.substring(3, 6)}-${phone.substring(
     6,
     10
@@ -91,5 +94,13 @@ export const styles = StyleSheet.create({
     fontFamily: "Mada-Bold",
     color: "#7D7D7D",
     marginBottom: 10,
+  },
+  confirmButton: {
+    alignItems: "center",
+    backgroundColor: "lightgreen",
+    height: 50,
+    borderRadius: 8,
+    margin: 10,
+    justifyContent: "center",
   },
 });
