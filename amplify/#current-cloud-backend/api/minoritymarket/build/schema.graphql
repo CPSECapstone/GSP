@@ -23,6 +23,7 @@ type User @aws_iam @aws_api_key {
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
   name: String
+  isModerator: Boolean
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
   Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
@@ -82,8 +83,9 @@ type Business @aws_iam @aws_api_key {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -309,6 +311,7 @@ input ModelUserFilterInput {
   email: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
+  isModerator: ModelBooleanInput
   and: [ModelUserFilterInput]
   or: [ModelUserFilterInput]
   not: ModelUserFilterInput
@@ -318,6 +321,7 @@ input ModelUserConditionInput {
   email: ModelStringInput
   profilePic: ModelStringInput
   name: ModelStringInput
+  isModerator: ModelBooleanInput
   and: [ModelUserConditionInput]
   or: [ModelUserConditionInput]
   not: ModelUserConditionInput
@@ -328,6 +332,7 @@ input CreateUserInput {
   email: AWSEmail!
   profilePic: AWSURL
   name: String
+  isModerator: Boolean
 }
 
 input UpdateUserInput {
@@ -335,6 +340,7 @@ input UpdateUserInput {
   email: AWSEmail
   profilePic: AWSURL
   name: String
+  isModerator: Boolean
 }
 
 input DeleteUserInput {
@@ -424,6 +430,7 @@ input ModelBusinessFilterInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  isVerified: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
@@ -449,6 +456,7 @@ input ModelBusinessConditionInput {
   menu: ModelStringInput
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
+  isVerified: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
@@ -473,8 +481,9 @@ input CreateBusinessInput {
   state: String!
   zipcode: Int!
   menu: AWSURL
-  profileImage: AWSURL!
+  profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID!
 }
 
@@ -498,6 +507,7 @@ input UpdateBusinessInput {
   menu: AWSURL
   profileImage: AWSURL
   bannerImage: AWSURL
+  isVerified: Boolean
   userID: ID
 }
 

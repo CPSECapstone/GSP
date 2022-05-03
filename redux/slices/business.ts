@@ -27,6 +27,10 @@ export const businessSlice = createSlice({
         state.businesses = action.payload;
       }
     },
+    addBusiness(state, action: PayloadAction<Business>) {
+      const newArray = [...state.businesses, action.payload];
+      state.businesses = newArray;
+    },
     updateBusiness(state, action: PayloadAction<Business>) {
       const index = state.businesses.findIndex(
         (business) => business!.id === action.payload.id
@@ -35,11 +39,24 @@ export const businessSlice = createSlice({
       newArray[index] = action.payload;
       state.businesses = newArray;
     },
+    deleteBusiness(state, action: PayloadAction<string>) {
+      const index = state.businesses.findIndex(
+        (business) => business!.id === action.payload
+      );
+      const newArray = [...state.businesses];
+      newArray.splice(index, 1);
+      state.businesses = newArray;
+    },
   },
 });
 
-export const { businessLoading, businessReceived, updateBusiness } =
-  businessSlice.actions;
+export const {
+  businessLoading,
+  businessReceived,
+  addBusiness,
+  updateBusiness,
+  deleteBusiness,
+} = businessSlice.actions;
 
 const businessReducer = businessSlice.reducer;
 export default businessReducer;

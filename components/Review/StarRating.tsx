@@ -9,7 +9,7 @@ function Star() {
       name="star"
       style={{ marginRight: 2 }}
       size={22}
-      color="#DA5125"
+      color="#7300ff"
     />
   );
 }
@@ -20,7 +20,7 @@ function StarOutline() {
       name="star-outline"
       style={{ marginRight: 5 }}
       size={22}
-      color="#DA5125"
+      color="#7300ff"
     />
   );
 }

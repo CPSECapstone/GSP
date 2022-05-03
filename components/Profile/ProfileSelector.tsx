@@ -17,10 +17,13 @@ import defaultUser from "../../constants/defaultData";
 import { selectUser } from "../../redux/selectors/user";
 import UserProfile from "./User/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
+import BusinessEditor from "./Business/BusinessEditor";
 import { Business } from "../../src/API";
-import { useAppSelector } from "../../redux/hooks";
-import { selectAllBusinesses } from "../../redux/selectors/business";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectBusinessesByUser } from "../../redux/selectors/business";
 import { S3Image } from "../Misc/S3Util";
+import BusinessAPI from "./Business/BusinessAPI";
+import { addBusiness } from "../../redux/slices/business";
 
 const plusImage = require("../../assets/plus.png");
 
@@ -30,13 +33,17 @@ export type ProfileStackParamList = {
   Base: undefined;
   User: undefined;
   Business: { reduxIndex: number };
+  CreateBusiness: undefined;
 };
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 
 export default function ProfileSelector() {
+  const user = useAppSelector(selectUser);
   return (
-    <BusinessContext.Provider value={useAppSelector(selectAllBusinesses)}>
+    <BusinessContext.Provider
+      value={user ? useAppSelector(selectBusinessesByUser(user.id)) : undefined}
+    >
       <ProfileStack.Navigator
         initialRouteName="Base"
         screenOptions={{ headerShown: false }}
@@ -44,6 +51,10 @@ export default function ProfileSelector() {
         <ProfileStack.Screen name="Base" component={Base} />
         <ProfileStack.Screen name="User" component={UserProfile} />
         <ProfileStack.Screen name="Business" component={BusinessScreen} />
+        <ProfileStack.Screen
+          name="CreateBusiness"
+          component={BusinessCreationScreen}
+        />
       </ProfileStack.Navigator>
     </BusinessContext.Provider>
   );
@@ -57,6 +68,28 @@ function BusinessScreen({ route }: BusinessScreenProps) {
   const index = route.params.reduxIndex;
   const business = React.useContext(BusinessContext)[index];
   return <BusinessProfile business={business} />;
+}
+
+type BusinessCreationScreenProps = NativeStackScreenProps<
+  ProfileStackParamList,
+  "CreateBusiness"
+>;
+function BusinessCreationScreen({ navigation }: BusinessCreationScreenProps) {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser)!;
+
+  const submit = (fields: Partial<Business>, pImg?: string, bImg?: string) => {
+    const fieldsWithUser = { ...fields, email: user.email, userID: user.id };
+    BusinessAPI.create(fieldsWithUser, pImg, bImg)
+      .then((response) => {
+        console.log(response);
+        dispatch(addBusiness(response.data.createBusiness));
+        navigation.navigate("Base");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  return <BusinessEditor submit={submit} />;
 }
 
 type SelectorProps = {
@@ -113,19 +146,22 @@ function Base({ navigation }: BaseProps) {
           onPress={() => navigation.navigate("User")}
         />
         <Text style={styles.subtitle}>My Businesses</Text>
-        {businesses
-          .filter((b) => b.userID === user!.id)
-          .map((b, i) => (
-            <BusinessSelector
-              key={b!.id}
-              business={b!}
-              onPress={() => navigation.navigate("Business", { reduxIndex: i })}
-            />
-          ))}
+        {user &&
+          businesses
+            .filter((b) => b.userID === user.id)
+            .map((b, i) => (
+              <BusinessSelector
+                key={b!.id}
+                business={b!}
+                onPress={() =>
+                  navigation.navigate("Business", { reduxIndex: i })
+                }
+              />
+            ))}
         <Selector
           title="Create New Business"
           source={plusImage}
-          onPress={() => navigation.navigate("User")}
+          onPress={() => navigation.navigate("CreateBusiness")}
         />
       </View>
       <Margin />
