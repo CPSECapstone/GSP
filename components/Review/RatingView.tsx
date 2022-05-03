@@ -5,13 +5,14 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useAppSelector } from "../../redux/hooks";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
 
-export function Star({ size, outline }: { size?: number; outline?: boolean }) {
+type StarProps = { size?: number; outline?: boolean; color: string };
+export function Star({ size, outline, color }: StarProps) {
   return (
     <Ionicons
       name={outline ? "star-outline" : "star"}
       style={{ marginRight: 2 }}
       size={size}
-      color="#DA5125"
+      color={color}
     />
   );
 }
@@ -24,6 +25,7 @@ Star.defaultProps = {
 function getStars(
   rating: number,
   key: string,
+  color: string,
   size?: number,
   onSelect?: (count: number) => void
 ) {
@@ -33,7 +35,7 @@ function getStars(
   for (let i = 0; i < rating; i += 1) {
     stars.push(
       <Pressable key={`${i} star + ${key}`} onPress={() => onPress(i + 1)}>
-        <Star size={size} />
+        <Star size={size} color={color} />
       </Pressable>
     );
   }
@@ -43,16 +45,20 @@ function getStars(
         key={`${i} star-outline ${key}`}
         onPress={() => onPress(i + 1 + rating)}
       >
-        <Star outline size={size} />
+        <Star outline size={size} color={color} />
       </Pressable>
     );
   }
   return stars;
 }
 
-type RatingInputProps = { rating: number; submit: (count: number) => void };
-export function RatingInput({ rating, submit }: RatingInputProps) {
-  const stars = getStars(rating, "editor", 45, submit);
+type RatingInputProps = {
+  rating: number;
+  color: string;
+  submit: (count: number) => void;
+};
+export function RatingInput({ rating, color, submit }: RatingInputProps) {
+  const stars = getStars(rating, "editor", color, 45, submit);
   return (
     <View
       style={{
@@ -68,7 +74,7 @@ export function RatingInput({ rating, submit }: RatingInputProps) {
 
 type RatingViewProps = { rating: number; userName: string };
 export default function RatingView({ rating, userName }: RatingViewProps) {
-  const stars = getStars(rating, userName);
+  const stars = getStars(rating, userName, "#7300ff");
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>{stars}</View>
   );
@@ -78,12 +84,15 @@ function Bullet() {
   return <Text style={styles.bulletText}>•</Text>;
 }
 
-export function AverageRating({ businessId }: { businessId: string }) {
+type AverageRatingProps = { businessId: string; color: string };
+export function AverageRating({ businessId, color }: AverageRatingProps) {
   const reviews = useAppSelector(selectReviewsByBusiness(businessId));
   if (!reviews || reviews.length < 1) {
     return (
       <View style={styles.container}>
-        <View style={{ flexDirection: "row" }}>{getStars(0, "none")}</View>
+        <View style={{ flexDirection: "row" }}>
+          {getStars(0, "none", color)}
+        </View>
         <Bullet />
         <Text style={styles.ratingText}>Unrated</Text>
         <Bullet />
@@ -96,7 +105,9 @@ export function AverageRating({ businessId }: { businessId: string }) {
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row" }}>{getStars(average, "avg")}</View>
+      <View style={{ flexDirection: "row" }}>
+        {getStars(average, "avg", color)}
+      </View>
       <Bullet />
       <Text style={styles.ratingText}>{`${average} Stars`}</Text>
       <Bullet />

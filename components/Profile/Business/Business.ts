@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 
-import { Business } from "../../../src/API";
+import { Business, BusinessType, MinorityGroups } from "../../../src/API";
 
 // export const BUSINESS_TYPES = [
 //   "Restaurant",
@@ -51,76 +51,6 @@ export type Address = {
   zipcode: number;
 };
 
-// export default class Business {
-//   name: string;
-//   email: string;
-//   type: BusinessType;
-//   colorSet: ColorSet;
-//   phone: string;
-//   address: Address;
-//   website: string | null | undefined;
-//   tags: Array<MinorityGroups>;
-//   profileImage: string;
-//   bannerImage: string | null | undefined;
-//   aboutUs: string;
-//   menu?: string;
-
-//   constructor(
-//     name: string,
-//     email: string,
-//     type: BusinessType,
-//     colorPrimary: Color,
-//     colorSecondary: Color,
-//     phone: string,
-//     address: string,
-//     city: string,
-//     state: string,
-//     zipcode: number,
-//     website: string | null | undefined,
-//     tags: Array<MinorityGroups>,
-//     profileImage: string,
-//     bannerImage: string | null | undefined,
-//     aboutUs: string,
-//     menu?: string
-//   ) {
-//     this.name = name;
-//     this.email = email;
-//     this.type = type;
-//     this.colorSet = { primary: colorPrimary, secondary: colorSecondary };
-//     this.phone = phone;
-//     this.address = { address, city, state, zipcode };
-//     this.website = website;
-//     this.tags = tags;
-//     this.profileImage = profileImage;
-//     this.bannerImage = bannerImage;
-//     this.aboutUs = aboutUs;
-//     this.menu = menu;
-//   }
-// }
-
-// export class BusinessAdapter extends Business {
-//   constructor(business: BackendBusiness) {
-//     super(
-//       business.name,
-//       business.email,
-//       business.type as BusinessType,
-//       business.primarycolor as Color,
-//       business.secondarycolor as Color,
-//       business.phone,
-//       business.address,
-//       business.city,
-//       business.state,
-//       business.zipcode,
-//       business.website,
-//       business.tags!,
-//       business.profileImage,
-//       business.bannerImage,
-//       business.about,
-//       business.menu ? business.menu : undefined
-//     );
-//   }
-// }
-
 export type FrontendBusinessField =
   | "name"
   | "type"
@@ -132,16 +62,33 @@ export type FrontendBusinessField =
   | "menu"
   | "colorSet";
 
+// const DEFAULT_BUSINESS: Partial<Business> = {
+//   name: "",
+//   primarycolor: "#F81515",
+//   secondarycolor: "#DA3025",
+//   phone: "",
+//   tags: [],
+//   about: "",
+//   website: "",
+//   address: "",
+//   city: "",
+//   state: "",
+//   zipcode: "",
+// };
+
 const DEFAULT_BUSINESS: Partial<Business> = {
-  name: "",
-  phone: "",
-  tags: [],
-  about: "",
-  website: "",
-  address: "",
-  city: "",
-  state: "",
-  zipcode: "",
+  name: "test",
+  type: BusinessType.RESTAURANT,
+  primarycolor: "#F81515",
+  secondarycolor: "#DA3025",
+  phone: "7604201192",
+  tags: [MinorityGroups.ASIANAMERICAN],
+  about: "test",
+  website: "https://minecraft.net",
+  address: "308 Foothill Blvd",
+  city: "San Luis Obispo",
+  state: "California",
+  zipcode: "93405",
 };
 
 export class Editor {
@@ -154,26 +101,8 @@ export class Editor {
     this.edits = business ? { id: business.id } : DEFAULT_BUSINESS;
   }
 
-  updateField(key: FrontendBusinessField, value: any) {
-    if (key === "colorSet") {
-      const { primary, secondary } = value as ColorSet;
-      this.business.primarycolor = primary;
-      this.edits.primarycolor = primary;
-      this.business.secondarycolor = secondary;
-      this.edits.secondarycolor = secondary;
-    } else if (key === "address") {
-      const { address, city, state, zipcode } = value as Address;
-      this.business.address = address;
-      this.edits.address = address;
-      this.business.city = city;
-      this.edits.city = city;
-      this.business.state = state;
-      this.edits.state = state;
-      this.business.zipcode = zipcode;
-      this.edits.zipcode = zipcode;
-    } else {
-      this.business[key] = value;
-      this.edits[key] = value;
-    }
+  updateField(key: keyof Business, value: any) {
+    this.business[key] = value;
+    this.edits[key] = value;
   }
 }
