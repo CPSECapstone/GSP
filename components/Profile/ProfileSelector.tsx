@@ -4,19 +4,28 @@ import {
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
 import React from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  ImageSourcePropType,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import defaultUser from "../../constants/defaultData";
 import { selectUser } from "../../redux/selectors/user";
 import UserProfile from "./User/UserProfile";
 import BusinessProfile from "./Business/BusinessProfile";
+import BusinessEditor from "./Business/BusinessEditor";
 import { Business } from "../../src/API";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { selectAllBusinesses } from "../../redux/selectors/business";
-import BusinessEditor from "./Business/BusinessEditor";
-import BusinessAPI from "./Business/BusinessAPI";
-import { updateBusiness } from "../../redux/slices/business";
+import { selectBusinessesByUser } from "../../redux/selectors/business";
 import { S3Image } from "../Misc/S3Util";
+import BusinessAPI from "./Business/BusinessAPI";
+import { addBusiness } from "../../redux/slices/business";
+
+const plusImage = require("../../assets/plus.png");
 
 const BusinessContext = React.createContext<Business[]>([]);
 
@@ -24,14 +33,17 @@ export type ProfileStackParamList = {
   Base: undefined;
   User: undefined;
   Business: { reduxIndex: number };
-  BusinessEditor: { reduxIndex: number };
+  CreateBusiness: undefined;
 };
 
 const ProfileStack = createNativeStackNavigator<ProfileStackParamList>();
 
 export default function ProfileSelector() {
+  const user = useAppSelector(selectUser);
   return (
-    <BusinessContext.Provider value={useAppSelector(selectAllBusinesses)}>
+    <BusinessContext.Provider
+      value={user ? useAppSelector(selectBusinessesByUser(user.id)) : undefined}
+    >
       <ProfileStack.Navigator
         initialRouteName="Base"
         screenOptions={{ headerShown: false }}
@@ -40,8 +52,8 @@ export default function ProfileSelector() {
         <ProfileStack.Screen name="User" component={UserProfile} />
         <ProfileStack.Screen name="Business" component={BusinessScreen} />
         <ProfileStack.Screen
-          name="BusinessEditor"
-          component={BusinessEditorScreen}
+          name="CreateBusiness"
+          component={BusinessCreationScreen}
         />
       </ProfileStack.Navigator>
     </BusinessContext.Provider>
@@ -52,48 +64,45 @@ type BusinessScreenProps = NativeStackScreenProps<
   ProfileStackParamList,
   "Business"
 >;
-function BusinessScreen({ navigation, route }: BusinessScreenProps) {
+function BusinessScreen({ route }: BusinessScreenProps) {
   const index = route.params.reduxIndex;
   const business = React.useContext(BusinessContext)[index];
-  return (
-    <BusinessProfile
-      business={business}
-      edit={() => navigation.navigate("BusinessEditor", { reduxIndex: index })}
-    />
-  );
+  return <BusinessProfile business={business} />;
 }
 
-type EditorScreenProps = NativeStackScreenProps<
+type BusinessCreationScreenProps = NativeStackScreenProps<
   ProfileStackParamList,
-  "BusinessEditor"
+  "CreateBusiness"
 >;
-function BusinessEditorScreen({ navigation, route }: EditorScreenProps) {
-  const index = route.params.reduxIndex;
-  const business = React.useContext(BusinessContext)[index];
+function BusinessCreationScreen({ navigation }: BusinessCreationScreenProps) {
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser)!;
 
-  const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
-    BusinessAPI.update(edits, pImg, bImg)
+  const submit = (fields: Partial<Business>, pImg?: string, bImg?: string) => {
+    const fieldsWithUser = { ...fields, email: user.email, userID: user.id };
+    BusinessAPI.create(fieldsWithUser, pImg, bImg)
       .then((response) => {
-        navigation.navigate("Business", { reduxIndex: index });
-        dispatch(updateBusiness(response.data.updateBusiness));
+        console.log(response);
+        dispatch(addBusiness(response.data.createBusiness));
+        navigation.navigate("Base");
       })
       .catch((err) => console.log(err));
   };
-  return <BusinessEditor business={business} submit={submit} />;
+
+  return <BusinessEditor submit={submit} />;
 }
 
 type SelectorProps = {
   title: string;
   onPress: Function;
-  img: string;
+  source: ImageSourcePropType;
   details?: string;
 };
 
-function Selector({ title, onPress, img, details }: SelectorProps) {
+function Selector({ title, onPress, source, details }: SelectorProps) {
   return (
     <Pressable style={styles.selector} onPress={() => onPress()}>
-      <Image style={styles.selectorImage} source={{ uri: img }} />
+      <Image style={styles.selectorImage} source={source} />
       <View style={{ flex: 7 }}>
         <Text style={styles.selectorText}>{title}</Text>
         {details && <Text style={styles.selectorDetails}>{details}</Text>}
@@ -133,17 +142,27 @@ function Base({ navigation }: BaseProps) {
         <Text style={styles.title}>Profile</Text>
         <Selector
           title="My Profile"
-          img={user?.profilePic ?? defaultUser.profilePic}
+          source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
           onPress={() => navigation.navigate("User")}
         />
         <Text style={styles.subtitle}>My Businesses</Text>
-        {businesses.map((b, i) => (
-          <BusinessSelector
-            key={b!.id}
-            business={b!}
-            onPress={() => navigation.navigate("Business", { reduxIndex: i })}
-          />
-        ))}
+        {user &&
+          businesses
+            .filter((b) => b.userID === user.id)
+            .map((b, i) => (
+              <BusinessSelector
+                key={b!.id}
+                business={b!}
+                onPress={() =>
+                  navigation.navigate("Business", { reduxIndex: i })
+                }
+              />
+            ))}
+        <Selector
+          title="Create New Business"
+          source={plusImage}
+          onPress={() => navigation.navigate("CreateBusiness")}
+        />
       </View>
       <Margin />
     </SafeAreaView>
@@ -158,7 +177,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: "Mada-Medium",
-    color: "#7300ff",
+    color: "#5300b9",
     fontSize: 18,
     marginTop: 30,
     marginBottom: 15,

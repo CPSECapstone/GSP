@@ -1,13 +1,16 @@
-import { Address, ColorSet, FrontendBusinessField } from "./Business";
+import { createContext } from "react";
+import { Editor } from "./Business";
 import Field from "./Field";
 
+export const EditorContext = createContext<Editor>(undefined!);
+
 export type EditStackParamList = {
-  Base: { key: FrontendBusinessField; value: any } | undefined;
-  EditText: { field: Field; currentValue: string };
-  EditPhone: { field: Field; currentValue: string };
-  EditAddress: { field: Field; currentValue: Address };
-  EditSelection: { field: Field; currentValue: string; options: Array<any> };
-  EditList: { field: Field; currentValue: string[]; options: Array<any> };
-  EditURL: { field: Field; currentValue: string };
-  EditColorSet: { field: Field; currentValue: ColorSet };
+  Base: undefined;
+  EditText: { field: Field };
+  EditPhone: { field: Field };
+  EditAddress: { field: Field };
+  EditSelection: { field: Field; options: Array<any> };
+  EditList: { field: Field; options: Array<any> };
+  EditURL: { field: Field };
+  EditColorSet: { field: Field };
 };

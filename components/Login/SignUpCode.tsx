@@ -33,6 +33,9 @@ function SignUpCode({ navigation, route }: SignUpCodeProps) {
   const submitCode = async () => {
     try {
       await Auth.confirmSignUp(email, code);
+      if (route.params.isMBO) {
+        navigation.navigate("App", { screen: "Profile" });
+      }
       navigation.navigate("App");
     } catch {
       setCodeError("Invalid Code");
