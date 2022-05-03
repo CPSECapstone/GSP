@@ -49,6 +49,7 @@ export const getUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -75,6 +76,7 @@ export const listUsers = /* GraphQL */ `
         email
         profilePic
         name
+        isModerator
         createdAt
         updatedAt
       }
@@ -140,6 +142,7 @@ export const getBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -173,6 +176,7 @@ export const listBusinesses = /* GraphQL */ `
         menu
         profileImage
         bannerImage
+        isVerified
         userID
         createdAt
         updatedAt

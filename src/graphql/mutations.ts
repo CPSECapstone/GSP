@@ -69,6 +69,7 @@ export const createUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -96,6 +97,7 @@ export const updateUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -123,6 +125,7 @@ export const deleteUser = /* GraphQL */ `
         nextToken
       }
       name
+      isModerator
       Notifications {
         nextToken
       }
@@ -213,6 +216,7 @@ export const createBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -247,6 +251,7 @@ export const updateBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
@@ -281,6 +286,7 @@ export const deleteBusiness = /* GraphQL */ `
       menu
       profileImage
       bannerImage
+      isVerified
       userID
       createdAt
       updatedAt
