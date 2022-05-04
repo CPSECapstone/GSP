@@ -108,6 +108,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
   const reviews = useAppSelector(selectReviewsByBusiness(business.id));
   const users = useAppSelector(selectAllUsers);
   const clientId = useAppSelector(selectUser)!.id;
+  const curUserReviewId = reviews.find((r) => r.userID === clientId)?.id;
 
   return (
     <SafeAreaView style={{ flexDirection: "row", flex: 1 }}>
@@ -149,7 +150,7 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
         </View>
         */}
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: "center" }}>
             <FlatList
               contentContainerStyle={{
                 paddingTop: 40,
@@ -177,14 +178,15 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
               }}
               keyExtractor={(review) => review.id}
             />
-            <View style={{ display: "absolute", bottom: 0 }}>
+            <View style={{ position: "absolute", bottom: 0 }}>
               <LargeButton
                 action={() =>
                   navigation.navigate("CreateEditReview", {
                     busID: business.id,
+                    editReviewId: curUserReviewId,
                   })
                 }
-                label="Write a Review"
+                label={curUserReviewId ? "Edit Your Review" : "Write a Review"}
               />
             </View>
           </View>
