@@ -31,6 +31,7 @@ import {
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 import { selectUser } from "../../../redux/selectors/user";
+import { selectReviewsByBusiness } from "../../../redux/selectors/review";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -39,6 +40,10 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
   const currentUser = useAppSelector(selectUser)!;
+  const curReviews = useAppSelector(selectReviewsByBusiness(business.id));
+  const curUserReviewId = curReviews.find(
+    (r) => r.userID === currentUser.id
+  )?.id;
 
   React.useEffect(() => {
     if (modalVisible) {
@@ -196,6 +201,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                         onPress={() =>
                           navigation.navigate("CreateEditReview", {
                             busID: business.id,
+                            editReviewId: curUserReviewId,
                           })
                         }
                       >
@@ -206,7 +212,9 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                             fontSize: 16,
                           }}
                         >
-                          Write a Review
+                          {curUserReviewId
+                            ? "Edit Your Review"
+                            : "Write a Review"}
                         </Text>
                       </Pressable>
                       <Pressable
