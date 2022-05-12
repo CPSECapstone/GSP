@@ -173,7 +173,7 @@ function Base({ navigation }: BaseProps) {
 const styles = StyleSheet.create({
   subtitle: {
     fontFamily: "Mada-Medium",
-    color: "#5300b9",
+    color: "#7300ff",
     fontSize: 18,
     marginTop: 30,
     marginBottom: 15,
