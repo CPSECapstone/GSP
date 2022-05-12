@@ -16,7 +16,8 @@ import BusinessCard from "../BusinessCard/BusinessCard";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    marginLeft: 35,
+    marginTop: 30,
   },
   collectiontitle: {
     color: "#7300ff",
@@ -25,15 +26,16 @@ const styles = StyleSheet.create({
     marginRight: 50,
     marginLeft: 15,
   },
+  editcollectioncontainer: {
+    backgroundColor: "#e6ccff",
+    borderRadius: 10,
+    marginRight: 50,
+  },
   editcollectiontext: {
     fontFamily: "Mada-Medium",
     fontSize: 18,
-    borderRadius: 10,
-    borderColor: "#9A9A9D",
-    borderWidth: 1,
-    color: "#9A9A9D",
+    color: "black",
     padding: 5,
-    marginRight: 50,
   },
   collectiondesctext: {
     fontFamily: "Poppins-Regular",
@@ -60,8 +62,9 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flexDirection: "row", marginLeft: 50 }}>
+      <View style={{ flexDirection: "row" }}>
         <Pressable
+          style={{ marginLeft: -8 }}
           onPress={() => {
             navigation.goBack();
           }}
@@ -73,11 +76,12 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
           onPress={() => {
             setisEditing(!isEditing);
           }}
+          style={styles.editcollectioncontainer}
         >
           <Text
             style={[
               styles.editcollectiontext,
-              { minWidth: 150, textAlign: "center" },
+              { minWidth: 160, textAlign: "center" },
             ]}
           >
             {isEditing ? "Done" : "Edit Collection"}
@@ -90,14 +94,13 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
         renderItem={({ item }) => (
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
               flexDirection: "row",
+              alignItems: "center",
             }}
           >
             <Animated.View style={{ opacity: fadeAnim }}>
               <AntDesign
-                style={{ marginHorizontal: 10 }}
+                style={{ marginRight: 10 }}
                 name="minuscircle"
                 color="#7300ff"
                 size={20}

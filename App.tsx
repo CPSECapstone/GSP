@@ -162,7 +162,11 @@ export default function App() {
     setfontsLoaded(true);
   }
 
-  loadFontsAsync();
+  React.useEffect(() => {
+    if (!fontsLoaded) {
+      loadFontsAsync();
+    }
+  }, []);
 
   return (
     <Provider store={store}>

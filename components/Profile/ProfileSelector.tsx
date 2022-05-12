@@ -24,6 +24,7 @@ import { selectBusinessesByUser } from "../../redux/selectors/business";
 import { S3Image } from "../Misc/S3Util";
 import BusinessAPI from "./Business/BusinessAPI";
 import { addBusiness } from "../../redux/slices/business";
+import gStyles from "../../global-styles";
 
 const plusImage = require("../../assets/plus.png");
 
@@ -139,7 +140,7 @@ function Base({ navigation }: BaseProps) {
     <SafeAreaView style={{ flex: 1, flexDirection: "row" }}>
       <Margin />
       <View style={{ flex: 10 }}>
-        <Text style={styles.title}>Profile</Text>
+        <Text style={gStyles.title}>Profile</Text>
         <Selector
           title="My Profile"
           source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
@@ -170,14 +171,9 @@ function Base({ navigation }: BaseProps) {
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontFamily: "Mada-Bold",
-    fontSize: 34,
-    marginVertical: 30,
-  },
   subtitle: {
     fontFamily: "Mada-Medium",
-    color: "#5300b9",
+    color: "#7300ff",
     fontSize: 18,
     marginTop: 30,
     marginBottom: 15,

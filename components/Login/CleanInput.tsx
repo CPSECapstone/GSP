@@ -55,6 +55,7 @@ function CleanInput({
         placeholder={placeholder}
         onChangeText={setState}
         value={value}
+        autoCapitalize="none"
       />
       {!!errorMsg && <Text style={styles.error}>{errorMsg}</Text>}
     </View>
