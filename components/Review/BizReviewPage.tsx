@@ -176,17 +176,17 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
                 );
               }}
               keyExtractor={(review) => review.id}
-              ListFooterComponent={
-                <LargeButton
-                  action={() =>
-                    navigation.navigate("CreateEditReview", {
-                      busID: business.id,
-                    })
-                  }
-                  label="Write a Review"
-                />
-              }
             />
+            <View style={{ display: "absolute", bottom: 0 }}>
+              <LargeButton
+                action={() =>
+                  navigation.navigate("CreateEditReview", {
+                    busID: business.id,
+                  })
+                }
+                label="Write a Review"
+              />
+            </View>
           </View>
         </View>
       </View>
