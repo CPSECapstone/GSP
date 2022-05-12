@@ -1,4 +1,5 @@
 import { Entypo } from "@expo/vector-icons";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 interface CollectionCellPropTypes {
@@ -9,14 +10,14 @@ interface CollectionCellPropTypes {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
-    padding: 10,
+    padding: 14,
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     marginVertical: 10,
   },
   title: {
+    margin: 10,
     fontFamily: "Mada-Medium",
     fontSize: 18,
   },
@@ -30,18 +31,31 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 5,
   },
+  arrow: {
+    position: "absolute",
+    right: 10,
+  },
 });
 
-function CollectionCell(props: CollectionCellPropTypes) {
+export default function CollectionCell(props: CollectionCellPropTypes) {
   const { color, title } = props;
 
   return (
     <View style={[styles.container, styles.shadow]}>
       <Entypo color={color} name="location-pin" size={35} />
       <Text style={styles.title}>{title}</Text>
-      <Entypo name="chevron-right" size={24} />
+      <Entypo style={styles.arrow} name="chevron-right" size={24} />
     </View>
   );
 }
 
-export default CollectionCell;
+export function CreateNewCollectionCell() {
+  return (
+    <View
+      style={[styles.container, styles.shadow, { backgroundColor: "#e6ccff" }]}
+    >
+      <Entypo color="black" name="circle-with-plus" size={35} />
+      <Text style={styles.title}>Create New</Text>
+    </View>
+  );
+}

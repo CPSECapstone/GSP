@@ -31,6 +31,7 @@ import {
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 import { selectUser } from "../../../redux/selectors/user";
+import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -39,6 +40,10 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
   const currentUser = useAppSelector(selectUser)!;
+
+  React.useEffect(() => {
+    addRecentBusiness(business.id);
+  }, []);
 
   React.useEffect(() => {
     if (modalVisible) {

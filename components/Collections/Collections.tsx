@@ -10,7 +10,6 @@ import {
   TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { placeholderbusinesses } from "../../constants/placeholderdata";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import selectAllUserCollections from "../../redux/selectors/collections";
 import { selectUser } from "../../redux/selectors/user";
@@ -19,19 +18,13 @@ import { CollectionProps } from "../../route-settings";
 import { CreateCollectionMutation } from "../../src/API";
 import { createCollection } from "../../src/graphql/mutations";
 import BusinessCell from "../Misc/BusinessCell";
-import CollectionCell from "./CollectionCell";
+import CollectionCell, { CreateNewCollectionCell } from "./CollectionCell";
 import ColorPicker from "./ColorPicker";
+import gStyles from "../../global-styles";
+import { getRecentBusinesses } from "../Misc/RecentBusinessStore";
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 34,
-    marginLeft: 50,
-    marginBottom: 25,
-    fontFamily: "Mada-Bold",
-  },
-
   subheader: {
-    marginLeft: 50,
     fontFamily: "Mada-Medium",
     color: "#7300ff",
     fontSize: 18,
@@ -49,15 +42,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: "#9A9A9D",
     padding: 5,
-    marginRight: 50,
   },
   scrollitemsflatlist: {
     width: "100%",
-    paddingLeft: 50,
     overflow: "visible",
-  },
-  verticalflatlist: {
-    paddingHorizontal: 50,
   },
   modalContainer: {
     flex: 1,
@@ -68,7 +56,7 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: "white",
     borderRadius: 20,
-    padding: 20,
+    padding: 30,
     alignItems: "flex-start",
     shadowColor: "#000",
     shadowOffset: {
@@ -114,10 +102,19 @@ const styles = StyleSheet.create({
 
 function Collections({ navigation }: CollectionProps) {
   const [modalVisible, setModalVisible] = React.useState(false);
+  const [recent, setRecent] = React.useState<string[]>(undefined!);
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
   const userCollections = useAppSelector(selectAllUserCollections);
+
+  React.useEffect(() => {
+    if (!recent) {
+      getRecentBusinesses().then((businessIds) => {
+        setRecent(businessIds);
+      });
+    }
+  }, []);
 
   let collectionColor = "#B27129";
 
@@ -159,12 +156,12 @@ function Collections({ navigation }: CollectionProps) {
           <View style={styles.modalView}>
             <Text
               style={{
-                padding: 20,
+                marginBottom: 20,
                 fontFamily: "Poppins-Regular",
                 fontSize: 17,
               }}
             >
-              Create a New Collection
+              Create New Collection
             </Text>
             <Text style={styles.modaltitletext}>TITLE</Text>
             <TextInput
@@ -226,9 +223,9 @@ function Collections({ navigation }: CollectionProps) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={gStyles.container}>
       <AddCollectionModal />
-      <Text style={styles.title}>Collections</Text>
+      <Text style={gStyles.title}>Collections</Text>
       <Text style={[styles.subheader, { marginBottom: 20 }]}>
         Recently Visisted
       </Text>
@@ -237,55 +234,39 @@ function Collections({ navigation }: CollectionProps) {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.scrollitemsflatlist}
-          renderItem={({ item }) => (
-            <BusinessCell
-              name={item.name}
-              businessId={item.businessId}
-              distance={item.distance}
-            />
-          )}
-          keyExtractor={(item) => item.businessId}
-          data={placeholderbusinesses}
+          renderItem={({ item }) => <BusinessCell businessId={item} />}
+          keyExtractor={(item) => item}
+          data={recent}
         />
       </View>
       <View style={[{ marginBottom: 10 }, styles.subcontainer]}>
-        <Text style={[styles.subheader, { marginLeft: 50 }]}>
-          Your Collections
-        </Text>
+        <Text style={styles.subheader}>My Collections</Text>
+      </View>
+      <View>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={userCollections}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() =>
+                navigation.navigate("OpenCollection", {
+                  name: item?.title ?? "No Collection Title",
+                  description: item?.description ?? "No Collection Description",
+                })
+              }
+            >
+              <CollectionCell
+                color={item?.color ?? "#FFFFFF"}
+                title={item?.title ?? "Error"}
+              />
+            </Pressable>
+          )}
+          keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
+        />
         <Pressable onPress={() => setModalVisible(true)}>
-          <Text style={styles.addcollectiontext}>+ Add Collection</Text>
+          <CreateNewCollectionCell />
         </Pressable>
       </View>
-      {userCollections.length > 0 ? (
-        <View>
-          <FlatList
-            contentContainerStyle={styles.verticalflatlist}
-            showsVerticalScrollIndicator={false}
-            data={userCollections}
-            renderItem={({ item }) => (
-              <Pressable
-                onPress={() =>
-                  navigation.navigate("OpenCollection", {
-                    name: item?.title ?? "No Collection Title",
-                    description:
-                      item?.description ?? "No Collection Description",
-                  })
-                }
-              >
-                <CollectionCell
-                  color={item?.color ?? "#FFFFFF"}
-                  title={item?.title ?? "Error"}
-                />
-              </Pressable>
-            )}
-            keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
-          />
-        </View>
-      ) : (
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.emptytext}>Add your first collection!</Text>
-        </View>
-      )}
     </SafeAreaView>
   );
 }

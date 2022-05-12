@@ -5,15 +5,15 @@ import { View, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   searchbar: {
     position: "absolute",
-    top: "5%",
+    top: 60,
     alignItems: "center",
   },
   container: {
     backgroundColor: "transparent",
-    width: "90%",
+    width: "95%",
   },
   input: {
-    borderRadius: 20,
+    borderRadius: 30,
     backgroundColor: "#EBEBEB",
   },
 });
