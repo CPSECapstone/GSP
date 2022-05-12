@@ -31,6 +31,7 @@ import {
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 import { selectUser } from "../../../redux/selectors/user";
+import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
@@ -44,6 +45,10 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
   const curUserReviewId = curReviews.find(
     (r) => r.userID === currentUser.id
   )?.id;
+
+  React.useEffect(() => {
+    addRecentBusiness(business.id);
+  }, []);
 
   React.useEffect(() => {
     if (modalVisible) {
