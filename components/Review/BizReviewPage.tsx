@@ -22,22 +22,18 @@ import {
 } from "../Profile/Business/bizDependencies";
 import BizReviewHeader from "./BizReviewHeader";
 import { RootStackParamList } from "../../route-settings";
+import { ReviewType } from "../../src/APITypes";
 
 const styles = StyleSheet.create({
-  filterButton: {
-    height: 30,
-    width: 70,
-    fontFamily: "Mada-Medium",
-    backgroundColor: "#D7D7D7",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: "#D7D7D7",
-    marginLeft: 30,
-    marginTop: 5,
+  sortBy: {
+    color: "grey",
+    padding: 10,
   },
-  unselectedFilter: {
+  filterWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  filter: {
     height: 30,
     width: 70,
     fontFamily: "Mada-Medium",
@@ -46,8 +42,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "#D7D7D7",
-    marginLeft: 30,
-    marginTop: 5,
+  },
+  selectedFilter: {
+    backgroundColor: "#D7D7D7",
   },
   back: {
     flexDirection: "row",
@@ -100,14 +97,33 @@ type BizReviewPageProps = CompositeScreenProps<
   NativeStackScreenProps<BProfileStackParamList, "Reviews">
 >;
 
+const recentFilter = (a: ReviewType, b: ReviewType) =>
+  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+
+const relevantFilter = (a: ReviewType, b: ReviewType) =>
+  (b.comments?.length ?? 0) - (a.comments?.length ?? 0);
+
+const lowestFilter = (a: ReviewType, b: ReviewType) => a.rating! - b.rating!;
+const highestFilter = (a: ReviewType, b: ReviewType) => b.rating! - a.rating!;
+
+const filters = [
+  { name: "Recent", filter: recentFilter },
+  { name: "Relevant", filter: relevantFilter },
+  { name: "Lowest", filter: lowestFilter },
+  { name: "Highest", filter: highestFilter },
+];
+
 function BizReviewPage({ navigation }: BizReviewPageProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
   const [selectedReview, setSelectedReview] = useState("");
+  const [filterIdx, setFilterIdx] = useState(0);
 
   const business = React.useContext(BusinessContext);
   const reviews = useAppSelector(selectReviewsByBusiness(business.id));
   const users = useAppSelector(selectAllUsers);
   const clientId = useAppSelector(selectUser)!.id;
+  const curUserReviewId = reviews.find((r) => r.userID === clientId)?.id;
+  const selectedStyle = { ...styles.filter, ...styles.selectedFilter };
 
   return (
     <SafeAreaView style={{ flexDirection: "row", flex: 1 }}>
@@ -118,45 +134,32 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
           modalVisibilitySetter={setmodalVisible}
           reviewID={selectedReview}
         />
-
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <BackButton action={navigation.goBack} />
         </View>
         <BizReviewHeader businessID={business.id} />
         <Line />
-        {/* Commenting out until functional
-        <Text style={{ color: "grey", paddingLeft: 30, paddingTop: 10 }}>
-          {" "}
-          Sort By
-        </Text> 
-
-        <View style={{ flexDirection: "row" }}>
-          <Pressable style={styles.filterButton}>
-            <Text>Relevant</Text>
-          </Pressable>
-
-          <Pressable style={styles.unselectedFilter}>
-            <Text>Recent</Text>
-          </Pressable>
-
-          <Pressable style={styles.unselectedFilter}>
-            <Text>Lowest</Text>
-          </Pressable>
-
-          <Pressable style={styles.unselectedFilter}>
-            <Text>Highest</Text>
-          </Pressable>
+        <Text style={styles.sortBy}> Sort By</Text>
+        <View style={styles.filterWrapper}>
+          {filters.map((f, idx) => (
+            <Pressable
+              style={filterIdx === idx ? selectedStyle : styles.filter}
+              onPress={() => setFilterIdx(idx)}
+              key={f.name}
+            >
+              <Text>{f.name}</Text>
+            </Pressable>
+          ))}
         </View>
-        */}
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, alignItems: "center" }}>
             <FlatList
               contentContainerStyle={{
                 paddingTop: 40,
                 paddingLeft: 12,
                 paddingRight: 12,
               }}
-              data={reviews}
+              data={reviews.sort(filters[filterIdx].filter)}
               renderItem={({ item }) => {
                 const user = users.find((u) => u.id === item.userID);
                 if (!user || !user.name || !item.rating) return null;
@@ -176,17 +179,18 @@ function BizReviewPage({ navigation }: BizReviewPageProps) {
                 );
               }}
               keyExtractor={(review) => review.id}
-              ListFooterComponent={
-                <LargeButton
-                  action={() =>
-                    navigation.navigate("CreateEditReview", {
-                      busID: business.id,
-                    })
-                  }
-                  label="Write a Review"
-                />
-              }
             />
+            <View style={{ position: "absolute", bottom: 0 }}>
+              <LargeButton
+                action={() =>
+                  navigation.navigate("CreateEditReview", {
+                    busID: business.id,
+                    editReviewId: curUserReviewId,
+                  })
+                }
+                label={curUserReviewId ? "Edit Your Review" : "Write a Review"}
+              />
+            </View>
           </View>
         </View>
       </View>

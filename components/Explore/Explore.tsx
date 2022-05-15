@@ -28,34 +28,29 @@ import {
   returnMinorityGroupValue,
 } from "../../constants/enumconverters";
 import WithBusinessView from "../Profile/Business/WithBusinessView";
+import gStyles from "../../global-styles";
 
 const width = Dimensions.get("screen").width * 0.16;
-const height = Dimensions.get("screen").height * 0.096;
+// const height = Dimensions.get("screen").height * 0.096;
 const imgdimensions = width - 29;
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 34,
-    marginLeft: 50,
-    marginBottom: 25,
-    fontFamily: "Mada-Bold",
-  },
   title2: {
-    marginLeft: 50,
     fontFamily: "Mada-Medium",
     color: "#7300ff",
     fontSize: 18,
   },
   categorycontainer: {
-    width: 68,
+    width: 75,
+    height: 100,
     borderRadius: 15,
-    marginHorizontal: 10,
+    marginRight: 20,
     marginTop: 25,
     borderWidth: 2,
     backgroundColor: "#FFFFFF",
-    alignItems: "center",
     marginBottom: 15,
     borderColor: "#FFFFFF",
+    alignItems: "center",
   },
   shadow: {
     shadowColor: "#000",
@@ -68,7 +63,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   categoryicon: {
-    paddingHorizontal: 20,
+    justifyContent: "center",
     paddingTop: 20,
     paddingBottom: 13,
   },
@@ -80,11 +75,10 @@ const styles = StyleSheet.create({
   },
   minoritycellcontainer: {
     borderRadius: 15,
-    marginHorizontal: 10,
+    marginRight: 20,
     marginTop: 25,
-    minHeight: height,
-    minWidth: width + 10,
-    maxWidth: width + 10,
+    width: 75,
+    minHeight: 110,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     flex: 7,
@@ -174,14 +168,14 @@ function ExploreView({ navigation }: ExploreProps) {
   }, [selectedCategoryIndex, selectedMinorityGroups]);
 
   return (
-    <SafeAreaView>
-      <Text style={styles.title}>Explore</Text>
+    <SafeAreaView style={gStyles.container}>
+      <Text style={gStyles.title}>Explore</Text>
       <Text style={styles.title2}>Categories</Text>
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={categories}
-        contentContainerStyle={{ paddingLeft: 20 }}
+        style={{ width: "100%", overflow: "visible" }}
         renderItem={({ item, index }) => (
           <Pressable onPress={() => setselectedCategoryIndex(index)}>
             <Animated.View
@@ -203,8 +197,7 @@ function ExploreView({ navigation }: ExploreProps) {
           justifyContent: "center",
           alignItems: "center",
           marginVertical: 20,
-          padding: 10,
-          minHeight: 325,
+          minHeight: 310,
         }}
       >
         {resultBusinesses.length === 0 ? (
@@ -222,6 +215,7 @@ function ExploreView({ navigation }: ExploreProps) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
+            style={{ width: "100%", overflow: "visible" }}
             contentContainerStyle={
               resultBusinesses.length === 1 && {
                 width: "100%",
@@ -258,8 +252,9 @@ function ExploreView({ navigation }: ExploreProps) {
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
+        style={{ width: "100%", overflow: "visible" }}
         data={minoritygroups}
-        contentContainerStyle={{ paddingLeft: 20, height: 125 }}
+        contentContainerStyle={{ height: 125 }}
         renderItem={({ item, index }) => (
           <Pressable
             onPress={() => {
@@ -286,7 +281,9 @@ function ExploreView({ navigation }: ExploreProps) {
               ]}
             >
               <Image style={styles.minoritycellimage} source={item.img} />
-              <Text style={styles.minoritycelltitle}>{item.title}</Text>
+              <View style={{ justifyContent: "center", height: 50 }}>
+                <Text style={styles.minoritycelltitle}>{item.title}</Text>
+              </View>
             </View>
           </Pressable>
         )}

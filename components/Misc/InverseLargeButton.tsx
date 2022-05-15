@@ -11,7 +11,7 @@ const LoginButtonStyle = StyleSheet.create({
   },
   text: {
     fontSize: 30,
-    color: "rgb(250, 74, 12)",
+    color: "#7300ff",
     alignSelf: "center",
     fontWeight: "bold",
     paddingTop: 15,

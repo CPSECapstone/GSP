@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     height: 296,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 15,
+    marginRight: 30,
   },
   titletext: {
     fontFamily: "Mada-SemiBold",

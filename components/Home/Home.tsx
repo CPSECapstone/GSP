@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-
     borderColor: "#7B7B7C",
   },
   minoritycellimage: {
@@ -158,7 +157,11 @@ function HomeView({ navigation }: HomeProps) {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={minoritygroups}
-        contentContainerStyle={{ paddingLeft: "9.5%", height: ".02%" }}
+        contentContainerStyle={{
+          marginTop: 10,
+          paddingLeft: 25,
+          height: ".02%",
+        }}
         style={styles.filters}
         renderItem={({ item, index }) => (
           <Pressable

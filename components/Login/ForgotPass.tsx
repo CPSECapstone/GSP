@@ -7,7 +7,7 @@ import { ForgotPassProps } from "../../route-settings";
 import CleanInput from "./CleanInput";
 import { styles } from "./Login";
 
-const sourceImage = require("../../assets/default-avatar.jpeg");
+const sourceImage = require("../../assets/MMLogo.png");
 
 const forgotPassStyle = StyleSheet.create({
   container: {
@@ -29,8 +29,8 @@ const forgotPassStyle = StyleSheet.create({
     marginBottom: 100,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 200,
+    height: 200,
     alignSelf: "center",
     marginBottom: 150,
     marginTop: 60,
