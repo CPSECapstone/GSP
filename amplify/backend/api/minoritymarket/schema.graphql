@@ -90,4 +90,3 @@ type Collection @model @auth(rules: [{allow: public}]) {
   Businesses: [Business] @hasMany(indexName: "byCollection", fields: ["id"])
   userID: ID! @index(name: "byUser")
 }
- 

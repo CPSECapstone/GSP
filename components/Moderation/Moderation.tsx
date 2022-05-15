@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
+
+interface ModerationProps {}
 
 function Moderation() {
   return (
     <View>
-      <Text>Moderation page</Text>
+      <Text></Text>
     </View>
   );
 }

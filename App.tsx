@@ -150,7 +150,11 @@ function InnerApp() {
           component={Notifications}
           options={{ title: "Notifications", headerShown: true }}
         />
-        <Stack.Screen name="Moderation" component={Moderation} />
+        <Stack.Screen
+          name="Moderation"
+          component={Moderation}
+          options={{ title: "Moderation Requests", headerShown: true }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
