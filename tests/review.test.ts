@@ -1,18 +1,9 @@
-//@ts-nocheck
+// @ts-nocheck
 
 import { test, expect, describe } from "@jest/globals";
-import { useAppSelector } from "../redux/hooks";
-import {
-  selectAllReviews,
-  selectReviewsByUser,
-  selectReviewsByBusiness,
-  selectReviewById,
-} from "../redux/selectors/review";
+import { selectAllReviews, selectReviewById } from "../redux/selectors/review";
 
 import reviewReducer, {
-  addReview,
-  editReview,
-  deleteReviewRedux,
   ReviewState,
   reviewsLoading,
   reviewsRecieved,
