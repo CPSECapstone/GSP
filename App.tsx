@@ -63,13 +63,13 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
 
 function AuthenticatedApp() {
-  const user = useAppSelector(selectUser);
+  const user = useAppSelector(selectUser)!;
   const dispatch = useAppDispatch();
 
-  if (user?.id !== undefined) {
+  React.useEffect(() => {
     dispatch(notifications.fetchNotifications(user.id));
     dispatch(collections.fetchCollections(user.id));
-  }
+  }, []);
 
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={TabBarScreenOptions}>
@@ -83,7 +83,9 @@ function AuthenticatedApp() {
 
 function InnerApp() {
   const dispatch = useAppDispatch();
-  initializeRedux(dispatch);
+  React.useEffect(() => {
+    initializeRedux(dispatch);
+  }, []);
 
   return (
     <NavigationContainer>
