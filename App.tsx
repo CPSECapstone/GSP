@@ -37,6 +37,7 @@ import CreateEditReview from "./components/Review/CreateEditReview";
 import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
+import EditProfile from "./components/Profile/User/EditProfile";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -148,6 +149,14 @@ function InnerApp() {
           name="Notifications"
           component={Notifications}
           options={{ title: "Notifications", headerShown: true }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{
+            title: "Edit Profile",
+            headerShown: true,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
