@@ -2,6 +2,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createVerificationRequest = /* GraphQL */ `
+  mutation CreateVerificationRequest(
+    $input: CreateVerificationRequestInput!
+    $condition: ModelVerificationRequestConditionInput
+  ) {
+    createVerificationRequest(input: $input, condition: $condition) {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVerificationRequest = /* GraphQL */ `
+  mutation UpdateVerificationRequest(
+    $input: UpdateVerificationRequestInput!
+    $condition: ModelVerificationRequestConditionInput
+  ) {
+    updateVerificationRequest(input: $input, condition: $condition) {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVerificationRequest = /* GraphQL */ `
+  mutation DeleteVerificationRequest(
+    $input: DeleteVerificationRequestInput!
+    $condition: ModelVerificationRequestConditionInput
+  ) {
+    deleteVerificationRequest(input: $input, condition: $condition) {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createNotification = /* GraphQL */ `
   mutation CreateNotification(
     $input: CreateNotificationInput!
@@ -79,6 +121,7 @@ export const createUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -107,6 +150,7 @@ export const updateUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -135,6 +179,7 @@ export const deleteUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }

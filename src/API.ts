@@ -2,36 +2,21 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateNotificationInput = {
+export type CreateVerificationRequestInput = {
   id?: string | null,
+  businessID?: string | null,
   message: string,
-  type: NotificationType,
-  Sender?: string | null,
-  userID: string,
-  title: string,
-  businessRequestID: string,
 };
 
-export enum NotificationType {
-  OWNERSHIPREQUEST = "OWNERSHIPREQUEST",
-  OWNERSHIPAPPROVED = "OWNERSHIPAPPROVED",
-  OWNERSHIPDENIED = "OWNERSHIPDENIED",
-}
-
-
-export type ModelNotificationConditionInput = {
+export type ModelVerificationRequestConditionInput = {
+  businessID?: ModelIDInput | null,
   message?: ModelStringInput | null,
-  type?: ModelNotificationTypeInput | null,
-  Sender?: ModelIDInput | null,
-  userID?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  businessRequestID?: ModelIDInput | null,
-  and?: Array< ModelNotificationConditionInput | null > | null,
-  or?: Array< ModelNotificationConditionInput | null > | null,
-  not?: ModelNotificationConditionInput | null,
+  and?: Array< ModelVerificationRequestConditionInput | null > | null,
+  or?: Array< ModelVerificationRequestConditionInput | null > | null,
+  not?: ModelVerificationRequestConditionInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -71,12 +56,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelNotificationTypeInput = {
-  eq?: NotificationType | null,
-  ne?: NotificationType | null,
-};
-
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -90,6 +70,61 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type VerificationRequest = {
+  __typename: "VerificationRequest",
+  id: string,
+  businessID?: string | null,
+  message: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateVerificationRequestInput = {
+  id: string,
+  businessID?: string | null,
+  message?: string | null,
+};
+
+export type DeleteVerificationRequestInput = {
+  id: string,
+};
+
+export type CreateNotificationInput = {
+  id?: string | null,
+  message: string,
+  type: NotificationType,
+  Sender?: string | null,
+  userID: string,
+  title: string,
+  businessRequestID: string,
+};
+
+export enum NotificationType {
+  OWNERSHIPREQUEST = "OWNERSHIPREQUEST",
+  OWNERSHIPAPPROVED = "OWNERSHIPAPPROVED",
+  OWNERSHIPDENIED = "OWNERSHIPDENIED",
+  VERFICIATIONAPPROVED = "VERFICIATIONAPPROVED",
+  VERIFICATIONDENIED = "VERIFICATIONDENIED",
+}
+
+
+export type ModelNotificationConditionInput = {
+  message?: ModelStringInput | null,
+  type?: ModelNotificationTypeInput | null,
+  Sender?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  businessRequestID?: ModelIDInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+};
+
+export type ModelNotificationTypeInput = {
+  eq?: NotificationType | null,
+  ne?: NotificationType | null,
 };
 
 export type Notification = {
@@ -123,8 +158,9 @@ export type CreateUserInput = {
   id?: string | null,
   email: string,
   profilePic?: string | null,
-  name?: string | null,
+  name: string,
   isModerator?: boolean | null,
+  defaultAddress?: string | null,
 };
 
 export type ModelUserConditionInput = {
@@ -132,6 +168,7 @@ export type ModelUserConditionInput = {
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
   isModerator?: ModelBooleanInput | null,
+  defaultAddress?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
@@ -150,11 +187,12 @@ export type User = {
   email: string,
   profilePic?: string | null,
   Collections?: ModelCollectionConnection | null,
-  name?: string | null,
+  name: string,
   isModerator?: boolean | null,
   Notifications?: ModelNotificationConnection | null,
   Businesses?: ModelBusinessConnection | null,
   Reviews?: ModelReviewConnection | null,
+  defaultAddress?: string | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -265,6 +303,7 @@ export type UpdateUserInput = {
   profilePic?: string | null,
   name?: string | null,
   isModerator?: boolean | null,
+  defaultAddress?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -433,6 +472,21 @@ export type DeleteCollectionInput = {
   id: string,
 };
 
+export type ModelVerificationRequestFilterInput = {
+  id?: ModelIDInput | null,
+  businessID?: ModelIDInput | null,
+  message?: ModelStringInput | null,
+  and?: Array< ModelVerificationRequestFilterInput | null > | null,
+  or?: Array< ModelVerificationRequestFilterInput | null > | null,
+  not?: ModelVerificationRequestFilterInput | null,
+};
+
+export type ModelVerificationRequestConnection = {
+  __typename: "ModelVerificationRequestConnection",
+  items:  Array<VerificationRequest | null >,
+  nextToken?: string | null,
+};
+
 export type ModelNotificationFilterInput = {
   id?: ModelIDInput | null,
   message?: ModelStringInput | null,
@@ -452,6 +506,7 @@ export type ModelUserFilterInput = {
   profilePic?: ModelStringInput | null,
   name?: ModelStringInput | null,
   isModerator?: ModelBooleanInput | null,
+  defaultAddress?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -510,6 +565,54 @@ export type ModelCollectionFilterInput = {
   and?: Array< ModelCollectionFilterInput | null > | null,
   or?: Array< ModelCollectionFilterInput | null > | null,
   not?: ModelCollectionFilterInput | null,
+};
+
+export type CreateVerificationRequestMutationVariables = {
+  input: CreateVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type CreateVerificationRequestMutation = {
+  createVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateVerificationRequestMutationVariables = {
+  input: UpdateVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type UpdateVerificationRequestMutation = {
+  updateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteVerificationRequestMutationVariables = {
+  input: DeleteVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type DeleteVerificationRequestMutation = {
+  deleteVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
 };
 
 export type CreateNotificationMutationVariables = {
@@ -587,7 +690,7 @@ export type CreateUserMutation = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -601,6 +704,7 @@ export type CreateUserMutation = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -621,7 +725,7 @@ export type UpdateUserMutation = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -635,6 +739,7 @@ export type UpdateUserMutation = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -655,7 +760,7 @@ export type DeleteUserMutation = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -669,6 +774,7 @@ export type DeleteUserMutation = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -908,6 +1014,42 @@ export type DeleteCollectionMutation = {
   } | null,
 };
 
+export type GetVerificationRequestQueryVariables = {
+  id: string,
+};
+
+export type GetVerificationRequestQuery = {
+  getVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListVerificationRequestsQueryVariables = {
+  filter?: ModelVerificationRequestFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVerificationRequestsQuery = {
+  listVerificationRequests?:  {
+    __typename: "ModelVerificationRequestConnection",
+    items:  Array< {
+      __typename: "VerificationRequest",
+      id: string,
+      businessID?: string | null,
+      message: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetNotificationQueryVariables = {
   id: string,
 };
@@ -966,7 +1108,7 @@ export type GetUserQuery = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -980,6 +1122,7 @@ export type GetUserQuery = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -999,8 +1142,9 @@ export type ListUsersQuery = {
       id: string,
       email: string,
       profilePic?: string | null,
-      name?: string | null,
+      name: string,
       isModerator?: boolean | null,
+      defaultAddress?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1168,6 +1312,39 @@ export type ListCollectionsQuery = {
   } | null,
 };
 
+export type OnCreateVerificationRequestSubscription = {
+  onCreateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateVerificationRequestSubscription = {
+  onUpdateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteVerificationRequestSubscription = {
+  onDeleteVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateNotificationSubscription = {
   onCreateNotification?:  {
     __typename: "Notification",
@@ -1223,7 +1400,7 @@ export type OnCreateUserSubscription = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -1237,6 +1414,7 @@ export type OnCreateUserSubscription = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1252,7 +1430,7 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -1266,6 +1444,7 @@ export type OnUpdateUserSubscription = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1281,7 +1460,7 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelCollectionConnection",
       nextToken?: string | null,
     } | null,
-    name?: string | null,
+    name: string,
     isModerator?: boolean | null,
     Notifications?:  {
       __typename: "ModelNotificationConnection",
@@ -1295,6 +1474,7 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelReviewConnection",
       nextToken?: string | null,
     } | null,
+    defaultAddress?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

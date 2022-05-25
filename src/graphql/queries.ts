@@ -2,6 +2,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getVerificationRequest = /* GraphQL */ `
+  query GetVerificationRequest($id: ID!) {
+    getVerificationRequest(id: $id) {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVerificationRequests = /* GraphQL */ `
+  query ListVerificationRequests(
+    $filter: ModelVerificationRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVerificationRequests(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        businessID
+        message
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getNotification = /* GraphQL */ `
   query GetNotification($id: ID!) {
     getNotification(id: $id) {
@@ -59,6 +92,7 @@ export const getUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -77,6 +111,7 @@ export const listUsers = /* GraphQL */ `
         profilePic
         name
         isModerator
+        defaultAddress
         createdAt
         updatedAt
       }

@@ -2,6 +2,14 @@ enum NotificationType {
   OWNERSHIPREQUEST
   OWNERSHIPAPPROVED
   OWNERSHIPDENIED
+  VERFICIATIONAPPROVED
+  VERIFICATIONDENIED
+}
+
+type VerificationRequest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  businessID: ID @index(name: "byBusiness")
+  message: String!
 }
 
 type Notification @model @auth(rules: [{allow: public}]) {
@@ -19,11 +27,12 @@ type User @model @auth(rules: [{allow: public}]) {
   email: AWSEmail!
   profilePic: AWSURL
   Collections: [Collection] @hasMany(indexName: "byUser", fields: ["id"])
-  name: String
+  name: String!
   isModerator: Boolean
   Notifications: [Notification] @hasMany(indexName: "byUser", fields: ["id"])
   Businesses: [Business] @hasMany(indexName: "byUser", fields: ["id"])
   Reviews: [Review] @hasMany(indexName: "byUser", fields: ["id"])
+  defaultAddress: String
 }
 
 enum BusinessType {

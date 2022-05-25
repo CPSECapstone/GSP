@@ -137,7 +137,7 @@
           ]
         },
         "Description": "api key description",
-        "Expires": 1654124794
+        "Expires": 1656106873
       }
     },
     "GraphQLAPINONEDS95A13CF0": {
@@ -153,6 +153,82 @@
         "Type": "NONE",
         "Description": "None Data Source for Pipeline functions"
       }
+    },
+    "VerificationRequest": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": {
+          "Fn::Join": [
+            "",
+            [
+              "https://s3.",
+              {
+                "Ref": "AWS::Region"
+              },
+              ".",
+              {
+                "Ref": "AWS::URLSuffix"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentBucket"
+              },
+              "/",
+              {
+                "Ref": "S3DeploymentRootKey"
+              },
+              "/stacks/VerificationRequest.json"
+            ]
+          ]
+        },
+        "Parameters": {
+          "DynamoDBModelTableReadIOPS": {
+            "Ref": "DynamoDBModelTableReadIOPS"
+          },
+          "DynamoDBModelTableWriteIOPS": {
+            "Ref": "DynamoDBModelTableWriteIOPS"
+          },
+          "DynamoDBBillingMode": {
+            "Ref": "DynamoDBBillingMode"
+          },
+          "DynamoDBEnablePointInTimeRecovery": {
+            "Ref": "DynamoDBEnablePointInTimeRecovery"
+          },
+          "DynamoDBEnableServerSideEncryption": {
+            "Ref": "DynamoDBEnableServerSideEncryption"
+          },
+          "referencetotransformerrootstackenv10C5A902Ref": {
+            "Ref": "env"
+          },
+          "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
+            "Fn::GetAtt": [
+              "GraphQLAPI",
+              "ApiId"
+            ]
+          },
+          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+            "Fn::GetAtt": [
+              "GraphQLAPINONEDS95A13CF0",
+              "Name"
+            ]
+          },
+          "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+            "Ref": "S3DeploymentBucket"
+          },
+          "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+            "Ref": "S3DeploymentRootKey"
+          },
+          "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+            "Ref": "authRoleName"
+          },
+          "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+            "Ref": "unauthRoleName"
+          }
+        }
+      },
+      "DependsOn": [
+        "GraphQLAPITransformerSchema3CB2AE18"
+      ]
     },
     "Notification": {
       "Type": "AWS::CloudFormation::Stack",
@@ -206,23 +282,59 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+            ]
+          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+            ]
           }
         }
       },
@@ -282,23 +394,59 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+            ]
+          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+            ]
           }
         }
       },
@@ -358,23 +506,59 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+            ]
+          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+            ]
           }
         }
       },
@@ -434,23 +618,59 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+            ]
+          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+            ]
           }
         }
       },
@@ -510,23 +730,59 @@
               "ApiId"
             ]
           },
-          "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-            "Fn::GetAtt": [
-              "GraphQLAPINONEDS95A13CF0",
-              "Name"
-            ]
-          },
           "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
             "Ref": "S3DeploymentBucket"
           },
           "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
             "Ref": "S3DeploymentRootKey"
           },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+            ]
+          },
           "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
             "Ref": "authRoleName"
           },
           "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
             "Ref": "unauthRoleName"
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+            ]
+          },
+          "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+            "Fn::GetAtt": [
+              "VerificationRequest",
+              "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+            ]
           }
         }
       },
@@ -687,6 +943,7 @@
       "DependsOn": [
         "GraphQLAPI",
         "GraphQLAPITransformerSchema3CB2AE18",
+        "VerificationRequest",
         "Notification",
         "User",
         "Review",

@@ -43,19 +43,37 @@
     "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
-      "Type": "String"
-    },
     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
       "Type": "String"
     },
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+      "Type": "String"
+    },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
       "Type": "String"
     },
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+      "Type": "String"
+    },
+    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
       "Type": "String"
     }
   },
@@ -434,66 +452,6 @@
         "BusinessIAMRole945FFEF0"
       ]
     },
-    "QuerygetBusinessauth0FunctionQuerygetBusinessauth0FunctionAppSyncFunctionC96F1698": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetBusinessauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getBusiness.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "QuerygetBusinesspostAuth0FunctionQuerygetBusinesspostAuth0FunctionAppSyncFunction2A347590": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerygetBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.getBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "QueryGetBusinessDataResolverFnQueryGetBusinessDataResolverFnAppSyncFunction6279A2F2": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -557,16 +515,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerygetBusinessauth0FunctionQuerygetBusinessauth0FunctionAppSyncFunctionC96F1698",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F"
             },
             {
-              "Fn::GetAtt": [
-                "QuerygetBusinesspostAuth0FunctionQuerygetBusinesspostAuth0FunctionAppSyncFunction2A347590",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
               "Fn::GetAtt": [
@@ -609,66 +561,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "QuerylistBusinessesauth0FunctionQuerylistBusinessesauth0FunctionAppSyncFunction9700E10A": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerylistBusinessesauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.listBusinesses.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "QuerylistBusinessespostAuth0FunctionQuerylistBusinessespostAuth0FunctionAppSyncFunction5858C7DD": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "QuerylistBusinessespostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Query.listBusinesses.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "QueryListBusinessesDataResolverFnQueryListBusinessesDataResolverFnAppSyncFunctionB718F8F8": {
@@ -734,16 +626,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "QuerylistBusinessesauth0FunctionQuerylistBusinessesauth0FunctionAppSyncFunction9700E10A",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F"
             },
             {
-              "Fn::GetAtt": [
-                "QuerylistBusinessespostAuth0FunctionQuerylistBusinessespostAuth0FunctionAppSyncFunction5858C7DD",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
               "Fn::GetAtt": [
@@ -786,96 +672,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "MutationcreateBusinessinit0FunctionMutationcreateBusinessinit0FunctionAppSyncFunction74009AAE": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateBusinessinit0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createBusiness.init.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "MutationcreateBusinessauth0FunctionMutationcreateBusinessauth0FunctionAppSyncFunctionE090A4A7": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateBusinessauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createBusiness.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "MutationcreateBusinesspostAuth0FunctionMutationcreateBusinesspostAuth0FunctionAppSyncFunction8886DB30": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationcreateBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.createBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "MutationCreateBusinessDataResolverFnMutationCreateBusinessDataResolverFnAppSyncFunction7A3FBE34": {
@@ -941,22 +737,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "MutationcreateBusinessinit0FunctionMutationcreateBusinessinit0FunctionAppSyncFunction74009AAE",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E"
             },
             {
-              "Fn::GetAtt": [
-                "MutationcreateBusinessauth0FunctionMutationcreateBusinessauth0FunctionAppSyncFunctionE090A4A7",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246"
             },
             {
-              "Fn::GetAtt": [
-                "MutationcreateBusinesspostAuth0FunctionMutationcreateBusinesspostAuth0FunctionAppSyncFunction8886DB30",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
               "Fn::GetAtt": [
@@ -999,36 +786,6 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
-      }
-    },
-    "MutationupdateBusinessinit0FunctionMutationupdateBusinessinit0FunctionAppSyncFunction74FE41DB": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationupdateBusinessinit0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.updateBusiness.init.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "MutationupdateBusinessauth0FunctionMutationupdateBusinessauth0FunctionAppSyncFunctionFDEDF1FB": {
@@ -1081,36 +838,6 @@
       "DependsOn": [
         "BusinessDataSource"
       ]
-    },
-    "MutationupdateBusinesspostAuth0FunctionMutationupdateBusinesspostAuth0FunctionAppSyncFunction4C7DA6A4": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationupdateBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.updateBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
     },
     "MutationUpdateBusinessDataResolverFnMutationUpdateBusinessDataResolverFnAppSyncFunction12F472A7": {
       "Type": "AWS::AppSync::FunctionConfiguration",
@@ -1175,10 +902,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "MutationupdateBusinessinit0FunctionMutationupdateBusinessinit0FunctionAppSyncFunction74FE41DB",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC"
             },
             {
               "Fn::GetAtt": [
@@ -1187,10 +911,7 @@
               ]
             },
             {
-              "Fn::GetAtt": [
-                "MutationupdateBusinesspostAuth0FunctionMutationupdateBusinesspostAuth0FunctionAppSyncFunction4C7DA6A4",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
               "Fn::GetAtt": [
@@ -1286,36 +1007,6 @@
         "BusinessDataSource"
       ]
     },
-    "MutationdeleteBusinesspostAuth0FunctionMutationdeleteBusinesspostAuth0FunctionAppSyncFunctionFF59EC0E": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "MutationdeleteBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Mutation.deleteBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
     "MutationDeleteBusinessDataResolverFnMutationDeleteBusinessDataResolverFnAppSyncFunction3E756048": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -1385,10 +1076,7 @@
               ]
             },
             {
-              "Fn::GetAtt": [
-                "MutationdeleteBusinesspostAuth0FunctionMutationdeleteBusinesspostAuth0FunctionAppSyncFunctionFF59EC0E",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
               "Fn::GetAtt": [
@@ -1433,111 +1121,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononCreateBusinessauth0FunctionSubscriptiononCreateBusinessauth0FunctionAppSyncFunction4BF2AA0F": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreateBusinessauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateBusiness.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptiononCreateBusinesspostAuth0FunctionSubscriptiononCreateBusinesspostAuth0FunctionAppSyncFunction0BE912FD": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononCreateBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnCreateBusinessDataResolverFnSubscriptionOnCreateBusinessDataResolverFnAppSyncFunction8C99C643": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnCreateBusinessDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateBusiness.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onCreateBusiness.res.vtl"
-            ]
-          ]
-        }
-      }
-    },
     "SubscriptiononCreateBusinessResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1550,22 +1133,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateBusinessauth0FunctionSubscriptiononCreateBusinessauth0FunctionAppSyncFunction4BF2AA0F",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptiononCreateBusinesspostAuth0FunctionSubscriptiononCreateBusinesspostAuth0FunctionAppSyncFunction0BE912FD",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnCreateBusinessDataResolverFnSubscriptionOnCreateBusinessDataResolverFnAppSyncFunction8C99C643",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
             }
           ]
         },
@@ -1600,111 +1174,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononUpdateBusinessauth0FunctionSubscriptiononUpdateBusinessauth0FunctionAppSyncFunctionAF7BD174": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononUpdateBusinessauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateBusiness.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptiononUpdateBusinesspostAuth0FunctionSubscriptiononUpdateBusinesspostAuth0FunctionAppSyncFunction875D94ED": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononUpdateBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnUpdateBusinessDataResolverFnSubscriptionOnUpdateBusinessDataResolverFnAppSyncFunction3E7413BE": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnUpdateBusinessDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateBusiness.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onUpdateBusiness.res.vtl"
-            ]
-          ]
-        }
-      }
-    },
     "SubscriptiononUpdateBusinessResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1717,22 +1186,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononUpdateBusinessauth0FunctionSubscriptiononUpdateBusinessauth0FunctionAppSyncFunctionAF7BD174",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptiononUpdateBusinesspostAuth0FunctionSubscriptiononUpdateBusinesspostAuth0FunctionAppSyncFunction875D94ED",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnUpdateBusinessDataResolverFnSubscriptionOnUpdateBusinessDataResolverFnAppSyncFunction3E7413BE",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
             }
           ]
         },
@@ -1767,111 +1227,6 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
-    "SubscriptiononDeleteBusinessauth0FunctionSubscriptiononDeleteBusinessauth0FunctionAppSyncFunction2BFC6F49": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononDeleteBusinessauth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteBusiness.auth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptiononDeleteBusinesspostAuth0FunctionSubscriptiononDeleteBusinesspostAuth0FunctionAppSyncFunctionF4D5BB1C": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptiononDeleteBusinesspostAuth0Function",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteBusiness.postAuth.1.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplate": "$util.toJson({})"
-      }
-    },
-    "SubscriptionOnDeleteBusinessDataResolverFnSubscriptionOnDeleteBusinessDataResolverFnAppSyncFunction4C92D380": {
-      "Type": "AWS::AppSync::FunctionConfiguration",
-      "Properties": {
-        "ApiId": {
-          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
-        },
-        "DataSourceName": {
-          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
-        },
-        "FunctionVersion": "2018-05-29",
-        "Name": "SubscriptionOnDeleteBusinessDataResolverFn",
-        "RequestMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteBusiness.req.vtl"
-            ]
-          ]
-        },
-        "ResponseMappingTemplateS3Location": {
-          "Fn::Join": [
-            "",
-            [
-              "s3://",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
-              },
-              "/",
-              {
-                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
-              },
-              "/resolvers/Subscription.onDeleteBusiness.res.vtl"
-            ]
-          ]
-        }
-      }
-    },
     "SubscriptiononDeleteBusinessResolver": {
       "Type": "AWS::AppSync::Resolver",
       "Properties": {
@@ -1884,22 +1239,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Fn::GetAtt": [
-                "SubscriptiononDeleteBusinessauth0FunctionSubscriptiononDeleteBusinessauth0FunctionAppSyncFunction2BFC6F49",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptiononDeleteBusinesspostAuth0FunctionSubscriptiononDeleteBusinesspostAuth0FunctionAppSyncFunctionF4D5BB1C",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
             },
             {
-              "Fn::GetAtt": [
-                "SubscriptionOnDeleteBusinessDataResolverFnSubscriptionOnDeleteBusinessDataResolverFnAppSyncFunction4C92D380",
-                "FunctionId"
-              ]
+              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
             }
           ]
         },
