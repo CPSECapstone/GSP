@@ -87,7 +87,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
         variables: { input: requestDetails },
       });
 
-      const busUpdate = { id: business.id, verificationPending: true };
+      // const busUpdate = { id: business.id, verificationPending: true };
 
       // PROBLEM: redux has the same name as the graphql query to update a business
 

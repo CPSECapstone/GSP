@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  VerificationRequestQueryType,
-  VerificationRequestType,
-} from "../../src/APITypes";
+import { VerificationRequestQueryType } from "../../src/APITypes";
 
 interface VerificationState {
   requests: VerificationRequestQueryType;
