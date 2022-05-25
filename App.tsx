@@ -37,6 +37,7 @@ import CreateEditReview from "./components/Review/CreateEditReview";
 import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
+import verification from "./redux/thunks/verification";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -69,6 +70,9 @@ function AuthenticatedApp() {
   React.useEffect(() => {
     dispatch(notifications.fetchNotifications(user.id));
     dispatch(collections.fetchCollections(user.id));
+    if (user.isModerator) {
+      dispatch(verification.fetchRequests());
+    }
   }, []);
 
   return (
