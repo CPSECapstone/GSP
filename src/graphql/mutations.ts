@@ -262,6 +262,7 @@ export const createBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt
@@ -297,6 +298,7 @@ export const updateBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt
@@ -332,6 +334,7 @@ export const deleteBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt

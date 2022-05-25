@@ -97,6 +97,7 @@ type Business @aws_iam @aws_api_key {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -492,6 +493,7 @@ input ModelBusinessFilterInput {
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
   isVerified: ModelBooleanInput
+  verificationPending: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
@@ -518,6 +520,7 @@ input ModelBusinessConditionInput {
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
   isVerified: ModelBooleanInput
+  verificationPending: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
@@ -545,6 +548,7 @@ input CreateBusinessInput {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID!
 }
 
@@ -569,6 +573,7 @@ input UpdateBusinessInput {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID
 }
 

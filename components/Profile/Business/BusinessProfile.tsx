@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
   Linking,
@@ -11,11 +11,13 @@ import {
   TouchableOpacity,
   Pressable,
   Animated,
+  Alert,
 } from "react-native";
 import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { API } from "aws-amplify";
 import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business } from "../../../src/API";
@@ -33,6 +35,7 @@ import {
 import { selectUser } from "../../../redux/selectors/user";
 import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
+import { createVerificationRequest } from "../../../src/graphql/mutations";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -65,6 +68,31 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
       }).start();
     }
   }, [modalVisible]);
+
+  const sendVerificationRequest = async () => {
+    // if business.verificationPending => Alert.alert("dont spam")
+    if (business.verificationPending) {
+      Alert.alert(
+        "Request Pending",
+        "You have already previously sent a verification request."
+      );
+    } else {
+      const requestDetails = {
+        businessID: business.id,
+        message: "Verification request testing.",
+      };
+
+      await API.graphql({
+        query: createVerificationRequest,
+        variables: { input: requestDetails },
+      });
+
+      Alert.alert(
+        "Success",
+        "Verification request has been sent to moderators, please be patient while they review your request."
+      );
+    }
+  };
 
   return (
     <BusinessContext.Provider value={business}>
@@ -138,6 +166,61 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                     )} • 3mi`}</Text>
                   </View>
                   <View style={styles.body}>
+                    <Pressable
+                      onPress={() => {
+                        if (currentUser.id === business.userID) {
+                          if (business.isVerified) {
+                            Alert.alert(
+                              "Verified",
+                              "Your business has been verified by moderators!"
+                            );
+                          } else {
+                            Alert.alert(
+                              "Unverified",
+                              "Your business has not yet been verified by moderators. Would you like to send a request for verification?",
+                              [
+                                {
+                                  text: "Yes",
+                                  onPress: () => sendVerificationRequest(),
+                                },
+                                { text: "No", onPress: () => {} },
+                              ]
+                            );
+                          }
+                        } else if (business.isVerified) {
+                          Alert.alert(
+                            "Verified Business",
+                            "This business has been verified by moderators."
+                          );
+                        } else {
+                          Alert.alert(
+                            "Unverified Business",
+                            "This business has not yet been verified by moderators."
+                          );
+                        }
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          paddingBottom: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: business.isVerified ? "#31c3f7" : "#99aab0",
+                          }}
+                        >
+                          {business.isVerified ? "Verified" : "Not Verified"}
+                        </Text>
+                        <MaterialIcons
+                          color={business.isVerified ? "#31c3f7" : "#99aab0"}
+                          name="verified"
+                          size={20}
+                        />
+                      </View>
+                    </Pressable>
                     <Tags tags={business.tags as string[]} />
                     <View style={styles.buttonWrapper}>
                       {business.phone && (

@@ -178,6 +178,7 @@ export const getBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt
@@ -212,6 +213,7 @@ export const listBusinesses = /* GraphQL */ `
         profileImage
         bannerImage
         isVerified
+        verificationPending
         userID
         createdAt
         updatedAt
