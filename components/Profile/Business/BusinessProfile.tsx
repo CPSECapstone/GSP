@@ -24,7 +24,10 @@ import { Business } from "../../../src/API";
 import { AverageRating } from "../../Review/RatingView";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
-import { deleteBusiness, updateBusiness } from "../../../redux/slices/business";
+import {
+  deleteBusiness,
+  updateBusinessRedux,
+} from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
 import BizReviewPage from "../../Review/BizReviewPage";
 import { BProfileStackParamList, BusinessContext } from "./bizDependencies";
@@ -377,7 +380,7 @@ function BusinessEditorScreen({ navigation }: EditorScreenProps) {
   const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
     BusinessAPI.update(edits, pImg, bImg)
       .then((response) => {
-        dispatch(updateBusiness(response.data.updateBusiness));
+        dispatch(updateBusinessRedux(response.data.updateBusiness));
         navigation.navigate("BusinessProfile");
       })
       .catch((err) => console.log(err));
