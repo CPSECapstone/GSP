@@ -67,7 +67,7 @@ function VerificationRequest({
           textAlign: "center",
         }}
       >
-        The business '{currentBusiness?.name}' has request verification.
+        {`The business '${currentBusiness?.name}' has requested verification.`}
       </Text>
       <Divider />
       <View

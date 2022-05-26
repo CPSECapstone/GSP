@@ -10,6 +10,7 @@ import { selectUser } from "../../../redux/selectors/user";
 import notifications from "../../../redux/thunks/notifications";
 import defaultUser from "../../../constants/defaultData";
 import { setUser } from "../../../redux/slices/user";
+import verification from "../../../redux/thunks/verification";
 
 const styles = StyleSheet.create({
   container: {
@@ -85,6 +86,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   React.useEffect(() => {
     if (user?.id !== undefined) {
       dispatch(notifications.fetchNotifications(user?.id));
+      dispatch(verification.fetchRequests());
     }
   }, []);
 

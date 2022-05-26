@@ -1,36 +1,44 @@
 import React from "react";
 import { FlatList, Text, View } from "react-native";
+import { API } from "aws-amplify";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { VerificationRequestProps } from "../../route-settings";
 import selectAllRequests from "../../redux/selectors/verification";
 import VerificationRequest from "./VerificationRequest";
-import { deleteReviewRedux } from "../../redux/slices/review";
 import { deleteRequestRedux } from "../../redux/slices/verification";
-import { API } from "aws-amplify";
 import {
   createNotification,
   deleteVerificationRequest,
   updateBusiness,
 } from "../../src/graphql/mutations";
-import { selectBusinessById } from "../../redux/selectors/business";
+import { selectAllBusinesses } from "../../redux/selectors/business";
 import { NotificationType } from "../../src/API";
 import { selectUser } from "../../redux/selectors/user";
-import { removeRequest } from "./verificationAPI";
 
 // eslint-disable-next-line
 function VerificationRequests({ route, navigation }: VerificationRequestProps) {
   const requests = useAppSelector(selectAllRequests);
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectUser);
+  const businesses = useAppSelector(selectAllBusinesses);
 
   const respondToRequest = async (
     approved: boolean,
     id: string,
     businessID: string
   ) => {
-    const business = useAppSelector(selectBusinessById(businessID));
+    const business = businesses.filter((b) => b?.id === businessID)[0];
     // 1. remove request from redux and asynchronously
-    removeRequest(id, dispatch);
+    dispatch(deleteRequestRedux(id));
+
+    const details = {
+      id,
+    };
+
+    await API.graphql({
+      query: deleteVerificationRequest,
+      variables: { input: details },
+    });
 
     // 2. push new notification with appropriate inputs
     const approveNotif = {
@@ -46,7 +54,7 @@ function VerificationRequests({ route, navigation }: VerificationRequestProps) {
 
     const businessUpdate = {
       id: business?.id,
-      isVerified: approved ? true : false,
+      isVerified: !!approved,
     };
 
     await API.graphql({
