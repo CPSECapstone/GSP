@@ -53,7 +53,7 @@ function VerificationRequests({ route, navigation }: VerificationRequestProps) {
     <View style={{ flex: 1, justifyContent: "center", alignContent: "center" }}>
       {requests.length > 0 ? (
         <FlatList
-          style={{ width: "100" }}
+          style={{ width: "100%" }}
           contentContainerStyle={{ flex: 1, marginTop: 25 }}
           data={requests}
           showsVerticalScrollIndicator={false}
