@@ -55,7 +55,7 @@ describe("selectAllBusinesses when", () => {
     const businesses = selectAllBusinesses(reduxFullState);
     expect(businesses).toEqual([business1, business2]);
   });
-  test("users is empty", () => {
+  test("businesses is empty", () => {
     const modifiedState = { business: initialState };
     const businesses = selectAllBusinesses(modifiedState);
     expect(businesses).toEqual([]);
