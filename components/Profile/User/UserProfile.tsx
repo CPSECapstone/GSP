@@ -109,6 +109,10 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           action={() => navigation.navigate("Notifications")}
           title="Notifications"
         />
+        <UserProfileCell
+          action={() => navigation.navigate("VerificationRequests")}
+          title="Verification Requests"
+        />
         <Pressable
           onPress={async () => {
             try {

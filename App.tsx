@@ -38,6 +38,7 @@ import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
 import verification from "./redux/thunks/verification";
+import VerificationRequests from "./components/Moderation/VerificationRequestsPage";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -154,6 +155,11 @@ function InnerApp() {
           name="Notifications"
           component={Notifications}
           options={{ title: "Notifications", headerShown: true }}
+        />
+        <Stack.Screen
+          name="VerificationRequests"
+          component={VerificationRequests}
+          options={{ title: "Verification Requests", headerShown: true }}
         />
       </Stack.Navigator>
     </NavigationContainer>
