@@ -83,9 +83,11 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
-  if (user?.id !== undefined) {
-    dispatch(notifications.fetchNotifications(user?.id));
-  }
+  React.useEffect(() => {
+    if (user?.id !== undefined) {
+      dispatch(notifications.fetchNotifications(user?.id));
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
