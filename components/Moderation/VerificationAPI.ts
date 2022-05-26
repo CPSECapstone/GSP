@@ -78,11 +78,19 @@ export async function performModeratingAction(
     variables: { input: approveNotif },
   }) as Promise<GraphQLResult<any>>;
 
-  busUpdatePromise.then((b) => {
-    console.log("Business verified");
-    updateCallback(b.data.updateBusiness);
-    notifCreatePromise.then(() => {
-      console.log("Response sent to business owner");
-    });
-  });
+  busUpdatePromise
+    .then((b) => {
+      console.log("Business verified");
+      updateCallback(b.data.updateBusiness);
+      notifCreatePromise
+        .then(() => {
+          console.log("Response sent to business owner");
+        })
+        .catch((e) =>
+          console.error(
+            `Notification could not be sent to business owner: ${e}`
+          )
+        );
+    })
+    .catch((e) => console.error(`Business could not be updated: ${e}`));
 }
