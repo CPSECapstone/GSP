@@ -10,6 +10,9 @@ import { RootStackParamList } from "../../../route-settings";
 import { UpdateUserMutation } from "../../../src/API";
 import { updateUser } from "../../../src/graphql/mutations";
 import CleanInput from "../../Login/CleanInput";
+import { S3Image } from "../../Misc/S3Util";
+import { S3ImageUpload } from "../Business/BusinessAPI";
+import { EditButton, pickImage } from "../Business/BusinessEditor";
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -42,10 +45,15 @@ type UserProfileProps = NativeStackScreenProps<
   "EditProfile"
 >;
 
+async function updateUserImage(file: string, userId: string) {
+  return S3ImageUpload(file, `${userId}/user`);
+}
+
 export default function EditProfile({ navigation }: UserProfileProps) {
   const user = useAppSelector(selectUser);
   const [name, setName] = useState(user!.name);
   const [address, setAddress] = useState(user?.defaultAddress ?? "");
+  const [profilePic, setProfilePic] = useState(user?.profilePic);
   const dispatch = useAppDispatch();
 
   const editUser = async () => {
@@ -53,7 +61,14 @@ export default function EditProfile({ navigation }: UserProfileProps) {
       id: user!.id,
       name,
       defaultAddress: address ?? undefined,
+      profilePic,
     };
+
+    if (profilePic !== user?.profilePic && profilePic) {
+      updateUserImage(profilePic, user!.id);
+      newUser.profilePic = "https://aws.amazon.com/s3/";
+    }
+
     const backendUser = (await API.graphql(
       graphqlOperation(updateUser, {
         input: newUser,
@@ -71,14 +86,28 @@ export default function EditProfile({ navigation }: UserProfileProps) {
       // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => <Button title="Done" onPress={editUser} />,
     });
-  }, [navigation, name, address]);
+  }, [navigation, name, address, profilePic]);
+
+  const handleSetProfile = (val: string) => setProfilePic(val);
 
   return (
     <View style={styles.wrapper}>
-      <Image
-        style={styles.profileImage}
-        source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
-      />
+      <View>
+        {profilePic === "https://aws.amazon.com/s3/" ? (
+          <S3Image S3key={`${user!.id}/user`} style={styles.profileImage} />
+        ) : (
+          <Image
+            style={styles.profileImage}
+            source={{ uri: profilePic ?? defaultUser.profilePic }}
+          />
+        )}
+
+        <EditButton
+          onPress={() => pickImage(handleSetProfile)}
+          position={{ top: 5, right: -7 }}
+          size={20}
+        />
+      </View>
       <CleanInput
         label="Name"
         textContentType="name"

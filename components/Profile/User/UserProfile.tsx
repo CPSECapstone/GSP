@@ -10,6 +10,7 @@ import { selectUser } from "../../../redux/selectors/user";
 import notifications from "../../../redux/thunks/notifications";
 import defaultUser from "../../../constants/defaultData";
 import { setUser } from "../../../redux/slices/user";
+import { S3Image } from "../../Misc/S3Util";
 
 const styles = StyleSheet.create({
   container: {
@@ -89,10 +90,14 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   return (
     <SafeAreaView style={styles.container}>
       <BackButton action={() => navigation.goBack()} />
-      <Image
-        style={styles.profileImage}
-        source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
-      />
+      {user?.profilePic === "https://aws.amazon.com/s3/" ? (
+        <S3Image style={styles.profileImage} S3key={`${user.id}/user`} />
+      ) : (
+        <Image
+          style={styles.profileImage}
+          source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
+        />
+      )}
       <Text style={styles.name}>{user?.name ?? defaultUser.name}</Text>
       <View style={styles.cells}>
         <UserProfileCell
