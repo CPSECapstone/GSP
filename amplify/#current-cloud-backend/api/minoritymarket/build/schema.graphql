@@ -22,11 +22,12 @@ type User @aws_iam @aws_api_key {
   email: AWSEmail!
   profilePic: AWSURL
   Collections(filter: ModelCollectionFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCollectionConnection
-  name: String
+  name: String!
   isModerator: Boolean
   Notifications(filter: ModelNotificationFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelNotificationConnection
   Businesses(filter: ModelBusinessFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelBusinessConnection
   Reviews(filter: ModelReviewFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelReviewConnection
+  defaultAddress: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
@@ -312,6 +313,7 @@ input ModelUserFilterInput {
   profilePic: ModelStringInput
   name: ModelStringInput
   isModerator: ModelBooleanInput
+  defaultAddress: ModelStringInput
   and: [ModelUserFilterInput]
   or: [ModelUserFilterInput]
   not: ModelUserFilterInput
@@ -322,6 +324,7 @@ input ModelUserConditionInput {
   profilePic: ModelStringInput
   name: ModelStringInput
   isModerator: ModelBooleanInput
+  defaultAddress: ModelStringInput
   and: [ModelUserConditionInput]
   or: [ModelUserConditionInput]
   not: ModelUserConditionInput
@@ -331,8 +334,9 @@ input CreateUserInput {
   id: ID
   email: AWSEmail!
   profilePic: AWSURL
-  name: String
+  name: String!
   isModerator: Boolean
+  defaultAddress: String
 }
 
 input UpdateUserInput {
@@ -341,6 +345,7 @@ input UpdateUserInput {
   profilePic: AWSURL
   name: String
   isModerator: Boolean
+  defaultAddress: String
 }
 
 input DeleteUserInput {

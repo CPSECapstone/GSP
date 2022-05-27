@@ -40,10 +40,17 @@ export const userSlice = createSlice({
         throw new Error("No user has the provided email");
       }
     },
+    updateCurUser(state, action: PayloadAction<UserType>) {
+      const curUserIdx = state.users.findIndex(
+        (u) => u.email === state.curUserEmail
+      );
+      state.users[curUserIdx] = action.payload;
+    },
   },
 });
 
-export const { userLoading, userRecieved, setUser } = userSlice.actions;
+export const { userLoading, userRecieved, setUser, updateCurUser } =
+  userSlice.actions;
 
 const userReducer = userSlice.reducer;
 export default userReducer;

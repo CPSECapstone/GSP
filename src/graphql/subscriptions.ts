@@ -67,6 +67,7 @@ export const onCreateUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -92,6 +93,7 @@ export const onUpdateUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -117,6 +119,7 @@ export const onDeleteUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
