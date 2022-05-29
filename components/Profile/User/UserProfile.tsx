@@ -102,7 +102,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           title="My Reviews"
         />
         <UserProfileCell
-          action={() => console.log("Edit Profile")}
+          action={() => navigation.navigate("EditProfile")}
           title="Edit Profile"
         />
         <UserProfileCell

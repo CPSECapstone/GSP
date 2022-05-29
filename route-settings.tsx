@@ -25,6 +25,7 @@ export type RootStackParamList = {
   OpenCollection: { name: string; description: string };
   ProfileEditor: undefined;
   ReviewPage: undefined;
+  EditProfile: undefined;
   UserProfile: undefined;
   BizReviewPage: { busID: string };
   CreateEditReview: { busID: string; editReviewId?: string };
@@ -93,6 +94,11 @@ export type ReviewPageProps = NativeStackScreenProps<
 export type BizReviewPageProps = NativeStackScreenProps<
   RootStackParamList,
   "BizReviewPage"
+>;
+
+export type EditProfilePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  "EditProfile"
 >;
 
 export const TabBarScreenOptions = ({

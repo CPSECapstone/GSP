@@ -19,6 +19,7 @@ import ForgotPass2 from "./components/Login/ForgotPass2";
 import SignUpCode from "./components/Login/SignUpCode";
 import OpenCollection from "./components/Collections/OpenCollection";
 import ReviewPage from "./components/Review/ReviewPage";
+import { EditProfile } from "./components/Profile/User/EditProfile";
 
 import {
   RootStackParamList,
@@ -146,6 +147,7 @@ function InnerApp() {
         <Stack.Screen name="ReviewPage" component={ReviewPage} />
         <Stack.Screen name="BizReviewPage" component={BizReviewPage} />
         <Stack.Screen name="CreateEditReview" component={CreateEditReview} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen
           name="Notifications"
           component={Notifications}
