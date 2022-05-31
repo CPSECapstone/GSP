@@ -130,13 +130,8 @@ function HomeView({ navigation }: HomeProps) {
         ];
         const findTextLower = findText.toLowerCase();
         if (
-          businessFields.some(
-            (b) =>
-              b.toLowerCase().includes(findTextLower) ||
-              business?.tags?.some((b) =>
-                b.toLowerCase().includes(findTextLower)
-              )
-          )
+          businessFields.some((b) => b.includes(findTextLower)) ||
+          business?.tags?.some((b) => b.includes(findTextLower))
         ) {
           resBusiness.push(business);
         }
