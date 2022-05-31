@@ -269,10 +269,12 @@ function Collections({ navigation }: CollectionProps) {
             </Pressable>
           )}
           keyExtractor={(item, index) => item?.id ?? `undefined${index}`}
+          ListFooterComponent={
+            <Pressable onPress={() => setModalVisible(true)}>
+              <CreateNewCollectionCell />
+            </Pressable>
+          }
         />
-        <Pressable onPress={() => setModalVisible(true)}>
-          <CreateNewCollectionCell />
-        </Pressable>
       </View>
     </SafeAreaView>
   );

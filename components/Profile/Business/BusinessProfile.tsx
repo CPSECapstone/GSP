@@ -20,7 +20,7 @@ import {
 } from "@react-navigation/native-stack";
 import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
-import { Business } from "../../../src/API";
+import { Business, Collection } from "../../../src/API";
 import { AverageRating } from "../../Review/RatingView";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
@@ -42,6 +42,7 @@ const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
 type BusinessProfileProps = { business: Business };
 export default function BusinessProfile({ business }: BusinessProfileProps) {
+  const dispatch = useAppDispatch();
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
   const currentUser = useAppSelector(selectUser)!;
@@ -71,10 +72,16 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
     }
   }, [modalVisible]);
 
+  const updateBusinessCollection = (c: Collection) => {
+    CollectionAPI.addBusiness(c!, business).then((response) => {
+      dispatch(updateBusiness(response.data.updateBusiness));
+    });
+  };
+
   const createSaveAlert = () => {
     const buttons: AlertButton[] = userCollections.map((c) => ({
       text: c?.title,
-      onPress: () => CollectionAPI.addBusiness(c!, business),
+      onPress: () => updateBusinessCollection(c!),
     }));
     buttons.push({
       text: "Cancel",

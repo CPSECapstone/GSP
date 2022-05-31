@@ -33,30 +33,35 @@ export default class CollectionAPI {
     });
   }
 
-  static async removeBusiness(collection: Collection, business: Business) {
-    const index = collection.Businesses?.items.findIndex(
-      (x) => x!.id === business.id
-    );
+  static async removeBusiness(business: Business) {
+    const updatedBusiness = { id: business.id, collectionID: "none" };
+    return API.graphql({
+      query: updateBusiness,
+      variables: { input: updatedBusiness },
+    });
+    // const index = collection.Businesses?.items.findIndex(
+    //   (x) => x!.id === business.id
+    // );
 
-    if (index !== undefined) {
-      const updated = { ...collection };
-      updated.Businesses?.items.splice(index);
-      return API.graphql({
-        query: updateCollection,
-        variables: { input: updated },
-      });
-    }
-    // If this business isn't in the collection, do nothing
-    return Promise.resolve();
+    // if (index !== undefined) {
+    //   const updated = { ...collection };
+    //   updated.Businesses?.items.splice(index);
+    //   return API.graphql({
+    //     query: updateCollection,
+    //     variables: { input: updated },
+    //   });
+    // }
+    // // If this business isn't in the collection, do nothing
+    // return Promise.resolve();
   }
 
-  static async delete(id: string) {
-    const businessDetails = {
-      id,
+  static async delete(collection: Collection) {
+    const collectionDetails = {
+      id: collection.id,
     };
     return API.graphql({
       query: deleteCollection,
-      variables: { input: businessDetails },
+      variables: { input: collectionDetails },
     });
   }
 }
