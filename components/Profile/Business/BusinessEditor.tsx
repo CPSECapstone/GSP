@@ -115,6 +115,21 @@ interface BaseEditorProps extends BaseEditorRouteProps {
   submit: (edits: Partial<Business>, pImg?: string, bImg?: string) => void;
   del: () => void;
 }
+
+export const pickImage = async (setImage: Function) => {
+  // No permissions request is necessary for launching the image library
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  if (!result.cancelled) {
+    setImage(result.uri);
+  }
+};
+
 function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
   const editor = useContext(EditorContext);
 
@@ -134,20 +149,6 @@ function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
       headerRight: () => ConfigureDoneButton(trySubmit),
     })
   );
-
-  const pickImage = async (setImage: Function) => {
-    // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
-  };
 
   const FieldRouteList: { field: Field; function: Function }[] = [
     {
@@ -423,11 +424,18 @@ function DataRow({ onPress, field, business }: DataRowProps) {
   );
 }
 
-type EditButtonProps = { position: Object; onPress: Function };
-function EditButton({ position, onPress }: EditButtonProps) {
+type EditButtonProps = { position: Object; onPress: Function; size?: number };
+export function EditButton({ position, onPress, size }: EditButtonProps) {
   return (
-    <Pressable style={[styles.editButton, position]} onPress={() => onPress()}>
-      <Ionicons name="pencil" size={30} color="black" />
+    <Pressable
+      style={[styles.editButton, { width: (size ?? 30) * 1.75 }, position]}
+      onPress={() => onPress()}
+    >
+      <Ionicons name="pencil" size={size} color="black" />
     </Pressable>
   );
 }
+
+EditButton.defaultProps = {
+  size: 30,
+};

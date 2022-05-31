@@ -39,6 +39,7 @@ import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
 import verification from "./redux/thunks/verification";
 import VerificationRequests from "./components/Moderation/VerificationRequestsPage";
+import EditProfile from "./components/Profile/User/EditProfile";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -160,6 +161,14 @@ function InnerApp() {
           name="VerificationRequests"
           component={VerificationRequests}
           options={{ title: "Verification Requests", headerShown: true }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+          options={{
+            title: "Edit Profile",
+            headerShown: true,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

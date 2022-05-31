@@ -49,10 +49,10 @@
     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
       "Type": "String"
     },
     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -61,19 +61,19 @@
     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
       "Type": "String"
     },
-    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
       "Type": "String"
     }
   },
@@ -515,10 +515,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -626,10 +626,10 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -737,13 +737,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -902,7 +902,7 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -911,7 +911,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1076,7 +1076,7 @@
               ]
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
               "Fn::GetAtt": [
@@ -1133,13 +1133,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622"
             }
           ]
         },
@@ -1186,13 +1186,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622"
             }
           ]
         },
@@ -1239,13 +1239,13 @@
         "PipelineConfig": {
           "Functions": [
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
             },
             {
-              "Ref": "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB"
+              "Ref": "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622"
             }
           ]
         },

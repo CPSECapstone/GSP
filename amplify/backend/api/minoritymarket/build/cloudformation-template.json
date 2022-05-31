@@ -137,7 +137,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1656618348
+                "Expires": 1655591455
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -288,128 +288,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
-                        "Ref": "authRoleName"
-                    },
-                    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
-                        "Ref": "unauthRoleName"
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
-                        ]
-                    }
-                }
-            },
-            "DependsOn": [
-                "GraphQLAPITransformerSchema3CB2AE18"
-            ]
-        },
-        "User": {
-            "Type": "AWS::CloudFormation::Stack",
-            "Properties": {
-                "TemplateURL": {
-                    "Fn::Join": [
-                        "",
-                        [
-                            "https://s3.",
-                            {
-                                "Ref": "AWS::Region"
-                            },
-                            ".",
-                            {
-                                "Ref": "AWS::URLSuffix"
-                            },
-                            "/",
-                            {
-                                "Ref": "S3DeploymentBucket"
-                            },
-                            "/",
-                            {
-                                "Ref": "S3DeploymentRootKey"
-                            },
-                            "/stacks/User.json"
-                        ]
-                    ]
-                },
-                "Parameters": {
-                    "DynamoDBModelTableReadIOPS": {
-                        "Ref": "DynamoDBModelTableReadIOPS"
-                    },
-                    "DynamoDBModelTableWriteIOPS": {
-                        "Ref": "DynamoDBModelTableWriteIOPS"
-                    },
-                    "DynamoDBBillingMode": {
-                        "Ref": "DynamoDBBillingMode"
-                    },
-                    "DynamoDBEnablePointInTimeRecovery": {
-                        "Ref": "DynamoDBEnablePointInTimeRecovery"
-                    },
-                    "DynamoDBEnableServerSideEncryption": {
-                        "Ref": "DynamoDBEnableServerSideEncryption"
-                    },
-                    "referencetotransformerrootstackenv10C5A902Ref": {
-                        "Ref": "env"
-                    },
-                    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
-                        "Fn::GetAtt": [
-                            "GraphQLAPI",
-                            "ApiId"
-                        ]
-                    },
-                    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
-                        "Ref": "S3DeploymentBucket"
-                    },
-                    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
-                        "Ref": "S3DeploymentRootKey"
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
-                        "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -418,34 +306,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
                         ]
                     }
                 }
@@ -512,16 +400,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -530,34 +418,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
                         ]
                     }
                 }
@@ -624,16 +512,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -642,34 +530,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
                         ]
                     }
                 }
@@ -736,16 +624,16 @@
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSync1A12964F": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestauth0FunctionQuerygetVerificationRequestauth0FunctionAppSyncFunctionA8CB40A8FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0Functio8174CD00": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestQuerygetVerificationRequestpostAuth0FunctionQuerygetVerificationRequestpostAuth0FunctionAppSyncFunction4314B856FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
                         ]
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
@@ -754,34 +642,34 @@
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0Fun668D642E": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestinit0FunctionMutationcreateVerificationRequestinit0FunctionAppSyncFunction903ECB83FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0Fun232E5246": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationcreateVerificationRequestauth0FunctionMutationcreateVerificationRequestauth0FunctionAppSyncFunctionC734D1EFFunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0Fun91DEE6FC": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestMutationupdateVerificationRequestinit0FunctionMutationupdateVerificationRequestinit0FunctionAppSyncFunction1DFB4E65FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationReqD440474D": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptiononCreateVerificationRequestauth0FunctionSubscriptiononCreateVerificationRequestauth0FunctionAppSyncFunctionAD6076C2FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
                         ]
                     },
-                    "referencetotransformerrootstackVerificationRequestNestedStackVerificationRequestNestedStackResourceF2A7AD9FOutputstransformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationReAEB14DCB": {
+                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
                         "Fn::GetAtt": [
-                            "VerificationRequest",
-                            "Outputs.transformerrootstackVerificationRequestSubscriptionOnCreateVerificationRequestDataResolverFnSubscriptionOnCreateVerificationRequestDataResolverFnAppSyncFunction36B730A1FunctionId"
+                            "Notification",
+                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
                         ]
                     }
                 }
