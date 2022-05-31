@@ -10,18 +10,21 @@ import {
   TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import selectAllUserCollections from "../../redux/selectors/collections";
 import { selectUser } from "../../redux/selectors/user";
 import { addCollection } from "../../redux/slices/collection";
-import { CollectionProps } from "../../route-settings";
-import { CreateCollectionMutation } from "../../src/API";
+import { Collection, CreateCollectionMutation } from "../../src/API";
 import { createCollection } from "../../src/graphql/mutations";
 import BusinessCell from "../Misc/BusinessCell";
 import CollectionCell, { CreateNewCollectionCell } from "./CollectionCell";
 import ColorPicker from "./ColorPicker";
 import gStyles from "../../global-styles";
 import { getRecentBusinesses } from "../Misc/RecentBusinessStore";
+import WithBusinessView from "../Profile/Business/WithBusinessView";
+import CollectionAPI from "./CollestionsAPI";
+import OpenCollection from "./OpenCollection";
 
 const styles = StyleSheet.create({
   subheader: {
@@ -100,9 +103,17 @@ const styles = StyleSheet.create({
   },
 });
 
+type CollectionProps = NativeStackScreenProps<
+  { BusinessView: { id: string }; Component: undefined },
+  "Component"
+>;
+
 function Collections({ navigation }: CollectionProps) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [recent, setRecent] = React.useState<string[]>(undefined!);
+  const [currentCollection, setCurrentCollection] = React.useState<
+    Collection | undefined
+  >(undefined);
   const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -133,16 +144,10 @@ function Collections({ navigation }: CollectionProps) {
       description,
       userID: user?.id,
     };
-    try {
-      const res = (await API.graphql({
-        query: createCollection,
-        variables: { input: newCollection },
-      })) as { data: CreateCollectionMutation };
-
+    CollectionAPI.create(newCollection).then((res) => {
       dispatch(addCollection(res.data.createCollection));
-    } catch (e) {
-      console.error(e);
-    }
+      setCurrentCollection(res.data.createCollection);
+    });
   };
 
   // eslint-disable-next-line
@@ -196,11 +201,6 @@ function Collections({ navigation }: CollectionProps) {
               </Pressable>
               <Pressable
                 onPress={() => {
-                  // eslint-disable-next-line
-                  navigation.navigate("OpenCollection", {
-                    name: title,
-                    description,
-                  });
                   setModalVisible(false);
                   pushNewCollection(collectionColor, title, description);
                 }}
@@ -222,6 +222,14 @@ function Collections({ navigation }: CollectionProps) {
     );
   }
 
+  if (currentCollection !== undefined) {
+    return (
+      <OpenCollection
+        collection={currentCollection}
+        goBack={() => setCurrentCollection(undefined)}
+      />
+    );
+  }
   return (
     <SafeAreaView style={gStyles.container}>
       <AddCollectionModal />
@@ -234,7 +242,13 @@ function Collections({ navigation }: CollectionProps) {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.scrollitemsflatlist}
-          renderItem={({ item }) => <BusinessCell businessId={item} />}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => navigation.navigate("BusinessView", { id: item })}
+            >
+              <BusinessCell businessId={item} />
+            </Pressable>
+          )}
           keyExtractor={(item) => item}
           data={recent}
         />
@@ -247,14 +261,7 @@ function Collections({ navigation }: CollectionProps) {
           showsVerticalScrollIndicator={false}
           data={userCollections}
           renderItem={({ item }) => (
-            <Pressable
-              onPress={() =>
-                navigation.navigate("OpenCollection", {
-                  name: item?.title ?? "No Collection Title",
-                  description: item?.description ?? "No Collection Description",
-                })
-              }
-            >
+            <Pressable onPress={() => setCurrentCollection(item)}>
               <CollectionCell
                 color={item?.color ?? "#FFFFFF"}
                 title={item?.title ?? "Error"}
@@ -270,5 +277,6 @@ function Collections({ navigation }: CollectionProps) {
     </SafeAreaView>
   );
 }
-
-export default Collections;
+export default function CollectionsPage() {
+  return <WithBusinessView Component={Collections} />;
+}

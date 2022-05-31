@@ -55,27 +55,19 @@ function BusinessCell({ businessId }: BusinessCellProps) {
   const business = useAppSelector(selectBusinessById(businessId))!;
 
   return (
-    <Pressable
-      onPress={() => {
-        console.log(
-          `navigate to business page for: '${business.name}' with ID: ${businessId}`
-        );
-      }}
-    >
-      <View style={[styles.foryoucellcontainer, styles.shadow]}>
-        <S3Image
-          style={[
-            styles.businessimage,
-            { borderColor: `${business.primarycolor}` },
-          ]}
-          S3key={`${businessId}/profile`}
-        />
-        <View>
-          <Text style={styles.businesssubtitle}>{business.name}</Text>
-        </View>
-        <Text style={styles.distancetext}>{`${3}mi`}</Text>
+    <View style={[styles.foryoucellcontainer, styles.shadow]}>
+      <S3Image
+        style={[
+          styles.businessimage,
+          { borderColor: `${business.primarycolor}` },
+        ]}
+        S3key={`${businessId}/profile`}
+      />
+      <View>
+        <Text style={styles.businesssubtitle}>{business.name}</Text>
       </View>
-    </Pressable>
+      <Text style={styles.distancetext}>{`${3}mi`}</Text>
+    </View>
   );
 }
 

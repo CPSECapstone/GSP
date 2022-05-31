@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
   Pressable,
   Animated,
+  Alert,
+  AlertButton,
 } from "react-native";
 import {
   createNativeStackNavigator,
@@ -33,6 +35,8 @@ import {
 import { selectUser } from "../../../redux/selectors/user";
 import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
+import selectAllUserCollections from "../../../redux/selectors/collections";
+import CollectionAPI from "../../Collections/CollestionsAPI";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -41,6 +45,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
   const currentUser = useAppSelector(selectUser)!;
+  const userCollections = useAppSelector(selectAllUserCollections);
   const curReviews = useAppSelector(selectReviewsByBusiness(business.id));
   const curUserReviewId = curReviews.find(
     (r) => r.userID === currentUser.id
@@ -65,6 +70,19 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
       }).start();
     }
   }, [modalVisible]);
+
+  const createSaveAlert = () => {
+    const buttons: AlertButton[] = userCollections.map((c) => ({
+      text: c?.title,
+      onPress: () => CollectionAPI.addBusiness(c!, business),
+    }));
+    buttons.push({
+      text: "Cancel",
+      onPress: () => console.log("Cancel Pressed"),
+      style: "cancel",
+    });
+    Alert.alert("Save Business", "Select Collection", buttons);
+  };
 
   return (
     <BusinessContext.Provider value={business}>
@@ -181,7 +199,7 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                         <CircleButton
                           icon="bookmark"
                           title="Save"
-                          action={() => {}}
+                          action={createSaveAlert}
                           color={business.primarycolor}
                         />
                       )}
