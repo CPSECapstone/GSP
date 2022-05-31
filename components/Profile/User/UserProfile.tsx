@@ -115,9 +115,9 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           title="Notifications"
         />
         <Pressable
-          onPress={async () => {
+          onPress={() => {
             try {
-              await Auth.signOut();
+              Auth.signOut();
               dispatch(setUser(undefined));
               navigation.navigate("Login");
             } catch (error) {
