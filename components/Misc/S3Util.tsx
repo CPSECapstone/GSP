@@ -3,10 +3,9 @@ import React, { useEffect, useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 import { Image, ImageBackground } from "react-native";
 
-const PLACEHOLDER_IMG_URL = {
-  uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1K8ypPsfNVQU8lVxl1i2_ajismMS_w6FA4Q&usqp=CAU",
-};
+const ImageCache = {};
 
+const PLACEHOLDER_IMG_URL = require("./PlaceholderImages/placeholderBusiness.png");
 const PLACEHOLDER_BANNER = require("./PlaceholderImages/banner.jpeg");
 
 type S3ImageProps = { S3key: string; style: object };
@@ -15,15 +14,19 @@ export function S3Image({ S3key, style }: S3ImageProps) {
 
   useEffect(() => {
     let downloading = true;
-    getImage(S3key).then((response) => {
-      if (response && downloading) setSource({ uri: response });
+    checkCache(S3key).then((response) => {
+      if (response && downloading) {
+        setSource({ uri: response });
+      }
     });
     return () => {
       downloading = false;
     };
   }, [S3key]);
 
-  return <Image source={source} style={style} />;
+  return (
+    <Image defaultSource={PLACEHOLDER_IMG_URL} source={source} style={style} />
+  );
 }
 
 export function S3ImageBackground({ S3key, style }: S3ImageProps) {
@@ -31,7 +34,7 @@ export function S3ImageBackground({ S3key, style }: S3ImageProps) {
 
   useEffect(() => {
     let downloading = true;
-    getImage(S3key).then((response) => {
+    checkCache(S3key).then((response) => {
       if (response && downloading) setSource({ uri: response });
     });
     return () => {
@@ -39,7 +42,14 @@ export function S3ImageBackground({ S3key, style }: S3ImageProps) {
     };
   }, [S3key]);
 
-  return <ImageBackground resizeMode="cover" source={source} style={style} />;
+  return (
+    <ImageBackground
+      resizeMode="cover"
+      defaultSource={PLACEHOLDER_BANNER}
+      source={source}
+      style={style}
+    />
+  );
 }
 
 function isValidUrl(url: string) {
@@ -51,6 +61,16 @@ function isValidUrl(url: string) {
       return true;
     })
     .catch(() => false);
+}
+
+async function checkCache(S3key: string) {
+  const cachedImage = ImageCache[S3key];
+  if (cachedImage) {
+    return cachedImage;
+  }
+  const imageUrl = await getImage(S3key);
+  ImageCache[S3key] = imageUrl;
+  return imageUrl;
 }
 
 async function getImage(S3key: string) {
