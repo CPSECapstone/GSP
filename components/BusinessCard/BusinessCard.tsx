@@ -1,13 +1,12 @@
-import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { S3Image } from "../Misc/S3Util";
+import { AverageRating } from "../Review/RatingView";
 
 interface BusinessCardProps {
   id: string;
   name: string;
   distance: string;
-  rating: string;
 }
 
 const styles = StyleSheet.create({
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function BusinessCard({ id, name, distance, rating }: BusinessCardProps) {
+function BusinessCard({ id, name, distance }: BusinessCardProps) {
   return (
     <View style={styles.container}>
       <S3Image
@@ -59,10 +58,7 @@ function BusinessCard({ id, name, distance, rating }: BusinessCardProps) {
       <View style={styles.subcontainer}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.distancetext}>{`${distance} mi`}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Entypo name="star" size={23} color="#7300ff" />
-          <Text>{rating}</Text>
-        </View>
+        <AverageRating businessId={id} color="#7300ff" short />
       </View>
     </View>
   );

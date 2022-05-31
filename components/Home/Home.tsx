@@ -208,7 +208,6 @@ function HomeView({ navigation }: HomeProps) {
               id={selectedBusiness[0]!.id}
               name={selectedBusiness[0]!.name}
               distance="4"
-              rating={String(selectedBusiness[0]!.rating)}
             />
           </Pressable>
         </View>

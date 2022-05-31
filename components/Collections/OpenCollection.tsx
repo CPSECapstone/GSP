@@ -106,11 +106,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
                 size={20}
               />
             </Animated.View>
-            <BusinessCard
-              name={item.name}
-              rating={item.rating}
-              distance={item.distance}
-            />
+            <BusinessCard name={item.name} distance={item.distance} />
           </View>
         )}
         keyExtractor={(item, index) => index + item.name}
