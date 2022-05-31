@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 function BusinessCell({ businessId }: BusinessCellProps) {
   const business = useAppSelector(selectBusinessById(businessId))!;
   if (business === undefined) {
-    return <View></View>;
+    return <View />;
   }
   return (
     <Pressable

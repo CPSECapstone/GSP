@@ -5,7 +5,7 @@ import {
   selectBusinessById,
 } from "../redux/selectors/business";
 import businessReducer, {
-  updateBusiness,
+  updateBusinessRedux,
   businessLoading,
   businessReceived,
   BusinessState,
@@ -105,7 +105,7 @@ describe("updateBusiness when", () => {
     };
     const curState = businessReducer(
       fullState,
-      updateBusiness(modifiedBusiness)
+      updateBusinessRedux(modifiedBusiness)
     );
     expect(curState.businesses).toEqual([modifiedBusiness, business2]);
   });
@@ -116,7 +116,7 @@ describe("updateBusiness when", () => {
     };
     const curState = businessReducer(
       fullState,
-      updateBusiness(modifiedBusiness)
+      updateBusinessRedux(modifiedBusiness)
     );
     expect(curState.undefined).toEqual(undefined);
   });
