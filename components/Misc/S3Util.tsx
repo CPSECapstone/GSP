@@ -14,9 +14,13 @@ export function S3Image({ S3key, style }: S3ImageProps) {
   const [source, setSource] = useState(PLACEHOLDER_IMG_URL);
 
   useEffect(() => {
+    let downloading = true;
     getImage(S3key).then((response) => {
-      if (response) setSource({ uri: response });
+      if (response && downloading) setSource({ uri: response });
     });
+    return () => {
+      downloading = false;
+    };
   }, [S3key]);
 
   return <Image source={source} style={style} />;
@@ -26,9 +30,13 @@ export function S3ImageBackground({ S3key, style }: S3ImageProps) {
   const [source, setSource] = useState(PLACEHOLDER_BANNER);
 
   useEffect(() => {
+    let downloading = true;
     getImage(S3key).then((response) => {
-      if (response) setSource({ uri: response });
+      if (response && downloading) setSource({ uri: response });
     });
+    return () => {
+      downloading = false;
+    };
   }, [S3key]);
 
   return <ImageBackground resizeMode="cover" source={source} style={style} />;
