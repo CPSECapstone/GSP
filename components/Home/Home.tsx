@@ -128,9 +128,10 @@ function HomeView({ navigation }: HomeProps) {
           business?.type,
           String(business?.zipcode),
         ];
+        const findTextLower = findText.toLowerCase();
         if (
-          businessFields.some((b) => b.includes(findText)) ||
-          business?.tags?.some((b) => b.includes(findText))
+          businessFields.some((b) => b.includes(findTextLower)) ||
+          business?.tags?.some((b) => b.includes(findTextLower))
         ) {
           resBusiness.push(business);
         }
