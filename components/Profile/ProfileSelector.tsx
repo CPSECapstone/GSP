@@ -98,12 +98,18 @@ type SelectorProps = {
   onPress: Function;
   source: ImageSourcePropType;
   details?: string;
+  S3Key?: string;
 };
 
-function Selector({ title, onPress, source, details }: SelectorProps) {
+function Selector({ title, onPress, source, details, S3Key }: SelectorProps) {
   return (
     <Pressable style={styles.selector} onPress={() => onPress()}>
-      <Image style={styles.selectorImage} source={source} />
+      {S3Key ? (
+        <S3Image style={styles.selectorImage} S3key={S3Key} />
+      ) : (
+        <Image style={styles.selectorImage} source={source} />
+      )}
+
       <View style={{ flex: 7 }}>
         <Text style={styles.selectorText}>{title}</Text>
         {details && <Text style={styles.selectorDetails}>{details}</Text>}
@@ -125,7 +131,7 @@ function BusinessSelector({ business, onPress }: BusinessSelectorProps) {
   );
 }
 
-Selector.defaultProps = { details: undefined };
+Selector.defaultProps = { details: undefined, S3Key: undefined };
 
 function Margin() {
   return <View style={{ flex: 1 }} />;
@@ -145,6 +151,11 @@ function Base({ navigation }: BaseProps) {
           title="My Profile"
           source={{ uri: user?.profilePic ?? defaultUser.profilePic }}
           onPress={() => navigation.navigate("User")}
+          S3Key={
+            user?.profilePic === "https://aws.amazon.com/s3/"
+              ? `${user.id}/user`
+              : undefined
+          }
         />
         <Text style={styles.subtitle}>My Businesses</Text>
         {user &&

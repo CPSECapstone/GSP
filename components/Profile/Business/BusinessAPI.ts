@@ -83,7 +83,7 @@ async function updateBannerImage(file: string, businessId: string) {
   return S3ImageUpload(file, `${businessId}/banner`);
 }
 
-async function S3ImageUpload(file: string, name: string) {
+export async function S3ImageUpload(file: string, name: string) {
   const photo = await fetch(file);
   const photoBlob = await photo.blob();
 

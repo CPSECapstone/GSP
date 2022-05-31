@@ -59,6 +59,7 @@ export const getUser = /* GraphQL */ `
       Reviews {
         nextToken
       }
+      defaultAddress
       createdAt
       updatedAt
     }
@@ -77,6 +78,7 @@ export const listUsers = /* GraphQL */ `
         profilePic
         name
         isModerator
+        defaultAddress
         createdAt
         updatedAt
       }
