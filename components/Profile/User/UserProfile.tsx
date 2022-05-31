@@ -121,9 +121,9 @@ export default function UserProfile({ navigation }: UserProfileProps) {
           title="Verification Requests"
         />
         <Pressable
-          onPress={async () => {
+          onPress={() => {
             try {
-              await Auth.signOut();
+              Auth.signOut();
               dispatch(setUser(undefined));
               navigation.navigate("Login");
             } catch (error) {
