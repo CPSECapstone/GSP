@@ -11,6 +11,7 @@ import {
   Image,
   Pressable,
   ImageSourcePropType,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import defaultUser from "../../constants/defaultData";
@@ -158,23 +159,29 @@ function Base({ navigation }: BaseProps) {
           }
         />
         <Text style={styles.subtitle}>My Businesses</Text>
-        {user &&
-          businesses
-            .filter((b) => b.userID === user.id)
-            .map((b, i) => (
-              <BusinessSelector
-                key={b!.id}
-                business={b!}
-                onPress={() =>
-                  navigation.navigate("Business", { reduxIndex: i })
-                }
-              />
-            ))}
-        <Selector
-          title="Create New Business"
-          source={plusImage}
-          onPress={() => navigation.navigate("CreateBusiness")}
-        />
+        {user && (
+          <ScrollView
+            scrollEnabled={businesses.length > 3}
+            showsVerticalScrollIndicator={false}
+          >
+            {businesses
+              .filter((b) => b.userID === user.id)
+              .map((b, i) => (
+                <BusinessSelector
+                  key={b!.id}
+                  business={b!}
+                  onPress={() =>
+                    navigation.navigate("Business", { reduxIndex: i })
+                  }
+                />
+              ))}
+            <Selector
+              title="Create New Business"
+              source={plusImage}
+              onPress={() => navigation.navigate("CreateBusiness")}
+            />
+          </ScrollView>
+        )}
       </View>
       <Margin />
     </SafeAreaView>
@@ -199,8 +206,8 @@ const styles = StyleSheet.create({
     padding: 15,
     shadowColor: "#393939",
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 30 },
-    shadowRadius: 30,
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 2.5,
   },
   selectorImage: {
     borderRadius: 100,
