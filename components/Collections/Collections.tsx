@@ -118,9 +118,10 @@ function Collections({ navigation }: CollectionProps) {
   const userCollections = useAppSelector(selectAllUserCollections);
 
   React.useEffect(() => {
-    if (!recent) {
+    if (recent.length === 0) {
       getRecentBusinesses().then((businessIds) => {
         setRecent(businessIds);
+        console.log(recent);
       });
     }
   }, []);

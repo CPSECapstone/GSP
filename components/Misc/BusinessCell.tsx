@@ -53,28 +53,33 @@ const styles = StyleSheet.create({
 });
 
 function BusinessCell({ businessId }: BusinessCellProps) {
-  const business = useAppSelector(selectBusinessById(businessId))!;
+  const business = useAppSelector(selectBusinessById(businessId));
   const [distance, setDistance] = React.useState("");
 
   React.useEffect(() => {
-    getDistanceToBusiness(business).then(setDistance);
+    if (business) {
+      getDistanceToBusiness(business).then(setDistance);
+    }
   }, []);
 
-  return (
-    <View style={[styles.foryoucellcontainer, styles.shadow]}>
-      <Image
-        style={[
-          styles.businessimage,
-          { borderColor: `${business.primarycolor}` },
-        ]}
-        source={getProfileImage(business)}
-      />
-      <View>
-        <Text style={styles.businesssubtitle}>{business.name}</Text>
+  if (business) {
+    return (
+      <View style={[styles.foryoucellcontainer, styles.shadow]}>
+        <Image
+          style={[
+            styles.businessimage,
+            { borderColor: `${business.primarycolor}` },
+          ]}
+          source={getProfileImage(business)}
+        />
+        <View>
+          <Text style={styles.businesssubtitle}>{business.name}</Text>
+        </View>
+        <Text style={styles.distancetext}>{`${distance}mi`}</Text>
       </View>
-      <Text style={styles.distancetext}>{`${distance}mi`}</Text>
-    </View>
-  );
+    );
+  }
+  return <View />;
 }
 
 export default BusinessCell;

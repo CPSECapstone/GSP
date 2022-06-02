@@ -35,7 +35,10 @@ import {
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 import { selectUser } from "../../../redux/selectors/user";
-import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
+import {
+  addRecentBusiness,
+  getRecentBusinesses,
+} from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
 import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";
@@ -61,7 +64,6 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
   React.useEffect(() => {
     addRecentBusiness(business.id);
     getDistanceToBusiness(business).then(setDistance);
-    // requestPermission();
   }, []);
 
   React.useEffect(() => {

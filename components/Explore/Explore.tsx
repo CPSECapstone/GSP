@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginTop: 25,
     width: 75,
-    minHeight: 110,
+    minHeight: 100,
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     flex: 7,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     width: imgdimensions,
     height: imgdimensions,
     borderRadius: imgdimensions,
-    marginTop: 15,
+    marginTop: 10,
   },
   minoritycelltitle: {
     fontFamily: "Mada-Medium",
