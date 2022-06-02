@@ -1,13 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { S3Image } from "../Misc/S3Util";
+import { Image, StyleSheet, View, Text } from "react-native";
+import { getDistanceToBusiness } from "../../constants/location";
+import { useAppSelector } from "../../redux/hooks";
+import { selectBusinessById } from "../../redux/selectors/business";
+import { getProfileImage } from "../Misc/S3Util";
 import { AverageRating } from "../Review/RatingView";
-
-interface BusinessCardProps {
-  id: string;
-  name: string;
-  distance: string;
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -48,17 +45,23 @@ const styles = StyleSheet.create({
   },
 });
 
-function BusinessCard({ id, name, distance }: BusinessCardProps) {
+function BusinessCard({ businessID }: { businessID: string }) {
+  const [distance, setDistance] = React.useState("");
+  const business = useAppSelector(selectBusinessById(businessID))!;
+  React.useEffect(() => {
+    getDistanceToBusiness(business).then(setDistance);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <S3Image
+      <Image
         style={[styles.avatar, { borderColor: "red" }]}
-        S3key={`${id}/profile`}
+        source={getProfileImage(business)}
       />
       <View style={styles.subcontainer}>
-        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.title}>{business.name}</Text>
         <Text style={styles.distancetext}>{`${distance} mi`}</Text>
-        <AverageRating businessId={id} color="#7300ff" short />
+        <AverageRating businessId={business.id} color="#7300ff" short />
       </View>
     </View>
   );

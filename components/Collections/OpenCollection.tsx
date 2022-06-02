@@ -1,4 +1,5 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   StyleSheet,
@@ -9,9 +10,14 @@ import {
   Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { collectionplaceholderbusinesses } from "../../constants/placeholderdata";
-import { OpenCollectionPageProps } from "../../route-settings";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
+import { selectAllBusinesses } from "../../redux/selectors/business";
+import { updateBusiness } from "../../redux/slices/business";
+import { collectionRemoval } from "../../redux/slices/collection";
+import { Business, Collection } from "../../src/API";
 import BusinessCard from "../BusinessCard/BusinessCard";
+import CollectionAPI from "./CollestionsAPI";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +50,27 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     flexWrap: "wrap",
   },
+  deleteButton: {
+    alignItems: "center",
+    backgroundColor: "#ff504a",
+    height: 45,
+    borderRadius: 8,
+    marginTop: 20,
+    justifyContent: "center",
+    marginRight: 50,
+  },
+  deleteText: { fontSize: 18, fontWeight: "bold", color: "white" },
 });
 
-function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
+type OpenCollectionProps = { collection: Collection; goBack: () => void };
+function OpenCollection({ collection, goBack }: OpenCollectionProps) {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [isEditing, setisEditing] = React.useState(false);
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
-
-  const { name, description } = route.params;
+  const collectedBusinesses = useAppSelector(selectAllBusinesses)!.filter(
+    (x) => x!.collectionID === collection.id
+  );
 
   React.useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -60,18 +80,32 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
     }).start();
   }, [isEditing]);
 
+  const removeBusinessFromCollection = (b: Business) => {
+    if (!isEditing) return;
+    CollectionAPI.removeBusiness(b).then((response) => {
+      dispatch(updateBusiness(response.data.updateBusiness));
+    });
+  };
+
+  const del = () => {
+    CollectionAPI.delete(collection).then(() => {
+      dispatch(collectionRemoval(collection.id));
+      goBack();
+    });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flexDirection: "row" }}>
         <Pressable
           style={{ marginLeft: -8 }}
           onPress={() => {
-            navigation.goBack();
+            goBack();
           }}
         >
           <Entypo color="black" name="chevron-left" size={30} />
         </Pressable>
-        <Text style={styles.collectiontitle}>{name}</Text>
+        <Text style={styles.collectiontitle}>{collection.title}</Text>
         <Pressable
           onPress={() => {
             setisEditing(!isEditing);
@@ -88,7 +122,7 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
           </Text>
         </Pressable>
       </View>
-      <Text style={styles.collectiondesctext}>{description}</Text>
+      <Text style={styles.collectiondesctext}>{collection.description}</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
@@ -99,18 +133,34 @@ function OpenCollection({ route, navigation }: OpenCollectionPageProps) {
             }}
           >
             <Animated.View style={{ opacity: fadeAnim }}>
-              <AntDesign
-                style={{ marginRight: 10 }}
-                name="minuscircle"
-                color="#7300ff"
-                size={20}
-              />
+              <Pressable onPress={() => removeBusinessFromCollection(item!)}>
+                <AntDesign
+                  style={{ marginRight: 10 }}
+                  name="minuscircle"
+                  color="#7300ff"
+                  size={20}
+                />
+              </Pressable>
             </Animated.View>
-            <BusinessCard name={item.name} distance={item.distance} />
+            <Pressable
+              onPress={() => {
+                if (!isEditing)
+                  navigation.navigate("BusinessView", { id: item!.id });
+              }}
+            >
+              <BusinessCard businessID={item!.id} />
+            </Pressable>
           </View>
         )}
-        keyExtractor={(item, index) => index + item.name}
-        data={collectionplaceholderbusinesses}
+        keyExtractor={(item, index) => index + item!.name}
+        data={collectedBusinesses}
+        ListFooterComponent={
+          isEditing && (
+            <Pressable style={styles.deleteButton} onPress={() => del()}>
+              <Text style={styles.deleteText}>Delete Collection</Text>
+            </Pressable>
+          )
+        }
       />
     </SafeAreaView>
   );

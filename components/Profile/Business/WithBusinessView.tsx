@@ -2,8 +2,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { useAppSelector } from "../../../redux/hooks";
-import { selectBusinessById } from "../../../redux/selectors/business";
 import BusinessProfile from "./BusinessProfile";
 
 export type BusinessViewStackParamList = {
@@ -25,11 +23,7 @@ function WithBusinessView({ Component }: { Component: ViewProps }) {
         {(props) => <Component {...props} />}
       </BusinessViewStack.Screen>
       <BusinessViewStack.Screen name="BusinessView">
-        {({ route }) => (
-          <BusinessProfile
-            business={useAppSelector(selectBusinessById(route.params.id))!}
-          />
-        )}
+        {({ route }) => <BusinessProfile businessID={route.params.id} />}
       </BusinessViewStack.Screen>
     </BusinessViewStack.Navigator>
   );
