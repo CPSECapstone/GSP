@@ -3,7 +3,7 @@ import * as React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectBusinessById } from "../../redux/selectors/business";
 import { getDistanceToBusiness } from "../../constants/location";
-import { getProfileImage, S3Image } from "./S3Util";
+import { getProfileImage } from "./S3Util";
 
 interface BusinessCellProps {
   businessId: string;

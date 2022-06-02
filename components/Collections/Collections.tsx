@@ -1,4 +1,3 @@
-import { API } from "aws-amplify";
 import React from "react";
 import {
   View,
@@ -109,7 +108,7 @@ type CollectionProps = NativeStackScreenProps<
 
 function Collections({ navigation }: CollectionProps) {
   const [modalVisible, setModalVisible] = React.useState(false);
-  const [recent, setRecent] = React.useState<string[]>(undefined!);
+  const [recent, setRecent] = React.useState<string[]>([]);
   const [currentCollection, setCurrentCollection] = React.useState<
     Collection | undefined
   >(undefined);

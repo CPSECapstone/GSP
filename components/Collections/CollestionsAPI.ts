@@ -5,7 +5,6 @@ import {
   createCollection,
   deleteCollection,
   updateBusiness,
-  updateCollection,
 } from "../../src/graphql/mutations";
 import { Business, Collection } from "../../src/API";
 

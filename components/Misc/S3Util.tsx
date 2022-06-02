@@ -57,13 +57,13 @@ function isValidUrl(url: string) {
     .catch(() => false);
 }
 
-async function getImage(S3key: string) {
-  const url = await Storage.get(S3key);
+// async function getImage(S3key: string) {
+//   const url = await Storage.get(S3key);
 
-  // Amplify storage returns a URL even if the file doesn't exist...
-  // we only return the returned URL if its fetchable, otherwise return null
-  return (await isValidUrl(url)) ? url : null;
-}
+//   // Amplify storage returns a URL even if the file doesn't exist...
+//   // we only return the returned URL if its fetchable, otherwise return null
+//   return (await isValidUrl(url)) ? url : null;
+// }
 
 export function getProfileImage(business: Business): ImageSourcePropType {
   if (!business.profileImage) {

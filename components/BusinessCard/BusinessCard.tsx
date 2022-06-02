@@ -3,7 +3,6 @@ import { Image, StyleSheet, View, Text } from "react-native";
 import { getDistanceToBusiness } from "../../constants/location";
 import { useAppSelector } from "../../redux/hooks";
 import { selectBusinessById } from "../../redux/selectors/business";
-import { Business } from "../../src/API";
 import { getProfileImage } from "../Misc/S3Util";
 import { AverageRating } from "../Review/RatingView";
 

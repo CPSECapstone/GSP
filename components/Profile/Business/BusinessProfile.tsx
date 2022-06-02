@@ -20,7 +20,6 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { useForegroundPermissions } from "expo-location";
 import { getBannerImage, getProfileImage } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business, Collection } from "../../../src/API";
@@ -54,7 +53,6 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
   const currentUser = useAppSelector(selectUser)!;
   const userCollections = useAppSelector(selectAllUserCollections);
   const curReviews = useAppSelector(selectReviewsByBusiness(business.id));
-  const [status, requestPermission] = useForegroundPermissions();
   const [distance, setDistance] = React.useState("");
   const curUserReviewId = curReviews.find(
     (r) => r.userID === currentUser.id
@@ -62,14 +60,9 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
 
   React.useEffect(() => {
     addRecentBusiness(business.id);
-    //requestPermission();
+    getDistanceToBusiness(business).then(setDistance);
+    // requestPermission();
   }, []);
-
-  React.useEffect(() => {
-    if (status?.granted) {
-      getDistanceToBusiness(business).then(setDistance);
-    }
-  }, [status]);
 
   React.useEffect(() => {
     if (modalVisible) {

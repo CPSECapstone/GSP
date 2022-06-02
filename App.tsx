@@ -7,6 +7,7 @@ import AppLoading from "expo-app-loading";
 import Amplify from "aws-amplify";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
+import { useForegroundPermissions } from "expo-location";
 import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
@@ -38,7 +39,6 @@ import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
 import EditProfile from "./components/Profile/User/EditProfile";
-import { useForegroundPermissions } from "expo-location";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");

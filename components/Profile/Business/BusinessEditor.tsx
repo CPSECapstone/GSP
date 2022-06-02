@@ -229,7 +229,6 @@ function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
         ) : (
           <ImageBackground
             source={getBannerImage(editor.business)}
-            defaultSource={require("../../Misc/PlaceholderImages/banner.jpeg")}
             style={styles.banner}
           />
         )}
