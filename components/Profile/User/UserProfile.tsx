@@ -10,6 +10,7 @@ import { selectUser } from "../../../redux/selectors/user";
 import notifications from "../../../redux/thunks/notifications";
 import defaultUser from "../../../constants/defaultData";
 import { setUser } from "../../../redux/slices/user";
+import verification from "../../../redux/thunks/verification";
 import { S3Image } from "../../Misc/S3Util";
 
 const styles = StyleSheet.create({
@@ -86,6 +87,7 @@ export default function UserProfile({ navigation }: UserProfileProps) {
   React.useEffect(() => {
     if (user?.id !== undefined) {
       dispatch(notifications.fetchNotifications(user?.id));
+      dispatch(verification.fetchRequests());
     }
   }, []);
 
@@ -113,6 +115,10 @@ export default function UserProfile({ navigation }: UserProfileProps) {
         <UserProfileCell
           action={() => navigation.navigate("Notifications")}
           title="Notifications"
+        />
+        <UserProfileCell
+          action={() => navigation.navigate("VerificationRequests")}
+          title="Verification Requests"
         />
         <Pressable
           onPress={() => {

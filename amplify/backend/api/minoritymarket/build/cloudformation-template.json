@@ -154,7 +154,7 @@
                 "Description": "None Data Source for Pipeline functions"
             }
         },
-        "Notification": {
+        "VerificationRequest": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
@@ -177,7 +177,7 @@
                             {
                                 "Ref": "S3DeploymentRootKey"
                             },
-                            "/stacks/Notification.json"
+                            "/stacks/VerificationRequest.json"
                         ]
                     ]
                 },
@@ -230,7 +230,7 @@
                 "GraphQLAPITransformerSchema3CB2AE18"
             ]
         },
-        "User": {
+        "Notification": {
             "Type": "AWS::CloudFormation::Stack",
             "Properties": {
                 "TemplateURL": {
@@ -253,7 +253,7 @@
                             {
                                 "Ref": "S3DeploymentRootKey"
                             },
-                            "/stacks/User.json"
+                            "/stacks/Notification.json"
                         ]
                     ]
                 },
@@ -831,6 +831,7 @@
             "DependsOn": [
                 "GraphQLAPI",
                 "GraphQLAPITransformerSchema3CB2AE18",
+                "VerificationRequest",
                 "Notification",
                 "User",
                 "Review",

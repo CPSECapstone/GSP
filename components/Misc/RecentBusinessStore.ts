@@ -27,7 +27,6 @@ export const getRecentBusinesses = async (): Promise<string[]> => {
 };
 
 export const addRecentBusiness = async (id: string) => {
-  alert("here");
   let businesses = await getRecentBusinesses();
   if (!businesses.includes(id)) {
     businesses.push(id);

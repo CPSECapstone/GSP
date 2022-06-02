@@ -3,6 +3,16 @@ enum NotificationType {
   OWNERSHIPREQUEST
   OWNERSHIPAPPROVED
   OWNERSHIPDENIED
+  VERFICIATIONAPPROVED
+  VERIFICATIONDENIED
+}
+
+type VerificationRequest @aws_iam @aws_api_key {
+  id: ID!
+  businessID: ID
+  message: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 type Notification @aws_iam @aws_api_key {
@@ -87,6 +97,7 @@ type Business @aws_iam @aws_api_key {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID!
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
@@ -194,6 +205,101 @@ enum ModelSortDirection {
   DESC
 }
 
+type ModelVerificationRequestConnection @aws_api_key @aws_iam {
+  items: [VerificationRequest]!
+  nextToken: String
+}
+
+input ModelVerificationRequestFilterInput {
+  id: ModelIDInput
+  businessID: ModelIDInput
+  message: ModelStringInput
+  and: [ModelVerificationRequestFilterInput]
+  or: [ModelVerificationRequestFilterInput]
+  not: ModelVerificationRequestFilterInput
+}
+
+type Query {
+  getVerificationRequest(id: ID!): VerificationRequest @aws_api_key @aws_iam
+  listVerificationRequests(filter: ModelVerificationRequestFilterInput, limit: Int, nextToken: String): ModelVerificationRequestConnection @aws_api_key @aws_iam
+  getNotification(id: ID!): Notification @aws_api_key @aws_iam
+  listNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String): ModelNotificationConnection @aws_api_key @aws_iam
+  getUser(id: ID!): User @aws_api_key @aws_iam
+  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
+  getReview(id: ID!): Review @aws_api_key @aws_iam
+  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam
+  getBusiness(id: ID!): Business @aws_api_key @aws_iam
+  listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam
+  getCollection(id: ID!): Collection @aws_api_key @aws_iam
+  listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_api_key @aws_iam
+}
+
+input ModelVerificationRequestConditionInput {
+  businessID: ModelIDInput
+  message: ModelStringInput
+  and: [ModelVerificationRequestConditionInput]
+  or: [ModelVerificationRequestConditionInput]
+  not: ModelVerificationRequestConditionInput
+}
+
+input CreateVerificationRequestInput {
+  id: ID
+  businessID: ID
+  message: String!
+}
+
+input UpdateVerificationRequestInput {
+  id: ID!
+  businessID: ID
+  message: String
+}
+
+input DeleteVerificationRequestInput {
+  id: ID!
+}
+
+type Mutation {
+  createVerificationRequest(input: CreateVerificationRequestInput!, condition: ModelVerificationRequestConditionInput): VerificationRequest @aws_api_key @aws_iam
+  updateVerificationRequest(input: UpdateVerificationRequestInput!, condition: ModelVerificationRequestConditionInput): VerificationRequest @aws_api_key @aws_iam
+  deleteVerificationRequest(input: DeleteVerificationRequestInput!, condition: ModelVerificationRequestConditionInput): VerificationRequest @aws_api_key @aws_iam
+  createNotification(input: CreateNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
+  updateNotification(input: UpdateNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
+  deleteNotification(input: DeleteNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
+  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
+  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
+  createBusiness(input: CreateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  updateBusiness(input: UpdateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  deleteBusiness(input: DeleteBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
+  createCollection(input: CreateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
+  updateCollection(input: UpdateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
+  deleteCollection(input: DeleteCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
+}
+
+type Subscription {
+  onCreateVerificationRequest: VerificationRequest @aws_subscribe(mutations: ["createVerificationRequest"]) @aws_api_key @aws_iam
+  onUpdateVerificationRequest: VerificationRequest @aws_subscribe(mutations: ["updateVerificationRequest"]) @aws_api_key @aws_iam
+  onDeleteVerificationRequest: VerificationRequest @aws_subscribe(mutations: ["deleteVerificationRequest"]) @aws_api_key @aws_iam
+  onCreateNotification: Notification @aws_subscribe(mutations: ["createNotification"]) @aws_api_key @aws_iam
+  onUpdateNotification: Notification @aws_subscribe(mutations: ["updateNotification"]) @aws_api_key @aws_iam
+  onDeleteNotification: Notification @aws_subscribe(mutations: ["deleteNotification"]) @aws_api_key @aws_iam
+  onCreateUser: User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam
+  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam
+  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam
+  onCreateReview: Review @aws_subscribe(mutations: ["createReview"]) @aws_api_key @aws_iam
+  onUpdateReview: Review @aws_subscribe(mutations: ["updateReview"]) @aws_api_key @aws_iam
+  onDeleteReview: Review @aws_subscribe(mutations: ["deleteReview"]) @aws_api_key @aws_iam
+  onCreateBusiness: Business @aws_subscribe(mutations: ["createBusiness"]) @aws_api_key @aws_iam
+  onUpdateBusiness: Business @aws_subscribe(mutations: ["updateBusiness"]) @aws_api_key @aws_iam
+  onDeleteBusiness: Business @aws_subscribe(mutations: ["deleteBusiness"]) @aws_api_key @aws_iam
+  onCreateCollection: Collection @aws_subscribe(mutations: ["createCollection"]) @aws_api_key @aws_iam
+  onUpdateCollection: Collection @aws_subscribe(mutations: ["updateCollection"]) @aws_api_key @aws_iam
+  onDeleteCollection: Collection @aws_subscribe(mutations: ["deleteCollection"]) @aws_api_key @aws_iam
+}
+
 type ModelNotificationConnection @aws_api_key @aws_iam {
   items: [Notification]!
   nextToken: String
@@ -215,19 +321,6 @@ input ModelNotificationFilterInput {
   and: [ModelNotificationFilterInput]
   or: [ModelNotificationFilterInput]
   not: ModelNotificationFilterInput
-}
-
-type Query {
-  getNotification(id: ID!): Notification @aws_api_key @aws_iam
-  listNotifications(filter: ModelNotificationFilterInput, limit: Int, nextToken: String): ModelNotificationConnection @aws_api_key @aws_iam
-  getUser(id: ID!): User @aws_api_key @aws_iam
-  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection @aws_api_key @aws_iam
-  getReview(id: ID!): Review @aws_api_key @aws_iam
-  listReviews(filter: ModelReviewFilterInput, limit: Int, nextToken: String): ModelReviewConnection @aws_api_key @aws_iam
-  getBusiness(id: ID!): Business @aws_api_key @aws_iam
-  listBusinesses(filter: ModelBusinessFilterInput, limit: Int, nextToken: String): ModelBusinessConnection @aws_api_key @aws_iam
-  getCollection(id: ID!): Collection @aws_api_key @aws_iam
-  listCollections(filter: ModelCollectionFilterInput, limit: Int, nextToken: String): ModelCollectionConnection @aws_api_key @aws_iam
 }
 
 input ModelNotificationConditionInput {
@@ -264,42 +357,6 @@ input UpdateNotificationInput {
 
 input DeleteNotificationInput {
   id: ID!
-}
-
-type Mutation {
-  createNotification(input: CreateNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
-  updateNotification(input: UpdateNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
-  deleteNotification(input: DeleteNotificationInput!, condition: ModelNotificationConditionInput): Notification @aws_api_key @aws_iam
-  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
-  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
-  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User @aws_api_key @aws_iam
-  createReview(input: CreateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
-  updateReview(input: UpdateReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
-  deleteReview(input: DeleteReviewInput!, condition: ModelReviewConditionInput): Review @aws_api_key @aws_iam
-  createBusiness(input: CreateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
-  updateBusiness(input: UpdateBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
-  deleteBusiness(input: DeleteBusinessInput!, condition: ModelBusinessConditionInput): Business @aws_api_key @aws_iam
-  createCollection(input: CreateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
-  updateCollection(input: UpdateCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
-  deleteCollection(input: DeleteCollectionInput!, condition: ModelCollectionConditionInput): Collection @aws_api_key @aws_iam
-}
-
-type Subscription {
-  onCreateNotification: Notification @aws_subscribe(mutations: ["createNotification"]) @aws_api_key @aws_iam
-  onUpdateNotification: Notification @aws_subscribe(mutations: ["updateNotification"]) @aws_api_key @aws_iam
-  onDeleteNotification: Notification @aws_subscribe(mutations: ["deleteNotification"]) @aws_api_key @aws_iam
-  onCreateUser: User @aws_subscribe(mutations: ["createUser"]) @aws_api_key @aws_iam
-  onUpdateUser: User @aws_subscribe(mutations: ["updateUser"]) @aws_api_key @aws_iam
-  onDeleteUser: User @aws_subscribe(mutations: ["deleteUser"]) @aws_api_key @aws_iam
-  onCreateReview: Review @aws_subscribe(mutations: ["createReview"]) @aws_api_key @aws_iam
-  onUpdateReview: Review @aws_subscribe(mutations: ["updateReview"]) @aws_api_key @aws_iam
-  onDeleteReview: Review @aws_subscribe(mutations: ["deleteReview"]) @aws_api_key @aws_iam
-  onCreateBusiness: Business @aws_subscribe(mutations: ["createBusiness"]) @aws_api_key @aws_iam
-  onUpdateBusiness: Business @aws_subscribe(mutations: ["updateBusiness"]) @aws_api_key @aws_iam
-  onDeleteBusiness: Business @aws_subscribe(mutations: ["deleteBusiness"]) @aws_api_key @aws_iam
-  onCreateCollection: Collection @aws_subscribe(mutations: ["createCollection"]) @aws_api_key @aws_iam
-  onUpdateCollection: Collection @aws_subscribe(mutations: ["updateCollection"]) @aws_api_key @aws_iam
-  onDeleteCollection: Collection @aws_subscribe(mutations: ["deleteCollection"]) @aws_api_key @aws_iam
 }
 
 type ModelUserConnection @aws_api_key @aws_iam {
@@ -436,6 +493,7 @@ input ModelBusinessFilterInput {
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
   isVerified: ModelBooleanInput
+  verificationPending: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessFilterInput]
   or: [ModelBusinessFilterInput]
@@ -462,6 +520,7 @@ input ModelBusinessConditionInput {
   profileImage: ModelStringInput
   bannerImage: ModelStringInput
   isVerified: ModelBooleanInput
+  verificationPending: ModelBooleanInput
   userID: ModelIDInput
   and: [ModelBusinessConditionInput]
   or: [ModelBusinessConditionInput]
@@ -489,6 +548,7 @@ input CreateBusinessInput {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID!
 }
 
@@ -513,6 +573,7 @@ input UpdateBusinessInput {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID
 }
 

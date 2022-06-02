@@ -2,6 +2,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateVerificationRequest = /* GraphQL */ `
+  subscription OnCreateVerificationRequest {
+    onCreateVerificationRequest {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateVerificationRequest = /* GraphQL */ `
+  subscription OnUpdateVerificationRequest {
+    onUpdateVerificationRequest {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteVerificationRequest = /* GraphQL */ `
+  subscription OnDeleteVerificationRequest {
+    onDeleteVerificationRequest {
+      id
+      businessID
+      message
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateNotification = /* GraphQL */ `
   subscription OnCreateNotification {
     onCreateNotification {
@@ -190,6 +223,7 @@ export const onCreateBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt
@@ -222,6 +256,7 @@ export const onUpdateBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt
@@ -254,6 +289,7 @@ export const onDeleteBusiness = /* GraphQL */ `
       profileImage
       bannerImage
       isVerified
+      verificationPending
       userID
       createdAt
       updatedAt

@@ -2,36 +2,21 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateNotificationInput = {
+export type CreateVerificationRequestInput = {
   id?: string | null,
+  businessID?: string | null,
   message: string,
-  type: NotificationType,
-  Sender?: string | null,
-  userID: string,
-  title: string,
-  businessRequestID: string,
 };
 
-export enum NotificationType {
-  OWNERSHIPREQUEST = "OWNERSHIPREQUEST",
-  OWNERSHIPAPPROVED = "OWNERSHIPAPPROVED",
-  OWNERSHIPDENIED = "OWNERSHIPDENIED",
-}
-
-
-export type ModelNotificationConditionInput = {
+export type ModelVerificationRequestConditionInput = {
+  businessID?: ModelIDInput | null,
   message?: ModelStringInput | null,
-  type?: ModelNotificationTypeInput | null,
-  Sender?: ModelIDInput | null,
-  userID?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  businessRequestID?: ModelIDInput | null,
-  and?: Array< ModelNotificationConditionInput | null > | null,
-  or?: Array< ModelNotificationConditionInput | null > | null,
-  not?: ModelNotificationConditionInput | null,
+  and?: Array< ModelVerificationRequestConditionInput | null > | null,
+  or?: Array< ModelVerificationRequestConditionInput | null > | null,
+  not?: ModelVerificationRequestConditionInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -71,12 +56,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelNotificationTypeInput = {
-  eq?: NotificationType | null,
-  ne?: NotificationType | null,
-};
-
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -90,6 +70,61 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type VerificationRequest = {
+  __typename: "VerificationRequest",
+  id: string,
+  businessID?: string | null,
+  message: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateVerificationRequestInput = {
+  id: string,
+  businessID?: string | null,
+  message?: string | null,
+};
+
+export type DeleteVerificationRequestInput = {
+  id: string,
+};
+
+export type CreateNotificationInput = {
+  id?: string | null,
+  message: string,
+  type: NotificationType,
+  Sender?: string | null,
+  userID: string,
+  title: string,
+  businessRequestID: string,
+};
+
+export enum NotificationType {
+  OWNERSHIPREQUEST = "OWNERSHIPREQUEST",
+  OWNERSHIPAPPROVED = "OWNERSHIPAPPROVED",
+  OWNERSHIPDENIED = "OWNERSHIPDENIED",
+  VERFICIATIONAPPROVED = "VERFICIATIONAPPROVED",
+  VERIFICATIONDENIED = "VERIFICATIONDENIED",
+}
+
+
+export type ModelNotificationConditionInput = {
+  message?: ModelStringInput | null,
+  type?: ModelNotificationTypeInput | null,
+  Sender?: ModelIDInput | null,
+  userID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  businessRequestID?: ModelIDInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+};
+
+export type ModelNotificationTypeInput = {
+  eq?: NotificationType | null,
+  ne?: NotificationType | null,
 };
 
 export type Notification = {
@@ -209,6 +244,7 @@ export type Business = {
   profileImage?: string | null,
   bannerImage?: string | null,
   isVerified?: boolean | null,
+  verificationPending?: boolean | null,
   userID: string,
   createdAt: string,
   updatedAt: string,
@@ -338,6 +374,7 @@ export type CreateBusinessInput = {
   profileImage?: string | null,
   bannerImage?: string | null,
   isVerified?: boolean | null,
+  verificationPending?: boolean | null,
   userID: string,
 };
 
@@ -361,6 +398,7 @@ export type ModelBusinessConditionInput = {
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
   isVerified?: ModelBooleanInput | null,
+  verificationPending?: ModelBooleanInput | null,
   userID?: ModelIDInput | null,
   and?: Array< ModelBusinessConditionInput | null > | null,
   or?: Array< ModelBusinessConditionInput | null > | null,
@@ -400,6 +438,7 @@ export type UpdateBusinessInput = {
   profileImage?: string | null,
   bannerImage?: string | null,
   isVerified?: boolean | null,
+  verificationPending?: boolean | null,
   userID?: string | null,
 };
 
@@ -435,6 +474,21 @@ export type UpdateCollectionInput = {
 
 export type DeleteCollectionInput = {
   id: string,
+};
+
+export type ModelVerificationRequestFilterInput = {
+  id?: ModelIDInput | null,
+  businessID?: ModelIDInput | null,
+  message?: ModelStringInput | null,
+  and?: Array< ModelVerificationRequestFilterInput | null > | null,
+  or?: Array< ModelVerificationRequestFilterInput | null > | null,
+  not?: ModelVerificationRequestFilterInput | null,
+};
+
+export type ModelVerificationRequestConnection = {
+  __typename: "ModelVerificationRequestConnection",
+  items:  Array<VerificationRequest | null >,
+  nextToken?: string | null,
 };
 
 export type ModelNotificationFilterInput = {
@@ -500,6 +554,7 @@ export type ModelBusinessFilterInput = {
   profileImage?: ModelStringInput | null,
   bannerImage?: ModelStringInput | null,
   isVerified?: ModelBooleanInput | null,
+  verificationPending?: ModelBooleanInput | null,
   userID?: ModelIDInput | null,
   and?: Array< ModelBusinessFilterInput | null > | null,
   or?: Array< ModelBusinessFilterInput | null > | null,
@@ -515,6 +570,54 @@ export type ModelCollectionFilterInput = {
   and?: Array< ModelCollectionFilterInput | null > | null,
   or?: Array< ModelCollectionFilterInput | null > | null,
   not?: ModelCollectionFilterInput | null,
+};
+
+export type CreateVerificationRequestMutationVariables = {
+  input: CreateVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type CreateVerificationRequestMutation = {
+  createVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateVerificationRequestMutationVariables = {
+  input: UpdateVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type UpdateVerificationRequestMutation = {
+  updateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteVerificationRequestMutationVariables = {
+  input: DeleteVerificationRequestInput,
+  condition?: ModelVerificationRequestConditionInput | null,
+};
+
+export type DeleteVerificationRequestMutation = {
+  deleteVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
 };
 
 export type CreateNotificationMutationVariables = {
@@ -768,6 +871,7 @@ export type CreateBusinessMutation = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -806,6 +910,7 @@ export type UpdateBusinessMutation = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -844,6 +949,7 @@ export type DeleteBusinessMutation = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -913,6 +1019,42 @@ export type DeleteCollectionMutation = {
     userID: string,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type GetVerificationRequestQueryVariables = {
+  id: string,
+};
+
+export type GetVerificationRequestQuery = {
+  getVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListVerificationRequestsQueryVariables = {
+  filter?: ModelVerificationRequestFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVerificationRequestsQuery = {
+  listVerificationRequests?:  {
+    __typename: "ModelVerificationRequestConnection",
+    items:  Array< {
+      __typename: "VerificationRequest",
+      id: string,
+      businessID?: string | null,
+      message: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -1089,6 +1231,7 @@ export type GetBusinessQuery = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1126,6 +1269,7 @@ export type ListBusinessesQuery = {
       profileImage?: string | null,
       bannerImage?: string | null,
       isVerified?: boolean | null,
+      verificationPending?: boolean | null,
       userID: string,
       createdAt: string,
       updatedAt: string,
@@ -1175,6 +1319,39 @@ export type ListCollectionsQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateVerificationRequestSubscription = {
+  onCreateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateVerificationRequestSubscription = {
+  onUpdateVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteVerificationRequestSubscription = {
+  onDeleteVerificationRequest?:  {
+    __typename: "VerificationRequest",
+    id: string,
+    businessID?: string | null,
+    message: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -1379,6 +1556,7 @@ export type OnCreateBusinessSubscription = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1412,6 +1590,7 @@ export type OnUpdateBusinessSubscription = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
@@ -1445,6 +1624,7 @@ export type OnDeleteBusinessSubscription = {
     profileImage?: string | null,
     bannerImage?: string | null,
     isVerified?: boolean | null,
+    verificationPending?: boolean | null,
     userID: string,
     createdAt: string,
     updatedAt: string,
