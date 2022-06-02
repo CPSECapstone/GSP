@@ -1,6 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
 import { getDistanceToBusiness } from "../../constants/location";
+import { useAppSelector } from "../../redux/hooks";
+import { selectBusinessById } from "../../redux/selectors/business";
 import { Business } from "../../src/API";
 import { getProfileImage } from "../Misc/S3Util";
 import { AverageRating } from "../Review/RatingView";
@@ -44,8 +46,9 @@ const styles = StyleSheet.create({
   },
 });
 
-function BusinessCard({ business }: { business: Business }) {
+function BusinessCard({ businessID }: { businessID: string }) {
   const [distance, setDistance] = React.useState("");
+  const business = useAppSelector(selectBusinessById(businessID))!;
   React.useEffect(() => {
     getDistanceToBusiness(business).then(setDistance);
   }, []);

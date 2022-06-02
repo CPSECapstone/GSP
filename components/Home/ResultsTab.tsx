@@ -150,7 +150,7 @@ function ResultsTab({
                             handleDismiss();
                           }}
                         >
-                          <BusinessCard business={item} />
+                          <BusinessCard businessID={item!.id} />
                         </Pressable>
                       </View>
                     );

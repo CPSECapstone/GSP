@@ -148,7 +148,7 @@ function OpenCollection({ collection, goBack }: OpenCollectionProps) {
                   navigation.navigate("BusinessView", { id: item!.id });
               }}
             >
-              <BusinessCard business={item!} />
+              <BusinessCard businessID={item!.id} />
             </Pressable>
           </View>
         )}

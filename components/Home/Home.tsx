@@ -204,7 +204,7 @@ function HomeView({ navigation }: HomeProps) {
               })
             }
           >
-            <BusinessCard business={selectedBusiness[0]!} />
+            <BusinessCard businessID={selectedBusiness[0]!.id} />
           </Pressable>
         </View>
       ) : (
