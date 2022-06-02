@@ -7,6 +7,7 @@ import AppLoading from "expo-app-loading";
 import Amplify from "aws-amplify";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
+import { useForegroundPermissions } from "expo-location";
 import awsconfig from "./src/aws-exports";
 import AccountType from "./components/Login/AccountType";
 import SignUp from "./components/Login/SignUp";
@@ -65,8 +66,11 @@ Amplify.configure(awsconfig);
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
 
+console.disableYellowBox = true;
 function AuthenticatedApp() {
   const user = useAppSelector(selectUser)!;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [status, requestPermission] = useForegroundPermissions();
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
@@ -75,6 +79,7 @@ function AuthenticatedApp() {
     if (user.isModerator) {
       dispatch(verification.fetchRequests());
     }
+    requestPermission();
   }, []);
 
   return (

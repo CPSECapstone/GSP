@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 
-import { Business, BusinessType, MinorityGroups } from "../../../src/API";
+import { Business } from "../../../src/API";
 
 // export const BUSINESS_TYPES = [
 //   "Restaurant",
@@ -77,18 +77,17 @@ export type FrontendBusinessField =
 // };
 
 const DEFAULT_BUSINESS: Partial<Business> = {
-  name: "test",
-  type: BusinessType.RESTAURANT,
+  name: "",
   primarycolor: "#F81515",
   secondarycolor: "#DA3025",
-  phone: "7604201192",
-  tags: [MinorityGroups.ASIANAMERICAN],
-  about: "test",
-  website: "https://minecraft.net",
-  address: "308 Foothill Blvd",
-  city: "San Luis Obispo",
-  state: "California",
-  zipcode: "93405",
+  phone: "",
+  tags: [],
+  about: "",
+  website: "",
+  address: "",
+  city: "",
+  state: "",
+  zipcode: "",
 };
 
 export class Editor {

@@ -150,16 +150,7 @@ function ResultsTab({
                             handleDismiss();
                           }}
                         >
-                          <BusinessCard
-                            id={item.id}
-                            name={item.name}
-                            distance="4"
-                            rating={
-                              item.rating == null
-                                ? "0 Reviews"
-                                : String(item.rating)
-                            }
-                          />
+                          <BusinessCard businessID={item!.id} />
                         </Pressable>
                       </View>
                     );

@@ -234,11 +234,7 @@ function ExploreView({ navigation }: ExploreProps) {
                     onPress={() =>
                       navigation.navigate("BusinessView", { id: item.id })
                     }
-                    distance={3}
-                    business={item}
-                    minoritygroups={item.tags.map(
-                      (tag) => returnMinorityGroupValue(tag)!
-                    )}
+                    businessID={item.id}
                   />
                 );
               }

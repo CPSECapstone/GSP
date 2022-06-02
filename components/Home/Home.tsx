@@ -128,9 +128,10 @@ function HomeView({ navigation }: HomeProps) {
           business?.type,
           String(business?.zipcode),
         ];
+        const findTextLower = findText.toLowerCase();
         if (
-          businessFields.some((b) => b.includes(findText)) ||
-          business?.tags?.some((b) => b.includes(findText))
+          businessFields.some((b) => b.includes(findTextLower)) ||
+          business?.tags?.some((b) => b.includes(findTextLower))
         ) {
           resBusiness.push(business);
         }
@@ -204,12 +205,7 @@ function HomeView({ navigation }: HomeProps) {
               })
             }
           >
-            <BusinessCard
-              id={selectedBusiness[0]!.id}
-              name={selectedBusiness[0]!.name}
-              distance="4"
-              rating={String(selectedBusiness[0]!.rating)}
-            />
+            <BusinessCard businessID={selectedBusiness[0]!.id} />
           </Pressable>
         </View>
       ) : (

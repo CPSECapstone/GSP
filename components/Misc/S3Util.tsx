@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useEffect, useState } from "react";
+import { Image, ImageBackground, ImageSourcePropType } from "react-native";
 import { Storage } from "@aws-amplify/storage";
-import { Image, ImageBackground } from "react-native";
-
-const ImageCache = {};
+import ImageCache from "./ImageCache";
+import { Business } from "../../src/API";
+import store from "../../redux/store";
+import { updateBusinessRedux } from "../../redux/slices/business";
 
 const PLACEHOLDER_IMG_URL = require("./PlaceholderImages/placeholderBusiness.png");
 const PLACEHOLDER_BANNER = require("./PlaceholderImages/banner.jpeg");
@@ -13,7 +15,7 @@ export function S3Image({ S3key, style }: S3ImageProps) {
   const [source, setSource] = useState(PLACEHOLDER_IMG_URL);
 
   useEffect(() => {
-    checkCache(S3key).then((response) => {
+    ImageCache.checkCache(S3key).then((response) => {
       if (response) {
         setSource({ uri: response });
       }
@@ -29,7 +31,7 @@ export function S3ImageBackground({ S3key, style }: S3ImageProps) {
   const [source, setSource] = useState(PLACEHOLDER_BANNER);
 
   useEffect(() => {
-    checkCache(S3key).then((response) => {
+    ImageCache.checkCache(S3key).then((response) => {
       if (response) setSource({ uri: response });
     });
   }, [S3key]);
@@ -55,20 +57,49 @@ function isValidUrl(url: string) {
     .catch(() => false);
 }
 
-async function checkCache(S3key: string) {
-  const cachedImage = ImageCache[S3key];
-  if (cachedImage) {
-    return cachedImage;
+// async function getImage(S3key: string) {
+//   const url = await Storage.get(S3key);
+
+//   // Amplify storage returns a URL even if the file doesn't exist...
+//   // we only return the returned URL if its fetchable, otherwise return null
+//   return (await isValidUrl(url)) ? url : null;
+// }
+
+export function getProfileImage(business: Business): ImageSourcePropType {
+  if (!business.profileImage) {
+    const pendingBusiness = { ...business };
+    pendingBusiness.profileImage = "pending";
+    store.dispatch(updateBusinessRedux(pendingBusiness));
+    Storage.get(`${business.id}/profile`).then((url) => {
+      isValidUrl(url).then((valid) => {
+        if (valid) {
+          const updatedBusiness = { ...business };
+          updatedBusiness.profileImage = valid ? url : "default";
+          store.dispatch(updateBusinessRedux(updatedBusiness));
+        }
+      });
+    });
   }
-  const imageUrl = await getImage(S3key);
-  ImageCache[S3key] = imageUrl;
-  return imageUrl;
+
+  return { uri: business.profileImage };
 }
 
-async function getImage(S3key: string) {
-  const url = await Storage.get(S3key);
+export function getBannerImage(business: Business): ImageSourcePropType {
+  if (!business.bannerImage) {
+    const pendingBusiness = { ...business };
+    pendingBusiness.bannerImage = "pending";
+    store.dispatch(updateBusinessRedux(pendingBusiness));
+    Storage.get(`${business.id}/banner`).then((url) => {
+      isValidUrl(url).then((valid) => {
+        if (valid) {
+          console.log("GETTING b");
+          const updatedBusiness = { ...business };
+          updatedBusiness.bannerImage = valid ? url : "default";
+          store.dispatch(updateBusinessRedux(updatedBusiness));
+        }
+      });
+    });
+  }
 
-  // Amplify storage returns a URL even if the file doesn't exist...
-  // we only return the returned URL if its fetchable, otherwise return null
-  return (await isValidUrl(url)) ? url : null;
+  return { uri: business.bannerImage };
 }

@@ -6,7 +6,7 @@ export const BusinessContext = createContext<Business>(undefined!);
 
 // Route Param List
 export type BProfileStackParamList = {
-  BusinessProfile: undefined;
+  BusinessProfile: undefined | { rerender: boolean };
   BusinessEditor: undefined;
   Reviews: undefined;
 };

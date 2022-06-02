@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import * as React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { selectBusinessById } from "../../redux/selectors/business";
-import { S3Image } from "./S3Util";
+import { getDistanceToBusiness } from "../../constants/location";
+import { getProfileImage } from "./S3Util";
 
 interface BusinessCellProps {
   businessId: string;
@@ -56,28 +57,26 @@ function BusinessCell({ businessId }: BusinessCellProps) {
   if (business === undefined) {
     return <View />;
   }
+  const [distance, setDistance] = React.useState("");
+
+  React.useEffect(() => {
+    getDistanceToBusiness(business).then(setDistance);
+  }, []);
+
   return (
-    <Pressable
-      onPress={() => {
-        console.log(
-          `navigate to business page for: '${business.name}' with ID: ${businessId}`
-        );
-      }}
-    >
-      <View style={[styles.foryoucellcontainer, styles.shadow]}>
-        <S3Image
-          style={[
-            styles.businessimage,
-            { borderColor: `${business.primarycolor}` },
-          ]}
-          S3key={`${businessId}/profile`}
-        />
-        <View>
-          <Text style={styles.businesssubtitle}>{business.name}</Text>
-        </View>
-        <Text style={styles.distancetext}>{`${3}mi`}</Text>
+    <View style={[styles.foryoucellcontainer, styles.shadow]}>
+      <Image
+        style={[
+          styles.businessimage,
+          { borderColor: `${business.primarycolor}` },
+        ]}
+        source={getProfileImage(business)}
+      />
+      <View>
+        <Text style={styles.businesssubtitle}>{business.name}</Text>
       </View>
-    </Pressable>
+      <Text style={styles.distancetext}>{`${distance}mi`}</Text>
+    </View>
   );
 }
 
