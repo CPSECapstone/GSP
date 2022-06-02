@@ -137,7 +137,7 @@
                     ]
                 },
                 "Description": "api key description",
-                "Expires": 1655591455
+                "Expires": 1656786137
             }
         },
         "GraphQLAPINONEDS95A13CF0": {
@@ -282,59 +282,99 @@
                             "ApiId"
                         ]
                     },
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
+                        ]
+                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
+                    "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
+                        "Ref": "authRoleName"
+                    },
+                    "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
+                        "Ref": "unauthRoleName"
+                    }
+                }
+            },
+            "DependsOn": [
+                "GraphQLAPITransformerSchema3CB2AE18"
+            ]
+        },
+        "User": {
+            "Type": "AWS::CloudFormation::Stack",
+            "Properties": {
+                "TemplateURL": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "https://s3.",
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            ".",
+                            {
+                                "Ref": "AWS::URLSuffix"
+                            },
+                            "/",
+                            {
+                                "Ref": "S3DeploymentBucket"
+                            },
+                            "/",
+                            {
+                                "Ref": "S3DeploymentRootKey"
+                            },
+                            "/stacks/User.json"
+                        ]
+                    ]
+                },
+                "Parameters": {
+                    "DynamoDBModelTableReadIOPS": {
+                        "Ref": "DynamoDBModelTableReadIOPS"
+                    },
+                    "DynamoDBModelTableWriteIOPS": {
+                        "Ref": "DynamoDBModelTableWriteIOPS"
+                    },
+                    "DynamoDBBillingMode": {
+                        "Ref": "DynamoDBBillingMode"
+                    },
+                    "DynamoDBEnablePointInTimeRecovery": {
+                        "Ref": "DynamoDBEnablePointInTimeRecovery"
+                    },
+                    "DynamoDBEnableServerSideEncryption": {
+                        "Ref": "DynamoDBEnableServerSideEncryption"
+                    },
+                    "referencetotransformerrootstackenv10C5A902Ref": {
+                        "Ref": "env"
+                    },
+                    "referencetotransformerrootstackGraphQLAPI20497F53ApiId": {
                         "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
+                            "GraphQLAPI",
+                            "ApiId"
                         ]
                     },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
                         "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
                         ]
+                    },
+                    "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
+                        "Ref": "S3DeploymentBucket"
+                    },
+                    "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
+                        "Ref": "S3DeploymentRootKey"
                     },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
                         "Ref": "authRoleName"
                     },
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
-                        ]
                     }
                 }
             },
@@ -394,59 +434,23 @@
                             "ApiId"
                         ]
                     },
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
+                        ]
+                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
-                        ]
-                    },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
                         "Ref": "authRoleName"
                     },
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
-                        ]
                     }
                 }
             },
@@ -506,59 +510,23 @@
                             "ApiId"
                         ]
                     },
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
+                        ]
+                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
-                        ]
-                    },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
                         "Ref": "authRoleName"
                     },
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
-                        ]
                     }
                 }
             },
@@ -618,59 +586,23 @@
                             "ApiId"
                         ]
                     },
+                    "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name": {
+                        "Fn::GetAtt": [
+                            "GraphQLAPINONEDS95A13CF0",
+                            "Name"
+                        ]
+                    },
                     "referencetotransformerrootstackS3DeploymentBucket7592718ARef": {
                         "Ref": "S3DeploymentBucket"
                     },
                     "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref": {
                         "Ref": "S3DeploymentRootKey"
                     },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationauth0FunctionQuerygetNotificationauth0FunctionAppSyncFunction9CFAD9FEFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationQuerygetNotificationpostAuth0FunctionQuerygetNotificationpostAuth0FunctionAppSyncFunction2D2DD590FunctionId"
-                        ]
-                    },
                     "referencetotransformerrootstackauthRoleNameFB872D50Ref": {
                         "Ref": "authRoleName"
                     },
                     "referencetotransformerrootstackunauthRoleName49F3C1FERef": {
                         "Ref": "unauthRoleName"
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationinit0FunctionMutationcreateNotificationinit0FunctionAppSyncFunctionE592035EFunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationcreateNotificationauth0FunctionMutationcreateNotificationauth0FunctionAppSyncFunction92752A61FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationMutationupdateNotificationinit0FunctionMutationupdateNotificationinit0FunctionAppSyncFunctionEC914943FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptiononCreateNotificationauth0FunctionSubscriptiononCreateNotificationauth0FunctionAppSyncFunction8B197628FunctionId"
-                        ]
-                    },
-                    "referencetotransformerrootstackNotificationNestedStackNotificationNestedStackResourceB234F94DOutputstransformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction2AE57D622": {
-                        "Fn::GetAtt": [
-                            "Notification",
-                            "Outputs.transformerrootstackNotificationSubscriptionOnCreateNotificationDataResolverFnSubscriptionOnCreateNotificationDataResolverFnAppSyncFunction223BD3FAFunctionId"
-                        ]
                     }
                 }
             },

@@ -39,10 +39,7 @@ import {
   returnMinorityGroupValue,
 } from "../../../constants/enumconverters";
 import { selectUser } from "../../../redux/selectors/user";
-import {
-  addRecentBusiness,
-  getRecentBusinesses,
-} from "../../Misc/RecentBusinessStore";
+import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
 import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";

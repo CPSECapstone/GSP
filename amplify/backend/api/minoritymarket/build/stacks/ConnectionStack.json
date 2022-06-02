@@ -135,6 +135,36 @@
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
       }
     },
+    "UserNotificationsauth0FunctionUserNotificationsauth0FunctionAppSyncFunctionF0B57C22": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "UserNotificationsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Notifications.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
+      }
+    },
     "UserNotificationsDataResolverFnUserNotificationsDataResolverFnAppSyncFunctionAF2B5438": {
       "Type": "AWS::AppSync::FunctionConfiguration",
       "Properties": {
@@ -193,7 +223,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "UserCollectionsauth0FunctionUserCollectionsauth0FunctionAppSyncFunctionC2E4AA42",
+                "UserNotificationsauth0FunctionUserNotificationsauth0FunctionAppSyncFunctionF0B57C22",
                 "FunctionId"
               ]
             },
@@ -238,6 +268,36 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "UserBusinessesauth0FunctionUserBusinessesauth0FunctionAppSyncFunction222BA41C": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "UserBusinessesauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Businesses.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "UserBusinessesDataResolverFnUserBusinessesDataResolverFnAppSyncFunction04B8796F": {
@@ -298,7 +358,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "UserCollectionsauth0FunctionUserCollectionsauth0FunctionAppSyncFunctionC2E4AA42",
+                "UserBusinessesauth0FunctionUserBusinessesauth0FunctionAppSyncFunction222BA41C",
                 "FunctionId"
               ]
             },
@@ -343,6 +403,36 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "UserReviewsauth0FunctionUserReviewsauth0FunctionAppSyncFunction030B7409": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "UserReviewsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/User.Reviews.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "UserReviewsDataResolverFnUserReviewsDataResolverFnAppSyncFunction98D03831": {
@@ -403,7 +493,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "UserCollectionsauth0FunctionUserCollectionsauth0FunctionAppSyncFunctionC2E4AA42",
+                "UserReviewsauth0FunctionUserReviewsauth0FunctionAppSyncFunction030B7409",
                 "FunctionId"
               ]
             },
@@ -448,6 +538,36 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "BusinessReviewsauth0FunctionBusinessReviewsauth0FunctionAppSyncFunctionEFC10EE5": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "BusinessReviewsauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Business.Reviews.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "BusinessReviewsDataResolverFnBusinessReviewsDataResolverFnAppSyncFunctionE02888B9": {
@@ -508,7 +628,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "UserCollectionsauth0FunctionUserCollectionsauth0FunctionAppSyncFunctionC2E4AA42",
+                "BusinessReviewsauth0FunctionBusinessReviewsauth0FunctionAppSyncFunctionEFC10EE5",
                 "FunctionId"
               ]
             },
@@ -553,6 +673,36 @@
           ]
         },
         "ResponseMappingTemplate": "$util.toJson($ctx.prev.result)"
+      }
+    },
+    "CollectionBusinessesauth0FunctionCollectionBusinessesauth0FunctionAppSyncFunction478E1DD2": {
+      "Type": "AWS::AppSync::FunctionConfiguration",
+      "Properties": {
+        "ApiId": {
+          "Ref": "referencetotransformerrootstackGraphQLAPI20497F53ApiId"
+        },
+        "DataSourceName": {
+          "Ref": "referencetotransformerrootstackGraphQLAPINONEDS2BA9D1C8Name"
+        },
+        "FunctionVersion": "2018-05-29",
+        "Name": "CollectionBusinessesauth0Function",
+        "RequestMappingTemplateS3Location": {
+          "Fn::Join": [
+            "",
+            [
+              "s3://",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentBucket7592718ARef"
+              },
+              "/",
+              {
+                "Ref": "referencetotransformerrootstackS3DeploymentRootKeyA71EA735Ref"
+              },
+              "/resolvers/Collection.Businesses.auth.1.req.vtl"
+            ]
+          ]
+        },
+        "ResponseMappingTemplate": "$util.toJson({})"
       }
     },
     "CollectionBusinessesDataResolverFnCollectionBusinessesDataResolverFnAppSyncFunction2E7D8AB8": {
@@ -613,7 +763,7 @@
           "Functions": [
             {
               "Fn::GetAtt": [
-                "UserCollectionsauth0FunctionUserCollectionsauth0FunctionAppSyncFunctionC2E4AA42",
+                "CollectionBusinessesauth0FunctionCollectionBusinessesauth0FunctionAppSyncFunction478E1DD2",
                 "FunctionId"
               ]
             },

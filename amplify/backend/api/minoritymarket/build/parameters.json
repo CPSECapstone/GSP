@@ -8,12 +8,7 @@
             "Outputs.UserPoolId"
         ]
     },
-    "authRoleName": {
-        "Ref": "AuthRoleName"
-    },
-    "unauthRoleName": {
-        "Ref": "UnauthRoleName"
-    },
+    "AuthModeLastUpdated": "2022-01-11T21:45:20.476Z",
     "S3DeploymentBucket": "amplify-minoritymarket-staging-24817-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/3e332027f1dbcfa23802005786dd1174e3ec5cc8"
+    "S3DeploymentRootKey": "amplify-appsync-files/a48baa0924768dd66d06f5a300dee0b9ed25cd20"
 }

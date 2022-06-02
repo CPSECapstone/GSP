@@ -53,7 +53,6 @@ function BusinessCard({ businessID }: { businessID: string }) {
     React.useEffect(() => {
       getDistanceToBusiness(business).then(setDistance);
     }, []);
-
     return (
       <View style={styles.container}>
         <Image
