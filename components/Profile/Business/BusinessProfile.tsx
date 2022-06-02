@@ -20,6 +20,7 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { API } from "aws-amplify";
 import { getBannerImage, getProfileImage } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business, Collection } from "../../../src/API";
@@ -44,7 +45,6 @@ import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";
 import { getDistanceToBusiness } from "../../../constants/location";
 import { selectBusinessById } from "../../../redux/selectors/business";
-import { API } from "aws-amplify";
 import {
   createVerificationRequest,
   updateBusiness,
