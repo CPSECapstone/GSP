@@ -70,7 +70,6 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
   React.useEffect(() => {
     addRecentBusiness(business.id);
     getDistanceToBusiness(business).then(setDistance);
-    // requestPermission();
   }, []);
 
   React.useEffect(() => {

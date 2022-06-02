@@ -47,24 +47,26 @@ const styles = StyleSheet.create({
 
 function BusinessCard({ businessID }: { businessID: string }) {
   const [distance, setDistance] = React.useState("");
-  const business = useAppSelector(selectBusinessById(businessID))!;
-  React.useEffect(() => {
-    getDistanceToBusiness(business).then(setDistance);
-  }, []);
+  const business = useAppSelector(selectBusinessById(businessID));
 
-  return (
-    <View style={styles.container}>
-      <Image
-        style={[styles.avatar, { borderColor: "red" }]}
-        source={getProfileImage(business)}
-      />
-      <View style={styles.subcontainer}>
-        <Text style={styles.title}>{business.name}</Text>
-        <Text style={styles.distancetext}>{`${distance} mi`}</Text>
-        <AverageRating businessId={business.id} color="#7300ff" short />
+  if (business) {
+    React.useEffect(() => {
+      getDistanceToBusiness(business).then(setDistance);
+    }, []);
+    return (
+      <View style={styles.container}>
+        <Image
+          style={[styles.avatar, { borderColor: "red" }]}
+          source={getProfileImage(business)}
+        />
+        <View style={styles.subcontainer}>
+          <Text style={styles.title}>{business.name}</Text>
+          <Text style={styles.distancetext}>{`${distance} mi`}</Text>
+          <AverageRating businessId={business.id} color="#7300ff" short />
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 export default BusinessCard;
