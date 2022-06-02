@@ -41,6 +41,7 @@ import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";
 import { getDistanceToBusiness } from "../../../constants/location";
 import { selectBusinessById } from "../../../redux/selectors/business";
+import { MinorityGroups } from "../../../src/models";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -171,7 +172,7 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
                     )}${distance ? ` • ${distance} mi` : ""}`}</Text>
                   </View>
                   <View style={styles.body}>
-                    <Tags tags={business.tags as string[]} />
+                    <Tags tags={business.tags ?? []} />
                     <View style={styles.buttonWrapper}>
                       {business.phone && (
                         <CircleButton
@@ -373,7 +374,7 @@ function Line() {
   );
 }
 
-function Tags({ tags }: { tags: string[] }) {
+function Tags({ tags }: { tags: MinorityGroups[] }) {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
   tags.forEach((tag) => (tagList += `${returnMinorityGroupValue(tag)} • `));

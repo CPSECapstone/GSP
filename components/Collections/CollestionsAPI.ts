@@ -29,7 +29,7 @@ export default class CollectionAPI {
     return API.graphql({
       query: updateBusiness,
       variables: { input: updatedBusiness },
-    });
+    }) as GraphQLResult<any>;
   }
 
   static async removeBusiness(business: Business) {
@@ -61,6 +61,6 @@ export default class CollectionAPI {
     return API.graphql({
       query: deleteCollection,
       variables: { input: collectionDetails },
-    });
+    }) as GraphQLResult<any>;
   }
 }

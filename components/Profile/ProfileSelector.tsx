@@ -153,7 +153,7 @@ function Base({ navigation }: BaseProps) {
         <Text style={styles.subtitle}>My Businesses</Text>
         {user &&
           businesses
-            .filter((b) => b.userID === user.id)
+            .filter((b) => b?.userID === user.id)
             .map((b) => (
               <BusinessSelector
                 key={b!.id}

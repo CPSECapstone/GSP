@@ -66,7 +66,7 @@ export default class BusinessAPI {
     return API.graphql({
       query: updateBusiness,
       variables: { input: business },
-    });
+    }) as GraphQLResult<any>;
   }
 
   static async delete(id: string) {

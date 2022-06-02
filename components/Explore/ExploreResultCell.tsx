@@ -55,9 +55,8 @@ function ExploreResultCell({ businessID, onPress }: ExploreResultCellProps) {
   const business = useAppSelector(selectBusinessById(businessID))!;
   const [distance, setDistance] = React.useState("");
 
-  const minoritygroups = business.tags!.map(
-    (tag) => returnMinorityGroupValue(tag)!
-  );
+  const minoritygroups =
+    business.tags?.map((tag) => returnMinorityGroupValue(tag)!) ?? [];
 
   React.useEffect(() => {
     getDistanceToBusiness(business).then(setDistance);
