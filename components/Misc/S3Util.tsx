@@ -73,7 +73,6 @@ export function getProfileImage(business: Business): ImageSourcePropType {
     Storage.get(`${business.id}/profile`).then((url) => {
       isValidUrl(url).then((valid) => {
         if (valid) {
-          console.log("GETTING p");
           const updatedBusiness = { ...business };
           updatedBusiness.profileImage = valid ? url : "default";
           store.dispatch(updateBusiness(updatedBusiness));
