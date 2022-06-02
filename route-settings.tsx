@@ -30,6 +30,7 @@ export type RootStackParamList = {
   BizReviewPage: { busID: string };
   CreateEditReview: { busID: string; editReviewId?: string };
   Notifications: undefined;
+  VerificationRequests: undefined;
 };
 
 export type LoginProps = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -59,6 +60,11 @@ export type ProfileEditorProps = NativeStackScreenProps<
 export type NotificationsProps = NativeStackScreenProps<
   RootStackParamList,
   "Notifications"
+>;
+
+export type VerificationRequestProps = NativeStackScreenProps<
+  RootStackParamList,
+  "VerificationRequests"
 >;
 
 export type RootTabBarParamList = {

@@ -2,6 +2,14 @@ enum NotificationType {
   OWNERSHIPREQUEST
   OWNERSHIPAPPROVED
   OWNERSHIPDENIED
+  VERFICIATIONAPPROVED
+  VERIFICATIONDENIED
+}
+
+type VerificationRequest @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  businessID: ID @index(name: "byBusiness")
+  message: String!
 }
 
 type Notification @model @auth(rules: [{allow: public}]) {
@@ -80,6 +88,7 @@ type Business @model @auth(rules: [{allow: public}]) {
   profileImage: AWSURL
   bannerImage: AWSURL
   isVerified: Boolean
+  verificationPending: Boolean
   userID: ID! @index(name: "byUser")
 }
 

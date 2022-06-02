@@ -4,6 +4,7 @@ import collectionReducer from "./slices/collection";
 import notificationsReducer from "./slices/notifications";
 import reviewReducer from "./slices/review";
 import userReducer from "./slices/user";
+import requestReducer from "./slices/verification";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     notification: notificationsReducer,
     review: reviewReducer,
+    verification: requestReducer,
   },
 });
 

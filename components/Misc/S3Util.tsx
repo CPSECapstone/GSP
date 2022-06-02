@@ -5,7 +5,7 @@ import { Storage } from "@aws-amplify/storage";
 import ImageCache from "./ImageCache";
 import { Business } from "../../src/API";
 import store from "../../redux/store";
-import { updateBusiness } from "../../redux/slices/business";
+import { updateBusinessRedux } from "../../redux/slices/business";
 
 const PLACEHOLDER_IMG_URL = require("./PlaceholderImages/placeholderBusiness.png");
 const PLACEHOLDER_BANNER = require("./PlaceholderImages/banner.jpeg");
@@ -69,13 +69,13 @@ export function getProfileImage(business: Business): ImageSourcePropType {
   if (!business.profileImage) {
     const pendingBusiness = { ...business };
     pendingBusiness.profileImage = "pending";
-    store.dispatch(updateBusiness(pendingBusiness));
+    store.dispatch(updateBusinessRedux(pendingBusiness));
     Storage.get(`${business.id}/profile`).then((url) => {
       isValidUrl(url).then((valid) => {
         if (valid) {
           const updatedBusiness = { ...business };
           updatedBusiness.profileImage = valid ? url : "default";
-          store.dispatch(updateBusiness(updatedBusiness));
+          store.dispatch(updateBusinessRedux(updatedBusiness));
         }
       });
     });
@@ -88,14 +88,14 @@ export function getBannerImage(business: Business): ImageSourcePropType {
   if (!business.bannerImage) {
     const pendingBusiness = { ...business };
     pendingBusiness.bannerImage = "pending";
-    store.dispatch(updateBusiness(pendingBusiness));
+    store.dispatch(updateBusinessRedux(pendingBusiness));
     Storage.get(`${business.id}/banner`).then((url) => {
       isValidUrl(url).then((valid) => {
         if (valid) {
           console.log("GETTING b");
           const updatedBusiness = { ...business };
           updatedBusiness.bannerImage = valid ? url : "default";
-          store.dispatch(updateBusiness(updatedBusiness));
+          store.dispatch(updateBusinessRedux(updatedBusiness));
         }
       });
     });

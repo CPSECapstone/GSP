@@ -38,6 +38,8 @@ import CreateEditReview from "./components/Review/CreateEditReview";
 import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
+import verification from "./redux/thunks/verification";
+import VerificationRequests from "./components/Moderation/VerificationRequestsPage";
 import EditProfile from "./components/Profile/User/EditProfile";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
@@ -74,6 +76,9 @@ function AuthenticatedApp() {
   React.useEffect(() => {
     dispatch(notifications.fetchNotifications(user.id));
     dispatch(collections.fetchCollections(user.id));
+    if (user.isModerator) {
+      dispatch(verification.fetchRequests());
+    }
     requestPermission();
   }, []);
 
@@ -156,6 +161,11 @@ function InnerApp() {
           name="Notifications"
           component={Notifications}
           options={{ title: "Notifications", headerShown: true }}
+        />
+        <Stack.Screen
+          name="VerificationRequests"
+          component={VerificationRequests}
+          options={{ title: "Verification Requests", headerShown: true }}
         />
         <Stack.Screen
           name="EditProfile"

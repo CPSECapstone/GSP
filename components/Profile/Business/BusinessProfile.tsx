@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { Ionicons, SimpleLineIcons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import React from "react";
 import {
   Linking,
@@ -20,13 +20,17 @@ import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { API } from "aws-amplify";
 import { getBannerImage, getProfileImage } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business, Collection } from "../../../src/API";
 import { AverageRating } from "../../Review/RatingView";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import BusinessAPI from "./BusinessAPI";
-import { deleteBusiness, updateBusiness } from "../../../redux/slices/business";
+import {
+  deleteBusiness,
+  updateBusinessRedux,
+} from "../../../redux/slices/business";
 import BusinessEditor from "./BusinessEditor";
 import BizReviewPage from "../../Review/BizReviewPage";
 import { BProfileStackParamList, BusinessContext } from "./bizDependencies";
@@ -41,6 +45,11 @@ import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";
 import { getDistanceToBusiness } from "../../../constants/location";
 import { selectBusinessById } from "../../../redux/selectors/business";
+import {
+  createVerificationRequest,
+  updateBusiness,
+} from "../../../src/graphql/mutations";
+import { MinorityGroups } from "../../../src/models";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
@@ -80,9 +89,40 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
     }
   }, [modalVisible]);
 
+  const sendVerificationRequest = async () => {
+    if (business.verificationPending) {
+      Alert.alert(
+        "Request Pending",
+        "You have already previously sent a verification request."
+      );
+    } else {
+      const requestDetails = {
+        businessID: business.id,
+        message: "Verification request testing.",
+      };
+
+      await API.graphql({
+        query: createVerificationRequest,
+        variables: { input: requestDetails },
+      });
+
+      const busUpdate = { id: business.id, verificationPending: true };
+
+      await API.graphql({
+        query: updateBusiness,
+        variables: { input: busUpdate },
+      });
+
+      Alert.alert(
+        "Success",
+        "Verification request has been sent to moderators, please be patient while they review your request."
+      );
+    }
+  };
+
   const updateBusinessCollection = (c: Collection) => {
     CollectionAPI.addBusiness(c!, business).then((response) => {
-      dispatch(updateBusiness(response.data.updateBusiness));
+      dispatch(updateBusinessRedux(response.data.updateBusiness));
     });
   };
 
@@ -171,7 +211,62 @@ export default function BusinessProfile({ businessID }: BusinessProfileProps) {
                     )}${distance ? ` • ${distance} mi` : ""}`}</Text>
                   </View>
                   <View style={styles.body}>
-                    <Tags tags={business.tags as string[]} />
+                    <Pressable
+                      onPress={() => {
+                        if (currentUser.id === business.userID) {
+                          if (business.isVerified) {
+                            Alert.alert(
+                              "Verified",
+                              "Your business has been verified by moderators!"
+                            );
+                          } else {
+                            Alert.alert(
+                              "Unverified",
+                              "Your business has not yet been verified by moderators. Would you like to send a request for verification?",
+                              [
+                                {
+                                  text: "Yes",
+                                  onPress: () => sendVerificationRequest(),
+                                },
+                                { text: "No", onPress: () => {} },
+                              ]
+                            );
+                          }
+                        } else if (business.isVerified) {
+                          Alert.alert(
+                            "Verified Business",
+                            "This business has been verified by moderators."
+                          );
+                        } else {
+                          Alert.alert(
+                            "Unverified Business",
+                            "This business has not yet been verified by moderators."
+                          );
+                        }
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          paddingBottom: 5,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: business.isVerified ? "#31c3f7" : "#99aab0",
+                          }}
+                        >
+                          {business.isVerified ? "Verified" : "Not Verified"}
+                        </Text>
+                        <MaterialIcons
+                          color={business.isVerified ? "#31c3f7" : "#99aab0"}
+                          name="verified"
+                          size={20}
+                        />
+                      </View>
+                    </Pressable>
+                    <Tags tags={business.tags ?? []} />
                     <View style={styles.buttonWrapper}>
                       {business.phone && (
                         <CircleButton
@@ -325,7 +420,7 @@ function BusinessEditorScreen({ navigation }: EditorScreenProps) {
         if (bImg) {
           updatedBusiness.bannerImage = null;
         }
-        dispatch(updateBusiness(updatedBusiness));
+        dispatch(updateBusinessRedux(updatedBusiness));
         navigation.navigate("BusinessProfile", { rerender: true });
       })
       .catch((err) => console.log(err));
@@ -373,7 +468,7 @@ function Line() {
   );
 }
 
-function Tags({ tags }: { tags: string[] }) {
+function Tags({ tags }: { tags: MinorityGroups[] }) {
   let tagList = "";
   // eslint-disable-next-line no-return-assign
   tags.forEach((tag) => (tagList += `${returnMinorityGroupValue(tag)} • `));

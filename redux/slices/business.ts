@@ -31,7 +31,7 @@ export const businessSlice = createSlice({
       const newArray = [...state.businesses, action.payload];
       state.businesses = newArray;
     },
-    updateBusiness(state, action: PayloadAction<Business>) {
+    updateBusinessRedux(state, action: PayloadAction<Business>) {
       const index = state.businesses.findIndex(
         (business) => business!.id === action.payload.id
       );
@@ -54,7 +54,7 @@ export const {
   businessLoading,
   businessReceived,
   addBusiness,
-  updateBusiness,
+  updateBusinessRedux,
   deleteBusiness,
 } = businessSlice.actions;
 

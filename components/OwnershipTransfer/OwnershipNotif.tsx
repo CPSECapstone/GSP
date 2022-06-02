@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Divider() {
+export function Divider() {
   return (
     <View
       style={{

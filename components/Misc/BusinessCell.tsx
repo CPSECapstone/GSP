@@ -54,6 +54,9 @@ const styles = StyleSheet.create({
 
 function BusinessCell({ businessId }: BusinessCellProps) {
   const business = useAppSelector(selectBusinessById(businessId))!;
+  if (business === undefined) {
+    return <View />;
+  }
   const [distance, setDistance] = React.useState("");
 
   React.useEffect(() => {
