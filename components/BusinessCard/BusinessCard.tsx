@@ -1,10 +1,9 @@
-import { Entypo } from "@expo/vector-icons";
 import React from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
 import { getDistanceToBusiness } from "../../constants/location";
-import { average } from "../../constants/math";
 import { Business } from "../../src/API";
 import { getProfileImage } from "../Misc/S3Util";
+import { AverageRating } from "../Review/RatingView";
 
 const styles = StyleSheet.create({
   container: {
@@ -47,16 +46,9 @@ const styles = StyleSheet.create({
 
 function BusinessCard({ business }: { business: Business }) {
   const [distance, setDistance] = React.useState("");
-
   React.useEffect(() => {
     getDistanceToBusiness(business).then(setDistance);
   }, []);
-
-  let averageRating = 0;
-  const ratings = business.Reviews?.items;
-  if (ratings) {
-    averageRating = average(ratings.map((x) => x!.rating!));
-  }
 
   return (
     <View style={styles.container}>
@@ -66,11 +58,8 @@ function BusinessCard({ business }: { business: Business }) {
       />
       <View style={styles.subcontainer}>
         <Text style={styles.title}>{business.name}</Text>
-        <Text style={styles.distancetext}>{distance && `${distance} mi`}</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Entypo name="star" size={23} color="#7300ff" />
-          <Text>{averageRating}</Text>
-        </View>
+        <Text style={styles.distancetext}>{`${distance} mi`}</Text>
+        <AverageRating businessId={business.id} color="#7300ff" short />
       </View>
     </View>
   );
