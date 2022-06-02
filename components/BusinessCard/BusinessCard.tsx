@@ -1,14 +1,10 @@
 import { Entypo } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { S3Image } from "../Misc/S3Util";
-
-interface BusinessCardProps {
-  id: string;
-  name: string;
-  distance: string;
-  rating: string;
-}
+import { Image, StyleSheet, View, Text } from "react-native";
+import { getDistanceToBusiness } from "../../constants/location";
+import { average } from "../../constants/math";
+import { Business } from "../../src/API";
+import { getProfileImage } from "../Misc/S3Util";
 
 const styles = StyleSheet.create({
   container: {
@@ -49,19 +45,31 @@ const styles = StyleSheet.create({
   },
 });
 
-function BusinessCard({ id, name, distance, rating }: BusinessCardProps) {
+function BusinessCard({ business }: { business: Business }) {
+  const [distance, setDistance] = React.useState("");
+
+  React.useEffect(() => {
+    getDistanceToBusiness(business).then(setDistance);
+  }, []);
+
+  let averageRating = 0;
+  const ratings = business.Reviews?.items;
+  if (ratings) {
+    averageRating = average(ratings.map((x) => x!.rating!));
+  }
+
   return (
     <View style={styles.container}>
-      <S3Image
+      <Image
         style={[styles.avatar, { borderColor: "red" }]}
-        S3key={`${id}/profile`}
+        source={getProfileImage(business)}
       />
       <View style={styles.subcontainer}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.distancetext}>{`${distance} mi`}</Text>
+        <Text style={styles.title}>{business.name}</Text>
+        <Text style={styles.distancetext}>{distance && `${distance} mi`}</Text>
         <View style={{ flexDirection: "row" }}>
           <Entypo name="star" size={23} color="#7300ff" />
-          <Text>{rating}</Text>
+          <Text>{averageRating}</Text>
         </View>
       </View>
     </View>

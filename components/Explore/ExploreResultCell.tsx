@@ -1,15 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { returnBusinessTypeValue } from "../../constants/enumconverters";
-import { Business } from "../../src/API";
-import { S3Image } from "../Misc/S3Util";
-
-interface ResultCellProps {
-  business: Business;
-  distance: number;
-  minoritygroups: (string | null)[];
-  onPress: () => void;
-}
+import { Image, View, Text, StyleSheet, Pressable } from "react-native";
+import {
+  returnBusinessTypeValue,
+  returnMinorityGroupValue,
+} from "../../constants/enumconverters";
+import { getDistanceToBusiness } from "../../constants/location";
+import { useAppSelector } from "../../redux/hooks";
+import { selectBusinessById } from "../../redux/selectors/business";
+import { getProfileImage } from "../Misc/S3Util";
 
 const styles = StyleSheet.create({
   container: {
@@ -52,21 +50,33 @@ const styles = StyleSheet.create({
   },
 });
 
-function ExploreResultCell(props: ResultCellProps) {
-  const { business, distance, minoritygroups, onPress } = props;
+type ExploreResultCellProps = { businessID: string; onPress: () => void };
+function ExploreResultCell({ businessID, onPress }: ExploreResultCellProps) {
+  const business = useAppSelector(selectBusinessById(businessID))!;
+  const [distance, setDistance] = React.useState("");
+
+  const minoritygroups = business.tags!.map(
+    (tag) => returnMinorityGroupValue(tag)!
+  );
+
+  React.useEffect(() => {
+    getDistanceToBusiness(business).then(setDistance);
+  }, []);
 
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <S3Image
+      <Image
         style={[
           styles.image,
-          { borderWidth: 2, borderColor: `${business.primarycolor}` },
+          { borderWidth: 2, borderColor: business.primarycolor },
         ]}
-        S3key={`${business.id}/profile`}
+        source={getProfileImage(business)}
       />
       <View style={styles.horizview}>
         <Text style={styles.titletext}>{business.name}</Text>
-        <Text style={styles.distancetext}>{`${distance}mi`}</Text>
+        <Text style={styles.distancetext}>{`${
+          distance ? `${distance}mi` : ""
+        }`}</Text>
       </View>
       <Text style={styles.littletext}>
         {returnBusinessTypeValue(business.type)}

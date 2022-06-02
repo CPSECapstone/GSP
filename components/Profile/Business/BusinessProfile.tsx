@@ -13,12 +13,15 @@ import {
   Animated,
   Alert,
   AlertButton,
+  Image,
+  ImageBackground,
 } from "react-native";
 import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { S3ImageBackground, S3Image } from "../../Misc/S3Util";
+import { useForegroundPermissions } from "expo-location";
+import { getBannerImage, getProfileImage } from "../../Misc/S3Util";
 import BusinessProfileModal from "../../OwnershipTransfer/BusinessProfileModal";
 import { Business, Collection } from "../../../src/API";
 import { AverageRating } from "../../Review/RatingView";
@@ -37,24 +40,36 @@ import { addRecentBusiness } from "../../Misc/RecentBusinessStore";
 import { selectReviewsByBusiness } from "../../../redux/selectors/review";
 import selectAllUserCollections from "../../../redux/selectors/collections";
 import CollectionAPI from "../../Collections/CollestionsAPI";
+import { getDistanceToBusiness } from "../../../constants/location";
+import { selectBusinessById } from "../../../redux/selectors/business";
 
 const BProfileStack = createNativeStackNavigator<BProfileStackParamList>();
 
-type BusinessProfileProps = { business: Business };
-export default function BusinessProfile({ business }: BusinessProfileProps) {
+type BusinessProfileProps = { businessID: string };
+export default function BusinessProfile({ businessID }: BusinessProfileProps) {
   const dispatch = useAppDispatch();
   const [modalVisible, setmodalVisible] = React.useState(false);
   const backgroundOpactiy = new Animated.Value(1.0);
+  const business = useAppSelector(selectBusinessById(businessID))!;
   const currentUser = useAppSelector(selectUser)!;
   const userCollections = useAppSelector(selectAllUserCollections);
   const curReviews = useAppSelector(selectReviewsByBusiness(business.id));
+  const [status, requestPermission] = useForegroundPermissions();
+  const [distance, setDistance] = React.useState("");
   const curUserReviewId = curReviews.find(
     (r) => r.userID === currentUser.id
   )?.id;
 
   React.useEffect(() => {
     addRecentBusiness(business.id);
+    //requestPermission();
   }, []);
+
+  React.useEffect(() => {
+    if (status?.granted) {
+      getDistanceToBusiness(business).then(setDistance);
+    }
+  }, [status]);
 
   React.useEffect(() => {
     if (modalVisible) {
@@ -112,8 +127,8 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                 visible={modalVisible}
                 modalVisibilitySetter={setmodalVisible}
               />
-              <S3ImageBackground
-                S3key={`${business.id}/banner`}
+              <ImageBackground
+                source={getBannerImage(business)}
                 style={styles.banner}
               />
               <View
@@ -150,17 +165,17 @@ export default function BusinessProfile({ business }: BusinessProfileProps) {
                     >
                       <SimpleLineIcons name="options" size={25} color="white" />
                     </Pressable>
-                    <S3Image
+                    <Image
                       style={[
                         styles.avatar,
                         { borderColor: business.primarycolor },
                       ]}
-                      S3key={`${business.id}/profile`}
+                      source={getProfileImage(business)}
                     />
                     <Text style={styles.title}>{business.name}</Text>
                     <Text style={styles.details}>{`${returnBusinessTypeValue(
                       business.type
-                    )} • 3mi`}</Text>
+                    )}${distance ? ` • ${distance} mi` : ""}`}</Text>
                   </View>
                   <View style={styles.body}>
                     <Tags tags={business.tags as string[]} />
@@ -310,8 +325,15 @@ function BusinessEditorScreen({ navigation }: EditorScreenProps) {
   const submit = (edits: Partial<Business>, pImg?: string, bImg?: string) => {
     BusinessAPI.update(edits, pImg, bImg)
       .then((response) => {
-        dispatch(updateBusiness(response.data.updateBusiness));
-        navigation.navigate("BusinessProfile");
+        const updatedBusiness = response.data.updateBusiness;
+        if (pImg) {
+          updatedBusiness.profileImage = null;
+        }
+        if (bImg) {
+          updatedBusiness.bannerImage = null;
+        }
+        dispatch(updateBusiness(updatedBusiness));
+        navigation.navigate("BusinessProfile", { rerender: true });
       })
       .catch((err) => console.log(err));
   };
@@ -367,7 +389,6 @@ function Tags({ tags }: { tags: string[] }) {
 }
 
 async function call(phoneNumber: string) {
-  alert(phoneNumber);
   Linking.openURL(`tel:${phoneNumber}`);
 }
 

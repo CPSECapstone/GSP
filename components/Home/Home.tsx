@@ -204,12 +204,7 @@ function HomeView({ navigation }: HomeProps) {
               })
             }
           >
-            <BusinessCard
-              id={selectedBusiness[0]!.id}
-              name={selectedBusiness[0]!.name}
-              distance="4"
-              rating={String(selectedBusiness[0]!.rating)}
-            />
+            <BusinessCard business={selectedBusiness[0]!} />
           </Pressable>
         </View>
       ) : (

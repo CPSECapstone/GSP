@@ -38,6 +38,7 @@ import { selectUser } from "./redux/selectors/user";
 import notifications from "./redux/thunks/notifications";
 import collections from "./redux/thunks/collections";
 import EditProfile from "./components/Profile/User/EditProfile";
+import { useForegroundPermissions } from "expo-location";
 
 const madaBlack = require("./assets/fonts/Mada/Mada-Black.ttf");
 const madaRegular = require("./assets/fonts/Mada/Mada-Regular.ttf");
@@ -63,13 +64,17 @@ Amplify.configure(awsconfig);
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<RootTabBarParamList>();
 
+console.disableYellowBox = true;
 function AuthenticatedApp() {
   const user = useAppSelector(selectUser)!;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [status, requestPermission] = useForegroundPermissions();
   const dispatch = useAppDispatch();
 
   React.useEffect(() => {
     dispatch(notifications.fetchNotifications(user.id));
     dispatch(collections.fetchCollections(user.id));
+    requestPermission();
   }, []);
 
   return (

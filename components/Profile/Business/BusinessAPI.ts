@@ -7,6 +7,7 @@ import {
   updateBusiness,
 } from "../../../src/graphql/mutations";
 import { Business } from "../../../src/API";
+import ImageCache from "../../Misc/ImageCache";
 
 export default class BusinessAPI {
   static async create(
@@ -21,9 +22,11 @@ export default class BusinessAPI {
     const newBusinessId = newBusiness.data.createBusiness.id;
     if (profileImage) {
       await updateProfileImage(profileImage, newBusinessId);
+      ImageCache.updateCache(`${business.id}/profile`, undefined);
     }
     if (bannerImage) {
       await updateBannerImage(bannerImage, newBusinessId);
+      ImageCache.updateCache(`${business.id}/banner`, undefined);
     }
     return newBusiness;
 
@@ -53,9 +56,11 @@ export default class BusinessAPI {
   ) {
     if (profileImage) {
       await updateProfileImage(profileImage, business.id!);
+      ImageCache.updateCache(`${business.id}/profile`, undefined);
     }
     if (bannerImage) {
       await updateBannerImage(bannerImage, business.id!);
+      ImageCache.updateCache(`${business.id}/banner`, undefined);
     }
 
     return API.graphql({

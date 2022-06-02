@@ -47,7 +47,7 @@ import {
   ColorSetEditor,
 } from "./FieldEditors/FieldEditors";
 import { MinorityGroups, BusinessType, Business } from "../../../src/API";
-import { S3Image, S3ImageBackground } from "../../Misc/S3Util";
+import { getBannerImage, getProfileImage } from "../../Misc/S3Util";
 import {
   returnBusinessTypeValue,
   returnMinorityGroupValue,
@@ -227,8 +227,9 @@ function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
             style={styles.banner}
           />
         ) : (
-          <S3ImageBackground
-            S3key={`${editor.business.id}/banner`}
+          <ImageBackground
+            source={getBannerImage(editor.business)}
+            defaultSource={require("../../Misc/PlaceholderImages/banner.jpeg")}
             style={styles.banner}
           />
         )}
@@ -246,9 +247,9 @@ function BaseEditor({ navigation, submit, del }: BaseEditorProps) {
               }}
             />
           ) : (
-            <S3Image
+            <Image
               style={{ width: "100%", aspectRatio: 1, borderRadius: 100 }}
-              S3key={`${editor.business.id}/profile`}
+              source={getProfileImage(editor.business)}
             />
           )}
           <EditButton

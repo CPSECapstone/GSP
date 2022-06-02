@@ -1,7 +1,12 @@
 import { Geo } from "aws-amplify";
+import {
+  getCurrentPositionAsync,
+  getForegroundPermissionsAsync,
+} from "expo-location";
 import * as geolib from "geolib";
 import "react-native-get-random-values";
 import "react-native-url-polyfill/auto";
+import { Business } from "../src/API";
 
 const searchOptionsWithBiasPosition = {
   maxResults: 1,
@@ -45,4 +50,27 @@ const getCoordinates = async (loc: string) => {
   }
 };
 
-export { computeDistance, getCoordinates };
+const getDistanceToBusiness = async (business: Business) => {
+  const perms = await getForegroundPermissionsAsync();
+  if (!perms.granted) {
+    return "";
+  }
+  const currentPostition = await getCurrentPositionAsync({});
+  const businessPosition = await getCoordinates(
+    `${business.address}, ${business.city}, ${business.state} ${business.zipcode}`
+  );
+  if (businessPosition === false) {
+    return "";
+  }
+  const dist = geolib.getDistance(
+    {
+      longitude: currentPostition.coords.longitude,
+      latitude: currentPostition.coords.latitude,
+    },
+    businessPosition
+  );
+  const distInMiles = geolib.convertDistance(dist, "mi").toFixed(1);
+  return distInMiles;
+};
+
+export { computeDistance, getCoordinates, getDistanceToBusiness };

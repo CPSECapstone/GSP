@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { returnBusinessTypeValue, returnMinorityGroupValue } from "../../api";
 import { average } from "../../constants/math";
 import { useAppSelector } from "../../redux/hooks";
 import { selectBusinessById } from "../../redux/selectors/business";
 import { selectReviewsByBusiness } from "../../redux/selectors/review";
-import { S3Image } from "../Misc/S3Util";
+import { getProfileImage } from "../Misc/S3Util";
 import StarRating from "./StarRating";
 
 const styles = StyleSheet.create({
@@ -58,9 +58,9 @@ function BizReviewHeader({ businessID }: BizReviewHeaderProps) {
         <StarRating rating={avgRating} label={`${ratings.length} reviews`} />
       </View>
       <View style={{ flex: 1 }}>
-        <S3Image
+        <Image
           style={[styles.avatar, { borderColor: business?.primarycolor }]}
-          S3key={`${business?.id}/profile`}
+          source={getProfileImage(business!)}
         />
       </View>
     </View>

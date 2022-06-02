@@ -1,4 +1,3 @@
-import { ConsoleLogger } from "@aws-amplify/core";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
@@ -14,10 +13,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../redux/hooks";
 import { selectAllBusinesses } from "../../redux/selectors/business";
-import selectAllUserCollections from "../../redux/selectors/collections";
 import { updateBusiness } from "../../redux/slices/business";
 import { collectionRemoval } from "../../redux/slices/collection";
-import { OpenCollectionPageProps } from "../../route-settings";
 import { Business, Collection } from "../../src/API";
 import BusinessCard from "../BusinessCard/BusinessCard";
 import CollectionAPI from "./CollestionsAPI";
@@ -151,12 +148,7 @@ function OpenCollection({ collection, goBack }: OpenCollectionProps) {
                   navigation.navigate("BusinessView", { id: item!.id });
               }}
             >
-              <BusinessCard
-                id={item!.id}
-                name={item!.name}
-                rating={4}
-                distance={3}
-              />
+              <BusinessCard business={item!} />
             </Pressable>
           </View>
         )}

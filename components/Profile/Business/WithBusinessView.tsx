@@ -25,11 +25,9 @@ function WithBusinessView({ Component }: { Component: ViewProps }) {
         {(props) => <Component {...props} />}
       </BusinessViewStack.Screen>
       <BusinessViewStack.Screen name="BusinessView">
-        {({ route }) => (
-          <BusinessProfile
-            business={useAppSelector(selectBusinessById(route.params.id))!}
-          />
-        )}
+        {({ route }) => {
+          return <BusinessProfile businessID={route.params.id} />;
+        }}
       </BusinessViewStack.Screen>
     </BusinessViewStack.Navigator>
   );
