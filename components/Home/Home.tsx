@@ -38,9 +38,10 @@ const styles = StyleSheet.create({
   },
   minoritycellcontainer: {
     borderRadius: 20.35,
-    marginHorizontal: 8,
     marginTop: minorityGroupCellPadding,
-    width,
+    minWidth: width,
+    marginHorizontal: 5,
+    flexGrow: 0,
     height,
     flex: 1,
     flexDirection: "row",
@@ -52,13 +53,13 @@ const styles = StyleSheet.create({
     width: imgdimensions,
     height: imgdimensions,
     borderRadius: imgdimensions,
-    marginLeft: "5%",
-    marginRight: "5%",
+    marginHorizontal: 5,
   },
   minoritycelltitle: {
     fontFamily: "Mada-Medium",
     fontSize: 12,
     textAlign: "center",
+    paddingHorizontal: 10,
   },
   resultCard: {
     position: "absolute",
