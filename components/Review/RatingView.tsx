@@ -84,8 +84,16 @@ function Bullet() {
   return <Text style={styles.bulletText}>•</Text>;
 }
 
-type AverageRatingProps = { businessId: string; color: string };
-export function AverageRating({ businessId, color }: AverageRatingProps) {
+type AverageRatingProps = {
+  businessId: string;
+  color: string;
+  short?: boolean;
+};
+export function AverageRating({
+  businessId,
+  color,
+  short,
+}: AverageRatingProps) {
   const reviews = useAppSelector(selectReviewsByBusiness(businessId));
   if (!reviews || reviews.length < 1) {
     return (
@@ -93,10 +101,14 @@ export function AverageRating({ businessId, color }: AverageRatingProps) {
         <View style={{ flexDirection: "row" }}>
           {getStars(0, "none", color)}
         </View>
-        <Bullet />
-        <Text style={styles.ratingText}>Unrated</Text>
-        <Bullet />
-        <Text style={styles.ratingText}>{`${0} Reviews`}</Text>
+        {!short && (
+          <>
+            <Bullet />
+            <Text style={styles.ratingText}>Unrated</Text>
+            <Bullet />
+            <Text style={styles.ratingText}>{`${0} Reviews`}</Text>
+          </>
+        )}
       </View>
     );
   }
@@ -108,13 +120,21 @@ export function AverageRating({ businessId, color }: AverageRatingProps) {
       <View style={{ flexDirection: "row" }}>
         {getStars(average, "avg", color)}
       </View>
-      <Bullet />
-      <Text style={styles.ratingText}>{`${average} Stars`}</Text>
-      <Bullet />
-      <Text style={styles.ratingText}>{`${reviews.length} Reviews`}</Text>
+      {!short && (
+        <>
+          <Bullet />
+          <Text style={styles.ratingText}>{`${average} Stars`}</Text>
+          <Bullet />
+          <Text style={styles.ratingText}>{`${reviews.length} Reviews`}</Text>
+        </>
+      )}
     </View>
   );
 }
+
+AverageRating.defaultProps = {
+  short: false,
+};
 
 const styles = StyleSheet.create({
   container: {
