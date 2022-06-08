@@ -2,6 +2,10 @@
 
 Welcome to the Minority Market GitHub repo!
 
+## Alpha Site
+
+https://minority-market.gitbook.io/about/
+
 ## CI Server
 
 Here in Github! https://github.com/CPSECapstone/GSP/actions
